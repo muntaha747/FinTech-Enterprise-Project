@@ -7,7 +7,7 @@ resource "aws_instance" "basics-ec2" {
   instance_type = var.instance_type
   depends_on    = [aws_s3_bucket.basics-s3]
 }
- 
+
 resource "aws_eip" "basics-eip" {
   instance = aws_instance.basics-ec2.id
 }
