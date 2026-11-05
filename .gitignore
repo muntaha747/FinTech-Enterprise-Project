@@ -1,0 +1,80 @@
+# ---------- Terraform ----------
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+crash.log
+crash.*.log
+*.tfvars
+*.tfvars.json
+!*.tfvars.example
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraformrc
+terraform.rc
+*.tfplan
+tfplan
+
+# ---------- Secrets / credentials ----------
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+cosign.key
+secrets/
+.aws/
+kubeconfig*
+*.kubeconfig
+
+# ---------- Python / ML ----------
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+mlruns/
+mlartifacts/
+*.pkl
+*.joblib
+*.h5
+*.onnx
+*.pt
+*.ckpt
+data/raw/
+data/processed/
+*.parquet
+
+# ---------- Node / Frontend ----------
+node_modules/
+dist/
+build/
+.next/
+coverage/
+npm-debug.log*
+yarn-error.log*
+
+# ---------- Helm / K8s ----------
+charts/*.tgz
+*.rendered.yaml
+
+# ---------- Docker ----------
+docker-compose.override.yml
+
+# ---------- IDE / OS ----------
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db
+
+# ---------- Logs ----------
+*.log
+logs/
