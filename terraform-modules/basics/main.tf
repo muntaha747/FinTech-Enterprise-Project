@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 resource "aws_instance" "basics-ec2" {
-  ami           = var.ami_id
+  ami           = data.aws_ami.ubuntu_ami.id
   instance_type = var.instance_type
   depends_on    = [aws_s3_bucket.basics-s3]
 }
