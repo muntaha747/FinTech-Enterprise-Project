@@ -3,8 +3,8 @@ provider "aws" {
 }
 
 resource "aws_instance" "basics-ec2" {
-  ami           = "ami-0d97d7f07b25dd693"
-  instance_type = "t2.micro"
+  ami           = var.ami_id
+  instance_type = var.instance_type
 }
 
 resource "aws_eip" "basics-eip" {
