@@ -3,12 +3,17 @@ provider "aws" {
 }
 
 module "instance" {
-  source = "../modules/instance"
-  instance_type = "t3.micro" #We have to also defined the instance type in the root module as well, otherwise it will use the default value from the module.
-  ami_id = "ami-0c55b159cbfafe1d0" #We have to also defined the AMI ID in the root module as well, otherwise it will use the default value from the module.
+  source        = "../modules/instance"
+  instance_type = "t3.micro"              #We have to also defined the instance type in the root module as well, otherwise it will use the default value from the module.
+  ami_id        = "ami-0c55b159cbfafe1d0" #We have to also defined the AMI ID in the root module as well, otherwise it will use the default value from the module.
 }
 
 module "eip" {
-  source = "../modules/eip"
+  source      = "../modules/eip"
   instance_id = module.instance.instanceid
+}
+
+module "iam_user" {
+  source     = "../modules/iam-user"
+  user_names = var.iam-user-names 
 }
