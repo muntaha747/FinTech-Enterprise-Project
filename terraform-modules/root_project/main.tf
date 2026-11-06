@@ -15,5 +15,5 @@ module "eip" {
 
 module "iam_user" {
   source     = "../modules/iam-user"
-  user_names = var.iam-user-names
+  user_names = upper(var.iam-user-names[count.index])
 }
