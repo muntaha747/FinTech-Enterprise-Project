@@ -15,8 +15,8 @@ permissions:
 
 jobs:
   terraform:
-    runs-on: ubuntu-latest
-
+    runs-on: ubuntu-latest 
+#
     defaults:
       run:
         working-directory: ./infra-modules/qa/s3
