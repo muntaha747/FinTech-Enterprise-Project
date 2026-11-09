@@ -9,7 +9,7 @@ A small project that builds a secure S3 bucket on AWS using Terraform. A GitHub 
 - Checks the code for formatting problems and security issues before deploying
 - Stores Terraform state in a remote backend with state locking
 
-## Project structure
+## Project structure ##
 
 ```
 .
