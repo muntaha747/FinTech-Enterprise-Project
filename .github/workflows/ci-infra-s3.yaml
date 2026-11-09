@@ -48,7 +48,7 @@ jobs:
    
       - name: Checkov Scan
         run: |
-          pip install checkov
+          pipx install checkov
           checkov -d . --soft-fail
 
      
