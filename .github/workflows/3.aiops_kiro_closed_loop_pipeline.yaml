@@ -34,7 +34,7 @@ jobs:
           python3 -m pip install --upgrade pip
           pip install checkov
 
-      # 1. EVALUATE COMPLIANCE STATE
+
       - name: Run Initial Checkov Scan
         id: run_scan
         continue-on-error: true 
@@ -57,7 +57,7 @@ jobs:
           curl -fsSL https://cli.kiro.dev/install | bash
           echo "$HOME/.kiro/bin" >> $GITHUB_PATH
 
-      # 3. INTERACTIVE CLASSROOM GATEWAY: DEVICE FLOW LOGIN
+      
       - name: Interactive Live AIOps Authentication
         if: steps.run_scan.outputs.violations > 0
         timeout-minutes: 5 
