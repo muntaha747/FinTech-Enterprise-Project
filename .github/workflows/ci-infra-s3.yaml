@@ -28,7 +28,7 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ secrets.OIDC_GITHUB_ACTIONS_PIPELINE_ROLE_ARN }}
+          role-to-assume: ${{ secrets.FinTech_Enterprise_Project_GithubActions_OIDC_Role  }}
           aws-region: us-east-1
 
 
