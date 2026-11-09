@@ -1,4 +1,4 @@
-name: Terraform S3 CI Pipeline (Dev Branch Only For Testing the infra)
+name: Terraform S3 CI Pipeline (Dev Branch Only For Testing the infra) #
 
 on:
   push:
@@ -36,8 +36,8 @@ jobs:
           part += '=' * (-len(part) % 4)
           claims = json.loads(base64.urlsafe_b64decode(part))
           print({k: claims[k] for k in ('iss', 'aud', 'sub')})
-          EOF 
-#
+          EOF
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
