@@ -1,44 +1,39 @@
-name: IAC Pipeline ##
+name: IAC Pipeline
 
 on:
   workflow_dispatch:
 
-permissions:
-  id-token: write
-  contents: read
-  
   push:
     paths:
+      - 'demo/**'
       - '.github/workflows/2.dev_iac_pipeline.yaml'
     branches:
       - dev
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
-  terraform-devsecops: 
+  terraform-devsecops:
     runs-on: ubuntu-latest
 
     defaults:
-      run: 
+      run:
         working-directory: demo
 
     steps:
-      # -------------------
-      # demo Provision
-      # -------------------
       - name: Checkout
         uses: actions/checkout@v4
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ secrets.FinTech_Enterprise_Project_GithubActions_OIDC_Role  }}
+          role-to-assume: ${{ secrets.FinTech_Enterprise_Project_GithubActions_OIDC_Role }}
           aws-region: us-east-1
-
 
       - name: setup terraform
         uses: hashicorp/setup-terraform@v3
-              
-
 
       - name: terraform init
         run: terraform init
@@ -52,7 +47,6 @@ jobs:
           pip install checkov
 
       - name: Run Checkov Scan
-        # 🔑 ENTERPRISE BEST PRACTICE: Compact execution logs, ignoring local artifact directories
         run: checkov -d . --soft-fail --skip-path .terraform --compact
 
       - name: terraform plan
