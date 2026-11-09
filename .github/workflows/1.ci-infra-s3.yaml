@@ -1,13 +1,7 @@
 name: Terraform S3 CI Pipeline (Dev Branch Only For Testing the infra) #
 
-on:
-  push:
-    branches:
-      - dev
-  pull_request:
-    branches:
-      - main
-      - dev
+# 🔑 Disabled: Empty trigger list prevents this workflow from ever running automatically
+on: []
 
 permissions:
   id-token: write

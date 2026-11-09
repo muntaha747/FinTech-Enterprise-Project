@@ -6,7 +6,7 @@ on:
   push:
     paths:
       - 'demo/**'
-      - '.github/workflows/demo.yml'
+      - '.github/workflows/2.dev_iac_pipeline.yaml'
     branches:
       - dev
 
@@ -25,7 +25,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-    - name: Configure AWS Credentials
+      - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.FinTech_Enterprise_Project_GithubActions_OIDC_Role  }}
