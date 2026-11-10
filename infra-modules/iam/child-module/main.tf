@@ -1,7 +1,7 @@
 ############### ROLE 1 PLATFORM ENGINEERING TEAM ###############
 module "platform_team_setup" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-role"
-  version = "~> 6.70"
+  version = "6.8.2"
 
   create = var.enable_platform_role
   name   = "FinTech-Platform-Admin"

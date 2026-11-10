@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 module "iam_roles" {
-  source               = "../../child-modules"
+  source               = "../../child-module"
   account_id           = var.account_id # The ID of this ops account
   enable_product_role = true           # Only enable the Admin/Guardian roles here
   enable_cicd_role = true
