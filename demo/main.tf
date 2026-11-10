@@ -59,7 +59,7 @@ resource "aws_efs_backup_policy" "policy" {
   file_system_id = aws_efs_file_system.demo_efs.id
 
   backup_policy {
-    status = "DISABLED"
+    status = "ENABLED"
   }
 }
 #########
