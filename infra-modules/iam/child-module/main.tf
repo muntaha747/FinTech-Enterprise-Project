@@ -56,7 +56,7 @@ module "platform_team_setup" {
 ############### ROLE 2 DEVELOPERS AND QUALITY ENGINEERING TEAM ###############
 module "product_team_setup" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-role"
-  version = "~> 6.2"
+  version = "6.8.2"
 
   create = var.enable_product_role
   name   = "AppTeam-${var.env_type}-Role"
@@ -110,7 +110,7 @@ module "product_team_setup" {
 ############### ROLE 3 CI/CD PIPELINE (GITHUB ACTIONS) ###############
 module "cicd_pipeline_setup" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-role"
-  version = "~> 6.2"
+  version = "6.8.2"
 
   create = var.enable_cicd_role
   name   = "FinTech-CI-CD-Deployer-${var.env_type}"
