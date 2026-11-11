@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1240 640" width="1240" height="640" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <title>Multi state files in one S3 remote backend</title>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b1020"/>
+      <stop offset="1" stop-color="#141b2f"/>
+    </linearGradient>
+    <linearGradient id="bucket" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2f6b2a"/>
+      <stop offset="1" stop-color="#173a16"/>
+    </linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <style>
+      .flow { fill: none; stroke-width: 2.2; stroke-dasharray: 8 7; animation: dash 1s linear infinite; opacity: .8 }
+      @keyframes dash { to { stroke-dashoffset: -15 } }
+      .blink { animation: blink 2s steps(2, start) infinite }
+      @keyframes blink { to { visibility: hidden } }
+      .t  { fill: #e6edf3; font-size: 14px; font-weight: 700 }
+      .ts { fill: #b6c2d1; font-size: 12px }
+      .k  { fill: #dff7d9; font-size: 12px; font-family: Consolas, Menlo, monospace }
+    </style>
+  </defs>
+
+  <rect width="1240" height="640" rx="18" fill="url(#bg)"/>
+  <text x="40" y="44" class="t" font-size="22">🗃️ Multi state files · one encrypted S3 backend · native S3 locking</text>
+  <text x="40" y="68" class="ts">Each Terraform stack writes its own .tfstate — small blast radius, parallel work, per-prefix access control</text>
+
+  <!-- paths from stacks to keys -->
+  <g>
+    <path id="f1" class="flow" stroke="#4facfe" d="M330,130 C520,130 560,145 720,145"/>
+    <path id="f2" class="flow" stroke="#ff9900" d="M330,190 C520,190 560,200 720,200"/>
+    <path id="f3" class="flow" stroke="#ff9900" d="M330,250 C520,250 560,255 720,255"/>
+    <path id="f4" class="flow" stroke="#ff9900" d="M330,310 C520,310 560,310 720,310"/>
+    <path id="f5" class="flow" stroke="#ff9900" d="M330,370 C520,370 560,365 720,365"/>
+    <path id="f6" class="flow" stroke="#43e97b" d="M330,430 C520,430 560,420 720,420"/>
+    <path id="f7" class="flow" stroke="#43e97b" d="M330,490 C520,490 560,475 720,475"/>
+    <path id="f8" class="flow" stroke="#43e97b" d="M330,550 C520,550 560,530 720,530"/>
+  </g>
+
+  <!-- stacks -->
+  <g>
+    <rect x="40" y="108" width="290" height="44" rx="10" fill="#12263f" stroke="#4facfe" stroke-width="1.6"/>
+    <text x="58" y="136" class="t">🌐 prod/Networking</text>
+    <rect x="40" y="168" width="290" height="44" rx="10" fill="#3d2400" stroke="#ff9900" stroke-width="1.6"/>
+    <text x="58" y="196" class="t">🛠️ iam/product-ops-role</text>
+    <rect x="40" y="228" width="290" height="44" rx="10" fill="#3d2400" stroke="#ff9900" stroke-width="1.6"/>
+    <text x="58" y="256" class="t">🧪 iam/product-qa-role</text>
+    <rect x="40" y="288" width="290" height="44" rx="10" fill="#3d2400" stroke="#ff9900" stroke-width="1.6"/>
+    <text x="58" y="316" class="t">🧷 iam/product-uat-role</text>
+    <rect x="40" y="348" width="290" height="44" rx="10" fill="#3d2400" stroke="#ff9900" stroke-width="1.6"/>
+    <text x="58" y="376" class="t">🏦 iam/product-prod-role</text>
+    <rect x="40" y="408" width="290" height="44" rx="10" fill="#0b3d2e" stroke="#43e97b" stroke-width="1.6"/>
+    <text x="58" y="436" class="t">🪣 qa/s3</text>
+    <rect x="40" y="468" width="290" height="44" rx="10" fill="#0b3d2e" stroke="#43e97b" stroke-width="1.6"/>
+    <text x="58" y="496" class="t">🪣 stage/s3</text>
+    <rect x="40" y="528" width="290" height="44" rx="10" fill="#0b3d2e" stroke="#43e97b" stroke-width="1.6"/>
+    <text x="58" y="556" class="t">🪣 prod/s3</text>
+  </g>
+
+  <!-- bucket -->
+  <rect x="700" y="96" width="500" height="490" rx="20" fill="url(#bucket)" stroke="#7ddc5f" stroke-width="2.5" filter="url(#glow)"/>
+  <text x="720" y="124" class="t" fill="#c8f7b5">🪣 s3://fintech-project-statefile-bucket</text>
+  <g class="k">
+    <text x="740" y="150">product-networking/envs/prod/networking.tfstate</text>
+    <text x="740" y="205">product-iam/envs/iam-ops-role.tfstate</text>
+    <text x="740" y="260">product-iam/envs/iam-qa-role.tfstate</text>
+    <text x="740" y="315">product-iam/envs/iam-uat-role.tfstate</text>
+    <text x="740" y="370">product-iam/envs/iam-prod-role.tfstate</text>
+    <text x="740" y="425">product-name/envs/qa/s3.tfstate</text>
+    <text x="740" y="480">product-name/envs/stage/s3.tfstate</text>
+    <text x="740" y="535">product-name/envs/prod/s3.tfstate</text>
+  </g>
+  <text x="720" y="572" class="ts" fill="#c8f7b5">🔐 encrypt = true   ·   🔒 use_lockfile = true (no DynamoDB)</text>
+
+  <!-- blinking lock on the networking key -->
+  <g class="blink">
+    <rect x="1120" y="135" width="66" height="22" rx="11" fill="#ffd200"/>
+    <text x="1153" y="151" text-anchor="middle" font-size="11" font-weight="800" fill="#2b2200">🔒 .tflock</text>
+  </g>
+
+  <!-- moving state documents -->
+  <g filter="url(#glow)">
+    <g><rect x="-11" y="-7" width="22" height="14" rx="3" fill="#4facfe"/><animateMotion dur="2.8s" repeatCount="indefinite"><mpath xlink:href="#f1"/></animateMotion></g>
+    <g><rect x="-11" y="-7" width="22" height="14" rx="3" fill="#ff9900"/><animateMotion dur="2.8s" repeatCount="indefinite" begin="0.35s"><mpath xlink:href="#f2"/></animateMotion></g>
+    <g><rect x="-11" y="-7" width="22" height="14" rx="3" fill="#ff9900"/><animateMotion dur="2.8s" repeatCount="indefinite" begin="0.7s"><mpath xlink:href="#f3"/></animateMotion></g>
+    <g><rect x="-11" y="-7" width="22" height="14" rx="3" fill="#ff9900"/><animateMotion dur="2.8s" repeatCount="indefinite" begin="1.05s"><mpath xlink:href="#f4"/></animateMotion></g>
+    <g><rect x="-11" y="-7" width="22" height="14" rx="3" fill="#ff9900"/><animateMotion dur="2.8s" repeatCount="indefinite" begin="1.4s"><mpath xlink:href="#f5"/></animateMotion></g>
+    <g><rect x="-11" y="-7" width="22" height="14" rx="3" fill="#43e97b"/><animateMotion dur="2.8s" repeatCount="indefinite" begin="1.75s"><mpath xlink:href="#f6"/></animateMotion></g>
+    <g><rect x="-11" y="-7" width="22" height="14" rx="3" fill="#43e97b"/><animateMotion dur="2.8s" repeatCount="indefinite" begin="2.1s"><mpath xlink:href="#f7"/></animateMotion></g>
+    <g><rect x="-11" y="-7" width="22" height="14" rx="3" fill="#43e97b"/><animateMotion dur="2.8s" repeatCount="indefinite" begin="2.45s"><mpath xlink:href="#f8"/></animateMotion></g>
+  </g>
+
+  <!-- legend -->
+  <g>
+    <rect x="40" y="598" width="16" height="12" rx="3" fill="#4facfe"/><text x="64" y="609" class="ts">networking state</text>
+    <rect x="200" y="598" width="16" height="12" rx="3" fill="#ff9900"/><text x="224" y="609" class="ts">IAM state (one per environment)</text>
+    <rect x="450" y="598" width="16" height="12" rx="3" fill="#43e97b"/><text x="474" y="609" class="ts">S3 stacks state (qa · stage · prod)</text>
+  </g>
+</svg>

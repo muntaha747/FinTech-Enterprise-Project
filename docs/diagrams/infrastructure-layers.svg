@@ -1,0 +1,260 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1400 900" width="1400" height="900" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+<title>FinTech infrastructure layers on AWS</title>
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0a0f1e"/><stop offset="1" stop-color="#151a31"/></linearGradient>
+<linearGradient id="rail" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd200"/><stop offset=".2" stop-color="#4facfe"/><stop offset=".4" stop-color="#43e97b"/><stop offset=".6" stop-color="#f7971e"/><stop offset=".8" stop-color="#c471f5"/><stop offset="1" stop-color="#ff416c"/></linearGradient>
+<filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<style>
+.flow{fill:none;stroke-width:2.2;stroke-dasharray:8 7;animation:dash 1s linear infinite;opacity:.8}
+@keyframes dash{to{stroke-dashoffset:-15}}
+.glowcard{animation:gc 4.8s ease-in-out infinite}
+@keyframes gc{0%,100%{stroke-opacity:.55}50%{stroke-opacity:1}}
+.t{fill:#eef3f8;font-size:12.5px;font-weight:700}
+.ts{fill:#aab8cb;font-size:10.5px}
+.ln{font-size:17px;font-weight:800}
+.num{fill:#0a0f1e;font-size:13px;font-weight:900}
+</style></defs>
+<rect width="1400" height="900" rx="18" fill="url(#bg)"/>
+<text x="40" y="44" class="t" font-size="22">🧱 FinTech infrastructure layers on AWS</text>
+<text x="40" y="68" class="ts" font-size="12.5">Requests travel down the stack · CI/CD ships every layer · identity and observability cut across all of them</text>
+<rect x="30" y="96" width="6" height="670" rx="3" fill="url(#rail)" opacity=".9"/>
+<path id="rail" d="M33,96 V766" fill="none"/>
+<path id="bus" class="flow" stroke="#7fdbff" d="M1012,106 V756"/>
+<rect x="46" y="96" width="950" height="100" rx="16" fill="#2e2708" stroke="#ffd200" stroke-width="2" class="glowcard" style="animation-delay:0.0s"/>
+<rect x="46" y="96" width="8" height="100" rx="4" fill="#ffd200"/>
+<circle cx="84" cy="126" r="16" fill="#ffd200"/><text x="84" y="131" text-anchor="middle" class="num">01</text>
+<text x="108" y="132" class="ln" fill="#ffd200">🚀 CI/CD</text>
+<text x="70" y="166" class="ts" font-size="11.5">DevTools · build · ship · train</text>
+<rect x="262.0" y="110" width="96.3" height="72" rx="12" fill="#0a0f1e" fill-opacity=".55" stroke="#ffd200" stroke-opacity=".7"/>
+<text x="310.1" y="136" text-anchor="middle" font-size="18">🌿</text>
+<text x="310.1" y="156" text-anchor="middle" class="t">Git</text>
+<text x="310.1" y="171" text-anchor="middle" class="ts">source</text>
+<rect x="366.3" y="110" width="96.3" height="72" rx="12" fill="#0a0f1e" fill-opacity=".55" stroke="#ffd200" stroke-opacity=".7"/>
+<text x="414.4" y="136" text-anchor="middle" font-size="18">🐙</text>
+<text x="414.4" y="156" text-anchor="middle" class="t">GitHub</text>
+<text x="414.4" y="171" text-anchor="middle" class="ts">Actions pipeline</text>
+<rect x="470.6" y="110" width="96.3" height="72" rx="12" fill="#0a0f1e" fill-opacity=".55" stroke="#ffd200" stroke-opacity=".7"/>
+<text x="518.7" y="136" text-anchor="middle" font-size="18">🌬️</text>
+<text x="518.7" y="156" text-anchor="middle" class="t">Airflow</text>
+<text x="518.7" y="171" text-anchor="middle" class="ts">workflows</text>
+<rect x="574.9" y="110" width="96.3" height="72" rx="12" fill="#0a0f1e" fill-opacity=".55" stroke="#ffd200" stroke-opacity=".7"/>
+<text x="623.0" y="136" text-anchor="middle" font-size="18">🔁</text>
+<text x="623.0" y="156" text-anchor="middle" class="t">Argo CD</text>
+<text x="623.0" y="171" text-anchor="middle" class="ts">GitOps</text>
+<rect x="679.1" y="110" width="96.3" height="72" rx="12" fill="#0a0f1e" fill-opacity=".55" stroke="#ffd200" stroke-opacity=".7"/>
+<text x="727.3" y="136" text-anchor="middle" font-size="18">🏗️</text>
+<text x="727.3" y="156" text-anchor="middle" class="t">Terraform</text>
+<text x="727.3" y="171" text-anchor="middle" class="ts">IaC</text>
+<rect x="783.4" y="110" width="96.3" height="72" rx="12" fill="#0a0f1e" fill-opacity=".55" stroke="#ffd200" stroke-opacity=".7"/>
+<text x="831.6" y="136" text-anchor="middle" font-size="18">🚀</text>
+<text x="831.6" y="156" text-anchor="middle" class="t">KServe</text>
+<text x="831.6" y="171" text-anchor="middle" class="ts">model deploy</text>
+<rect x="887.7" y="110" width="96.3" height="72" rx="12" fill="#0a0f1e" fill-opacity=".55" stroke="#ffd200" stroke-opacity=".7"/>
+<text x="935.9" y="136" text-anchor="middle" font-size="18">📒</text>
+<text x="935.9" y="156" text-anchor="middle" class="t">MLflow</text>
+<text x="935.9" y="171" text-anchor="middle" class="ts">registry</text>
+<path id="c0" class="flow" stroke="#ffd200" d="M996,146.0 H1012"/>
+<rect x="46" y="210" width="950" height="100" rx="16" fill="#0e2038" stroke="#4facfe" stroke-width="2" class="glowcard" style="animation-delay:0.8s"/>
+<rect x="46" y="210" width="8" height="100" rx="4" fill="#4facfe"/>
+<circle cx="84" cy="240" r="16" fill="#4facfe"/><text x="84" y="245" text-anchor="middle" class="num">02</text>
+<text x="108" y="246" class="ln" fill="#4facfe">🌐 Edge</text>
+<text x="70" y="280" class="ts" font-size="11.5">first contact</text>
+<rect x="262.0" y="224" width="138.0" height="72" rx="12" fill="#0a0f1e" fill-opacity=".55" stroke="#4facfe" stroke-opacity=".7"/>
+<text x="331.0" y="250" text-anchor="middle" font-size="18">🧭</text>
+<text x="331.0" y="270" text-anchor="middle" class="t">Route 53</text>
+<text x="331.0" y="285" text-anchor="middle" class="ts">DNS</text>
+<rect x="408.0" y="224" width="138.0" height="72" rx="12" fill="#0a0f1e" fill-opacity=".55" stroke="#4facfe" stroke-opacity=".7"/>
+<text x="477.0" y="250" text-anchor="middle" font-size="18">☁️</text>
+<text x="477.0" y="270" text-anchor="middle" class="t">CloudFront</text>
+<text x="477.0" y="285" text-anchor="middle" class="ts">CDN</text>
+<rect x="554.0" y="224" width="138.0" height="72" rx="12" fill="#0a0f1e" fill-opacity=".55" stroke="#4facfe" stroke-opacity=".7"/>
+<text x="623.0" y="250" text-anchor="middle" font-size="18">🧱</text>
+<text x="623.0" y="270" text-anchor="middle" class="t">WAF</text>
+<text x="623.0" y="285" text-anchor="middle" class="ts">L7 firewall</text>
+<rect x="700.0" y="224" width="138.0" height="72" rx="12" fill="#0a0f1e" fill-opacity=".55" stroke="#4facfe" stroke-opacity=".7"/>
+<text x="769.0" y="250" text-anchor="middle" font-size="18">🛡️</text>
+<text x="769.0" y="270" text-anchor="middle" class="t">Shield Advanced</text>
+<text x="769.0" y="285" text-anchor="middle" class="ts">DDoS</text>
+<rect x="846.0" y="224" width="138.0" height="72" rx="12" fill="#0a0f1e" fill-opacity=".55" stroke="#4facfe" stroke-opacity=".7"/>
+<text x="915.0" y="250" text-anchor="middle" font-size="18">🔌</text>
+<text x="915.0" y="270" text-anchor="middle" class="t">API Gateway</text>
+<text x="915.0" y="285" text-anchor="middle" class="ts">REST</text>
+<path id="c1" class="flow" stroke="#4facfe" d="M996,260.0 H1012"/>
+<rect x="46" y="324" width="950" height="100" rx="16" fill="#0c2a20" stroke="#43e97b" stroke-width="2" class="glowcard" style="animation-delay:1.6s"/>
+<rect x="46" y="324" width="8" height="100" rx="4" fill="#43e97b"/>
+<circle cx="84" cy="354" r="16" fill="#43e97b"/><text x="84" y="359" text-anchor="middle" class="num">03</text>
+<text x="108" y="360" class="ln" fill="#43e97b">🕸️ Network</text>
+<text x="70" y="394" class="ts" font-size="11.5">isolate · connect</text>
+<rect x="262.0" y="338" width="138.0" height="72" rx="12" fill="#0a0f1e" fill-opacity=".55" stroke="#43e97b" stroke-opacity=".7"/>
+<text x="331.0" y="364" text-anchor="middle" font-size="18">🟩</text>
+<text x="331.0" y="384" text-anchor="middle" class="t">Public Subnets</text>
+<text x="331.0" y="399" text-anchor="middle" class="ts">ingress</text>
+<rect x="408.0" y="338" width="138.0" height="72" rx="12" fill="#0a0f1e" fill-opacity=".55" stroke="#43e97b" stroke-opacity=".7"/>
+<text x="477.0" y="364" text-anchor="middle" font-size="18">🟦</text>
+<text x="477.0" y="384" text-anchor="middle" class="t">Private Subnets</text>
+<text x="477.0" y="399" text-anchor="middle" class="ts">workloads</text>
+<rect x="554.0" y="338" width="138.0" height="72" rx="12" fill="#0a0f1e" fill-opacity=".55" stroke="#43e97b" stroke-opacity=".7"/>
+<text x="623.0" y="364" text-anchor="middle" font-size="18">🔀</text>
+<text x="623.0" y="384" text-anchor="middle" class="t">Transit Gateway</text>
+<text x="623.0" y="399" text-anchor="middle" class="ts">VPC hub</text>
+<rect x="700.0" y="338" width="138.0" height="72" rx="12" fill="#0a0f1e" fill-opacity=".55" stroke="#43e97b" stroke-opacity=".7"/>
+<text x="769.0" y="364" text-anchor="middle" font-size="18">🔁</text>
+<text x="769.0" y="384" text-anchor="middle" class="t">NAT Gateway</text>
+<text x="769.0" y="399" text-anchor="middle" class="ts">egress</text>
+<rect x="846.0" y="338" width="138.0" height="72" rx="12" fill="#0a0f1e" fill-opacity=".55" stroke="#43e97b" stroke-opacity=".7"/>
+<text x="915.0" y="364" text-anchor="middle" font-size="18">⚖️</text>
+<text x="915.0" y="384" text-anchor="middle" class="t">ALB</text>
+<text x="915.0" y="399" text-anchor="middle" class="ts">L7 load balancer</text>
+<path id="c2" class="flow" stroke="#43e97b" d="M996,374.0 H1012"/>
+<rect x="46" y="438" width="950" height="100" rx="16" fill="#2f1d06" stroke="#f7971e" stroke-width="2" class="glowcard" style="animation-delay:2.4000000000000004s"/>
+<rect x="46" y="438" width="8" height="100" rx="4" fill="#f7971e"/>
+<circle cx="84" cy="468" r="16" fill="#f7971e"/><text x="84" y="473" text-anchor="middle" class="num">04</text>
+<text x="108" y="474" class="ln" fill="#f7971e">☸️ Orchestration</text>
+<text x="70" y="508" class="ts" font-size="11.5">run · scale · mesh</text>
+<rect x="262.0" y="452" width="113.7" height="72" rx="12" fill="#0a0f1e" fill-opacity=".55" stroke="#f7971e" stroke-opacity=".7"/>
+<text x="318.8" y="478" text-anchor="middle" font-size="18">☸️</text>
+<text x="318.8" y="498" text-anchor="middle" class="t">Kubernetes</text>
+<text x="318.8" y="513" text-anchor="middle" class="ts">EKS</text>
+<rect x="383.7" y="452" width="113.7" height="72" rx="12" fill="#0a0f1e" fill-opacity=".55" stroke="#f7971e" stroke-opacity=".7"/>
+<text x="440.5" y="478" text-anchor="middle" font-size="18">🐯</text>
+<text x="440.5" y="498" text-anchor="middle" class="t">Calico</text>
+<text x="440.5" y="513" text-anchor="middle" class="ts">network policy</text>
+<rect x="505.3" y="452" width="113.7" height="72" rx="12" fill="#0a0f1e" fill-opacity=".55" stroke="#f7971e" stroke-opacity=".7"/>
+<text x="562.2" y="478" text-anchor="middle" font-size="18">🕸️</text>
+<text x="562.2" y="498" text-anchor="middle" class="t">Istio</text>
+<text x="562.2" y="513" text-anchor="middle" class="ts">mTLS mesh</text>
+<rect x="627.0" y="452" width="113.7" height="72" rx="12" fill="#0a0f1e" fill-opacity=".55" stroke="#f7971e" stroke-opacity=".7"/>
+<text x="683.8" y="478" text-anchor="middle" font-size="18">🎯</text>
+<text x="683.8" y="498" text-anchor="middle" class="t">Argo Rollouts</text>
+<text x="683.8" y="513" text-anchor="middle" class="ts">canary</text>
+<rect x="748.7" y="452" width="113.7" height="72" rx="12" fill="#0a0f1e" fill-opacity=".55" stroke="#f7971e" stroke-opacity=".7"/>
+<text x="805.5" y="478" text-anchor="middle" font-size="18">⚡</text>
+<text x="805.5" y="498" text-anchor="middle" class="t">KEDA</text>
+<text x="805.5" y="513" text-anchor="middle" class="ts">event scaling</text>
+<rect x="870.3" y="452" width="113.7" height="72" rx="12" fill="#0a0f1e" fill-opacity=".55" stroke="#f7971e" stroke-opacity=".7"/>
+<text x="927.2" y="478" text-anchor="middle" font-size="18">🪂</text>
+<text x="927.2" y="498" text-anchor="middle" class="t">Karpenter</text>
+<text x="927.2" y="513" text-anchor="middle" class="ts">node autoscale</text>
+<path id="c3" class="flow" stroke="#f7971e" d="M996,488.0 H1012"/>
+<rect x="46" y="552" width="950" height="100" rx="16" fill="#23113a" stroke="#c471f5" stroke-width="2" class="glowcard" style="animation-delay:3.2s"/>
+<rect x="46" y="552" width="8" height="100" rx="4" fill="#c471f5"/>
+<circle cx="84" cy="582" r="16" fill="#c471f5"/><text x="84" y="587" text-anchor="middle" class="num">05</text>
+<text x="108" y="588" class="ln" fill="#c471f5">⚙️ Application</text>
+<text x="70" y="622" class="ts" font-size="11.5">business logic</text>
+<rect x="262.0" y="566" width="113.7" height="72" rx="12" fill="#0a0f1e" fill-opacity=".55" stroke="#c471f5" stroke-opacity=".7"/>
+<text x="318.8" y="592" text-anchor="middle" font-size="18">🔀</text>
+<text x="318.8" y="612" text-anchor="middle" class="t">BFF</text>
+<text x="318.8" y="627" text-anchor="middle" class="ts">Node.js</text>
+<rect x="383.7" y="566" width="113.7" height="72" rx="12" fill="#0a0f1e" fill-opacity=".55" stroke="#c471f5" stroke-opacity=".7"/>
+<text x="440.5" y="592" text-anchor="middle" font-size="18">💸</text>
+<text x="440.5" y="612" text-anchor="middle" class="t">Payment</text>
+<text x="440.5" y="627" text-anchor="middle" class="ts">Go</text>
+<rect x="505.3" y="566" width="113.7" height="72" rx="12" fill="#0a0f1e" fill-opacity=".55" stroke="#c471f5" stroke-opacity=".7"/>
+<text x="562.2" y="592" text-anchor="middle" font-size="18">📒</text>
+<text x="562.2" y="612" text-anchor="middle" class="t">Ledger</text>
+<text x="562.2" y="627" text-anchor="middle" class="ts">Java</text>
+<rect x="627.0" y="566" width="113.7" height="72" rx="12" fill="#0a0f1e" fill-opacity=".55" stroke="#c471f5" stroke-opacity=".7"/>
+<text x="683.8" y="592" text-anchor="middle" font-size="18">🕵️</text>
+<text x="683.8" y="612" text-anchor="middle" class="t">Fraud</text>
+<text x="683.8" y="627" text-anchor="middle" class="ts">Python</text>
+<rect x="748.7" y="566" width="113.7" height="72" rx="12" fill="#0a0f1e" fill-opacity=".55" stroke="#c471f5" stroke-opacity=".7"/>
+<text x="805.5" y="592" text-anchor="middle" font-size="18">🔔</text>
+<text x="805.5" y="612" text-anchor="middle" class="t">Notification</text>
+<text x="805.5" y="627" text-anchor="middle" class="ts">Node.js</text>
+<rect x="870.3" y="566" width="113.7" height="72" rx="12" fill="#0a0f1e" fill-opacity=".55" stroke="#c471f5" stroke-opacity=".7"/>
+<text x="927.2" y="592" text-anchor="middle" font-size="18">🧪</text>
+<text x="927.2" y="612" text-anchor="middle" class="t">Kubeflow</text>
+<text x="927.2" y="627" text-anchor="middle" class="ts">ML pipelines</text>
+<path id="c4" class="flow" stroke="#c471f5" d="M996,602.0 H1012"/>
+<rect x="46" y="666" width="950" height="100" rx="16" fill="#2c0f1b" stroke="#ff416c" stroke-width="2" class="glowcard" style="animation-delay:4.0s"/>
+<rect x="46" y="666" width="8" height="100" rx="4" fill="#ff416c"/>
+<circle cx="84" cy="696" r="16" fill="#ff416c"/><text x="84" y="701" text-anchor="middle" class="num">06</text>
+<text x="108" y="702" class="ln" fill="#ff416c">🗄️ Data</text>
+<text x="70" y="736" class="ts" font-size="11.5">store · stream · search</text>
+<rect x="262.0" y="680" width="138.0" height="72" rx="12" fill="#0a0f1e" fill-opacity=".55" stroke="#ff416c" stroke-opacity=".7"/>
+<text x="331.0" y="706" text-anchor="middle" font-size="18">🐬</text>
+<text x="331.0" y="726" text-anchor="middle" class="t">MySQL</text>
+<text x="331.0" y="741" text-anchor="middle" class="ts">relational</text>
+<rect x="408.0" y="680" width="138.0" height="72" rx="12" fill="#0a0f1e" fill-opacity=".55" stroke="#ff416c" stroke-opacity=".7"/>
+<text x="477.0" y="706" text-anchor="middle" font-size="18">⚡</text>
+<text x="477.0" y="726" text-anchor="middle" class="t">Valkey</text>
+<text x="477.0" y="741" text-anchor="middle" class="ts">cache</text>
+<rect x="554.0" y="680" width="138.0" height="72" rx="12" fill="#0a0f1e" fill-opacity=".55" stroke="#ff416c" stroke-opacity=".7"/>
+<text x="623.0" y="706" text-anchor="middle" font-size="18">🍃</text>
+<text x="623.0" y="726" text-anchor="middle" class="t">MongoDB</text>
+<text x="623.0" y="741" text-anchor="middle" class="ts">documents</text>
+<rect x="700.0" y="680" width="138.0" height="72" rx="12" fill="#0a0f1e" fill-opacity=".55" stroke="#ff416c" stroke-opacity=".7"/>
+<text x="769.0" y="706" text-anchor="middle" font-size="18">🔎</text>
+<text x="769.0" y="726" text-anchor="middle" class="t">OpenSearch</text>
+<text x="769.0" y="741" text-anchor="middle" class="ts">search</text>
+<rect x="846.0" y="680" width="138.0" height="72" rx="12" fill="#0a0f1e" fill-opacity=".55" stroke="#ff416c" stroke-opacity=".7"/>
+<text x="915.0" y="706" text-anchor="middle" font-size="18">📨</text>
+<text x="915.0" y="726" text-anchor="middle" class="t">Kafka</text>
+<text x="915.0" y="741" text-anchor="middle" class="ts">EDA</text>
+<path id="c5" class="flow" stroke="#ff416c" d="M996,716.0 H1012"/>
+<rect x="1040" y="96" width="330" height="214" rx="18" fill="#2d1c05" stroke="#ffb84d" stroke-width="2.4" class="glowcard"/>
+<rect x="1040" y="96" width="330" height="44" rx="18" fill="#ffb84d"/><rect x="1040" y="122" width="330" height="18" fill="#ffb84d"/>
+<text x="1205.0" y="125" text-anchor="middle" font-size="16" font-weight="800" fill="#0a0f1e">🔑 Identity &amp; Access</text>
+<rect x="1052.0" y="150.0" width="148.0" height="154.0" rx="12" fill="#0a0f1e" fill-opacity=".55" stroke="#ffb84d" stroke-opacity=".7"/>
+<text x="1126.0" y="221.0" text-anchor="middle" font-size="18">🪪</text>
+<text x="1126.0" y="241.0" text-anchor="middle" class="t">IAM</text>
+<text x="1126.0" y="255.0" text-anchor="middle" class="ts">roles · policies</text>
+<rect x="1210.0" y="150.0" width="148.0" height="154.0" rx="12" fill="#0a0f1e" fill-opacity=".55" stroke="#ffb84d" stroke-opacity=".7"/>
+<text x="1284.0" y="221.0" text-anchor="middle" font-size="18">🔐</text>
+<text x="1284.0" y="241.0" text-anchor="middle" class="t">HashiCorp Vault</text>
+<text x="1284.0" y="255.0" text-anchor="middle" class="ts">secrets</text>
+<rect x="1040" y="324" width="330" height="442" rx="18" fill="#062620" stroke="#00c9a7" stroke-width="2.4" class="glowcard"/>
+<rect x="1040" y="324" width="330" height="44" rx="18" fill="#00c9a7"/><rect x="1040" y="350" width="330" height="18" fill="#00c9a7"/>
+<text x="1205.0" y="353" text-anchor="middle" font-size="16" font-weight="800" fill="#0a0f1e">🔭 Observability</text>
+<rect x="1052.0" y="378.0" width="148.0" height="88.0" rx="12" fill="#0a0f1e" fill-opacity=".55" stroke="#00c9a7" stroke-opacity=".7"/>
+<text x="1126.0" y="416.0" text-anchor="middle" font-size="18">🔥</text>
+<text x="1126.0" y="436.0" text-anchor="middle" class="t">Prometheus</text>
+<text x="1126.0" y="450.0" text-anchor="middle" class="ts">metrics</text>
+<rect x="1210.0" y="378.0" width="148.0" height="88.0" rx="12" fill="#0a0f1e" fill-opacity=".55" stroke="#00c9a7" stroke-opacity=".7"/>
+<text x="1284.0" y="416.0" text-anchor="middle" font-size="18">📈</text>
+<text x="1284.0" y="436.0" text-anchor="middle" class="t">Grafana</text>
+<text x="1284.0" y="450.0" text-anchor="middle" class="ts">dashboards</text>
+<rect x="1052.0" y="476.0" width="148.0" height="88.0" rx="12" fill="#0a0f1e" fill-opacity=".55" stroke="#00c9a7" stroke-opacity=".7"/>
+<text x="1126.0" y="514.0" text-anchor="middle" font-size="18">🪵</text>
+<text x="1126.0" y="534.0" text-anchor="middle" class="t">Loki</text>
+<text x="1126.0" y="548.0" text-anchor="middle" class="ts">logs</text>
+<rect x="1210.0" y="476.0" width="148.0" height="88.0" rx="12" fill="#0a0f1e" fill-opacity=".55" stroke="#00c9a7" stroke-opacity=".7"/>
+<text x="1284.0" y="514.0" text-anchor="middle" font-size="18">🧾</text>
+<text x="1284.0" y="534.0" text-anchor="middle" class="t">Logstash</text>
+<text x="1284.0" y="548.0" text-anchor="middle" class="ts">log pipeline</text>
+<rect x="1052.0" y="574.0" width="148.0" height="88.0" rx="12" fill="#0a0f1e" fill-opacity=".55" stroke="#00c9a7" stroke-opacity=".7"/>
+<text x="1126.0" y="612.0" text-anchor="middle" font-size="18">🦅</text>
+<text x="1126.0" y="632.0" text-anchor="middle" class="t">Falco</text>
+<text x="1126.0" y="646.0" text-anchor="middle" class="ts">runtime security</text>
+<rect x="1210.0" y="574.0" width="148.0" height="88.0" rx="12" fill="#0a0f1e" fill-opacity=".55" stroke="#00c9a7" stroke-opacity=".7"/>
+<text x="1284.0" y="612.0" text-anchor="middle" font-size="18">📉</text>
+<text x="1284.0" y="632.0" text-anchor="middle" class="t">Evidently AI</text>
+<text x="1284.0" y="646.0" text-anchor="middle" class="ts">ML drift</text>
+<rect x="1052.0" y="672.0" width="148.0" height="88.0" rx="12" fill="#0a0f1e" fill-opacity=".55" stroke="#00c9a7" stroke-opacity=".7"/>
+<text x="1126.0" y="710.0" text-anchor="middle" font-size="18">📊</text>
+<text x="1126.0" y="730.0" text-anchor="middle" class="t">WhyLogs</text>
+<text x="1126.0" y="744.0" text-anchor="middle" class="ts">data profiling</text>
+<rect x="1210.0" y="672.0" width="148.0" height="88.0" rx="12" fill="#0a0f1e" fill-opacity=".55" stroke="#00c9a7" stroke-opacity=".7"/>
+<text x="1284.0" y="710.0" text-anchor="middle" font-size="18">☁️</text>
+<text x="1284.0" y="730.0" text-anchor="middle" class="t">CloudWatch</text>
+<text x="1284.0" y="744.0" text-anchor="middle" class="ts">AWS telemetry</text>
+<path id="toIam" class="flow" stroke="#ffb84d" d="M1012,203 H1040"/>
+<path id="toObs" class="flow" stroke="#00c9a7" d="M1012,474 H1040"/>
+<g filter="url(#glow)">
+<circle r="8" fill="#ffffff"><animateMotion dur="6.6s" repeatCount="indefinite" begin="0s"><mpath xlink:href="#rail"/></animateMotion></circle>
+<circle r="8" fill="#ffffff"><animateMotion dur="6.6s" repeatCount="indefinite" begin="2.2s"><mpath xlink:href="#rail"/></animateMotion></circle>
+<circle r="8" fill="#ffffff"><animateMotion dur="6.6s" repeatCount="indefinite" begin="4.4s"><mpath xlink:href="#rail"/></animateMotion></circle>
+<circle r="5" fill="#ffd200"><animateMotion dur="1.2s" repeatCount="indefinite" begin="0.0s"><mpath xlink:href="#c0"/></animateMotion></circle>
+<circle r="5" fill="#4facfe"><animateMotion dur="1.2s" repeatCount="indefinite" begin="0.35s"><mpath xlink:href="#c1"/></animateMotion></circle>
+<circle r="5" fill="#43e97b"><animateMotion dur="1.2s" repeatCount="indefinite" begin="0.7s"><mpath xlink:href="#c2"/></animateMotion></circle>
+<circle r="5" fill="#f7971e"><animateMotion dur="1.2s" repeatCount="indefinite" begin="1.0499999999999998s"><mpath xlink:href="#c3"/></animateMotion></circle>
+<circle r="5" fill="#c471f5"><animateMotion dur="1.2s" repeatCount="indefinite" begin="1.4s"><mpath xlink:href="#c4"/></animateMotion></circle>
+<circle r="5" fill="#ff416c"><animateMotion dur="1.2s" repeatCount="indefinite" begin="1.75s"><mpath xlink:href="#c5"/></animateMotion></circle>
+<circle r="5" fill="#7fdbff"><animateMotion dur="4.2s" repeatCount="indefinite" begin="0s"><mpath xlink:href="#bus"/></animateMotion></circle>
+<circle r="5" fill="#7fdbff"><animateMotion dur="4.2s" repeatCount="indefinite" begin="1.4s"><mpath xlink:href="#bus"/></animateMotion></circle>
+<circle r="5" fill="#7fdbff"><animateMotion dur="4.2s" repeatCount="indefinite" begin="2.8s"><mpath xlink:href="#bus"/></animateMotion></circle>
+<circle r="6" fill="#ffb84d"><animateMotion dur="1.4s" repeatCount="indefinite"><mpath xlink:href="#toIam"/></animateMotion></circle>
+<circle r="6" fill="#00c9a7"><animateMotion dur="1.4s" repeatCount="indefinite" begin=".7s"><mpath xlink:href="#toObs"/></animateMotion></circle>
+</g>
+<text x="46" y="878" class="ts" font-size="12">⚪ white comet = a request descending Edge → Network → Orchestration → App → Data · coloured dots = telemetry and access checks flowing to the cross-cutting pillars</text>
+</svg>

@@ -1,30 +1,32 @@
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=venom&color=0:0f2027,40:203a43,70:2c5364,100:00c9a7&height=280&section=header&text=FinTech%20Enterprise%20Project&fontSize=56&fontColor=ffffff&animation=twinkling&fontAlignY=40&desc=14%20Microservices%20%7C%20EKS%20%7C%20DevSecOps%20%7C%20MLOps%20%7C%20GenAI&descAlignY=62&descSize=20" alt="banner"/>
+<img src="https://capsule-render.vercel.app/api?type=venom&color=0:0f2027,40:203a43,70:2c5364,100:00c9a7&height=280&section=header&text=FinTech%20Enterprise%20Project&fontSize=56&fontColor=ffffff&animation=twinkling&fontAlignY=40&desc=4%20VPCs%20%7C%20Transit%20Gateway%20%7C%20EKS%20%7C%20GitOps%20%7C%20MLOps&descAlignY=62&descSize=20" alt="banner"/>
 
-[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=22&pause=1000&color=00C9A7&center=true&vCenter=true&width=900&lines=A+replica+of+real-world+FinTech+platforms;14+microservices+on+Amazon+EKS;Karpenter+%2B+GitOps+%2B+DevSecOps+by+design;MLOps+%26+GenAI+for+prediction+and+assistance;Built+for+Platform+%2F+Senior+DevOps+Engineers)](https://git.io/typing-svg)
+[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=22&pause=1000&color=00C9A7&center=true&vCenter=true&width=900&lines=A+replica+of+real-world+FinTech+platforms;5+microservices+on+Amazon+EKS;Edge+%C2%B7+App+%C2%B7+Data+%C2%B7+Ops+VPCs+joined+by+a+Transit+Gateway;Argo+CD+GitOps+%2B+Kubeflow+%2F+MLflow+%2F+KServe+MLOps;Built+for+Platform+%2F+Senior+DevOps+Engineers)](https://git.io/typing-svg)
 
 ![AWS](https://img.shields.io/badge/AWS-232F3E?style=for-the-badge&logo=amazonaws&logoColor=FF9900)
-![EKS](https://img.shields.io/badge/EKS-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white)
-![Karpenter](https://img.shields.io/badge/Karpenter-FF9900?style=for-the-badge&logo=amazonec2&logoColor=white)
+![Kubernetes](https://img.shields.io/badge/Amazon%20EKS-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white)
 ![Terraform](https://img.shields.io/badge/Terraform-7B42BC?style=for-the-badge&logo=terraform&logoColor=white)
-![ArgoCD](https://img.shields.io/badge/ArgoCD-EF7B4D?style=for-the-badge&logo=argo&logoColor=white)
+![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-2088FF?style=for-the-badge&logo=githubactions&logoColor=white)
+![Argo CD](https://img.shields.io/badge/Argo%20CD-EF7B4D?style=for-the-badge&logo=argo&logoColor=white)
 ![Istio](https://img.shields.io/badge/Istio-466BB0?style=for-the-badge&logo=istio&logoColor=white)
 ![Vault](https://img.shields.io/badge/Vault-FFEC6E?style=for-the-badge&logo=vault&logoColor=black)
-![Trivy](https://img.shields.io/badge/Trivy-1904DA?style=for-the-badge&logo=aqua&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
+![Go](https://img.shields.io/badge/Go-00ADD8?style=for-the-badge&logo=go&logoColor=white)
+![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
 ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white)
 ![Kafka](https://img.shields.io/badge/Kafka-231F20?style=for-the-badge&logo=apachekafka&logoColor=white)
 ![MLflow](https://img.shields.io/badge/MLflow-0194E2?style=for-the-badge&logo=mlflow&logoColor=white)
 ![Prometheus](https://img.shields.io/badge/Prometheus-E6522C?style=for-the-badge&logo=prometheus&logoColor=white)
 ![Grafana](https://img.shields.io/badge/Grafana-F46800?style=for-the-badge&logo=grafana&logoColor=white)
 
-![Microservices](https://img.shields.io/badge/Microservices-14-00c9a7?style=flat-square)
-![Layers](https://img.shields.io/badge/Layers-Frontend%20%7C%20BFF%20%7C%20App%20%7C%20DB%20%7C%20ML-blueviolet?style=flat-square)
-![Security](https://img.shields.io/badge/Security-DevSecOps%20First-red?style=flat-square)
+![Microservices](https://img.shields.io/badge/Microservices-5-00c9a7?style=flat-square)
+![VPCs](https://img.shields.io/badge/VPCs-Edge%20%7C%20App%20%7C%20Data%20%7C%20Ops-ff9900?style=flat-square)
+![Layers](https://img.shields.io/badge/Layers-CI%2FCD%20%7C%20Edge%20%7C%20Network%20%7C%20Orchestration%20%7C%20App%20%7C%20Data-blueviolet?style=flat-square)
+![Region](https://img.shields.io/badge/Region-us--east--1-232F3E?style=flat-square)
 ![Status](https://img.shields.io/badge/Status-Actively%20Evolving-brightgreen?style=flat-square)
-![PRs](https://img.shields.io/badge/PRs-Welcome-ff69b4?style=flat-square)
 
 </div>
 
@@ -33,18 +35,15 @@
 ## 📑 Table of Contents
 
 - [About](#-about-this-project)
-- [Architecture](#%EF%B8%8F-high-level-architecture)
-- [The 14 Microservices](#-the-14-microservices)
-- [AWS Infrastructure](#%EF%B8%8F-aws-infrastructure-layout)
-- [Request Flow](#-request-flow-making-a-payment)
-- [Platform Layers](#-platform-layers)
-- [DevSecOps](#-devsecops-pipeline)
-- [GitOps & Delivery](#-gitops--delivery)
-- [Security Layers](#%EF%B8%8F-defence-in-depth)
-- [MLOps](#-mlops-lifecycle)
-- [AI / GenAI](#-ai--genai-capabilities)
-- [Observability](#-observability)
+- [Project Overview & Architecture](#%EF%B8%8F-project-overview--architecture)
 - [Tech Stack](#-tech-stack)
+- [Live Traffic Flow](#-live-traffic-flow)
+- [Microservices](#-microservices)
+- [Request Flow](#-request-flow-making-a-payment)
+- [Security by Layer](#%EF%B8%8F-security-by-layer)
+- [CI/CD & GitOps](#-cicd--gitops)
+- [MLOps](#-mlops-lifecycle)
+- [Observability](#-observability)
 - [Infrastructure Build: Networking & IAM](#%EF%B8%8F-infrastructure-build-networking--iam)
 - [Roadmap](#%EF%B8%8F-roadmap)
 
@@ -54,208 +53,465 @@
 
 > **This repository is a replica of the FinTech platform from my past projects and professional work experience.**
 
-It is an **EKS-based, multi-tier FinTech platform** made up of **14 microservices** across five layers: **Frontend → BFF → Application → Database**, plus an **MLOps / AI** layer for model training and data prediction.
+It is an **AWS FinTech platform on Amazon EKS** built from **6 infrastructure layers** (CI/CD & DevTools → Edge → Network → Orchestration → Application → Data) plus two cross-cutting pillars (**Identity & Access** and **Observability**). It runs across **4 VPCs** (edge, app, data, ops) joined by a **Transit Gateway**.
 
-The project **will be upgraded over time**. Each upgrade showcases a modern tool, skill or concept, with **DevSecOps security** as the main concern throughout. It mirrors the toolset and skillset expected of a **Platform Engineer / Senior DevOps Engineer in a FinTech organisation**.
+- 🌐 **Edge:** Route 53, CloudFront, WAF, Shield Advanced and API Gateway
+- ⚙️ **Microservices:** **5** services on EKS: BFF (Node.js), Payment (Go), Ledger (Java), Fraud (Python) and Notification (Node.js)
+- 🗄️ **Data:** MySQL, Valkey, MongoDB, OpenSearch and Kafka
+- 🛠️ **Ops:** Prometheus, Grafana, Argo CD, Vault, Kubeflow and MLflow
+- 🤖 **MLOps:** Airflow, Kubeflow, MLflow and KServe for fraud scoring, monitored by Evidently AI and WhyLogs
 
-> ⚠️ **Note:** this README describes the target architecture. The [Roadmap](#%EF%B8%8F-roadmap) shows what is done (✅), in progress (🚧) and planned (🔜).
+The project grows in stages. Each stage adds a layer of the architecture below, with security built in at every layer.
 
 <div align="center">
 
-| 🧩 Microservices | 🏛️ Layers | 🔐 Security Controls | 🤖 ML / AI Services | ☁️ AWS Services |
+| ⚙️ Microservices | 🧱 Layers | 🏢 VPCs | 🧰 Tools | ☁️ Region |
 |:---:|:---:|:---:|:---:|:---:|
-| **14** | **5** | **20+** | **4** | **25+** |
+| **5** | **6 + 2 pillars** | **4** | **48** | **us-east-1** |
 
 </div>
 
 ---
 
-## 🏗️ High-Level Architecture
+## 🗺️ Project Overview & Architecture
+
+<div align="center">
+
+[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=20&pause=900&color=00C9A7&center=true&vCenter=true&width=900&lines=6+infrastructure+layers+%C2%B7+2+cross-cutting+pillars;4+VPCs+%C2%B7+1+Transit+Gateway+%C2%B7+Amazon+EKS;48+tools+%C2%B7+one+consistent+architecture)](https://git.io/typing-svg)
+
+</div>
+
+### 🧱 FinTech Infrastructure Layers (AWS)
+
+<div align="center">
+
+<img src="docs/diagrams/infrastructure-layers.svg" width="100%" alt="Animated stack of six infrastructure layers (CI/CD, Edge, Network, Orchestration, Application, Data) with Identity and Access and Observability as cross-cutting pillars"/>
+
+</div>
+
+### 🏛️ Regional Architecture: 4 VPCs on AWS
+
+<div align="center">
+
+<img src="docs/diagrams/architecture-overview.svg" width="100%" alt="Animated regional architecture: edge, app, data and ops VPCs connected by a Transit Gateway, with EKS microservices, data stores, ops tooling, VPC endpoints to ECR, S3 and KMS, and NAT egress"/>
+
+<sub>🎬 Animated: request, response, Transit Gateway, data, metrics, GitOps, endpoint and egress traffic.</sub>
+
+</div>
+
+### 🧰 Tech Stack
+
+**48 tools**, every one of them shown in the two diagrams above, grouped exactly like the layers.
+
+#### 🚀 01 · CI/CD & DevTools
+
+<sub>Build, test and ship apps, infrastructure and ML models</sub>
+
+![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)
+![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-2088FF?style=for-the-badge&logo=githubactions&logoColor=white)
+![Apache Airflow](https://img.shields.io/badge/Apache%20Airflow-017CEE?style=for-the-badge&logo=apacheairflow&logoColor=white)
+![Argo CD](https://img.shields.io/badge/Argo%20CD-EF7B4D?style=for-the-badge&logo=argo&logoColor=white)
+![Terraform](https://img.shields.io/badge/Terraform-7B42BC?style=for-the-badge&logo=terraform&logoColor=white)
+![KServe](https://img.shields.io/badge/KServe-1F6FEB?style=for-the-badge)
+![MLflow](https://img.shields.io/badge/MLflow-0194E2?style=for-the-badge&logo=mlflow&logoColor=white)
+
+#### 🌐 02 · Edge
+
+<sub>First contact for every request</sub>
+
+![Route 53](https://img.shields.io/badge/Route%2053-8C4FFF?style=for-the-badge&logo=amazonroute53&logoColor=white)
+![CloudFront](https://img.shields.io/badge/CloudFront-8C4FFF?style=for-the-badge)
+![AWS WAF](https://img.shields.io/badge/AWS%20WAF-DD344C?style=for-the-badge)
+![Shield Advanced](https://img.shields.io/badge/Shield%20Advanced-DD344C?style=for-the-badge)
+![API Gateway](https://img.shields.io/badge/API%20Gateway-FF4F8B?style=for-the-badge&logo=amazonapigateway&logoColor=white)
+
+#### 🕸️ 03 · Network
+
+<sub>Isolate, connect and load-balance traffic</sub>
+
+![Amazon VPC](https://img.shields.io/badge/Amazon%20VPC-8C4FFF?style=for-the-badge)
+![Public Subnets](https://img.shields.io/badge/Public%20Subnets-43E97B?style=for-the-badge)
+![Private Subnets](https://img.shields.io/badge/Private%20Subnets-326CE5?style=for-the-badge)
+![Transit Gateway](https://img.shields.io/badge/Transit%20Gateway-FF7A00?style=for-the-badge)
+![NAT Gateway](https://img.shields.io/badge/NAT%20Gateway-FF4081?style=for-the-badge)
+![ALB](https://img.shields.io/badge/ALB-8C4FFF?style=for-the-badge)
+![VPC Endpoints](https://img.shields.io/badge/VPC%20Endpoints-C471F5?style=for-the-badge)
+
+#### ☸️ 04 · Orchestration
+
+<sub>Run, scale, secure and roll out workloads</sub>
+
+![Amazon EKS](https://img.shields.io/badge/Amazon%20EKS-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white)
+![Calico](https://img.shields.io/badge/Calico-FB8C00?style=for-the-badge)
+![Istio](https://img.shields.io/badge/Istio-466BB0?style=for-the-badge&logo=istio&logoColor=white)
+![Argo Rollouts](https://img.shields.io/badge/Argo%20Rollouts-EF7B4D?style=for-the-badge&logo=argo&logoColor=white)
+![KEDA](https://img.shields.io/badge/KEDA-2A5CAA?style=for-the-badge)
+![Karpenter](https://img.shields.io/badge/Karpenter-FF9900?style=for-the-badge)
+
+#### ⚙️ 05 · Application
+
+<sub>Business logic and ML pipelines</sub>
+
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
+![Go](https://img.shields.io/badge/Go-00ADD8?style=for-the-badge&logo=go&logoColor=white)
+![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![Kubeflow](https://img.shields.io/badge/Kubeflow-326CE5?style=for-the-badge&logo=kubeflow&logoColor=white)
+
+#### 🗄️ 06 · Data
+
+<sub>Store, cache, search and stream</sub>
+
+![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
+![Valkey](https://img.shields.io/badge/Valkey-6983FF?style=for-the-badge)
+![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white)
+![OpenSearch](https://img.shields.io/badge/OpenSearch-005EB8?style=for-the-badge&logo=opensearch&logoColor=white)
+![Apache Kafka](https://img.shields.io/badge/Apache%20Kafka-231F20?style=for-the-badge&logo=apachekafka&logoColor=white)
+
+#### 🔑 · Identity & Access
+
+<sub>Least privilege and secrets across every layer</sub>
+
+![AWS IAM](https://img.shields.io/badge/AWS%20IAM-DD344C?style=for-the-badge)
+![HashiCorp Vault](https://img.shields.io/badge/HashiCorp%20Vault-FFEC6E?style=for-the-badge&logo=vault&logoColor=white)
+![AWS KMS](https://img.shields.io/badge/AWS%20KMS-DD344C?style=for-the-badge)
+
+#### 🔭 · Observability
+
+<sub>Metrics, logs, runtime security and ML drift across every layer</sub>
+
+![Prometheus](https://img.shields.io/badge/Prometheus-E6522C?style=for-the-badge&logo=prometheus&logoColor=white)
+![Grafana](https://img.shields.io/badge/Grafana-F46800?style=for-the-badge&logo=grafana&logoColor=white)
+![Loki](https://img.shields.io/badge/Loki-F46800?style=for-the-badge&logo=grafana&logoColor=white)
+![Logstash](https://img.shields.io/badge/Logstash-005571?style=for-the-badge&logo=logstash&logoColor=white)
+![Falco](https://img.shields.io/badge/Falco-00AEC7?style=for-the-badge)
+![Evidently AI](https://img.shields.io/badge/Evidently%20AI-ED0400?style=for-the-badge)
+![WhyLogs](https://img.shields.io/badge/WhyLogs-6B48FF?style=for-the-badge)
+![CloudWatch](https://img.shields.io/badge/CloudWatch-FF4F8B?style=for-the-badge&logo=amazoncloudwatch&logoColor=white)
+
+#### ☁️ · Shared AWS Services
+
+<sub>Reached privately through VPC endpoints</sub>
+
+![Amazon ECR](https://img.shields.io/badge/Amazon%20ECR-FF9900?style=for-the-badge)
+![Amazon S3](https://img.shields.io/badge/Amazon%20S3-569A31?style=for-the-badge&logo=amazons3&logoColor=white)
+
+<details>
+<summary><b>📋 Every tool and what it does (table)</b></summary>
+
+| Layer | Tool | Role in this project |
+|---|---|---|
+| CI/CD & DevTools | **Git** | source control |
+| CI/CD & DevTools | **GitHub Actions** | CI pipelines |
+| CI/CD & DevTools | **Apache Airflow** | ML & data workflows |
+| CI/CD & DevTools | **Argo CD** | GitOps delivery |
+| CI/CD & DevTools | **Terraform** | infrastructure as code |
+| CI/CD & DevTools | **KServe** | model serving |
+| CI/CD & DevTools | **MLflow** | experiments & registry |
+| Edge | **Route 53** | DNS |
+| Edge | **CloudFront** | CDN · TLS |
+| Edge | **AWS WAF** | L7 firewall |
+| Edge | **Shield Advanced** | DDoS protection |
+| Edge | **API Gateway** | REST API front door |
+| Network | **Amazon VPC** | 4 VPCs |
+| Network | **Public Subnets** | internet-facing |
+| Network | **Private Subnets** | workloads & data |
+| Network | **Transit Gateway** | VPC hub |
+| Network | **NAT Gateway** | outbound only |
+| Network | **ALB** | L7 load balancer |
+| Network | **VPC Endpoints** | private AWS access |
+| Orchestration | **Amazon EKS** | Kubernetes |
+| Orchestration | **Calico** | network policy |
+| Orchestration | **Istio** | mTLS service mesh |
+| Orchestration | **Argo Rollouts** | canary · blue-green |
+| Orchestration | **KEDA** | event-driven pod scaling |
+| Orchestration | **Karpenter** | node autoscaling |
+| Application | **Node.js** | BFF · Notification |
+| Application | **Go** | Payment |
+| Application | **Java** | Ledger |
+| Application | **Python** | Fraud |
+| Application | **Kubeflow** | ML pipelines |
+| Data | **MySQL** | transactions · ledger |
+| Data | **Valkey** | cache · sessions |
+| Data | **MongoDB** | documents |
+| Data | **OpenSearch** | search · logs |
+| Data | **Apache Kafka** | event-driven (EDA) |
+| Identity & Access | **AWS IAM** | roles · policies |
+| Identity & Access | **HashiCorp Vault** | secrets |
+| Identity & Access | **AWS KMS** | encryption keys |
+| Observability | **Prometheus** | metrics |
+| Observability | **Grafana** | dashboards · alerts |
+| Observability | **Loki** | logs |
+| Observability | **Logstash** | log pipeline |
+| Observability | **Falco** | runtime security |
+| Observability | **Evidently AI** | model drift |
+| Observability | **WhyLogs** | data profiling |
+| Observability | **CloudWatch** | AWS telemetry |
+| Shared AWS Services | **Amazon ECR** | container images |
+| Shared AWS Services | **Amazon S3** | artifacts · data · state |
+
+**Total: 48 tools**
+
+</details>
+
+### 📋 Layers at a glance
+
+| # | Layer | Tools | Purpose |
+|:-:|---|---|---|
+| 01 | 🚀 **CI/CD & DevTools** | Git · GitHub Actions · Airflow · Argo CD · Terraform (IaC) · KServe · MLflow | Build, test, ship apps, infrastructure and ML models |
+| 02 | 🌐 **Edge** | Route 53 (DNS) · CloudFront (CDN) · AWS WAF · AWS Shield Advanced · API Gateway (REST) | First contact: DNS, caching, L7 filtering, DDoS protection, API front door |
+| 03 | 🕸️ **Network** | Public subnets · Private subnets · AWS Transit Gateway · NAT Gateway · ALB · VPC endpoints | Isolate, connect and load-balance traffic |
+| 04 | ☸️ **Orchestration** | Kubernetes (EKS) · Calico · Istio · Argo Rollouts · KEDA · Karpenter | Run, scale, secure and progressively deliver workloads |
+| 05 | ⚙️ **Application** | BFF (Node.js) · Payment (Go) · Ledger (Java) · Fraud (Python) · Notification (Node.js) · Kubeflow ML Pipelines | Business logic and ML pipelines |
+| 06 | 🗄️ **Data** | MySQL · Valkey · MongoDB · OpenSearch · Kafka (event-driven architecture) | Store, cache, search and stream data |
+| 🔑 | **Identity & Access** | AWS IAM (roles, policies) · HashiCorp Vault | Least privilege and secrets, across every layer |
+| 🔭 | **Observability** | Prometheus · Grafana · Loki · Logstash · Falco · Evidently AI · WhyLogs · CloudWatch | Metrics, logs, runtime security and ML/data drift, across every layer |
 
 ```mermaid
-flowchart TB
-    User([👤 Customer<br/>Web & Mobile]):::user --> R53[🌐 Route 53]:::edge
-    R53 --> CF[☁️ CloudFront CDN]:::edge
-    CF --> WAF[🛡️ AWS WAF + Shield]:::sec
-    WAF --> ALB[⚖️ ALB Ingress Controller]:::edge
+mindmap
+  root((🏦 FinTech Platform))
+    🚀 CI/CD & DevTools
+      Git
+      GitHub Actions
+      Airflow
+      Argo CD
+      Terraform IaC
+      KServe
+      MLflow
+    🌐 Edge
+      Route 53
+      CloudFront
+      WAF
+      Shield Advanced
+      API Gateway
+    🕸️ Network
+      Public Subnets
+      Private Subnets
+      Transit Gateway
+      NAT Gateway
+      ALB
+    ☸️ Orchestration
+      Kubernetes EKS
+      Calico
+      Istio
+      Argo Rollouts
+      KEDA
+      Karpenter
+    ⚙️ Application
+      BFF · Node.js
+      Payment · Go
+      Ledger · Java
+      Fraud · Python
+      Notification · Node.js
+      Kubeflow Pipelines
+    🗄️ Data
+      MySQL
+      Valkey
+      MongoDB
+      OpenSearch
+      Kafka EDA
+    🔑 Identity and Access
+      IAM Roles and Policies
+      HashiCorp Vault
+    🔭 Observability
+      Prometheus
+      Grafana
+      Loki
+      Logstash
+      Falco
+      Evidently AI
+      WhyLogs
+      CloudWatch
+```
 
-    subgraph EKS["☸️ AMAZON EKS CLUSTER · Karpenter autoscaled · Istio mTLS mesh"]
-        direction TB
+### 🗺️ VPC breakdown & service flow
 
-        subgraph FE["🎨 FRONTEND LAYER"]
-            S1[1 · web-frontend<br/>React / Next.js]:::fe
-        end
+| VPC | What runs there | How it connects |
+|---|---|---|
+| 🚪 **VPC A · Edge** `10.10.0.0/16` | Route 53 · CloudFront · WAF + Shield Advanced · API Gateway | Internet-facing. API Gateway forwards to the app VPC's ALB (VPC Link via Transit Gateway) |
+| ⚙️ **VPC B · App** `10.20.0.0/16` | ALB → Amazon EKS: BFF, Payment, Ledger, Fraud, Notification services · KServe · Airflow · Kubeflow · Istio · Calico · KEDA · Karpenter | Transit Gateway to data and ops · VPC endpoints to ECR and S3 · NAT Gateway for outbound calls |
+| 🗄️ **VPC C · Data** `10.30.0.0/16` | MySQL · Valkey · Kafka · MongoDB · OpenSearch | Private only. Reached through the Transit Gateway · VPC endpoints to KMS and S3 |
+| 🛠️ **VPC D · Ops** `10.40.0.0/16` | Prometheus · Grafana · Argo CD · HashiCorp Vault · Kubeflow · MLflow | Scrapes metrics and syncs GitOps through the Transit Gateway · VPC endpoint to S3 · NAT for alerting |
+| 🔀 **Transit Gateway** | Hub for all 4 VPCs | `10.0.0.0/8 → TGW` in every route table |
+| ☁️ **Shared AWS services** | Amazon ECR · Amazon S3 · AWS KMS | Reached privately through VPC endpoints, never over the internet |
 
-        subgraph BFFL["🔀 BFF LAYER"]
-            S2[2 · web-bff<br/>GraphQL]:::bff
-            S3[3 · mobile-bff<br/>REST]:::bff
-        end
-
-        subgraph APPL["⚙️ APPLICATION LAYER"]
-            S4[4 · auth-service<br/>OAuth2 / JWT]:::app
-            S5[5 · customer-kyc-service]:::app
-            S6[6 · accounts-service]:::app
-            S7[7 · payments-service]:::app
-            S8[8 · transactions-service]:::app
-            S9[9 · ledger-service]:::app
-            S10[10 · notification-service]:::app
-        end
-
-        subgraph MLL["🤖 MLOPS & AI LAYER"]
-            S11[11 · fraud-detection-api]:::ml
-            S12[12 · credit-scoring-api]:::ml
-            S13[13 · model-training-pipeline]:::ml
-            S14[14 · genai-assistant<br/>RAG]:::ml
-        end
+```mermaid
+flowchart LR
+    U([👤 Customer]):::u --> R53[🧭 Route 53]:::e --> CF[☁️ CloudFront]:::e --> WAF[🧱 WAF + Shield]:::s --> API[🔌 API Gateway]:::e
+    API ==>|VPC Link · TGW| ALB[⚖️ ALB]:::n
+    subgraph EKS["☸️ Amazon EKS · Istio · Calico · KEDA · Karpenter"]
+        BFF[🔀 BFF · Node.js]:::a --> PAY[💸 Payment · Go]:::a
+        BFF --> LED[📒 Ledger · Java]:::a
+        PAY --> FR[🕵️ Fraud · Python]:::a
+        PAY --> NOT[🔔 Notification · Node.js]:::a
+        FR --> KS[🚀 KServe]:::m
     end
+    ALB --> BFF
+    PAY & LED ==>|TGW| MY[(🐬 MySQL)]:::d
+    BFF ==>|TGW| VK[(⚡ Valkey)]:::d
+    PAY ==>|TGW| KF{{📨 Kafka}}:::d
+    KF --> NOT
+    NOT ==>|TGW| MG[(🍃 MongoDB)]:::d
+    LED ==>|TGW| OS[(🔎 OpenSearch)]:::d
+    EKS -.->|metrics| PR[🔥 Prometheus]:::o --> GR[📈 Grafana]:::o
+    AR[🐙 Argo CD]:::o -.->|GitOps sync| EKS
+    VT[🔐 Vault]:::o -.->|secrets| EKS
+    KF2[🧪 Kubeflow + 🌬️ Airflow]:::m -->|models| ML[📒 MLflow]:::o --> KS
 
-    subgraph DBL["🗄️ DATABASE LAYER"]
-        PG[(Aurora PostgreSQL)]:::db
-        RD[(ElastiCache Redis)]:::db
-        KF{{Kafka / MSK}}:::db
-        S3[(S3 Data Lake)]:::db
-        VEC[(pgvector)]:::db
-    end
-
-    ALB --> S1
-    S1 --> S2 & S3
-    S2 & S3 --> S4 & S6 & S7 & S8 & S14
-    S4 --> S5
-    S7 --> S11
-    S6 --> S12
-    S7 --> S9
-    S8 --> S9
-    S8 --> KF --> S10
-    S4 --> RD
-    S5 & S6 & S7 & S8 & S9 --> PG
-    S13 --> S3
-    S11 & S12 --> S3
-    S14 --> VEC
-
-    classDef user fill:#ff9a9e,stroke:#fff,color:#000,stroke-width:2px
-    classDef edge fill:#fbc2eb,stroke:#a18cd1,color:#000
-    classDef sec fill:#ff416c,stroke:#fff,color:#fff
-    classDef fe fill:#4facfe,stroke:#fff,color:#000
-    classDef bff fill:#c471f5,stroke:#fff,color:#fff
-    classDef app fill:#43e97b,stroke:#fff,color:#000
-    classDef ml fill:#f7971e,stroke:#fff,color:#000
-    classDef db fill:#434343,stroke:#ffd200,color:#fff,stroke-width:2px
-
-    style EKS fill:#0f2027,stroke:#00c9a7,color:#fff,stroke-width:3px
-    style FE fill:#12263f,stroke:#4facfe,color:#fff
-    style BFFL fill:#2a1245,stroke:#c471f5,color:#fff
-    style APPL fill:#0b3d2e,stroke:#43e97b,color:#fff
-    style MLL fill:#3d2400,stroke:#f7971e,color:#fff
-    style DBL fill:#1a1a1a,stroke:#ffd200,color:#fff
+    classDef u fill:#ff9a9e,stroke:#fff,color:#000,stroke-width:2px
+    classDef e fill:#4facfe,stroke:#fff,color:#000
+    classDef s fill:#ff416c,stroke:#fff,color:#fff
+    classDef n fill:#43e97b,stroke:#fff,color:#000
+    classDef a fill:#0f3a2c,stroke:#43e97b,color:#fff
+    classDef m fill:#f7971e,stroke:#fff,color:#000
+    classDef d fill:#3a1424,stroke:#ff416c,color:#fff,stroke-width:2px
+    classDef o fill:#c471f5,stroke:#fff,color:#fff
+    style EKS fill:#0b2235,stroke:#326ce5,color:#fff,stroke-width:2px
 ```
 
 ---
 
-## 🧩 The 14 Microservices
+## 🚦 Live Traffic Flow
 
 <div align="center">
 
-| # | Service | Layer | Responsibility | Stack | Data Store |
-|:-:|---|:-:|---|---|---|
-| 1 | 🎨 **web-frontend** | Frontend | Customer web UI | React, Next.js | CDN / S3 |
-| 2 | 🔀 **web-bff** | BFF | Aggregates APIs for web | Node.js, GraphQL | Redis |
-| 3 | 📱 **mobile-bff** | BFF | Aggregates APIs for mobile | Node.js, REST | Redis |
-| 4 | 🔑 **auth-service** | App | Login, OAuth2, JWT, MFA | Java / Spring Boot | Redis, Aurora |
-| 5 | 🪪 **customer-kyc-service** | App | Onboarding and KYC checks | Python / FastAPI | Aurora |
-| 6 | 🏦 **accounts-service** | App | Accounts and balances | Java / Spring Boot | Aurora |
-| 7 | 💸 **payments-service** | App | Payment initiation and orchestration | Go | Aurora |
-| 8 | 🔁 **transactions-service** | App | Transaction history and events | Go | Aurora, Kafka |
-| 9 | 📒 **ledger-service** | App | Double-entry ledger | Java / Spring Boot | Aurora |
-| 10 | 🔔 **notification-service** | App | Email, SMS and push | Python | Kafka |
-| 11 | 🕵️ **fraud-detection-api** | ML | Real-time fraud scoring | Python, KServe | S3 / MLflow |
-| 12 | 📊 **credit-scoring-api** | ML | Credit risk prediction | Python, KServe | S3 / MLflow |
-| 13 | 🏋️ **model-training-pipeline** | ML | Feature engineering, training, evaluation | Airflow, MLflow, Kubeflow | S3, Feast |
-| 14 | 🧠 **genai-assistant** | AI | RAG assistant with guardrails | Python, LangChain, Bedrock | pgvector |
+<img src="docs/diagrams/traffic-flow.svg" width="100%" alt="Animated diagram of traffic flowing from the customer through CloudFront, the edge VPC, the Transit Gateway, the app VPC and the data and ops VPCs"/>
+
+<sub>🎬 Animated: every moving dot is a real traffic type travelling through the network.</sub>
 
 </div>
 
-> Languages and frameworks above are the target design and may change as the services are built.
+### 🛣️ Hop by hop: one payment request through the network
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor C as 👤 Customer
+    participant R53 as 🧭 Route 53
+    participant CF as ☁️ CloudFront + 🧱 WAF
+    participant API as 🔌 API Gateway (edge VPC)
+    participant TGW as 🔀 Transit Gateway
+    participant ALB as ⚖️ ALB (app VPC)
+    participant POD as 💸 payment pod (EKS)
+    participant SM as 🔐 HashiCorp Vault (ops VPC)
+    participant DB as 🐬 MySQL (data VPC)
+    participant PSP as 🌍 Payment network
+
+    C->>R53: api.fintech.example → resolve
+    R53-->>C: CloudFront edge IP
+    C->>CF: HTTPS request (TLS 1.3)
+    CF->>CF: WAF rules · rate limit · Shield Advanced
+    CF->>API: Forward to the REST API
+    API->>TGW: VPC Link to 10.20.x.x → route 10.0.0.0/8 → TGW
+    TGW->>ALB: Deliver into the app VPC
+    ALB->>POD: Route via BFF to the payment service
+    POD->>SM: Fetch DB credentials via TGW (Istio mTLS)
+    SM-->>POD: Secret
+    POD->>TGW: Query 10.30.x.x → route 10.0.0.0/8 → TGW
+    TGW->>DB: Deliver into data VPC (10.30.11.0/24)
+    DB-->>TGW: Rows
+    TGW-->>POD: Rows
+    POD->>PSP: Authorise card via NAT Gateway (outbound only)
+    PSP-->>POD: ✅ Approved
+    POD-->>ALB: 200 OK
+    ALB-->>TGW: Response
+    TGW-->>API: Response
+    API-->>CF: Response
+    CF-->>C: ✅ Payment complete
+```
+
+### 🧭 How a packet picks its path (route table decision)
+
+```mermaid
+flowchart LR
+    P([📦 Packet leaves a pod]):::start --> Q1{Destination inside<br/>my own /16?}:::q
+    Q1 -->|yes| L[🏠 local route<br/>stays in the VPC]:::local
+    Q1 -->|no| Q2{AWS service with<br/>a VPC endpoint?}:::q
+    Q2 -->|S3| G[🟢 Gateway endpoint<br/>prefix-list route]:::gw
+    Q2 -->|ECR · KMS| I[🟣 Interface endpoint<br/>private DNS → ENI]:::ifep
+    Q2 -->|no| Q3{Destination in<br/>10.0.0.0/8?}:::q
+    Q3 -->|yes| T[🔀 Transit Gateway<br/>to another VPC]:::tgw
+    Q3 -->|no| Q4{VPC has a<br/>NAT Gateway?}:::q
+    Q4 -->|yes · app| N[🔁 NAT → IGW<br/>outbound internet]:::nat
+    Q4 -->|no · data| X[⛔ Dropped<br/>no internet path]:::drop
+
+    classDef start fill:#4facfe,stroke:#fff,color:#000,stroke-width:2px
+    classDef q fill:#ffd200,stroke:#fff,color:#000
+    classDef local fill:#8fd3f4,stroke:#fff,color:#000
+    classDef gw fill:#43e97b,stroke:#fff,color:#000
+    classDef ifep fill:#c471f5,stroke:#fff,color:#fff
+    classDef tgw fill:#ff9900,stroke:#fff,color:#000,stroke-width:2px
+    classDef nat fill:#ff4081,stroke:#fff,color:#fff
+    classDef drop fill:#434343,stroke:#ff416c,color:#fff,stroke-width:2px
+```
+
+### 🛡️ Security checkpoints on the way in
+
+```mermaid
+flowchart LR
+    A[👤 Internet]:::i --> B[🛡️ Shield Advanced<br/>DDoS]:::s1 --> C[🧱 WAF<br/>L7 rules]:::s2 --> D[☁️ CloudFront<br/>TLS]:::s3 --> E[🔌 API Gateway<br/>throttling]:::s4 --> F[🔀 Transit Gateway<br/>10.0.0.0/8]:::s5 --> G[⚖️ ALB<br/>listener rules]:::s6 --> H[🐯 Calico<br/>network policy]:::s7 --> I[🕸️ Istio<br/>mTLS]:::s8 --> J[⚙️ Service]:::ok
+
+    classDef i fill:#ff9a9e,color:#000
+    classDef s1 fill:#ff416c,color:#fff
+    classDef s2 fill:#ff6a3d,color:#fff
+    classDef s3 fill:#f7971e,color:#000
+    classDef s4 fill:#ffd200,color:#000
+    classDef s5 fill:#ff9900,color:#000
+    classDef s6 fill:#84fab0,color:#000
+    classDef s7 fill:#4facfe,color:#000
+    classDef s8 fill:#c471f5,color:#fff
+    classDef ok fill:#43e97b,color:#000,stroke:#fff,stroke-width:3px
+```
+
+---
+
+## 🧩 Microservices
+
+All five services run on **Amazon EKS in the app VPC**, behind the **ALB**, inside the **Istio** mesh with **Calico** network policies. **KEDA** scales pods on load and Kafka lag, and **Karpenter** adds nodes.
+
+<div align="center">
+
+| # | Service | Language | Responsibility | Calls | Data (data VPC) |
+|:-:|---|:-:|---|---|---|
+| 1 | 🔀 **BFF Service** | Node.js | Single API for web and mobile; aggregates and shapes responses | Payment, Ledger | Valkey (sessions, cache) |
+| 2 | 💸 **Payment Service** | Go | Payment initiation and orchestration | Fraud, Ledger, Kafka | MySQL |
+| 3 | 📒 **Ledger Service** | Java | Double-entry ledger and balances | – | MySQL, OpenSearch (search, audit) |
+| 4 | 🕵️ **Fraud Service** | Python | Real-time fraud scoring | KServe model | MongoDB (fraud cases) |
+| 5 | 🔔 **Notification Service** | Node.js | Email, SMS and push from payment events | – | Kafka (consumer), MongoDB |
+
+</div>
+
+| ML component | Where | Role |
+|---|---|---|
+| 🚀 **KServe** | app VPC (EKS) | Serves the fraud model to the Fraud Service |
+| 🌬️ **Airflow** | app VPC (EKS) | Orchestrates data and training workflows |
+| 🧪 **Kubeflow** | app + ops VPCs | ML pipelines: train and evaluate |
+| 📒 **MLflow** | ops VPC | Experiment tracking and model registry |
 
 ### 🕸️ Service Dependency Map
 
 ```mermaid
-graph LR
-    S1([1 web-frontend]):::fe --> S2([2 web-bff]):::bff
-    S1 --> S3([3 mobile-bff]):::bff
-    S2 --> S4([4 auth]):::app
-    S3 --> S4
-    S2 --> S6([6 accounts]):::app
-    S2 --> S7([7 payments]):::app
-    S3 --> S8([8 transactions]):::app
-    S2 --> S14([14 genai-assistant]):::ml
-    S4 --> S5([5 customer-kyc]):::app
-    S6 --> S12([12 credit-scoring]):::ml
-    S7 --> S11([11 fraud-detection]):::ml
-    S7 --> S9([9 ledger]):::app
-    S8 --> S9
-    S8 --> S10([10 notification]):::app
-    S13([13 training-pipeline]):::ml -.->|publishes models| S11
-    S13 -.->|publishes models| S12
+flowchart LR
+    ALB[⚖️ ALB]:::net --> BFF([🔀 BFF · Node.js]):::svc
+    BFF --> PAY([💸 Payment · Go]):::svc
+    BFF --> LED([📒 Ledger · Java]):::svc
+    PAY --> FR([🕵️ Fraud · Python]):::svc
+    PAY --> LED
+    FR --> KS[🚀 KServe]:::ml
+    PAY -->|PaymentCompleted| KF{{📨 Kafka}}:::data
+    KF --> NOT([🔔 Notification · Node.js]):::svc
+    BFF -.-> VK[(⚡ Valkey)]:::data
+    PAY -.-> MY[(🐬 MySQL)]:::data
+    LED -.-> MY
+    LED -.-> OS[(🔎 OpenSearch)]:::data
+    FR -.-> MG[(🍃 MongoDB)]:::data
+    NOT -.-> MG
+    ML[📒 MLflow]:::ml -.->|model version| KS
 
-    classDef fe fill:#4facfe,stroke:#fff,color:#000
-    classDef bff fill:#c471f5,stroke:#fff,color:#fff
-    classDef app fill:#43e97b,stroke:#fff,color:#000
+    classDef net fill:#43e97b,stroke:#fff,color:#000
+    classDef svc fill:#4facfe,stroke:#fff,color:#000,stroke-width:2px
     classDef ml fill:#f7971e,stroke:#fff,color:#000
-```
-
----
-
-## ☁️ AWS Infrastructure Layout
-
-```mermaid
-flowchart TB
-    INT((🌍 Internet)):::net --> CFN[CloudFront + WAF + Shield]:::edge
-
-    subgraph REGION["☁️ AWS Region"]
-        subgraph VPC["🔒 VPC 10.0.0.0/16"]
-            subgraph PUB["🌐 Public Subnets · 3 AZs"]
-                ALB2[Application Load Balancer]:::pub
-                NAT[NAT Gateways]:::pub
-            end
-            subgraph PRIV["🔐 Private Subnets · 3 AZs"]
-                subgraph K["☸️ EKS Control Plane + Karpenter nodes"]
-                    NP1[Spot NodePool<br/>stateless apps]:::node
-                    NP2[On-Demand NodePool<br/>payments · ledger]:::node
-                    NP3[GPU / High-mem NodePool<br/>ML training]:::node
-                end
-            end
-            subgraph ISO["🧱 Isolated Data Subnets"]
-                AUR[(Aurora PostgreSQL<br/>Multi-AZ)]:::data
-                ECA[(ElastiCache Redis)]:::data
-                MSK{{Amazon MSK}}:::data
-            end
-        end
-        S3B[(S3 Data Lake)]:::data
-        ECR[📦 ECR + Image Scanning]:::svc
-        KMS[🔑 KMS · Secrets Manager]:::svc
-        SEC[🛡️ GuardDuty · Security Hub · Inspector]:::svc
-        BED[🧠 Bedrock · SageMaker]:::svc
-    end
-
-    CFN --> ALB2 --> K
-    K --> AUR & ECA & MSK
-    K --> S3B
-    K -.->|VPC endpoints| ECR & KMS & BED
-    NAT --> INT
-    SEC -.->|monitors| VPC
-
-    classDef net fill:#ff9a9e,color:#000
-    classDef edge fill:#fbc2eb,color:#000
-    classDef pub fill:#84fab0,color:#000
-    classDef node fill:#8fd3f4,color:#000
-    classDef data fill:#434343,stroke:#ffd200,color:#fff
-    classDef svc fill:#ffecd2,color:#000
-    style REGION fill:#0f2027,stroke:#ff9900,color:#fff,stroke-width:3px
-    style VPC fill:#16222a,stroke:#00c9a7,color:#fff,stroke-width:2px
-    style PUB fill:#10372b,stroke:#84fab0,color:#fff
-    style PRIV fill:#12263f,stroke:#4facfe,color:#fff
-    style ISO fill:#2b1a1a,stroke:#ff416c,color:#fff
-    style K fill:#1a2b4a,stroke:#326ce5,color:#fff
+    classDef data fill:#3a1424,stroke:#ff416c,color:#fff,stroke-width:2px
 ```
 
 ---
@@ -266,24 +522,24 @@ flowchart TB
 sequenceDiagram
     autonumber
     actor C as 👤 Customer
-    participant FE as 🎨 web-frontend
-    participant BFF as 🔀 web-bff
-    participant AU as 🔑 auth-service
-    participant PAY as 💸 payments-service
-    participant FR as 🕵️ fraud-detection-api
-    participant LED as 📒 ledger-service
+    participant API as 🔌 API Gateway
+    participant BFF as 🔀 BFF Service
+    participant PAY as 💸 Payment Service
+    participant FR as 🕵️ Fraud Service
+    participant KS as 🚀 KServe
+    participant LED as 📒 Ledger Service
     participant K as 📨 Kafka
-    participant NT as 🔔 notification-service
+    participant NT as 🔔 Notification Service
 
-    C->>FE: Click "Send $250"
-    FE->>BFF: POST /payments (JWT)
-    BFF->>AU: Validate token + MFA
-    AU-->>BFF: ✅ Valid
+    C->>API: POST /payments (via Route 53 · CloudFront · WAF)
+    API->>BFF: Forward through Transit Gateway → ALB
     BFF->>PAY: Create payment
     PAY->>FR: Score transaction
+    FR->>KS: Predict
+    KS-->>FR: risk score
     alt 🟢 Low risk
         FR-->>PAY: risk = 0.04
-        PAY->>LED: Post debit / credit entries
+        PAY->>LED: Post debit / credit entries (MySQL)
         LED-->>PAY: ✅ Committed
         PAY->>K: PaymentCompleted event
         K->>NT: Consume event
@@ -296,134 +552,93 @@ sequenceDiagram
         K->>NT: Consume event
         NT-->>C: ⚠️ Verify this payment
     end
-    BFF-->>FE: Response
-    FE-->>C: Show result
+    BFF-->>API: Response
+    API-->>C: Show result
 ```
 
 ---
 
-## 🧱 Platform Layers
+## 🛡️ Security by Layer
+
+Every layer in the architecture adds its own control, and nothing depends on a single defence.
 
 ```mermaid
 flowchart TB
-    L1["🎨 FRONTEND<br/>React · Next.js · CloudFront · S3"]:::l1
-    L2["🔀 BFF LAYER<br/>Web BFF · Mobile BFF · GraphQL · Response shaping"]:::l2
-    L3["⚙️ APPLICATION LAYER<br/>Auth · KYC · Accounts · Payments · Transactions · Ledger · Notifications"]:::l3
-    L4["🤖 MLOPS / AI LAYER<br/>Fraud · Credit Scoring · Training Pipeline · GenAI RAG"]:::l4
-    L5["🗄️ DATABASE LAYER<br/>Aurora · Redis · Kafka · S3 · pgvector"]:::l5
-    L6["☸️ PLATFORM LAYER<br/>EKS · Karpenter · Istio · ArgoCD · Vault · Terraform"]:::l6
-    L7["🔐 SECURITY & OBSERVABILITY<br/>Kyverno · Falco · Trivy · Prometheus · Grafana · Loki"]:::l7
-
-    L1 --> L2 --> L3 --> L4 --> L5 --> L6 --> L7
-
-    classDef l1 fill:#4facfe,color:#000,stroke:#fff,stroke-width:2px
-    classDef l2 fill:#c471f5,color:#fff,stroke:#fff,stroke-width:2px
-    classDef l3 fill:#43e97b,color:#000,stroke:#fff,stroke-width:2px
-    classDef l4 fill:#f7971e,color:#000,stroke:#fff,stroke-width:2px
-    classDef l5 fill:#434343,color:#fff,stroke:#ffd200,stroke-width:2px
-    classDef l6 fill:#326ce5,color:#fff,stroke:#fff,stroke-width:2px
-    classDef l7 fill:#ff416c,color:#fff,stroke:#fff,stroke-width:2px
-```
-
----
-
-## 🔐 DevSecOps Pipeline
-
-```mermaid
-flowchart LR
-    DEV[👨‍💻 Commit]:::s0 --> PRE[🪝 pre-commit<br/>Gitleaks]:::s1
-    PRE --> SAST[🔍 SAST<br/>SonarQube · Semgrep]:::s1
-    SAST --> SCA[📦 SCA<br/>Trivy · Snyk]:::s1
-    SCA --> BUILD[🐳 Docker Build]:::s2
-    BUILD --> SCAN[🛡️ Image Scan<br/>Trivy · Grype]:::s3
-    SCAN --> SBOM[📄 SBOM + Sign<br/>Syft · Cosign]:::s4
-    SBOM --> IAC[🏗️ IaC Scan<br/>Checkov · tfsec]:::s1
-    IAC --> GIT[📂 GitOps Repo]:::s2
-    GIT --> ARGO[🐙 ArgoCD]:::s5
-    ARGO --> ADM[🚧 Admission<br/>Kyverno · OPA]:::s3
-    ADM --> RUN[☸️ EKS Runtime]:::s6
-    RUN --> FALCO[🦅 Falco]:::s7
-    RUN --> DAST[🧪 DAST<br/>OWASP ZAP]:::s1
-    FALCO --> SIEM[📊 SIEM / Alerts]:::s7
-
-    classDef s0 fill:#4facfe,color:#000
-    classDef s1 fill:#f7971e,color:#000
-    classDef s2 fill:#43e97b,color:#000
-    classDef s3 fill:#ff416c,color:#fff
-    classDef s4 fill:#c471f5,color:#fff
-    classDef s5 fill:#ef7b4d,color:#fff
-    classDef s6 fill:#326ce5,color:#fff
-    classDef s7 fill:#00c9a7,color:#000
-```
-
----
-
-## 🚀 GitOps & Delivery
-
-```mermaid
-flowchart LR
-    subgraph CI["🛠️ CI · GitHub Actions"]
-        A1[Lint + Test]:::ci --> A2[Build Image]:::ci --> A3[Scan + Sign]:::ci --> A4[Push to ECR]:::ci
+    subgraph L1["🌐 Edge"]
+        E1[Shield Advanced · WAF · CloudFront TLS · API Gateway throttling]
     end
-    subgraph GO["📂 GitOps Repo"]
-        B1[Helm values / Kustomize]:::git
+    subgraph L2["🕸️ Network"]
+        E2[4 isolated VPCs · private subnets · security groups · Transit Gateway routing · VPC endpoints]
     end
-    subgraph CD["🐙 CD · ArgoCD"]
-        C1[App of Apps]:::cd --> C2[Argo Rollouts<br/>Canary / Blue-Green]:::cd
+    subgraph L3["☸️ Orchestration"]
+        E3[Calico network policies · Istio mTLS · Argo Rollouts safe releases]
     end
-    subgraph ENV["☸️ Environments"]
-        D1[dev]:::env --> D2[staging]:::env --> D3[prod]:::env
+    subgraph L4["🔑 Identity & Access"]
+        E4[IAM least-privilege roles · GitHub OIDC for CI · HashiCorp Vault secrets · KMS encryption]
     end
-
-    A4 -->|update tag| B1
-    B1 -->|sync| C1
-    C2 --> D1
-    D3 -.->|metrics gate| C2
-
-    classDef ci fill:#4facfe,color:#000
-    classDef git fill:#f7971e,color:#000
-    classDef cd fill:#ef7b4d,color:#fff
-    classDef env fill:#43e97b,color:#000
-    style CI fill:#12263f,stroke:#4facfe,color:#fff
-    style GO fill:#3d2400,stroke:#f7971e,color:#fff
-    style CD fill:#3a1a10,stroke:#ef7b4d,color:#fff
-    style ENV fill:#0b3d2e,stroke:#43e97b,color:#fff
-```
-
----
-
-## 🛡️ Defence in Depth
-
-```mermaid
-flowchart TB
-    subgraph L1["🌍 Layer 1 · Edge"]
-        E1[WAF · Shield · CloudFront · Rate limiting]
+    subgraph L5["🔭 Detection"]
+        E5[Falco runtime security · Prometheus + Grafana alerts · Loki · Logstash · CloudWatch]
     end
-    subgraph L2["🌐 Layer 2 · Network"]
-        E2[VPC isolation · Security Groups · NetworkPolicies · PrivateLink]
-    end
-    subgraph L3["🕸️ Layer 3 · Service Mesh"]
-        E3[Istio mTLS · AuthorizationPolicy · JWT validation]
-    end
-    subgraph L4["☸️ Layer 4 · Cluster"]
-        E4[RBAC · Pod Security Standards · Kyverno · IRSA / Pod Identity]
-    end
-    subgraph L5["📦 Layer 5 · Workload"]
-        E5[Signed images · Non-root · Read-only FS · Falco runtime detection]
-    end
-    subgraph L6["🔑 Layer 6 · Data"]
-        E6[KMS encryption · Vault · Secrets Manager · TLS everywhere]
+    subgraph L6["🤖 Model & Data Trust"]
+        E6[Evidently AI drift · WhyLogs data profiling · MLflow model lineage]
     end
 
     L1 --> L2 --> L3 --> L4 --> L5 --> L6
 
     style L1 fill:#ff416c,stroke:#fff,color:#fff
-    style L2 fill:#f7971e,stroke:#fff,color:#000
-    style L3 fill:#ffd200,stroke:#fff,color:#000
-    style L4 fill:#43e97b,stroke:#fff,color:#000
-    style L5 fill:#4facfe,stroke:#fff,color:#000
+    style L2 fill:#43e97b,stroke:#fff,color:#000
+    style L3 fill:#f7971e,stroke:#fff,color:#000
+    style L4 fill:#ffd200,stroke:#fff,color:#000
+    style L5 fill:#00c9a7,stroke:#fff,color:#000
     style L6 fill:#c471f5,stroke:#fff,color:#fff
 ```
+
+---
+
+## 🔁 CI/CD & GitOps
+
+**GitHub Actions** builds, **Terraform** provisions, **Argo CD** (ops VPC) syncs and **Argo Rollouts** releases progressively onto **EKS** (app VPC). Models follow the same path through **Airflow → Kubeflow → MLflow → KServe**.
+
+```mermaid
+flowchart LR
+    subgraph SRC["🌿 Source"]
+        G[Git · GitHub]:::s
+    end
+    subgraph CI["🐙 CI · GitHub Actions"]
+        T[Lint + test]:::ci --> B[Build image]:::ci --> P[Push to ECR]:::ci
+        TF[Terraform plan / apply]:::ci
+    end
+    subgraph CD["🔁 CD · Argo (ops VPC)"]
+        A[Argo CD sync]:::cd --> R[Argo Rollouts<br/>canary / blue-green]:::cd
+    end
+    subgraph ENV["☸️ EKS environments"]
+        Q[qa]:::env --> U[uat]:::env --> PR[prod]:::env
+    end
+    subgraph ML["🤖 Model delivery"]
+        AF[Airflow]:::ml --> KF[Kubeflow pipelines]:::ml --> MF[MLflow registry]:::ml --> KS[KServe]:::ml
+    end
+
+    G --> T
+    G --> TF
+    P -->|update image tag| G
+    G -->|watch| A
+    R --> Q
+    PR -.->|Prometheus metrics gate| R
+    MF -.->|new model version| A
+
+    classDef s fill:#f05032,color:#fff
+    classDef ci fill:#2088ff,color:#fff
+    classDef cd fill:#ef7b4d,color:#fff
+    classDef env fill:#43e97b,color:#000
+    classDef ml fill:#f7971e,color:#000
+    style SRC fill:#2b1a1a,stroke:#f05032,color:#fff
+    style CI fill:#12263f,stroke:#2088ff,color:#fff
+    style CD fill:#3a1a10,stroke:#ef7b4d,color:#fff
+    style ENV fill:#0b3d2e,stroke:#43e97b,color:#fff
+    style ML fill:#3d2400,stroke:#f7971e,color:#fff
+```
+
+> 🔐 CI never stores AWS keys: GitHub Actions assumes the `FinTech-CI-CD-Deployer-<env>` IAM role through **GitHub OIDC**, as defined in the IAM module below.
 
 ---
 
@@ -431,127 +646,74 @@ flowchart TB
 
 ```mermaid
 flowchart LR
-    DATA[(📥 Raw Data<br/>S3 Data Lake)]:::d --> ING[🔄 Ingestion<br/>Airflow · Kafka]:::p
-    ING --> FEAT[🧮 Feature Store<br/>Feast]:::p
-    FEAT --> TRAIN[🏋️ Training<br/>Kubeflow · SageMaker]:::t
-    TRAIN --> TRACK[📒 Experiment Tracking<br/>MLflow]:::t
-    TRACK --> EVAL{✅ Meets<br/>threshold?}:::g
-    EVAL -->|yes| REG[🗃️ Model Registry]:::t
-    EVAL -->|no| TRAIN
-    REG --> SERVE[🚀 Serving<br/>KServe]:::s
-    SERVE --> F[🕵️ fraud-detection-api]:::s
-    SERVE --> CR[📊 credit-scoring-api]:::s
-    F & CR --> MON[📈 Monitoring<br/>Evidently · Prometheus]:::m
-    MON -->|drift detected| TRAIN
+    DATA[(📥 MySQL · MongoDB<br/>Kafka · S3)]:::d --> AF[🌬️ Airflow<br/>ingest + orchestrate]:::p
+    AF --> KF[🧪 Kubeflow Pipelines<br/>train + evaluate]:::t
+    KF --> MF[📒 MLflow<br/>track + register]:::t
+    MF --> GATE{✅ Meets<br/>threshold?}:::g
+    GATE -->|yes| KS[🚀 KServe<br/>serve]:::s
+    GATE -->|no| KF
+    KS --> FR[🕵️ Fraud Service]:::s
+    FR --> MON[📉 Evidently AI drift<br/>📊 WhyLogs profiles<br/>🔥 Prometheus]:::m
+    MON -->|drift detected| AF
 
-    classDef d fill:#434343,stroke:#ffd200,color:#fff
+    classDef d fill:#3a1424,stroke:#ff416c,color:#fff
     classDef p fill:#4facfe,color:#000
     classDef t fill:#f7971e,color:#000
     classDef g fill:#ffd200,color:#000
     classDef s fill:#43e97b,color:#000
-    classDef m fill:#ff416c,color:#fff
+    classDef m fill:#c471f5,color:#fff
 ```
 
 ### 🔁 Model Lifecycle States
 
 ```mermaid
 stateDiagram-v2
-    [*] --> Experiment
-    Experiment --> Staging: passes evaluation
-    Staging --> Canary: shadow tests OK
+    [*] --> Experiment: Kubeflow run
+    Experiment --> Registered: logged in MLflow
+    Registered --> Canary: KServe canary
     Canary --> Production: metrics healthy
-    Production --> Drifted: drift detected
-    Drifted --> Experiment: retrain
-    Canary --> Staging: rollback
+    Production --> Drifted: Evidently AI / WhyLogs alert
+    Drifted --> Experiment: retrain via Airflow
+    Canary --> Registered: rollback
     Production --> Archived: replaced by new version
     Archived --> [*]
 ```
 
 ---
 
-## 🧠 AI / GenAI Capabilities
-
-```mermaid
-mindmap
-  root((🧠 AI and GenAI))
-    🗣️ LLM Apps
-      Customer Support Assistant
-      Financial Q&A Chatbot
-      Statement Summarisation
-    📚 RAG
-      Bedrock Knowledge Bases
-      LangChain
-      LlamaIndex
-      pgvector
-      OpenSearch
-    🛡️ Guardrails
-      Bedrock Guardrails
-      PII Redaction
-      Prompt Injection Defence
-    🤖 Agents
-      Bedrock Agents
-      MCP Servers
-      Tool calling
-    📊 Predictive ML
-      Fraud Detection
-      Credit Scoring
-      Churn Prediction
-    🔭 LLMOps
-      Prompt Versioning
-      Evaluation
-      Token and Cost Tracking
-```
-
-### 🧠 GenAI Assistant Flow (RAG)
-
-```mermaid
-flowchart LR
-    Q[💬 User question]:::u --> G1[🛡️ Input guardrails<br/>PII · injection]:::g
-    G1 --> EMB[🔢 Embed query]:::p
-    EMB --> VS[(🔎 pgvector search)]:::d
-    VS --> CTX[📚 Retrieve top-k context]:::p
-    CTX --> LLM[🧠 LLM · Bedrock]:::l
-    LLM --> G2[🛡️ Output guardrails]:::g
-    G2 --> A[✅ Answer + sources]:::u
-    LLM -.-> TR[📈 Trace · cost · eval]:::m
-
-    classDef u fill:#4facfe,color:#000
-    classDef g fill:#ff416c,color:#fff
-    classDef p fill:#43e97b,color:#000
-    classDef d fill:#434343,stroke:#ffd200,color:#fff
-    classDef l fill:#c471f5,color:#fff
-    classDef m fill:#f7971e,color:#000
-```
-
----
-
 ## 📊 Observability
+
+The **ops VPC** collects telemetry from every layer over the **Transit Gateway**.
 
 ```mermaid
 flowchart LR
     subgraph SRC["📡 Sources"]
-        P1[14 Microservices]
-        P2[EKS Nodes]
-        P3[Istio Mesh]
+        P1[5 microservices]
+        P2[EKS nodes + Istio]
+        P3[AWS: API Gateway · ALB · TGW]
+        P4[KServe models]
     end
-    subgraph COL["🔌 Collection"]
-        OT[OpenTelemetry Collector]
+    subgraph COL["🔌 Collect"]
+        PR[🔥 Prometheus<br/>metrics]
+        LS[🧾 Logstash<br/>log pipeline]
+        CW[☁️ CloudWatch<br/>AWS telemetry]
+        FA[🦅 Falco<br/>runtime events]
+        EV[📉 Evidently AI · 📊 WhyLogs<br/>ML + data drift]
     end
-    subgraph STORE["💾 Storage"]
-        PM[(Prometheus)]
-        LK[(Loki)]
-        TP[(Tempo)]
+    subgraph STORE["💾 Store"]
+        LK[(🪵 Loki)]
+        OS[(🔎 OpenSearch)]
     end
     subgraph VIZ["📈 Visualise & Alert"]
-        GF[Grafana]
-        AM[Alertmanager]
-        PD[PagerDuty]
+        GF[Grafana dashboards + alerts]
     end
 
-    P1 & P2 & P3 --> OT
-    OT --> PM & LK & TP
-    PM & LK & TP --> GF
-    PM --> AM --> PD
+    P1 & P2 --> PR
+    P1 & P2 --> LS --> LK & OS
+    P3 --> CW
+    P2 --> FA
+    P4 --> EV
+    PR & LK & CW & FA & EV --> GF
 
     style SRC fill:#12263f,stroke:#4facfe,color:#fff
     style COL fill:#2a1245,stroke:#c471f5,color:#fff
@@ -561,55 +723,18 @@ flowchart LR
 
 ---
 
-## 🧰 Tech Stack
-
-### ☁️ AWS Infrastructure
-| Area | Tools |
-|---|---|
-| **Compute / Containers** | Amazon EKS, **Karpenter**, Fargate, ECR, EC2 Spot |
-| **Networking** | VPC, Subnets, NAT, Transit Gateway, PrivateLink, Route 53, CloudFront, ALB/NLB |
-| **Data** | Aurora PostgreSQL, ElastiCache Redis, S3, DynamoDB, MSK (Kafka) |
-| **Security** | IAM, IRSA / Pod Identity, KMS, Secrets Manager, GuardDuty, Security Hub, WAF, Shield, Inspector, Config |
-| **Observability** | CloudWatch, X-Ray, Managed Prometheus, Managed Grafana |
-| **AI / ML** | Bedrock, SageMaker, Comprehend, Textract |
-
-### 🏗️ Infrastructure as Code & GitOps
-| Area | Tools |
-|---|---|
-| **IaC** | **Terraform**, Terragrunt, Crossplane |
-| **GitOps** | ArgoCD, Argo Rollouts, Argo Workflows, Helm, Kustomize |
-| **CI/CD** | GitHub Actions, Jenkins, Tekton |
-
-### 🛡️ DevSecOps
-| Area | Tools |
-|---|---|
-| **Secrets** | Gitleaks, HashiCorp Vault, External Secrets Operator |
-| **SAST / DAST** | SonarQube, Semgrep, OWASP ZAP |
-| **Container / Supply chain** | Trivy, Grype, Syft (SBOM), **Cosign**, SLSA |
-| **IaC scanning** | Checkov, tfsec, KICS |
-| **Policy** | **Kyverno**, OPA Gatekeeper, Pod Security Standards |
-| **Runtime** | Falco, Tetragon, Istio mTLS, Network Policies, Cilium |
-| **Compliance** | PCI-DSS, SOC 2, CIS Benchmarks (kube-bench) |
-
-### 📊 Observability & Reliability
-Prometheus · Grafana · Loki · Tempo · OpenTelemetry · Alertmanager · PagerDuty · SLO/SLI · Chaos Mesh · Velero · k6
-
-### 🤖 MLOps & AI
-MLflow · Kubeflow · KServe · Feast · Airflow · Evidently · SageMaker · Bedrock · LangChain · LlamaIndex · pgvector · Ray
-
----
-
 ## 📈 Skill Coverage
 
 ```mermaid
 pie showData title Platform Engineering Focus Areas
-    "Kubernetes / EKS" : 20
-    "Infrastructure as Code" : 15
-    "DevSecOps" : 20
+    "Networking (VPC, TGW, Edge)" : 18
+    "Kubernetes / EKS" : 18
+    "Infrastructure as Code" : 14
     "CI/CD and GitOps" : 12
-    "Observability / SRE" : 10
-    "MLOps" : 13
-    "GenAI / LLMOps" : 10
+    "Security and IAM" : 12
+    "Data platforms" : 10
+    "Observability" : 8
+    "MLOps" : 8
 ```
 
 ```mermaid
@@ -621,16 +746,17 @@ quadrantChart
     quadrant-2 Do first
     quadrant-3 Nice to have
     quadrant-4 Reconsider
-    Gitleaks: [0.15, 0.7]
-    Trivy: [0.2, 0.8]
-    ArgoCD: [0.45, 0.85]
-    Karpenter: [0.5, 0.8]
-    Kyverno: [0.4, 0.75]
-    Istio mTLS: [0.7, 0.8]
-    Vault: [0.75, 0.7]
+    Terraform: [0.3, 0.9]
+    Transit Gateway: [0.35, 0.8]
+    Argo CD: [0.4, 0.85]
+    Karpenter: [0.5, 0.75]
+    KEDA: [0.35, 0.6]
+    Calico: [0.45, 0.65]
+    Istio: [0.75, 0.8]
+    Vault: [0.7, 0.75]
+    Falco: [0.3, 0.6]
     KServe: [0.8, 0.6]
-    Chaos Mesh: [0.6, 0.35]
-    GenAI RAG: [0.7, 0.65]
+    Evidently AI: [0.55, 0.45]
 ```
 
 ---
@@ -639,7 +765,7 @@ quadrantChart
 
 <div align="center">
 
-[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=20&pause=900&color=FF9900&center=true&vCenter=true&width=900&lines=4+isolated+VPCs+in+us-east-1;Private+VPC+endpoints+%E2%80%94+no+internet+for+AWS+traffic;Least-privilege+IAM+roles+per+environment;Multi+state+files+in+one+encrypted+S3+backend;Terraform+1.17.1+%7C+AWS+provider+6.72+%7C+IAM+module+6.8.2)](https://git.io/typing-svg)
+[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=20&pause=900&color=FF9900&center=true&vCenter=true&width=900&lines=4+isolated+VPCs+joined+by+a+Transit+Gateway;Private+VPC+endpoints+%E2%80%94+no+internet+for+AWS+traffic;Least-privilege+IAM+roles+per+environment;Multi+state+files+in+one+encrypted+S3+backend;Terraform+1.17.1+%7C+AWS+provider+6.72+%7C+IAM+module+6.8.2)](https://git.io/typing-svg)
 
 ![Terraform](https://img.shields.io/badge/Terraform-%E2%89%A5%201.17.1-7B42BC?style=for-the-badge&logo=terraform&logoColor=white)
 ![AWS Provider](https://img.shields.io/badge/AWS%20Provider-~%3E%206.72-FF9900?style=for-the-badge&logo=amazonaws&logoColor=white)
@@ -659,104 +785,116 @@ timeline
     State backend : S3 state bucket : Encrypted state : Native S3 lock file (no DynamoDB)
     IAM : Reusable child module : Platform, App team and CI/CD roles : One root stack per environment (ops, qa, uat, prod)
     Networking : Reusable network module : 4 VPCs from one for_each : Gateway + Interface VPC endpoints
+    Connectivity : Transit Gateway hub : Subnets round-robin across 3 AZs : Corrected CIDRs 10.10 to 10.40
     Hardening : Fixed SG and AZ bugs : Private SG limited to VPC CIDR : Pinned latest Terraform, provider and module versions
 ```
 
 ---
 
-### 🌐 Networking: 4 Isolated VPCs
+### 🌐 Networking: 4 VPCs + Transit Gateway
 
-One reusable module (`prod/Networking/network/`) is called **once per VPC** from the root module with `for_each`. Each VPC gets its own subnets, route tables, security groups and VPC endpoints.
+One reusable module (`prod/Networking/network/`) is called **once per VPC** from the root module with `for_each`. Each VPC gets its own subnets, route tables, security groups and VPC endpoints. A **Transit Gateway** (`transit_gateway.tf`) joins them all.
+
+<div align="center">
+
+<img src="docs/diagrams/network-topology.svg" width="100%" alt="Animated hub-and-spoke diagram: edge, app, data and ops VPCs with their subnets per AZ, connected through a Transit Gateway"/>
+
+</div>
 
 ```mermaid
 flowchart TB
     INET((🌍 Internet)):::net
 
-    subgraph REGION["☁️ AWS us-east-1"]
+    subgraph REGION["☁️ AWS us-east-1 · AZs 1a · 1b · 1c"]
         direction TB
 
-        subgraph EDGE["🚪 EDGE VPC · 10.0.0.0/16"]
-            direction TB
-            IGW[🌐 Internet Gateway]:::gw
-            subgraph EPUB["Public subnets · 1a · 1b · 1c"]
-                EP1[10.0.0.0/24]:::pub
-                EP2[10.0.1.0/24]:::pub
-                EP3[10.0.2.0/24]:::pub
-                NAT[🔁 NAT Gateway + EIP]:::gw
-            end
-            subgraph EPRIV["Private subnets · 1a · 1b · 1c"]
-                EV1[10.0.10.0/24]:::priv
-                EV2[10.0.11.0/24]:::priv
-                EV3[10.0.12.0/24]:::priv
-            end
+        subgraph EDGE["🚪 EDGE · 10.10.0.0/16"]
+            EIGW[🌐 IGW]:::gw
+            EPUB[public 10.10.1-3.0/24<br/>🔌 API Gateway · WAF]:::pub
+            EPRIV[private 10.10.11-13.0/24]:::priv
         end
 
-        subgraph APP["⚙️ APP VPC · 10.1.0.0/16 · private only"]
-            AV[10.1.10-12.0/24<br/>3 private subnets]:::priv
+        subgraph APP["⚙️ APP · 10.20.0.0/16"]
+            AIGW[🌐 IGW]:::gw
+            ANAT[🔁 NAT Gateway]:::gw
+            APUB[public 10.20.1-3.0/24<br/>⚖️ ALB]:::pub
+            ACP[EKS control plane<br/>10.20.11-13.0/24]:::priv
+            ADP[EKS data plane<br/>10.20.21-23.0/24]:::priv
         end
-        subgraph DATA["🗄️ DATA VPC · 10.2.0.0/16 · private only"]
-            DV[10.2.10-12.0/24<br/>3 private subnets]:::priv
+
+        subgraph DATA["🗄️ DATA · 10.30.0.0/16 · no internet"]
+            DDB[MySQL · MongoDB · OpenSearch<br/>10.30.11-13.0/24]:::priv
+            DKF[Kafka + Valkey<br/>10.30.21-23.0/24]:::priv
         end
-        subgraph OPS["🛠️ OPS VPC · 10.3.0.0/16 · private only"]
-            OV[10.3.10-12.0/24<br/>3 private subnets]:::priv
+
+        subgraph OPS["🛠️ OPS · 10.40.0.0/16"]
+            OIGW[🌐 IGW]:::gw
+            OPUB[public 10.40.1-3.0/24]:::pub
+            OPRIV[Prometheus · Grafana · Argo<br/>Vault · Kubeflow · MLflow<br/>10.40.11-13.0/24]:::priv
         end
+
+        TGW{{"🔀 TRANSIT GATEWAY<br/>10.0.0.0/8"}}:::tgw
 
         subgraph AWS["🔒 AWS services via VPC endpoints"]
             S3[(🪣 S3)]:::gwep
-            DDB[(⚡ DynamoDB)]:::gwep
-            ECR[📦 ECR api + dkr]:::ifep
-            LOGS[📜 CloudWatch Logs]:::ifep
-            SEC[🔑 Secrets Manager]:::ifep
+            DYN[(⚡ DynamoDB)]:::gwep
+            ECR[📦 ECR]:::ifep
+            SEC[🔑 Secrets · 📜 Logs]:::ifep
             KMS[🔐 KMS]:::ifep
-            SSM[🖥️ SSM · ssmmessages · ec2messages]:::ifep
+            SSM[🖥️ SSM]:::ifep
         end
     end
 
-    INET <--> IGW
-    IGW --- EPUB
-    EPRIV -->|outbound only| NAT --> IGW
-    EPRIV -.-> S3
-    AV -.-> S3
-    AV ==> ECR & LOGS & SEC
-    DV -.-> S3 & DDB
-    DV ==> SEC & KMS
-    OV -.-> S3
-    OV ==> SSM
+    INET <--> EIGW --- EPUB
+    INET <--> AIGW
+    INET <--> OIGW --- OPUB
+    ADP -->|outbound| ANAT --> AIGW
+
+    EPRIV <==> TGW
+    ACP <==> TGW
+    ADP <==> TGW
+    DDB <==> TGW
+    DKF <==> TGW
+    OPRIV <==> TGW
+
+    ADP -.-> S3 & ECR & SEC
+    DDB -.-> S3 & DYN & KMS
+    OPRIV -.-> S3 & SSM
 
     classDef net fill:#ff9a9e,stroke:#fff,color:#000,stroke-width:2px
-    classDef gw fill:#ff9900,stroke:#fff,color:#000,stroke-width:2px
+    classDef gw fill:#ff9900,stroke:#fff,color:#000
     classDef pub fill:#84fab0,stroke:#0b3d2e,color:#000
     classDef priv fill:#8fd3f4,stroke:#12263f,color:#000
+    classDef tgw fill:#ff7a00,stroke:#ffd200,color:#000,stroke-width:3px
     classDef gwep fill:#43e97b,stroke:#fff,color:#000,stroke-width:2px
     classDef ifep fill:#c471f5,stroke:#fff,color:#fff,stroke-width:2px
 
     style REGION fill:#0f2027,stroke:#ff9900,color:#fff,stroke-width:3px
     style EDGE fill:#10372b,stroke:#84fab0,color:#fff,stroke-width:2px
-    style EPUB fill:#14532d,stroke:#84fab0,color:#fff
-    style EPRIV fill:#12263f,stroke:#4facfe,color:#fff
     style APP fill:#12263f,stroke:#4facfe,color:#fff,stroke-width:2px
     style DATA fill:#2b1a1a,stroke:#ff416c,color:#fff,stroke-width:2px
     style OPS fill:#2a1245,stroke:#c471f5,color:#fff,stroke-width:2px
     style AWS fill:#1a1a1a,stroke:#ffd200,color:#fff,stroke-width:2px
 ```
 
-> 🟢 dotted arrows = **Gateway endpoints** (free, route-table based) · 🟣 thick arrows = **Interface endpoints** (private IPs in each AZ)
+> 🟠 thick arrows = **Transit Gateway** · 🟢/🟣 dotted arrows = **VPC endpoints** · 🌐 = Internet Gateway
 
 | VPC | CIDR | Public subnets | Private subnets | NAT | Gateway endpoints | Interface endpoints |
 |---|---|:-:|:-:|:-:|---|---|
-| 🚪 **edge** | `10.0.0.0/16` | 3 | 3 | ✅ | s3 | – |
-| ⚙️ **app** | `10.1.0.0/16` | – | 3 | – | s3 | ecr.api, ecr.dkr, logs, secretsmanager |
-| 🗄️ **data** | `10.2.0.0/16` | – | 3 | – | s3, dynamodb | secretsmanager, kms |
-| 🛠️ **ops** | `10.3.0.0/16` | – | 3 | – | s3 | ssm, ssmmessages, ec2messages |
+| 🚪 **edge** | `10.10.0.0/16` | 3 | 3 | – | s3 | – |
+| ⚙️ **app** | `10.20.0.0/16` | 3 | 6 (EKS control + data plane) | ✅ | s3 | ecr.api, ecr.dkr, logs, secretsmanager |
+| 🗄️ **data** | `10.30.0.0/16` | – | 6 (DBs + Kafka/Valkey) | – | s3, dynamodb | kms |
+| 🛠️ **ops** | `10.40.0.0/16` | 3 | 3 | – | s3 | ssm, ssmmessages, ec2messages |
 
 **In simple words:**
-- 🏢 Each **VPC is a separate building** with its own address range. CIDRs don't overlap, so a Transit Gateway can connect them later.
-- 🌐 **Public subnets** (edge only) face the internet through the **Internet Gateway**.
-- 🔐 **Private subnets** can't be reached from outside. Apps and databases live here.
-- 🔁 The **NAT Gateway** lets edge's private servers go *out* to the internet, but nothing can come *in*.
-- 🚇 **VPC endpoints** are private tunnels to AWS services, so app, data and ops reach ECR, S3, Secrets Manager and so on **without any internet access**.
-- 🛡️ **Security groups:** private resources only accept traffic from inside their own VPC. Endpoints only accept HTTPS (443) from the VPC.
-- 🏗️ Subnets are spread across **3 Availability Zones** (us-east-1a/b/c), so one data center failing doesn't take the network down.
+- 🏢 Each **VPC is a separate building** with its own address range. The `10.10 / 10.20 / 10.30 / 10.40` CIDRs never overlap, so they can all be joined.
+- 🔀 The **Transit Gateway is the central hub** that connects the buildings. Every private route table has one route, `10.0.0.0/8 → TGW`, and traffic inside a VPC stays local because its own `/16` is more specific.
+- 🌐 **Public subnets** face the internet through an **Internet Gateway**.
+- 🔐 **Private subnets** can't be reached from outside. Apps, databases and monitoring live here.
+- 🔁 **NAT Gateway** (app): pods can call out, for example to a payment network, but nothing can come in.
+- 🚇 **VPC endpoints** are private tunnels to AWS services, so ECR, S3, Secrets Manager and KMS are reached **without the internet**.
+- 🗄️ The **data VPC has no internet path at all**. It's reachable only through the TGW.
+- 🏗️ Subnets go **round-robin across 3 AZs** (1a → 1b → 1c → 1a …), so 6 subnets give 2 per AZ, and the first 3 (one per AZ) host the TGW attachment and endpoint ENIs.
 
 #### 🔀 How the root module creates all 4 VPCs
 
@@ -768,6 +906,7 @@ flowchart LR
     M --> D["🗄️ module.network[data]"]:::data
     M --> O["🛠️ module.network[ops]"]:::ops
     E & A & D & O --> R["📦 Each instance creates:<br/>VPC · subnets · route tables<br/>SGs · NAT/IGW if public<br/>Gateway + Interface endpoints"]:::res
+    R --> T["🔀 transit_gateway.tf<br/>attach + route every VPC<br/>(for_each = local.vpcs)"]:::tgw
 
     classDef loc fill:#ffd200,stroke:#fff,color:#000,stroke-width:2px
     classDef mod fill:#7B42BC,stroke:#fff,color:#fff,stroke-width:2px
@@ -776,6 +915,7 @@ flowchart LR
     classDef data fill:#ff416c,stroke:#fff,color:#fff
     classDef ops fill:#c471f5,stroke:#fff,color:#fff
     classDef res fill:#0f2027,stroke:#00c9a7,color:#fff,stroke-width:2px
+    classDef tgw fill:#ff7a00,stroke:#ffd200,color:#000,stroke-width:2px
 ```
 
 #### 🚇 VPC endpoints: Gateway vs Interface
@@ -809,7 +949,7 @@ flowchart LR
 | `data.aws_region.current` | Reads the provider's region, so endpoint names are never hardcoded |
 | `aws_vpc_endpoint.gateway` | `for_each = toset(var.gateway_endpoints)` creates one free Gateway endpoint per service and attaches it to the private route tables |
 | `aws_security_group.endpoint_sg` | Created only if `interface_endpoints` isn't empty. Allows HTTPS 443 from the VPC CIDR |
-| `aws_vpc_endpoint.interface` | `for_each = toset(var.interface_endpoints)` places an ENI in every private subnet (one per AZ). `private_dns_enabled = true` means application code needs **no changes** |
+| `aws_vpc_endpoint.interface` | `for_each = toset(var.interface_endpoints)` places an ENI in the first private subnet of each AZ (`private_subnet_ids_per_az`). `private_dns_enabled = true` means application code needs **no changes** |
 
 ```hcl
 # Per-VPC input: just two simple lists
@@ -817,19 +957,51 @@ gateway_endpoints   = ["s3", "dynamodb"]
 interface_endpoints = ["secretsmanager", "kms"]
 ```
 
+#### 🔀 Transit Gateway: how VPCs talk to each other
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant POD as ⚙️ app pod 10.20.21.15
+    participant ART as 🗺️ app private route table
+    participant TGW as 🔀 Transit Gateway
+    participant TRT as 📋 TGW route table
+    participant DB as 🐬 MySQL 10.30.11.20
+
+    POD->>ART: Send to 10.30.11.20
+    ART->>ART: 10.20.0.0/16 local? ✖ · 10.0.0.0/8 → TGW ✅
+    ART->>TGW: Forward via app attachment
+    TGW->>TRT: Look up 10.30.11.20
+    TRT-->>TGW: 10.30.0.0/16 → data attachment (propagated)
+    TGW->>DB: Deliver into data VPC
+    DB-->>TGW: Reply to 10.20.21.15
+    TGW-->>POD: 10.20.0.0/16 → app attachment
+    Note over POD,DB: Routing opens the path · security groups still decide what is allowed
+```
+
+| Block (`transit_gateway.tf`) | What it does |
+|---|---|
+| `aws_ec2_transit_gateway.main` | The hub router. Every attachment auto-associates and auto-propagates its CIDR |
+| `aws_ec2_transit_gateway_vpc_attachment.vpc` | `for_each = local.vpcs` plugs every VPC in using one private subnet per AZ |
+| `aws_route.private_to_tgw` | `10.0.0.0/8 → TGW` in every private route table |
+| `aws_route.public_to_tgw` | The same route in public route tables (edge, app, ops) |
+
+> ➕ **Reusable:** add a VPC to `locals.tf` and it's created, attached to the TGW and routed automatically.
+
 #### 📦 What one `terraform apply` creates
 
 | Resource | Count |
 |---|:-:|
 | VPCs | 4 |
-| Subnets (6 edge + 3 × 3 private) | 15 |
-| Route tables | 5 |
-| Internet Gateway / NAT Gateway / Elastic IP | 1 / 1 / 1 |
-| Security groups (public, private, endpoint) | 8 |
+| Subnets (9 public + 18 private) | 27 |
+| Route tables (3 public + 4 private) | 7 |
+| Internet Gateways / NAT Gateway / Elastic IP | 3 / 1 / 1 |
+| Security groups (public, private, endpoint) | 10 |
 | Gateway endpoints | 5 |
-| Interface endpoints | 9 |
+| Interface endpoints | 8 |
+| Transit Gateway / attachments / TGW routes | 1 / 4 / 7 |
 
-> 💰 **Cost note:** Gateway endpoints are free. Interface endpoints cost about $7.30 per AZ per month each (9 × 3 AZs ≈ $200 per month), and the NAT Gateway about $33 per month, both before data charges. Add Interface endpoints only to VPCs that need them.
+> 💰 **Cost note:** Gateway endpoints are free. Interface endpoints cost about $7.30 per AZ per month each (8 × 3 AZs ≈ $175 per month), the NAT Gateway about $33 per month, and TGW attachments about $36 per month each (≈ $146 per month), all before data charges.
 
 ---
 
@@ -855,13 +1027,13 @@ flowchart TB
         OPS["🛠️ product-ops-role<br/>enable_platform_role"]:::env
         QA["🧪 product-qa-role<br/>enable_product_role<br/>enable_cicd_role"]:::env
         UAT["🧷 product-uat-role<br/>enable_product_role<br/>enable_cicd_role"]:::env
-        PRD["🏦 product-prod-role<br/>⚠️ role flags pending"]:::warn
+        PRD["🏦 product-prod-role<br/>enable_product_role<br/>enable_cicd_role"]:::env
     end
 
     OPS -.-> R1
     QA -.-> R2 & R3
     UAT -.-> R2 & R3
-    PRD -.-> ROLES
+    PRD -.-> R2 & R3
 
     classDef mod fill:#7B42BC,stroke:#fff,color:#fff,stroke-width:2px
     classDef plat fill:#ff9900,stroke:#fff,color:#000
@@ -902,6 +1074,12 @@ sequenceDiagram
 
 Every stack keeps its **own state file** inside a single encrypted S3 bucket, **`fintech-project-statefile-bucket`**. Locking uses Terraform's **native S3 lock file** (`use_lockfile = true`), so no DynamoDB table is needed.
 
+<div align="center">
+
+<img src="docs/diagrams/state-backend.svg" width="100%" alt="Animated diagram of eight Terraform stacks each writing its own state file into one encrypted S3 bucket"/>
+
+</div>
+
 **Why split the state?**
 - 💥 **Smaller blast radius:** a bad apply on QA IAM can't touch prod networking.
 - ⚡ **Faster plans:** each stack only refreshes its own resources.
@@ -930,7 +1108,8 @@ flowchart LR
         K4["product-iam/envs/iam-uat-role.tfstate"]:::ki
         K5["product-iam/envs/iam-prod-role.tfstate"]:::ki
         K6["product-name/envs/qa/s3.tfstate"]:::ks
-        K7["product-name/envs/prod/s3.tfstate"]:::ks
+        K7["product-name/envs/stage/s3.tfstate"]:::ks
+        K8["product-name/envs/prod/s3.tfstate"]:::ks
     end
 
     N --> K1
@@ -939,8 +1118,8 @@ flowchart LR
     I3 --> K4
     I4 --> K5
     S1 --> K6
-    S2 -.->|⚠️ shares prod key| K7
-    S3 --> K7
+    S2 --> K7
+    S3 --> K8
 
     classDef net fill:#4facfe,stroke:#fff,color:#000
     classDef iam fill:#ff9900,stroke:#fff,color:#000
@@ -960,8 +1139,8 @@ flowchart LR
 | 🧷 iam/product-uat-role | `product-iam/envs/iam-uat-role.tfstate` |
 | 🏦 iam/product-prod-role | `product-iam/envs/iam-prod-role.tfstate` |
 | 🪣 qa/s3 | `product-name/envs/qa/s3.tfstate` |
+| 🪣 stage/s3 | `product-name/envs/stage/s3.tfstate` |
 | 🪣 prod/s3 | `product-name/envs/prod/s3.tfstate` |
-| 🪣 stage/s3 | `product-name/envs/prod/s3.tfstate` ⚠️ *same as prod, to be fixed* |
 
 #### 🔒 How native S3 locking protects state
 
@@ -1000,23 +1179,31 @@ sequenceDiagram
 - 🛡️ Private SG no longer hardcodes `0.0.0.0/0` ingress. Rules now come from the root module (VPC CIDR only)
 - 🔁 VPC endpoint code rewritten: no hardcoded region, no fragile `slice()`, no `[0]` index crash, descriptions + tags added (clears the KICS findings)
 - 📌 Pinned latest Terraform, AWS provider and IAM module versions everywhere
+- 🗺️ CIDRs re-planned to `10.10 / 10.20 / 10.30 / 10.40` with edge subnets fixed to sit inside `10.10.0.0/16`
+- 🏗️ Subnets now round-robin across 3 AZs, and TGW and endpoints use one subnet per AZ
+- 🐞 `outputs.tf`: `aws.subnet` → `aws_subnet`, added CIDR, public subnet and route table outputs
+- 🔐 `product-prod-role` now uses real module inputs (`enable_product_role`, `enable_cicd_role`)
+- 🪣 `stage/s3` has its own state key, no longer sharing prod's
 
 ### 🚀 How to Deploy the Networking Stack
 
 ```bash
 cd infra-modules/prod/Networking
 terraform init -reconfigure          # connect to the S3 backend
-terraform plan -out=network.tfplan   # review: 4 VPCs, 15 subnets, 14 endpoints
+terraform plan -out=network.tfplan   # review: 4 VPCs, 27 subnets, 13 endpoints, 1 TGW
 terraform apply network.tfplan
 ```
 
 ### 🔜 Next Up
 
-- [ ] Fix the `product-prod-role` role flags (`enable_prod_role` isn't a module input)
-- [ ] Give `stage/s3` its own state key
-- [ ] Add `network/outputs.tf` (VPC ID, subnet IDs, route table IDs) for EKS and RDS stacks
-- [ ] Unique route table names per VPC
-- [ ] Transit Gateway to connect edge ↔ app ↔ data ↔ ops
+- [x] Transit Gateway connecting edge ↔ app ↔ data ↔ ops
+- [x] Separate state key for `stage/s3`
+- [x] Fix `product-prod-role` role flags
+- [ ] VPC Flow Logs (PCI-DSS / SOC 2)
+- [ ] Lock down the default security group (CIS 5.4)
+- [ ] EKS subnet tags (`kubernetes.io/role/elb`, `internal-elb`)
+- [ ] `default_tags` in the provider + unique route table names
+- [ ] TGW segmentation (separate route tables so edge can't reach data directly)
 - [ ] EKS + Karpenter in the app VPC
 
 ---
@@ -1029,47 +1216,51 @@ gantt
     dateFormat  YYYY-MM-DD
     axisFormat  %b %Y
     section Foundation
-    Repo, README, .gitignore          :done,    f1, 2026-11-01, 3d
-    Terraform VPC + EKS + Karpenter   :active,  f2, 2026-11-04, 14d
+    Repo, README, state backend, IAM     :done,    f1, 2026-11-01, 8d
+    Network: 4 VPCs + Transit Gateway    :done,    f2, 2026-11-07, 5d
+    section Edge
+    Route 53, CloudFront, WAF, Shield, API Gateway :active, e1, 2026-11-12, 10d
+    section Orchestration
+    EKS + Karpenter + KEDA               :         o1, after e1, 14d
+    Calico + Istio                       :         o2, after o1, 10d
+    section Data
+    MySQL, Valkey, MongoDB, OpenSearch, Kafka :    d1, after o1, 14d
     section Application
-    Frontend + 2 BFFs                 :         a1, after f2, 21d
-    7 core app microservices + Aurora :         a2, after a1, 35d
-    section DevSecOps
-    CI/CD, scanning, signing          :         d1, after f2, 21d
-    Kyverno, Falco, Vault, Istio      :         d2, after d1, 28d
-    section GitOps and Observability
-    ArgoCD + Rollouts                 :         g1, after d1, 14d
-    Prometheus, Grafana, Loki, Tempo  :         g2, after g1, 21d
-    section MLOps and AI
-    Fraud and credit models + MLflow  :         m1, after a2, 28d
-    Training pipeline + KServe        :         m2, after m1, 21d
-    GenAI RAG assistant + guardrails  :         m3, after m2, 28d
+    BFF, Payment, Ledger, Fraud, Notification :    a1, after d1, 28d
+    section Delivery
+    GitHub Actions + Argo CD + Argo Rollouts  :    g1, after o2, 14d
+    section Observability and Security
+    Prometheus, Grafana, Loki, Logstash, CloudWatch : s1, after g1, 14d
+    Vault + Falco                        :         s2, after s1, 10d
+    section MLOps
+    Airflow, Kubeflow, MLflow, KServe    :         m1, after a1, 21d
+    Evidently AI + WhyLogs               :         m2, after m1, 10d
 ```
 
 ```mermaid
 timeline
     title Evolution of the Platform
-    Phase 1 - Foundation : Repository and docs : Terraform VPC, EKS, Karpenter
-    Phase 2 - Services : Frontend and BFFs : 7 application microservices : Aurora, Redis, Kafka
-    Phase 3 - Security : CI/CD scanning and signing : Kyverno, Falco, Vault : Istio mTLS
-    Phase 4 - Delivery : ArgoCD GitOps : Canary rollouts : Observability stack
-    Phase 5 - Intelligence : MLOps pipeline : Fraud and credit scoring : GenAI RAG assistant
+    Phase 1 - Foundation : State backend and IAM : 4 VPCs and Transit Gateway
+    Phase 2 - Edge and Platform : Route 53, CloudFront, WAF, Shield, API Gateway : EKS, Karpenter, KEDA, Calico, Istio
+    Phase 3 - Data and Services : MySQL, Valkey, MongoDB, OpenSearch, Kafka : BFF, Payment, Ledger, Fraud, Notification
+    Phase 4 - Delivery and Operations : GitHub Actions, Argo CD, Argo Rollouts : Prometheus, Grafana, Loki, Logstash, CloudWatch, Vault, Falco
+    Phase 5 - Intelligence : Airflow, Kubeflow, MLflow, KServe : Evidently AI and WhyLogs
 ```
 
 | Status | Item |
 |:--:|---|
-| ✅ | Repository scaffold, README, `.gitignore` |
+| ✅ | Repository, README and animated architecture diagrams |
 | ✅ | Terraform remote backend: multi state files in S3 with native locking |
-| ✅ | IAM: reusable child module + ops / qa / uat environment roles (GitHub OIDC for CI/CD) |
-| ✅ | Networking: 4 VPCs (edge, app, data, ops) with Gateway + Interface VPC endpoints |
-| 🚧 | IAM prod role flags · stage S3 state key · network outputs |
-| 🔜 | Terraform: EKS cluster, Karpenter, Transit Gateway |
-| 🔜 | Frontend, 2 BFFs and 7 application microservices |
-| 🔜 | CI/CD with scanning, SBOM and image signing |
-| 🔜 | ArgoCD GitOps, Kyverno policies, Falco, Istio |
-| 🔜 | Observability stack (Prometheus, Grafana, Loki, Tempo) |
-| 🔜 | MLOps pipeline and 2 prediction APIs |
-| 🔜 | GenAI assistant with RAG and guardrails |
+| ✅ | IAM: reusable child module and roles for ops, qa, uat and prod (GitHub OIDC for CI/CD) |
+| ✅ | Network: 4 VPCs (edge, app, data, ops), VPC endpoints and Transit Gateway |
+| 🚧 | Network hardening: Flow Logs, default SG lockdown, EKS subnet tags, default tags |
+| 🔜 | Edge: Route 53, CloudFront, WAF, Shield Advanced, API Gateway |
+| 🔜 | Orchestration: EKS, Karpenter, KEDA, Calico, Istio |
+| 🔜 | Data: MySQL, Valkey, MongoDB, OpenSearch, Kafka |
+| 🔜 | Application: BFF, Payment, Ledger, Fraud and Notification services |
+| 🔜 | Delivery: GitHub Actions, Argo CD, Argo Rollouts |
+| 🔜 | Identity and observability: Vault, Falco, Prometheus, Grafana, Loki, Logstash, CloudWatch |
+| 🔜 | MLOps: Airflow, Kubeflow, MLflow, KServe, Evidently AI, WhyLogs |
 
 ---
 
@@ -1078,6 +1269,7 @@ timeline
 ```text
 FinTech-Enterprise-Project/
 ├── .github/workflows/            # Terraform CI pipelines (GitHub OIDC → AWS)
+├── docs/diagrams/                # animated SVG diagrams used in this README
 ├── infra-modules/
 │   ├── iam/
 │   │   ├── child-module/         # 3 roles via terraform-aws-modules/iam 6.8.2
@@ -1087,7 +1279,7 @@ FinTech-Enterprise-Project/
 │   │       ├── product-uat-role/ # app team + CI/CD roles
 │   │       └── product-prod-role/
 │   ├── prod/
-│   │   ├── Networking/           # root: backend, provider, locals (4 VPCs), module call
+│   │   ├── Networking/           # root: backend, provider, locals (4 VPCs), module call, transit_gateway.tf
 │   │   │   └── network/          # child: VPC, subnets, NAT, SGs, VPC endpoints
 │   │   └── s3/
 │   ├── qa/   (s3, EKS)

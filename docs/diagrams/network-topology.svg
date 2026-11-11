@@ -1,0 +1,156 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1240 800" width="1240" height="800" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <title>FinTech prod network - hub and spoke via Transit Gateway</title>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b1020"/>
+      <stop offset="1" stop-color="#151a30"/>
+    </linearGradient>
+    <radialGradient id="hub" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#ffcf70"/>
+      <stop offset="1" stop-color="#ff7a00"/>
+    </radialGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <style>
+      .spoke { fill: none; stroke-width: 3; stroke-dasharray: 12 8; animation: dash 1s linear infinite }
+      @keyframes dash { to { stroke-dashoffset: -20 } }
+      .breathe { animation: breathe 3s ease-in-out infinite; transform-origin: 620px 400px }
+      @keyframes breathe { 0%,100% { transform: scale(1) } 50% { transform: scale(1.06) } }
+      .t  { fill: #e6edf3; font-size: 15px; font-weight: 700 }
+      .ts { fill: #b6c2d1; font-size: 12px }
+      .chip { font-size: 11px; font-weight: 600; fill: #0b1020 }
+    </style>
+  </defs>
+
+  <rect width="1240" height="800" rx="18" fill="url(#bg)"/>
+  <text x="40" y="44" class="t" font-size="22">🕸️ Hub-and-spoke network · 4 VPCs · 3 AZs · 1 Transit Gateway</text>
+  <text x="40" y="68" class="ts">Every private route table: 10.0.0.0/8 → TGW · own /16 stays local · subnets round-robin across us-east-1a · 1b · 1c</text>
+
+  <!-- ===== spokes ===== -->
+  <path id="sEdge" class="spoke" stroke="#84fab0" d="M440,300 L620,400"/>
+  <path id="sApp"  class="spoke" stroke="#4facfe" d="M800,300 L620,400"/>
+  <path id="sData" class="spoke" stroke="#ff416c" d="M440,500 L620,400"/>
+  <path id="sOps"  class="spoke" stroke="#c471f5" d="M800,500 L620,400"/>
+
+  <!-- ===== VPC cards ===== -->
+  <!-- EDGE -->
+  <g>
+    <rect x="40" y="95" width="400" height="260" rx="16" fill="#10372b" stroke="#84fab0" stroke-width="2.5"/>
+    <text x="60" y="125" class="t" fill="#84fab0">🚪 EDGE VPC</text>
+    <text x="420" y="125" class="ts" text-anchor="end">10.10.0.0/16</text>
+    <text x="60" y="147" class="ts">Route 53 · CloudFront · WAF · Shield · API Gateway</text>
+    <g class="ts"><text x="150" y="175" text-anchor="middle">1a</text><text x="270" y="175" text-anchor="middle">1b</text><text x="390" y="175" text-anchor="middle">1c</text></g>
+    <text x="60" y="203" class="ts">public</text>
+    <rect x="100" y="186" width="100" height="26" rx="13" fill="#84fab0"/><text x="150" y="204" class="chip" text-anchor="middle">10.10.1.0/24</text>
+    <rect x="220" y="186" width="100" height="26" rx="13" fill="#84fab0"/><text x="270" y="204" class="chip" text-anchor="middle">10.10.2.0/24</text>
+    <rect x="340" y="186" width="90"  height="26" rx="13" fill="#84fab0"/><text x="385" y="204" class="chip" text-anchor="middle">10.10.3.0/24</text>
+    <text x="60" y="241" class="ts">private</text>
+    <rect x="100" y="224" width="100" height="26" rx="13" fill="#8fd3f4"/><text x="150" y="242" class="chip" text-anchor="middle">10.10.11.0/24</text>
+    <rect x="220" y="224" width="100" height="26" rx="13" fill="#8fd3f4"/><text x="270" y="242" class="chip" text-anchor="middle">10.10.12.0/24</text>
+    <rect x="340" y="224" width="90"  height="26" rx="13" fill="#8fd3f4"/><text x="385" y="242" class="chip" text-anchor="middle">10.10.13.0/24</text>
+    <text x="60" y="290" class="ts">🌐 IGW ✅   🔁 NAT ✖</text>
+    <text x="60" y="312" class="ts">🟢 gateway: s3</text>
+    <text x="60" y="334" class="ts">🟣 interface: —</text>
+  </g>
+
+  <!-- APP -->
+  <g>
+    <rect x="800" y="95" width="400" height="260" rx="16" fill="#12263f" stroke="#4facfe" stroke-width="2.5"/>
+    <text x="820" y="125" class="t" fill="#4facfe">⚙️ APP VPC</text>
+    <text x="1180" y="125" class="ts" text-anchor="end">10.20.0.0/16</text>
+    <text x="820" y="147" class="ts">ALB · EKS microservices · KServe · Airflow · NAT</text>
+    <g class="ts"><text x="935" y="172" text-anchor="middle">1a</text><text x="1040" y="172" text-anchor="middle">1b</text><text x="1140" y="172" text-anchor="middle">1c</text></g>
+    <text x="812" y="196" class="ts">public</text>
+    <rect x="890" y="180" width="92" height="24" rx="12" fill="#84fab0"/><text x="936" y="197" class="chip" text-anchor="middle">10.20.1.0</text>
+    <rect x="994" y="180" width="92" height="24" rx="12" fill="#84fab0"/><text x="1040" y="197" class="chip" text-anchor="middle">10.20.2.0</text>
+    <rect x="1098" y="180" width="92" height="24" rx="12" fill="#84fab0"/><text x="1144" y="197" class="chip" text-anchor="middle">10.20.3.0</text>
+    <text x="812" y="226" class="ts">control</text>
+    <rect x="890" y="210" width="92" height="24" rx="12" fill="#8fd3f4"/><text x="936" y="227" class="chip" text-anchor="middle">10.20.11.0</text>
+    <rect x="994" y="210" width="92" height="24" rx="12" fill="#8fd3f4"/><text x="1040" y="227" class="chip" text-anchor="middle">10.20.12.0</text>
+    <rect x="1098" y="210" width="92" height="24" rx="12" fill="#8fd3f4"/><text x="1144" y="227" class="chip" text-anchor="middle">10.20.13.0</text>
+    <text x="812" y="256" class="ts">data pl.</text>
+    <rect x="890" y="240" width="92" height="24" rx="12" fill="#a0c4ff"/><text x="936" y="257" class="chip" text-anchor="middle">10.20.21.0</text>
+    <rect x="994" y="240" width="92" height="24" rx="12" fill="#a0c4ff"/><text x="1040" y="257" class="chip" text-anchor="middle">10.20.22.0</text>
+    <rect x="1098" y="240" width="92" height="24" rx="12" fill="#a0c4ff"/><text x="1144" y="257" class="chip" text-anchor="middle">10.20.23.0</text>
+    <text x="820" y="292" class="ts">🌐 IGW ✅   🔁 NAT ✅</text>
+    <text x="820" y="314" class="ts">🟢 gateway: s3</text>
+    <text x="820" y="336" class="ts">🟣 interface: ecr.api · ecr.dkr · logs · secretsmanager</text>
+  </g>
+
+  <!-- DATA -->
+  <g>
+    <rect x="40" y="445" width="400" height="260" rx="16" fill="#2b1420" stroke="#ff416c" stroke-width="2.5"/>
+    <text x="60" y="475" class="t" fill="#ff7a95">🗄️ DATA VPC</text>
+    <text x="420" y="475" class="ts" text-anchor="end">10.30.0.0/16</text>
+    <text x="60" y="497" class="ts">MySQL · Valkey · Kafka · MongoDB · OpenSearch</text>
+    <g class="ts"><text x="150" y="524" text-anchor="middle">1a</text><text x="270" y="524" text-anchor="middle">1b</text><text x="385" y="524" text-anchor="middle">1c</text></g>
+    <text x="52" y="553" class="ts">DBs</text>
+    <rect x="100" y="536" width="100" height="26" rx="13" fill="#ffadc0"/><text x="150" y="554" class="chip" text-anchor="middle">10.30.11.0/24</text>
+    <rect x="220" y="536" width="100" height="26" rx="13" fill="#ffadc0"/><text x="270" y="554" class="chip" text-anchor="middle">10.30.12.0/24</text>
+    <rect x="340" y="536" width="90"  height="26" rx="13" fill="#ffadc0"/><text x="385" y="554" class="chip" text-anchor="middle">10.30.13.0/24</text>
+    <text x="52" y="591" class="ts">Kafka</text>
+    <rect x="100" y="574" width="100" height="26" rx="13" fill="#ffd6a5"/><text x="150" y="592" class="chip" text-anchor="middle">10.30.21.0/24</text>
+    <rect x="220" y="574" width="100" height="26" rx="13" fill="#ffd6a5"/><text x="270" y="592" class="chip" text-anchor="middle">10.30.22.0/24</text>
+    <rect x="340" y="574" width="90"  height="26" rx="13" fill="#ffd6a5"/><text x="385" y="592" class="chip" text-anchor="middle">10.30.23.0/24</text>
+    <text x="60" y="636" class="ts">🌐 IGW ✖   🔁 NAT ✖   (no internet path)</text>
+    <text x="60" y="658" class="ts">🟢 gateway: s3 · dynamodb</text>
+    <text x="60" y="680" class="ts">🟣 interface: kms</text>
+  </g>
+
+  <!-- OPS -->
+  <g>
+    <rect x="800" y="445" width="400" height="260" rx="16" fill="#24123d" stroke="#c471f5" stroke-width="2.5"/>
+    <text x="820" y="475" class="t" fill="#d79bff">🛠️ OPS VPC</text>
+    <text x="1180" y="475" class="ts" text-anchor="end">10.40.0.0/16</text>
+    <text x="820" y="497" class="ts">Prometheus · Grafana · Argo · Vault · Kubeflow · MLflow</text>
+    <g class="ts"><text x="936" y="524" text-anchor="middle">1a</text><text x="1040" y="524" text-anchor="middle">1b</text><text x="1144" y="524" text-anchor="middle">1c</text></g>
+    <text x="812" y="553" class="ts">public</text>
+    <rect x="886" y="536" width="100" height="26" rx="13" fill="#84fab0"/><text x="936" y="554" class="chip" text-anchor="middle">10.40.1.0/24</text>
+    <rect x="990" y="536" width="100" height="26" rx="13" fill="#84fab0"/><text x="1040" y="554" class="chip" text-anchor="middle">10.40.2.0/24</text>
+    <rect x="1094" y="536" width="100" height="26" rx="13" fill="#84fab0"/><text x="1144" y="554" class="chip" text-anchor="middle">10.40.3.0/24</text>
+    <text x="812" y="591" class="ts">private</text>
+    <rect x="886" y="574" width="100" height="26" rx="13" fill="#d7b8ff"/><text x="936" y="592" class="chip" text-anchor="middle">10.40.11.0/24</text>
+    <rect x="990" y="574" width="100" height="26" rx="13" fill="#d7b8ff"/><text x="1040" y="592" class="chip" text-anchor="middle">10.40.12.0/24</text>
+    <rect x="1094" y="574" width="100" height="26" rx="13" fill="#d7b8ff"/><text x="1144" y="592" class="chip" text-anchor="middle">10.40.13.0/24</text>
+    <text x="820" y="636" class="ts">🌐 IGW ✅   🔁 NAT ✖</text>
+    <text x="820" y="658" class="ts">🟢 gateway: s3</text>
+    <text x="820" y="680" class="ts">🟣 interface: ssm · ssmmessages · ec2messages</text>
+  </g>
+
+  <!-- ===== hub ===== -->
+  <circle cx="620" cy="400" r="96" fill="none" stroke="#ff9900" stroke-width="2" stroke-dasharray="6 10" opacity=".7">
+    <animateTransform attributeName="transform" type="rotate" from="0 620 400" to="360 620 400" dur="14s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="620" cy="400" r="78" fill="none" stroke="#ffcf70" stroke-width="1.5" stroke-dasharray="2 8" opacity=".6">
+    <animateTransform attributeName="transform" type="rotate" from="360 620 400" to="0 620 400" dur="9s" repeatCount="indefinite"/>
+  </circle>
+  <g class="breathe">
+    <circle cx="620" cy="400" r="62" fill="url(#hub)" filter="url(#glow)"/>
+    <text x="620" y="392" text-anchor="middle" font-size="26">🔀</text>
+    <text x="620" y="418" text-anchor="middle" font-size="14" font-weight="800" fill="#2b1500">TRANSIT GW</text>
+    <text x="620" y="434" text-anchor="middle" font-size="11" fill="#3d2400">10.0.0.0/8</text>
+  </g>
+
+  <!-- ===== packets on spokes (both directions) ===== -->
+  <g filter="url(#glow)">
+    <circle r="6" fill="#84fab0"><animateMotion dur="2.2s" repeatCount="indefinite"><mpath xlink:href="#sEdge"/></animateMotion></circle>
+    <circle r="6" fill="#4facfe"><animateMotion dur="2.2s" repeatCount="indefinite" begin="0.5s"><mpath xlink:href="#sApp"/></animateMotion></circle>
+    <circle r="6" fill="#4facfe"><animateMotion dur="2.2s" repeatCount="indefinite" begin="1.2s" keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath xlink:href="#sApp"/></animateMotion></circle>
+    <circle r="6" fill="#ff416c"><animateMotion dur="2.2s" repeatCount="indefinite" begin="0.9s" keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath xlink:href="#sData"/></animateMotion></circle>
+    <circle r="6" fill="#ff416c"><animateMotion dur="2.2s" repeatCount="indefinite" begin="1.8s"><mpath xlink:href="#sData"/></animateMotion></circle>
+    <circle r="6" fill="#c471f5"><animateMotion dur="2.2s" repeatCount="indefinite" begin="0.3s" keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath xlink:href="#sOps"/></animateMotion></circle>
+    <circle r="6" fill="#84fab0"><animateMotion dur="2.2s" repeatCount="indefinite" begin="1.4s" keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath xlink:href="#sEdge"/></animateMotion></circle>
+  </g>
+
+  <!-- ===== legend ===== -->
+  <rect x="40" y="725" width="1160" height="56" rx="14" fill="#0d1526" stroke="#2b3a55"/>
+  <g>
+    <rect x="62" y="744" width="34" height="18" rx="9" fill="#84fab0"/><text x="104" y="758" class="ts">public subnet</text>
+    <rect x="212" y="744" width="34" height="18" rx="9" fill="#8fd3f4"/><text x="254" y="758" class="ts">private subnet</text>
+    <text x="370" y="758" class="ts">🟢 Gateway endpoint (free, route table)</text>
+    <text x="640" y="758" class="ts">🟣 Interface endpoint (ENI per AZ)</text>
+    <text x="890" y="758" class="ts">● moving dots = traffic through TGW attachments</text>
+  </g>
+</svg>
