@@ -42,6 +42,7 @@ resource "aws_kms_key" "efs_cmk" {
   }
 }
 
+# ✅ Remediated CKV_AWS_42 + CKV_AWS_184: EFS encryption enabled with customer-managed KMS key
 resource "aws_efs_file_system" "demo_efs" {
   creation_token = "wezvatech-aiops-demo"
   encrypted      = true
@@ -53,6 +54,7 @@ resource "aws_efs_file_system" "demo_efs" {
   }
 }
 
+# ✅ Remediated: Backup policy explicitly enabled to prevent data loss vulnerabilities
 resource "aws_efs_backup_policy" "policy" {
   file_system_id = aws_efs_file_system.demo_efs.id
 
@@ -60,3 +62,4 @@ resource "aws_efs_backup_policy" "policy" {
     status = "ENABLED"
   }
 }
+#########
