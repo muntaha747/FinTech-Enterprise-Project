@@ -108,7 +108,7 @@
   <text x="850" y="432" text-anchor="middle" class="t">📒 ledger-service</text>
 
   <rect x="715" y="475" width="270" height="44" rx="9" class="node" fill="#2a1245" stroke="#e040fb" stroke-dasharray="4 3"/>
-  <text x="850" y="502" text-anchor="middle" class="ts">🚇 VPC endpoint ENIs · ecr · logs · secrets · s3</text>
+  <text x="850" y="502" text-anchor="middle" class="ts">🚇 VPC endpoints · ECR · S3 · KMS</text>
 
   <!-- ===== Data VPC nodes ===== -->
   <rect x="1055" y="215" width="130" height="44" rx="9" class="node" fill="#3a1424" stroke="#ff416c"/>
@@ -139,7 +139,7 @@
 
   <rect x="1040" y="74" width="340" height="52" rx="12" fill="#1f1530" stroke="#e040fb" stroke-width="1.6"/>
   <text x="1210" y="94" text-anchor="middle" class="t">☁️ AWS services · never via internet</text>
-  <text x="1210" y="113" text-anchor="middle" class="ts">📦 ECR · 🔑 Secrets Manager · 📜 Logs · 🪣 S3 · 🔐 KMS</text>
+  <text x="1210" y="113" text-anchor="middle" class="ts">📦 ECR · 🪣 S3 · 🔐 KMS</text>
 
   <!-- ===== packets ===== -->
   <g filter="url(#glow)">
@@ -170,7 +170,7 @@
     <circle cx="470" cy="732" r="6" fill="#43e97b"/><text x="486" y="737" class="t">Response</text><text x="486" y="755" class="ts">Same path back to the customer</text>
     <rect x="763" y="727" width="14" height="10" rx="2" fill="#ffd200"/><text x="786" y="737" class="t">Database query</text><text x="786" y="755" class="ts">app → TGW → data VPC (MySQL · Valkey · Kafka)</text>
     <circle cx="70"  cy="776" r="6" fill="#ff8a65"/><text x="86"  y="781" class="t">Metrics / logs</text><text x="190" y="781" class="ts">app → TGW → ops VPC (Prometheus · Grafana)</text>
-    <circle cx="470" cy="776" r="6" fill="#e040fb"/><text x="486" y="781" class="t">Private AWS access</text><text x="625" y="781" class="ts">VPC endpoints → ECR · Secrets · S3 · KMS</text>
+    <circle cx="470" cy="776" r="6" fill="#e040fb"/><text x="486" y="781" class="t">Private AWS access</text><text x="625" y="781" class="ts">VPC endpoints → ECR · S3 · KMS</text>
     <circle cx="935" cy="776" r="6" fill="#ff4081"/><text x="951" y="781" class="t">Egress</text><text x="1006" y="781" class="ts">app pods → NAT Gateway → payment network</text>
   </g>
 </svg>
