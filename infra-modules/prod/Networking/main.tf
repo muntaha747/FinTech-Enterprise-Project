@@ -6,6 +6,7 @@ module "network" {
   name        = "fintech-${local.environment}-${each.key}"
   vpc_name    = each.key
   vpc_cidr    = each.value.cidr
+  azs         = local.azs
   Environment = local.environment
   org         = local.org
 

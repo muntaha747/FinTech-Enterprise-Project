@@ -16,6 +16,11 @@ variable "vpc_tags" {
   default     = "WEZVATECH-VPC"
 }
 
+variable "azs" {
+  description = "Availability Zones to spread subnets across (round-robin)"
+  type        = list(string)
+}
+
 variable "public_subnets" {
   description = "A list of public subnets cidr inside the VPC"
   type        = list(string)

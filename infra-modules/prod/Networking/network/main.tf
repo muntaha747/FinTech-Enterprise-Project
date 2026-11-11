@@ -18,15 +18,21 @@ resource "aws_internet_gateway" "my_igw" {
 }
 
 
-############################## Availability Zones List ##############################
-data "aws_availability_zones" "all" {}
+############################## Availability Zones ##############################
+# Subnets go round-robin across var.azs: with 3 AZs, subnet 0->1a, 1->1b, 2->1c, 3->1a, 4->1b ...
+# So the first length(var.azs) private subnets are exactly one per AZ.
+locals {
+  private_subnet_ids_per_az = slice(
+    aws_subnet.private_subnet[*].id, 0, min(length(var.azs), length(var.private_subnets))
+  )
+}
 
 ############################## Public Subnets #######################################
 resource "aws_subnet" "public_subnet" {
   count             = length(var.public_subnets)
   vpc_id            = aws_vpc.my_vpc.id
   cidr_block        = element(var.public_subnets, count.index)
-  availability_zone = data.aws_availability_zones.all.names[count.index]
+  availability_zone = var.azs[count.index % length(var.azs)]
   tags = merge({
     Name      = "Fintech-${var.vpc_name}-public-subnet-${count.index}"
     "project" = var.public_subnet_tags
@@ -96,7 +102,7 @@ resource "aws_subnet" "private_subnet" {
   count             = length(var.private_subnets)
   vpc_id            = aws_vpc.my_vpc.id
   cidr_block        = element(var.private_subnets, count.index)
-  availability_zone = data.aws_availability_zones.all.names[count.index % length(data.aws_availability_zones.all.names)]
+  availability_zone = var.azs[count.index % length(var.azs)]
 
   tags = merge(
     {
@@ -227,7 +233,7 @@ resource "aws_vpc_endpoint" "interface" {
   vpc_id              = aws_vpc.my_vpc.id
   service_name        = "com.amazonaws.${data.aws_region.current.region}.${each.key}"
   vpc_endpoint_type   = "Interface"
-  subnet_ids          = aws_subnet.private_subnet[*].id
+  subnet_ids          = local.private_subnet_ids_per_az # endpoints allow only one subnet per AZ
   security_group_ids  = [aws_security_group.endpoint_sg[0].id]
   private_dns_enabled = true
 
