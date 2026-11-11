@@ -32,8 +32,55 @@
 
 ---
 
+## 🎬 Architecture at a Glance
+
+> Five animated diagrams: every moving dot is real traffic, state or telemetry flowing through the platform.
+
+### 🧱 1. FinTech Infrastructure Layers (AWS)
+
+<div align="center">
+
+<img src="docs/diagrams/infrastructure-layers.svg" width="100%" alt="Animated stack of six infrastructure layers (CI/CD, Edge, Network, Orchestration, Application, Data) with Identity and Access and Observability as cross-cutting pillars"/>
+
+</div>
+
+### 🏛️ 2. Regional Architecture: 4 VPCs on AWS
+
+<div align="center">
+
+<img src="docs/diagrams/architecture-overview.svg" width="100%" alt="Animated regional architecture: edge, app, data and ops VPCs connected by a Transit Gateway, with EKS microservices, data stores, ops tooling, VPC endpoints to ECR, S3 and KMS, and NAT egress"/>
+
+</div>
+
+### 🚦 3. Live Traffic Flow
+
+<div align="center">
+
+<img src="docs/diagrams/traffic-flow.svg" width="100%" alt="Animated diagram of a customer request flowing through CloudFront, API Gateway, the Transit Gateway, the ALB and EKS services into the data and ops VPCs"/>
+
+</div>
+
+### 🕸️ 4. Hub-and-Spoke Network
+
+<div align="center">
+
+<img src="docs/diagrams/network-topology.svg" width="100%" alt="Animated hub-and-spoke diagram: edge, app, data and ops VPCs with their subnets per AZ, connected through a Transit Gateway"/>
+
+</div>
+
+### 🗃️ 5. Multi State File Backend
+
+<div align="center">
+
+<img src="docs/diagrams/state-backend.svg" width="100%" alt="Animated diagram of Terraform stacks each writing its own state file into one encrypted S3 bucket"/>
+
+</div>
+
+---
+
 ## 📑 Table of Contents
 
+- [Architecture at a Glance](#-architecture-at-a-glance)
 - [About](#-about-this-project)
 - [Project Overview & Architecture](#%EF%B8%8F-project-overview--architecture)
 - [Tech Stack](#-tech-stack)
@@ -78,24 +125,6 @@ The project grows in stages. Each stage adds a layer of the architecture below, 
 <div align="center">
 
 [![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=20&pause=900&color=00C9A7&center=true&vCenter=true&width=900&lines=6+infrastructure+layers+%C2%B7+2+cross-cutting+pillars;4+VPCs+%C2%B7+1+Transit+Gateway+%C2%B7+Amazon+EKS;48+tools+%C2%B7+one+consistent+architecture)](https://git.io/typing-svg)
-
-</div>
-
-### 🧱 FinTech Infrastructure Layers (AWS)
-
-<div align="center">
-
-<img src="docs/diagrams/infrastructure-layers.svg" width="100%" alt="Animated stack of six infrastructure layers (CI/CD, Edge, Network, Orchestration, Application, Data) with Identity and Access and Observability as cross-cutting pillars"/>
-
-</div>
-
-### 🏛️ Regional Architecture: 4 VPCs on AWS
-
-<div align="center">
-
-<img src="docs/diagrams/architecture-overview.svg" width="100%" alt="Animated regional architecture: edge, app, data and ops VPCs connected by a Transit Gateway, with EKS microservices, data stores, ops tooling, VPC endpoints to ECR, S3 and KMS, and NAT egress"/>
-
-<sub>🎬 Animated: request, response, Transit Gateway, data, metrics, GitOps, endpoint and egress traffic.</sub>
 
 </div>
 
@@ -373,13 +402,7 @@ flowchart LR
 
 ## 🚦 Live Traffic Flow
 
-<div align="center">
-
-<img src="docs/diagrams/traffic-flow.svg" width="100%" alt="Animated diagram of traffic flowing from the customer through CloudFront, the edge VPC, the Transit Gateway, the app VPC and the data and ops VPCs"/>
-
-<sub>🎬 Animated: every moving dot is a real traffic type travelling through the network.</sub>
-
-</div>
+> 🎬 Animated view: [Live traffic flow](#-3-live-traffic-flow) at the top of this page.
 
 ### 🛣️ Hop by hop: one payment request through the network
 
@@ -795,11 +818,7 @@ timeline
 
 One reusable module (`prod/Networking/network/`) is called **once per VPC** from the root module with `for_each`. Each VPC gets its own subnets, route tables, security groups and VPC endpoints. A **Transit Gateway** (`transit_gateway.tf`) joins them all.
 
-<div align="center">
-
-<img src="docs/diagrams/network-topology.svg" width="100%" alt="Animated hub-and-spoke diagram: edge, app, data and ops VPCs with their subnets per AZ, connected through a Transit Gateway"/>
-
-</div>
+> 🎬 Animated view: [Hub-and-spoke network](#%EF%B8%8F-4-hub-and-spoke-network) at the top of this page.
 
 ```mermaid
 flowchart TB
@@ -1074,11 +1093,7 @@ sequenceDiagram
 
 Every stack keeps its **own state file** inside a single encrypted S3 bucket, **`fintech-project-statefile-bucket`**. Locking uses Terraform's **native S3 lock file** (`use_lockfile = true`), so no DynamoDB table is needed.
 
-<div align="center">
-
-<img src="docs/diagrams/state-backend.svg" width="100%" alt="Animated diagram of eight Terraform stacks each writing its own state file into one encrypted S3 bucket"/>
-
-</div>
+> 🎬 Animated view: [Multi state file backend](#%EF%B8%8F-5-multi-state-file-backend) at the top of this page.
 
 **Why split the state?**
 - 💥 **Smaller blast radius:** a bad apply on QA IAM can't touch prod networking.
