@@ -1,0 +1,210 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1400 990" width="1400" height="990" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+<title>FinTech regional architecture - 4 VPCs, Transit Gateway, EKS, data and ops tooling</title>
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0a0f1e"/><stop offset="1" stop-color="#141a30"/></linearGradient>
+<linearGradient id="tgw" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ff7a00"/><stop offset="1" stop-color="#ffb84d"/></linearGradient>
+<filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<style>
+.flow{fill:none;stroke-width:2.4;stroke-dasharray:9 7;animation:dash 1.1s linear infinite;opacity:.85}
+@keyframes dash{to{stroke-dashoffset:-16}}
+.pulse{animation:pulse 2.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.5}50%{opacity:1}}
+.t{fill:#eef3f8;font-size:13.5px;font-weight:700}
+.ts{fill:#aab8cb;font-size:11px}
+.h{fill:#0a0f1e;font-size:14px;font-weight:800}
+.hc{fill:#0a0f1e;font-size:12px;font-weight:700}
+.lab{fill:#cfd8e3;font-size:11px;font-style:italic}
+</style></defs>
+<rect width="1400" height="990" rx="18" fill="url(#bg)"/>
+<text x="40" y="44" class="t" font-size="22">🏛️ Regional architecture · AWS us-east-1</text>
+<text x="40" y="68" class="ts" font-size="12.5">Edge · App · Data · Ops VPCs joined by a Transit Gateway · private AWS access through VPC endpoints · controlled egress through NAT</text>
+<rect x="20" y="90" width="1360" height="830" rx="18" fill="none" stroke="#ff9900" stroke-width="2" stroke-dasharray="10 6"/>
+<rect x="34" y="80" width="150" height="22" rx="11" fill="#ff9900"/><text x="109" y="96" text-anchor="middle" class="hc">☁️ AWS Region</text>
+<rect x="40" y="200" width="290" height="560" rx="16" fill="#0f2036" stroke="#4facfe" stroke-width="2.4"/>
+<rect x="40" y="200" width="290" height="40" rx="16" fill="#4facfe"/>
+<rect x="40" y="222" width="290" height="18" fill="#4facfe"/>
+<text x="56" y="226" class="h">🚪 VPC A · EDGE</text>
+<text x="316" y="226" text-anchor="end" class="hc">10.10.0.0/16</text>
+<rect x="360" y="200" width="400" height="560" rx="16" fill="#0d2a22" stroke="#43e97b" stroke-width="2.4"/>
+<rect x="360" y="200" width="400" height="40" rx="16" fill="#43e97b"/>
+<rect x="360" y="222" width="400" height="18" fill="#43e97b"/>
+<text x="376" y="226" class="h">⚙️ VPC B · APP</text>
+<text x="746" y="226" text-anchor="end" class="hc">10.20.0.0/16</text>
+<rect x="790" y="200" width="270" height="560" rx="16" fill="#2a1220" stroke="#ff416c" stroke-width="2.4"/>
+<rect x="790" y="200" width="270" height="40" rx="16" fill="#ff416c"/>
+<rect x="790" y="222" width="270" height="18" fill="#ff416c"/>
+<text x="806" y="226" class="h">🗄️ VPC C · DATA</text>
+<text x="1046" y="226" text-anchor="end" class="hc">10.30.0.0/16</text>
+<rect x="1090" y="200" width="270" height="560" rx="16" fill="#22123a" stroke="#c471f5" stroke-width="2.4"/>
+<rect x="1090" y="200" width="270" height="40" rx="16" fill="#c471f5"/>
+<rect x="1090" y="222" width="270" height="18" fill="#c471f5"/>
+<text x="1106" y="226" class="h">🛠️ VPC D · OPS</text>
+<text x="1346" y="226" text-anchor="end" class="hc">10.40.0.0/16</text>
+<path id="tA" class="flow" stroke="#ff9900" d="M700,164 V176 H185 V200"/>
+<path id="tB" class="flow" stroke="#ff9900" d="M700,164 V176 H560 V200"/>
+<path id="tC" class="flow" stroke="#ff9900" d="M700,164 V176 H925 V200"/>
+<path id="tD" class="flow" stroke="#ff9900" d="M700,164 V176 H1225 V200"/>
+<path id="req" class="flow" stroke="#00e5ff" d="M160,160 V200 H185 V495 H345 V673 H460 V299"/>
+<path id="my" class="flow" stroke="#ffd200" d="M600,349 H700 V278 H810"/>
+<path id="kf" class="flow" stroke="#ffd200" d="M600,399 H810"/>
+<path id="met" class="flow" stroke="#ff8a65" d="M720,250 V188 H1180 V255"/>
+<path id="dep" class="flow" stroke="#b388ff" d="M1150,375 V194 H660 V250"/>
+<path id="e1" class="flow" stroke="#e040fb" d="M185,745 V870 H660 V850"/>
+<path id="e2" class="flow" stroke="#e040fb" d="M455,745 V800"/>
+<path id="e3" class="flow" stroke="#e040fb" d="M925,745 V800"/>
+<path id="e4" class="flow" stroke="#e040fb" d="M1165,745 V860 H690 V850"/>
+<path id="n1" class="flow" stroke="#ff4081" d="M645,745 V780 H1180 V800"/>
+<path id="n2" class="flow" stroke="#ff4081" d="M1285,745 V800"/>
+<text x="705" y="392" class="lab">events via TGW</text>
+<text x="705" y="342" class="lab">SQL via TGW</text>
+<text x="860" y="184" class="lab">metrics scrape · GitOps sync</text>
+<rect x="600" y="110" width="200" height="54" rx="27" fill="url(#tgw)" class="pulse" filter="url(#glow)"/>
+<text x="700" y="134" text-anchor="middle" class="h">🔀 Transit Gateway</text>
+<text x="700" y="152" text-anchor="middle" class="hc">10.0.0.0/8 hub</text>
+<rect x="60" y="110" width="200" height="50" rx="25" fill="#ff9a9e" filter="url(#glow)"/>
+<text x="160" y="141" text-anchor="middle" class="h">👤 Customers · web &amp; mobile</text>
+<rect x="70" y="260" width="230" height="50" rx="10" fill="#13294a" stroke="#4facfe" stroke-width="1.6"/>
+<text x="185.0" y="283.0" text-anchor="middle" class="t">🌐 Route 53</text>
+<text x="185.0" y="299.0" text-anchor="middle" class="ts">DNS</text>
+<rect x="70" y="330" width="230" height="50" rx="10" fill="#13294a" stroke="#4facfe" stroke-width="1.6"/>
+<text x="185.0" y="353.0" text-anchor="middle" class="t">☁️ CloudFront</text>
+<text x="185.0" y="369.0" text-anchor="middle" class="ts">CDN · TLS</text>
+<rect x="70" y="400" width="230" height="50" rx="10" fill="#3a1424" stroke="#ff416c" stroke-width="1.6"/>
+<text x="185.0" y="423.0" text-anchor="middle" class="t">🧱 WAF + Shield Advanced</text>
+<text x="185.0" y="439.0" text-anchor="middle" class="ts">OWASP rules · DDoS</text>
+<rect x="70" y="470" width="230" height="50" rx="10" fill="#13294a" stroke="#4facfe" stroke-width="1.6"/>
+<text x="185.0" y="493.0" text-anchor="middle" class="t">🔌 API Gateway</text>
+<text x="185.0" y="509.0" text-anchor="middle" class="ts">REST · VPC Link</text>
+<rect x="70" y="705" width="230" height="40" rx="10" fill="#22123a" stroke="#e040fb" stroke-width="1.6" stroke-dasharray="5 4"/>
+<text x="185.0" y="730.0" text-anchor="middle" class="t">🚇 VPC Endpoint</text>
+<rect x="380" y="250" width="360" height="390" rx="14" fill="#0b2235" stroke="#326ce5" stroke-width="2" stroke-dasharray="7 5"/>
+<text x="394" y="270" class="ts" fill="#9cc2ff">☸️ Amazon EKS cluster</text>
+<rect x="395" y="280" width="205" height="40" rx="10" fill="#0f3a2c" stroke="#43e97b" stroke-width="1.6"/>
+<text x="497.5" y="298.0" text-anchor="middle" class="t">🔀 BFF Service</text>
+<text x="497.5" y="314.0" text-anchor="middle" class="ts">Node.js</text>
+<rect x="395" y="330" width="205" height="40" rx="10" fill="#0f3a2c" stroke="#43e97b" stroke-width="1.6"/>
+<text x="497.5" y="348.0" text-anchor="middle" class="t">💸 Payment Service</text>
+<text x="497.5" y="364.0" text-anchor="middle" class="ts">Go</text>
+<rect x="395" y="380" width="205" height="40" rx="10" fill="#0f3a2c" stroke="#43e97b" stroke-width="1.6"/>
+<text x="497.5" y="398.0" text-anchor="middle" class="t">📒 Ledger Service</text>
+<text x="497.5" y="414.0" text-anchor="middle" class="ts">Java</text>
+<rect x="395" y="430" width="205" height="40" rx="10" fill="#0f3a2c" stroke="#43e97b" stroke-width="1.6"/>
+<text x="497.5" y="448.0" text-anchor="middle" class="t">🕵️ Fraud Service</text>
+<text x="497.5" y="464.0" text-anchor="middle" class="ts">Python</text>
+<rect x="395" y="480" width="205" height="40" rx="10" fill="#0f3a2c" stroke="#43e97b" stroke-width="1.6"/>
+<text x="497.5" y="498.0" text-anchor="middle" class="t">🔔 Notification Service</text>
+<text x="497.5" y="514.0" text-anchor="middle" class="ts">Node.js</text>
+<rect x="612" y="430" width="118" height="40" rx="10" fill="#3d2400" stroke="#f7971e" stroke-width="1.6"/>
+<text x="671.0" y="448.0" text-anchor="middle" class="t">🚀 KServe</text>
+<text x="671.0" y="464.0" text-anchor="middle" class="ts">model serving</text>
+<rect x="612" y="480" width="118" height="40" rx="10" fill="#3d2400" stroke="#f7971e" stroke-width="1.6"/>
+<text x="671.0" y="498.0" text-anchor="middle" class="t">🌬️ Airflow</text>
+<text x="671.0" y="514.0" text-anchor="middle" class="ts">ML pipelines</text>
+<rect x="612" y="280" width="118" height="40" rx="10" fill="#3d2400" stroke="#f7971e" stroke-width="1.6"/>
+<text x="671.0" y="298.0" text-anchor="middle" class="t">🧪 Kubeflow</text>
+<text x="671.0" y="314.0" text-anchor="middle" class="ts">ML pipelines</text>
+<rect x="392" y="585" width="80" height="36" rx="18" fill="#1b2f55" stroke="#326ce5"/>
+<text x="432" y="608" text-anchor="middle" class="ts" fill="#dbe7ff" font-weight="700">🕸️ Istio</text>
+<rect x="478" y="585" width="80" height="36" rx="18" fill="#1b2f55" stroke="#326ce5"/>
+<text x="518" y="608" text-anchor="middle" class="ts" fill="#dbe7ff" font-weight="700">🐯 Calico</text>
+<rect x="564" y="585" width="80" height="36" rx="18" fill="#1b2f55" stroke="#326ce5"/>
+<text x="604" y="608" text-anchor="middle" class="ts" fill="#dbe7ff" font-weight="700">⚡ KEDA</text>
+<rect x="650" y="585" width="80" height="36" rx="18" fill="#1b2f55" stroke="#326ce5"/>
+<text x="690" y="608" text-anchor="middle" class="ts" fill="#dbe7ff" font-weight="700">🪂 Karpenter</text>
+<rect x="380" y="650" width="160" height="46" rx="10" fill="#0f3a2c" stroke="#43e97b" stroke-width="1.6"/>
+<text x="460.0" y="671.0" text-anchor="middle" class="t">⚖️ ALB</text>
+<text x="460.0" y="687.0" text-anchor="middle" class="ts">ingress to EKS</text>
+<rect x="380" y="705" width="170" height="40" rx="10" fill="#22123a" stroke="#e040fb" stroke-width="1.6" stroke-dasharray="5 4"/>
+<text x="465.0" y="730.0" text-anchor="middle" class="t">🚇 VPC Endpoint</text>
+<rect x="560" y="705" width="170" height="40" rx="10" fill="#3a1424" stroke="#ff4081" stroke-width="1.6"/>
+<text x="645.0" y="730.0" text-anchor="middle" class="t">🔁 NAT Gateway</text>
+<rect x="810" y="255" width="230" height="46" rx="10" fill="#3a1424" stroke="#ff416c" stroke-width="1.6"/>
+<text x="925.0" y="276.0" text-anchor="middle" class="t">🐬 MySQL</text>
+<text x="925.0" y="292.0" text-anchor="middle" class="ts">transactional DB</text>
+<rect x="810" y="315" width="230" height="46" rx="10" fill="#3a1424" stroke="#ff416c" stroke-width="1.6"/>
+<text x="925.0" y="336.0" text-anchor="middle" class="t">⚡ Valkey</text>
+<text x="925.0" y="352.0" text-anchor="middle" class="ts">cache · sessions</text>
+<rect x="810" y="375" width="230" height="46" rx="10" fill="#3a1424" stroke="#ff416c" stroke-width="1.6"/>
+<text x="925.0" y="396.0" text-anchor="middle" class="t">📨 Kafka</text>
+<text x="925.0" y="412.0" text-anchor="middle" class="ts">event-driven (EDA)</text>
+<rect x="810" y="435" width="230" height="46" rx="10" fill="#3a1424" stroke="#ff416c" stroke-width="1.6"/>
+<text x="925.0" y="456.0" text-anchor="middle" class="t">🍃 MongoDB</text>
+<text x="925.0" y="472.0" text-anchor="middle" class="ts">documents · KYC</text>
+<rect x="810" y="495" width="230" height="46" rx="10" fill="#3a1424" stroke="#ff416c" stroke-width="1.6"/>
+<text x="925.0" y="516.0" text-anchor="middle" class="t">🔎 OpenSearch</text>
+<text x="925.0" y="532.0" text-anchor="middle" class="ts">search · logs · vectors</text>
+<rect x="810" y="705" width="230" height="40" rx="10" fill="#22123a" stroke="#e040fb" stroke-width="1.6" stroke-dasharray="5 4"/>
+<text x="925.0" y="730.0" text-anchor="middle" class="t">🚇 VPC Endpoint</text>
+<rect x="1110" y="255" width="230" height="46" rx="10" fill="#2a1245" stroke="#c471f5" stroke-width="1.6"/>
+<text x="1225.0" y="276.0" text-anchor="middle" class="t">🔥 Prometheus</text>
+<text x="1225.0" y="292.0" text-anchor="middle" class="ts">metrics</text>
+<rect x="1110" y="315" width="230" height="46" rx="10" fill="#2a1245" stroke="#c471f5" stroke-width="1.6"/>
+<text x="1225.0" y="336.0" text-anchor="middle" class="t">📈 Grafana</text>
+<text x="1225.0" y="352.0" text-anchor="middle" class="ts">dashboards</text>
+<rect x="1110" y="375" width="230" height="46" rx="10" fill="#2a1245" stroke="#c471f5" stroke-width="1.6"/>
+<text x="1225.0" y="396.0" text-anchor="middle" class="t">🐙 Argo CD</text>
+<text x="1225.0" y="412.0" text-anchor="middle" class="ts">GitOps</text>
+<rect x="1110" y="435" width="230" height="46" rx="10" fill="#2a1245" stroke="#c471f5" stroke-width="1.6"/>
+<text x="1225.0" y="456.0" text-anchor="middle" class="t">🔐 HashiCorp Vault</text>
+<text x="1225.0" y="472.0" text-anchor="middle" class="ts">secrets</text>
+<rect x="1110" y="495" width="230" height="46" rx="10" fill="#2a1245" stroke="#c471f5" stroke-width="1.6"/>
+<text x="1225.0" y="516.0" text-anchor="middle" class="t">🧪 Kubeflow</text>
+<text x="1225.0" y="532.0" text-anchor="middle" class="ts">ML platform</text>
+<rect x="1110" y="555" width="230" height="46" rx="10" fill="#2a1245" stroke="#c471f5" stroke-width="1.6"/>
+<text x="1225.0" y="576.0" text-anchor="middle" class="t">📒 MLflow</text>
+<text x="1225.0" y="592.0" text-anchor="middle" class="ts">experiments · registry</text>
+<rect x="1110" y="705" width="110" height="40" rx="10" fill="#22123a" stroke="#e040fb" stroke-width="1.6" stroke-dasharray="5 4"/>
+<text x="1165.0" y="730.0" text-anchor="middle" class="t">🚇 Endpoint</text>
+<rect x="1230" y="705" width="110" height="40" rx="10" fill="#3a1424" stroke="#ff4081" stroke-width="1.6"/>
+<text x="1285.0" y="730.0" text-anchor="middle" class="t">🔁 NAT</text>
+<rect x="380" y="800" width="150" height="50" rx="10" fill="#2a1f0f" stroke="#ff9900" stroke-width="1.6"/>
+<text x="455.0" y="823.0" text-anchor="middle" class="t">📦 ECR</text>
+<text x="455.0" y="839.0" text-anchor="middle" class="ts">images</text>
+<rect x="600" y="800" width="150" height="50" rx="10" fill="#173a16" stroke="#7ddc5f" stroke-width="1.6"/>
+<text x="675.0" y="823.0" text-anchor="middle" class="t">🪣 Amazon S3</text>
+<text x="675.0" y="839.0" text-anchor="middle" class="ts">artifacts · data</text>
+<rect x="820" y="800" width="150" height="50" rx="10" fill="#3a1424" stroke="#ff416c" stroke-width="1.6"/>
+<text x="895.0" y="823.0" text-anchor="middle" class="t">🔐 KMS</text>
+<text x="895.0" y="839.0" text-anchor="middle" class="ts">encryption keys</text>
+<rect x="1060" y="800" width="300" height="50" rx="10" fill="#3a1424" stroke="#ff4081" stroke-width="1.6"/>
+<text x="1210.0" y="823.0" text-anchor="middle" class="t">🌍 Internet</text>
+<text x="1210.0" y="839.0" text-anchor="middle" class="ts">payment networks · alerting</text>
+<g filter="url(#glow)">
+<circle r="5" fill="#ffb84d"><animateMotion dur="2s" repeatCount="indefinite" begin="0s"><mpath xlink:href="#tA"/></animateMotion></circle>
+<circle r="5" fill="#ffb84d"><animateMotion dur="2s" repeatCount="indefinite" begin="1s" keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath xlink:href="#tA"/></animateMotion></circle>
+<circle r="5" fill="#ffb84d"><animateMotion dur="2s" repeatCount="indefinite" begin="0.6s"><mpath xlink:href="#tB"/></animateMotion></circle>
+<circle r="5" fill="#ffb84d"><animateMotion dur="2s" repeatCount="indefinite" begin="1.6s" keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath xlink:href="#tB"/></animateMotion></circle>
+<circle r="5" fill="#ffb84d"><animateMotion dur="2s" repeatCount="indefinite" begin="1.2s"><mpath xlink:href="#tC"/></animateMotion></circle>
+<circle r="5" fill="#ffb84d"><animateMotion dur="2s" repeatCount="indefinite" begin="2.2s" keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath xlink:href="#tC"/></animateMotion></circle>
+<circle r="5" fill="#ffb84d"><animateMotion dur="2s" repeatCount="indefinite" begin="1.8s"><mpath xlink:href="#tD"/></animateMotion></circle>
+<circle r="5" fill="#ffb84d"><animateMotion dur="2s" repeatCount="indefinite" begin="2.8s" keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath xlink:href="#tD"/></animateMotion></circle>
+<circle r="7" fill="#00e5ff"><animateMotion dur="5.4s" repeatCount="indefinite" begin="0s"><mpath xlink:href="#req"/></animateMotion></circle>
+<circle r="7" fill="#00e5ff"><animateMotion dur="5.4s" repeatCount="indefinite" begin="1.8s"><mpath xlink:href="#req"/></animateMotion></circle>
+<circle r="7" fill="#00e5ff"><animateMotion dur="5.4s" repeatCount="indefinite" begin="3.6s"><mpath xlink:href="#req"/></animateMotion></circle>
+<circle r="5" fill="#43e97b"><animateMotion dur="5.4s" repeatCount="indefinite" begin="0.9s" keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath xlink:href="#req"/></animateMotion></circle>
+<circle r="5" fill="#43e97b"><animateMotion dur="5.4s" repeatCount="indefinite" begin="3.6s" keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath xlink:href="#req"/></animateMotion></circle>
+<rect x="-7" y="-5" width="14" height="10" rx="2" fill="#ffd200"><animateMotion dur="2.4s" repeatCount="indefinite" begin="0.3s"><mpath xlink:href="#my"/></animateMotion></rect>
+<rect x="-7" y="-5" width="14" height="10" rx="2" fill="#ffd200"><animateMotion dur="2.4s" repeatCount="indefinite" begin="1.5s"><mpath xlink:href="#my"/></animateMotion></rect>
+<rect x="-7" y="-5" width="14" height="10" rx="2" fill="#ffd200"><animateMotion dur="1.8s" repeatCount="indefinite" begin="0s"><mpath xlink:href="#kf"/></animateMotion></rect>
+<rect x="-7" y="-5" width="14" height="10" rx="2" fill="#ffd200"><animateMotion dur="1.8s" repeatCount="indefinite" begin="0.9s"><mpath xlink:href="#kf"/></animateMotion></rect>
+<circle r="5" fill="#ff8a65"><animateMotion dur="3.2s" repeatCount="indefinite" begin="0s" keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath xlink:href="#met"/></animateMotion></circle>
+<circle r="5" fill="#ff8a65"><animateMotion dur="3.2s" repeatCount="indefinite" begin="1.6s" keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath xlink:href="#met"/></animateMotion></circle>
+<circle r="6" fill="#b388ff"><animateMotion dur="3.4s" repeatCount="indefinite" begin="0.5s"><mpath xlink:href="#dep"/></animateMotion></circle>
+<circle r="6" fill="#b388ff"><animateMotion dur="3.4s" repeatCount="indefinite" begin="2.2s"><mpath xlink:href="#dep"/></animateMotion></circle>
+<circle r="5" fill="#e040fb"><animateMotion dur="2.6s" repeatCount="indefinite" begin="0s"><mpath xlink:href="#e1"/></animateMotion></circle>
+<circle r="5" fill="#e040fb"><animateMotion dur="2.6s" repeatCount="indefinite" begin="0.4s"><mpath xlink:href="#e2"/></animateMotion></circle>
+<circle r="5" fill="#e040fb"><animateMotion dur="2.6s" repeatCount="indefinite" begin="0.8s"><mpath xlink:href="#e3"/></animateMotion></circle>
+<circle r="5" fill="#e040fb"><animateMotion dur="2.6s" repeatCount="indefinite" begin="1.2s"><mpath xlink:href="#e4"/></animateMotion></circle>
+<circle r="6" fill="#ff4081"><animateMotion dur="3s" repeatCount="indefinite" begin="0.2s"><mpath xlink:href="#n1"/></animateMotion></circle>
+<circle r="6" fill="#ff4081"><animateMotion dur="1.6s" repeatCount="indefinite" begin="0.7s"><mpath xlink:href="#n2"/></animateMotion></circle>
+</g>
+<rect x="20" y="932" width="1360" height="46" rx="12" fill="#0d1526" stroke="#2b3a55"/>
+<circle cx="40" cy="955" r="6" fill="#00e5ff"/><text x="52" y="959" class="t" font-size="12">Request</text>
+<circle cx="131.2" cy="955" r="6" fill="#43e97b"/><text x="143.2" y="959" class="t" font-size="12">Response</text>
+<circle cx="230.0" cy="955" r="6" fill="#ffb84d"/><text x="242.0" y="959" class="t" font-size="12">Transit Gateway</text>
+<circle cx="382.0" cy="955" r="6" fill="#ffd200"/><text x="394.0" y="959" class="t" font-size="12">Data</text>
+<circle cx="450.4" cy="955" r="6" fill="#ff8a65"/><text x="462.4" y="959" class="t" font-size="12">Metrics</text>
+<circle cx="541.5999999999999" cy="955" r="6" fill="#b388ff"/><text x="553.5999999999999" y="959" class="t" font-size="12">GitOps</text>
+<circle cx="625.1999999999999" cy="955" r="6" fill="#e040fb"/><text x="637.1999999999999" y="959" class="t" font-size="12">Endpoints</text>
+<circle cx="731.5999999999999" cy="955" r="6" fill="#ff4081"/><text x="743.5999999999999" y="959" class="t" font-size="12">Egress</text>
+</svg>

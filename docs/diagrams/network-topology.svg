@@ -40,7 +40,7 @@
     <rect x="40" y="95" width="400" height="260" rx="16" fill="#10372b" stroke="#84fab0" stroke-width="2.5"/>
     <text x="60" y="125" class="t" fill="#84fab0">🚪 EDGE VPC</text>
     <text x="420" y="125" class="ts" text-anchor="end">10.10.0.0/16</text>
-    <text x="60" y="147" class="ts">Ingress · ALB · IGW</text>
+    <text x="60" y="147" class="ts">Route 53 · CloudFront · WAF · Shield · API Gateway</text>
     <g class="ts"><text x="150" y="175" text-anchor="middle">1a</text><text x="270" y="175" text-anchor="middle">1b</text><text x="390" y="175" text-anchor="middle">1c</text></g>
     <text x="60" y="203" class="ts">public</text>
     <rect x="100" y="186" width="100" height="26" rx="13" fill="#84fab0"/><text x="150" y="204" class="chip" text-anchor="middle">10.10.1.0/24</text>
@@ -60,7 +60,7 @@
     <rect x="800" y="95" width="400" height="260" rx="16" fill="#12263f" stroke="#4facfe" stroke-width="2.5"/>
     <text x="820" y="125" class="t" fill="#4facfe">⚙️ APP VPC</text>
     <text x="1180" y="125" class="ts" text-anchor="end">10.20.0.0/16</text>
-    <text x="820" y="147" class="ts">EKS · microservices · NAT egress</text>
+    <text x="820" y="147" class="ts">ALB · EKS microservices · KServe · Airflow · NAT</text>
     <g class="ts"><text x="935" y="172" text-anchor="middle">1a</text><text x="1040" y="172" text-anchor="middle">1b</text><text x="1140" y="172" text-anchor="middle">1c</text></g>
     <text x="812" y="196" class="ts">public</text>
     <rect x="890" y="180" width="92" height="24" rx="12" fill="#84fab0"/><text x="936" y="197" class="chip" text-anchor="middle">10.20.1.0</text>
@@ -84,7 +84,7 @@
     <rect x="40" y="445" width="400" height="260" rx="16" fill="#2b1420" stroke="#ff416c" stroke-width="2.5"/>
     <text x="60" y="475" class="t" fill="#ff7a95">🗄️ DATA VPC</text>
     <text x="420" y="475" class="ts" text-anchor="end">10.30.0.0/16</text>
-    <text x="60" y="497" class="ts">Aurora · Redis · Kafka · private only</text>
+    <text x="60" y="497" class="ts">MySQL · Valkey · Kafka · MongoDB · OpenSearch</text>
     <g class="ts"><text x="150" y="524" text-anchor="middle">1a</text><text x="270" y="524" text-anchor="middle">1b</text><text x="385" y="524" text-anchor="middle">1c</text></g>
     <text x="52" y="553" class="ts">DBs</text>
     <rect x="100" y="536" width="100" height="26" rx="13" fill="#ffadc0"/><text x="150" y="554" class="chip" text-anchor="middle">10.30.11.0/24</text>
@@ -104,7 +104,7 @@
     <rect x="800" y="445" width="400" height="260" rx="16" fill="#24123d" stroke="#c471f5" stroke-width="2.5"/>
     <text x="820" y="475" class="t" fill="#d79bff">🛠️ OPS VPC</text>
     <text x="1180" y="475" class="ts" text-anchor="end">10.40.0.0/16</text>
-    <text x="820" y="497" class="ts">Monitoring · Vault · SSM access</text>
+    <text x="820" y="497" class="ts">Prometheus · Grafana · Argo · Vault · Kubeflow · MLflow</text>
     <g class="ts"><text x="936" y="524" text-anchor="middle">1a</text><text x="1040" y="524" text-anchor="middle">1b</text><text x="1144" y="524" text-anchor="middle">1c</text></g>
     <text x="812" y="553" class="ts">public</text>
     <rect x="886" y="536" width="100" height="26" rx="13" fill="#84fab0"/><text x="936" y="554" class="chip" text-anchor="middle">10.40.1.0/24</text>

@@ -60,11 +60,11 @@
   </g>
 
   <!-- ===== flow paths (drawn under nodes) ===== -->
-  <path id="pReq"  class="flow" stroke="#00e5ff" d="M112,328 H420 V222 H550 V603 H835 V354"/>
+  <path id="pReq"  class="flow" stroke="#00e5ff" d="M112,328 H420 V222 H550 V603 H992 V209 H920 V292"/>
   <path id="pDb"   class="flow" stroke="#ffd200" d="M865,460 V615 H1120 V259"/>
   <path id="pMet"  class="flow" stroke="#ff8a65" d="M900,460 V627 H1305 V259"/>
   <path id="pEp"   class="flow" stroke="#e040fb" d="M965,337 H1020 V100 H1090"/>
-  <path id="pEgr"  class="flow" stroke="#ff4081" d="M760,320 V209 H920 V120"/>
+  <path id="pEgr"  class="flow" stroke="#ff4081" d="M790,320 V120"/>
 
   <!-- ===== Internet side ===== -->
   <circle cx="70" cy="328" r="42" fill="#ff9a9e" stroke="#fff" stroke-width="2" filter="url(#glow)"/>
@@ -84,8 +84,8 @@
   <rect x="470" y="200" width="160" height="44" rx="9" class="node" fill="#14532d" stroke="#84fab0"/>
   <text x="550" y="227" text-anchor="middle" class="t">🌐 Internet Gateway</text>
   <rect x="470" y="300" width="160" height="56" rx="9" class="node" fill="#14532d" stroke="#84fab0"/>
-  <text x="550" y="324" text-anchor="middle" class="t">⚖️ ALB</text>
-  <text x="550" y="342" text-anchor="middle" class="ts">public 10.10.1-3.0/24</text>
+  <text x="550" y="324" text-anchor="middle" class="t">🔌 API Gateway</text>
+  <text x="550" y="342" text-anchor="middle" class="ts">REST · VPC Link</text>
   <rect x="470" y="440" width="160" height="50" rx="9" class="node" fill="#0f2a3d" stroke="#4facfe" stroke-dasharray="4 3"/>
   <text x="550" y="461" text-anchor="middle" class="ts">private 10.10.11-13.0/24</text>
   <text x="550" y="478" text-anchor="middle" class="ts">TGW attachment ENIs</text>
@@ -94,12 +94,12 @@
   <rect x="715" y="190" width="130" height="38" rx="9" class="node" fill="#14532d" stroke="#84fab0"/>
   <text x="780" y="214" text-anchor="middle" class="t">🔁 NAT GW</text>
   <rect x="855" y="190" width="130" height="38" rx="9" class="node" fill="#14532d" stroke="#84fab0"/>
-  <text x="920" y="214" text-anchor="middle" class="t">🌐 IGW</text>
+  <text x="920" y="214" text-anchor="middle" class="t">⚖️ ALB</text>
 
   <rect x="715" y="245" width="270" height="215" rx="12" fill="#0e1f3a" stroke="#326ce5" stroke-width="1.6"/>
   <text x="728" y="266" class="ts" fill="#8fb8ff">☸️ EKS · control plane 10.20.11-13 · data plane 10.20.21-23</text>
   <rect x="735" y="275" width="230" height="34" rx="9" class="node" fill="#2a1245" stroke="#c471f5"/>
-  <text x="850" y="297" text-anchor="middle" class="t">🔀 web-bff</text>
+  <text x="850" y="297" text-anchor="middle" class="t">🔀 bff-service</text>
   <rect x="735" y="320" width="230" height="34" rx="9" class="node" fill="#0b3d2e" stroke="#43e97b"/>
   <text x="850" y="342" text-anchor="middle" class="t">💸 payments-service</text>
   <rect x="735" y="365" width="230" height="34" rx="9" class="node" fill="#3d2400" stroke="#f7971e"/>
@@ -112,14 +112,14 @@
 
   <!-- ===== Data VPC nodes ===== -->
   <rect x="1055" y="215" width="130" height="44" rx="9" class="node" fill="#3a1424" stroke="#ff416c"/>
-  <text x="1120" y="242" text-anchor="middle" class="t">🐘 Aurora PG</text>
+  <text x="1120" y="242" text-anchor="middle" class="t">🐬 MySQL</text>
   <rect x="1055" y="275" width="130" height="44" rx="9" class="node" fill="#3a1424" stroke="#ff416c"/>
-  <text x="1120" y="302" text-anchor="middle" class="t">⚡ Redis</text>
+  <text x="1120" y="302" text-anchor="middle" class="t">⚡ Valkey</text>
   <rect x="1055" y="335" width="130" height="44" rx="9" class="node" fill="#3a1424" stroke="#ff416c"/>
   <text x="1120" y="362" text-anchor="middle" class="t">📨 MSK Kafka</text>
-  <rect x="1055" y="440" width="130" height="50" rx="9" class="node" fill="#1f1530" stroke="#e040fb" stroke-dasharray="4 3"/>
-  <text x="1120" y="461" text-anchor="middle" class="ts">🚇 kms · s3 · dynamodb</text>
-  <text x="1120" y="478" text-anchor="middle" class="ts">private endpoints</text>
+  <rect x="1055" y="440" width="130" height="50" rx="9" class="node" fill="#3a1424" stroke="#ff416c"/>
+  <text x="1120" y="461" text-anchor="middle" class="ts">🍃 MongoDB</text>
+  <text x="1120" y="478" text-anchor="middle" class="ts">🔎 OpenSearch</text>
 
   <!-- ===== Ops VPC nodes ===== -->
   <rect x="1242" y="215" width="126" height="44" rx="9" class="node" fill="#2a1245" stroke="#c471f5"/>
@@ -128,8 +128,9 @@
   <text x="1305" y="302" text-anchor="middle" class="t">📈 Grafana</text>
   <rect x="1242" y="335" width="126" height="44" rx="9" class="node" fill="#2a1245" stroke="#c471f5"/>
   <text x="1305" y="362" text-anchor="middle" class="t">🔐 Vault</text>
-  <rect x="1242" y="440" width="126" height="50" rx="9" class="node" fill="#1f1530" stroke="#e040fb" stroke-dasharray="4 3"/>
-  <text x="1305" y="469" text-anchor="middle" class="ts">🚇 ssm endpoints</text>
+  <rect x="1242" y="440" width="126" height="50" rx="9" class="node" fill="#2a1245" stroke="#c471f5"/>
+  <text x="1305" y="461" text-anchor="middle" class="ts">🐙 Argo CD</text>
+  <text x="1305" y="478" text-anchor="middle" class="ts">Kubeflow · MLflow</text>
 
   <!-- ===== Top band: external + AWS services ===== -->
   <rect x="760" y="70" width="230" height="50" rx="9" class="node" fill="#3a1424" stroke="#ff4081"/>
@@ -165,11 +166,11 @@
   <!-- ===== legend ===== -->
   <rect x="40" y="700" width="1340" height="96" rx="14" fill="#0d1526" stroke="#2b3a55"/>
   <g class="ts" font-size="13">
-    <circle cx="70"  cy="732" r="7" fill="#00e5ff"/><text x="86"  y="737" class="t">Request</text><text x="86" y="755" class="ts">Customer → CloudFront/WAF → ALB → TGW → payments</text>
+    <circle cx="70"  cy="732" r="7" fill="#00e5ff"/><text x="86"  y="737" class="t">Request</text><text x="86" y="755" class="ts">Customer → CloudFront/WAF → API Gateway → TGW → ALB → BFF</text>
     <circle cx="470" cy="732" r="6" fill="#43e97b"/><text x="486" y="737" class="t">Response</text><text x="486" y="755" class="ts">Same path back to the customer</text>
-    <rect x="763" y="727" width="14" height="10" rx="2" fill="#ffd200"/><text x="786" y="737" class="t">Database query</text><text x="786" y="755" class="ts">app → TGW → data VPC (Aurora · Redis · Kafka)</text>
+    <rect x="763" y="727" width="14" height="10" rx="2" fill="#ffd200"/><text x="786" y="737" class="t">Database query</text><text x="786" y="755" class="ts">app → TGW → data VPC (MySQL · Valkey · Kafka)</text>
     <circle cx="70"  cy="776" r="6" fill="#ff8a65"/><text x="86"  y="781" class="t">Metrics / logs</text><text x="190" y="781" class="ts">app → TGW → ops VPC (Prometheus · Grafana)</text>
     <circle cx="470" cy="776" r="6" fill="#e040fb"/><text x="486" y="781" class="t">Private AWS access</text><text x="625" y="781" class="ts">VPC endpoints → ECR · Secrets · S3 · KMS</text>
-    <circle cx="935" cy="776" r="6" fill="#ff4081"/><text x="951" y="781" class="t">Egress</text><text x="1006" y="781" class="ts">app → NAT → IGW → payment network</text>
+    <circle cx="935" cy="776" r="6" fill="#ff4081"/><text x="951" y="781" class="t">Egress</text><text x="1006" y="781" class="ts">app pods → NAT Gateway → payment network</text>
   </g>
 </svg>

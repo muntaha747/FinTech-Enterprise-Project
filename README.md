@@ -33,6 +33,7 @@
 ## 📑 Table of Contents
 
 - [About](#-about-this-project)
+- [Project Overview & Architecture](#%EF%B8%8F-project-overview--architecture)
 - [Architecture](#%EF%B8%8F-high-level-architecture)
 - [Live Traffic Flow](#-live-traffic-flow)
 - [The 14 Microservices](#-the-14-microservices)
@@ -68,6 +69,145 @@ The project **will be upgraded over time**. Each upgrade showcases a modern tool
 | **14** | **5** | **20+** | **4** | **25+** |
 
 </div>
+
+---
+
+## 🗺️ Project Overview & Architecture
+
+<div align="center">
+
+[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=20&pause=900&color=00C9A7&center=true&vCenter=true&width=900&lines=6+infrastructure+layers+%C2%B7+2+cross-cutting+pillars;4+VPCs+%C2%B7+1+Transit+Gateway+%C2%B7+Amazon+EKS;40%2B+tools+from+Git+to+Evidently+AI)](https://git.io/typing-svg)
+
+</div>
+
+### 🧱 FinTech Infrastructure Layers (AWS)
+
+<div align="center">
+
+<img src="docs/diagrams/infrastructure-layers.svg" width="100%" alt="Animated stack of six infrastructure layers (CI/CD, Edge, Network, Orchestration, Application, Data) with Identity and Access and Observability as cross-cutting pillars"/>
+
+</div>
+
+| # | Layer | Tools | Purpose |
+|:-:|---|---|---|
+| 01 | 🚀 **CI/CD & DevTools** | Git · GitHub Actions · Airflow · Argo CD · Terraform (IaC) · KServe · MLflow | Build, test, ship apps, infrastructure and ML models |
+| 02 | 🌐 **Edge** | Route 53 (DNS) · CloudFront (CDN) · AWS WAF · AWS Shield Advanced · API Gateway (REST) | First contact: DNS, caching, L7 filtering, DDoS protection, API front door |
+| 03 | 🕸️ **Network** | Public subnets · Private subnets · AWS Transit Gateway · NAT Gateway · ALB · VPC endpoints | Isolate, connect and load-balance traffic |
+| 04 | ☸️ **Orchestration** | Kubernetes (EKS) · Calico · Istio · Argo Rollouts · KEDA · Karpenter | Run, scale, secure and progressively deliver workloads |
+| 05 | ⚙️ **Application** | BFF (Node.js) · Payment (Go) · Ledger (Java) · Fraud (Python) · Notification (Node.js) · Kubeflow ML Pipelines | Business logic and ML pipelines |
+| 06 | 🗄️ **Data** | MySQL · Valkey · MongoDB · OpenSearch · Kafka (event-driven architecture) | Store, cache, search and stream data |
+| 🔑 | **Identity & Access** | AWS IAM (roles, policies) · HashiCorp Vault | Least privilege and secrets, across every layer |
+| 🔭 | **Observability** | Prometheus · Grafana · Loki · Logstash · Falco · Evidently AI · WhyLogs · CloudWatch | Metrics, logs, runtime security and ML/data drift, across every layer |
+
+```mermaid
+mindmap
+  root((🏦 FinTech Platform))
+    🚀 CI/CD & DevTools
+      Git
+      GitHub Actions
+      Airflow
+      Argo CD
+      Terraform IaC
+      KServe
+      MLflow
+    🌐 Edge
+      Route 53
+      CloudFront
+      WAF
+      Shield Advanced
+      API Gateway
+    🕸️ Network
+      Public Subnets
+      Private Subnets
+      Transit Gateway
+      NAT Gateway
+      ALB
+    ☸️ Orchestration
+      Kubernetes EKS
+      Calico
+      Istio
+      Argo Rollouts
+      KEDA
+      Karpenter
+    ⚙️ Application
+      BFF · Node.js
+      Payment · Go
+      Ledger · Java
+      Fraud · Python
+      Notification · Node.js
+      Kubeflow Pipelines
+    🗄️ Data
+      MySQL
+      Valkey
+      MongoDB
+      OpenSearch
+      Kafka EDA
+    🔑 Identity and Access
+      IAM Roles and Policies
+      HashiCorp Vault
+    🔭 Observability
+      Prometheus
+      Grafana
+      Loki
+      Logstash
+      Falco
+      Evidently AI
+      WhyLogs
+      CloudWatch
+```
+
+### 🏛️ Regional Architecture: 4 VPCs on AWS
+
+<div align="center">
+
+<img src="docs/diagrams/architecture-overview.svg" width="100%" alt="Animated regional architecture: edge, app, data and ops VPCs connected by a Transit Gateway, with EKS microservices, data stores, ops tooling, VPC endpoints to ECR, S3 and KMS, and NAT egress"/>
+
+<sub>🎬 Animated: request, response, Transit Gateway, data, metrics, GitOps, endpoint and egress traffic.</sub>
+
+</div>
+
+| VPC | What runs there | How it connects |
+|---|---|---|
+| 🚪 **VPC A · Edge** `10.10.0.0/16` | Route 53 · CloudFront · WAF + Shield Advanced · API Gateway | Internet-facing. API Gateway forwards to the app VPC's ALB (VPC Link via Transit Gateway) |
+| ⚙️ **VPC B · App** `10.20.0.0/16` | ALB → Amazon EKS: BFF, Payment, Ledger, Fraud, Notification services · KServe · Airflow · Kubeflow · Istio · Calico · KEDA · Karpenter | Transit Gateway to data and ops · VPC endpoints to ECR and S3 · NAT Gateway for outbound calls |
+| 🗄️ **VPC C · Data** `10.30.0.0/16` | MySQL · Valkey · Kafka · MongoDB · OpenSearch | Private only. Reached through the Transit Gateway · VPC endpoints to KMS and S3 |
+| 🛠️ **VPC D · Ops** `10.40.0.0/16` | Prometheus · Grafana · Argo CD · HashiCorp Vault · Kubeflow · MLflow | Scrapes metrics and syncs GitOps through the Transit Gateway · VPC endpoint to S3 · NAT for alerting |
+| 🔀 **Transit Gateway** | Hub for all 4 VPCs | `10.0.0.0/8 → TGW` in every route table |
+| ☁️ **Shared AWS services** | Amazon ECR · Amazon S3 · AWS KMS | Reached privately through VPC endpoints, never over the internet |
+
+```mermaid
+flowchart LR
+    U([👤 Customer]):::u --> R53[🧭 Route 53]:::e --> CF[☁️ CloudFront]:::e --> WAF[🧱 WAF + Shield]:::s --> API[🔌 API Gateway]:::e
+    API ==>|VPC Link · TGW| ALB[⚖️ ALB]:::n
+    subgraph EKS["☸️ Amazon EKS · Istio · Calico · KEDA · Karpenter"]
+        BFF[🔀 BFF · Node.js]:::a --> PAY[💸 Payment · Go]:::a
+        BFF --> LED[📒 Ledger · Java]:::a
+        PAY --> FR[🕵️ Fraud · Python]:::a
+        PAY --> NOT[🔔 Notification · Node.js]:::a
+        FR --> KS[🚀 KServe]:::m
+    end
+    ALB --> BFF
+    PAY & LED ==>|TGW| MY[(🐬 MySQL)]:::d
+    BFF ==>|TGW| VK[(⚡ Valkey)]:::d
+    PAY ==>|TGW| KF{{📨 Kafka}}:::d
+    KF --> NOT
+    NOT ==>|TGW| MG[(🍃 MongoDB)]:::d
+    LED ==>|TGW| OS[(🔎 OpenSearch)]:::d
+    EKS -.->|metrics| PR[🔥 Prometheus]:::o --> GR[📈 Grafana]:::o
+    AR[🐙 Argo CD]:::o -.->|GitOps sync| EKS
+    VT[🔐 Vault]:::o -.->|secrets| EKS
+    KF2[🧪 Kubeflow + 🌬️ Airflow]:::m -->|models| ML[📒 MLflow]:::o --> KS
+
+    classDef u fill:#ff9a9e,stroke:#fff,color:#000,stroke-width:2px
+    classDef e fill:#4facfe,stroke:#fff,color:#000
+    classDef s fill:#ff416c,stroke:#fff,color:#fff
+    classDef n fill:#43e97b,stroke:#fff,color:#000
+    classDef a fill:#0f3a2c,stroke:#43e97b,color:#fff
+    classDef m fill:#f7971e,stroke:#fff,color:#000
+    classDef d fill:#3a1424,stroke:#ff416c,color:#fff,stroke-width:2px
+    classDef o fill:#c471f5,stroke:#fff,color:#fff
+    style EKS fill:#0b2235,stroke:#326ce5,color:#fff,stroke-width:2px
+```
 
 ---
 
@@ -111,17 +251,19 @@ flowchart TB
     end
 
     subgraph DBL["🗄️ DATABASE LAYER"]
-        PG[(Aurora PostgreSQL)]:::db
-        RD[(ElastiCache Redis)]:::db
+        PG[(MySQL)]:::db
+        RD[(Valkey)]:::db
         KF{{Kafka / MSK}}:::db
+        MG[(MongoDB)]:::db
         S3[(S3 Data Lake)]:::db
-        VEC[(pgvector)]:::db
+        VEC[(OpenSearch<br/>search + vectors)]:::db
     end
 
     ALB --> S1
     S1 --> S2 & S3
     S2 & S3 --> S4 & S6 & S7 & S8 & S14
     S4 --> S5
+    S5 --> MG
     S7 --> S11
     S6 --> S12
     S7 --> S9
@@ -168,33 +310,36 @@ flowchart TB
 sequenceDiagram
     autonumber
     actor C as 👤 Customer
-    participant R53 as 🌐 Route 53
-    participant CF as ☁️ CloudFront + 🛡️ WAF
-    participant ALB as ⚖️ ALB (edge VPC)
+    participant R53 as 🧭 Route 53
+    participant CF as ☁️ CloudFront + 🧱 WAF
+    participant API as 🔌 API Gateway (edge VPC)
     participant TGW as 🔀 Transit Gateway
-    participant POD as 💸 payments pod (app VPC)
+    participant ALB as ⚖️ ALB (app VPC)
+    participant POD as 💸 payment pod (EKS)
     participant SM as 🔑 Secrets Manager
-    participant DB as 🐘 Aurora (data VPC)
+    participant DB as 🐬 MySQL (data VPC)
     participant PSP as 🌍 Payment network
 
     C->>R53: api.fintech.example → resolve
     R53-->>C: CloudFront edge IP
     C->>CF: HTTPS request (TLS 1.3)
-    CF->>CF: WAF rules · rate limit · Shield
-    CF->>ALB: Forward via Internet Gateway (10.10.1.0/24)
-    ALB->>TGW: Target 10.20.x.x → route 10.0.0.0/8 → TGW
-    TGW->>POD: Deliver into app VPC private subnet
+    CF->>CF: WAF rules · rate limit · Shield Advanced
+    CF->>API: Forward to the REST API
+    API->>TGW: VPC Link to 10.20.x.x → route 10.0.0.0/8 → TGW
+    TGW->>ALB: Deliver into the app VPC
+    ALB->>POD: Route via BFF to the payment service
     POD->>SM: Fetch DB secret via Interface endpoint 🚇 (never leaves AWS)
     SM-->>POD: Secret
     POD->>TGW: Query 10.30.x.x → route 10.0.0.0/8 → TGW
     TGW->>DB: Deliver into data VPC (10.30.11.0/24)
     DB-->>TGW: Rows
     TGW-->>POD: Rows
-    POD->>PSP: Authorise card via NAT Gateway → IGW (outbound only)
+    POD->>PSP: Authorise card via NAT Gateway (outbound only)
     PSP-->>POD: ✅ Approved
-    POD-->>TGW: 200 OK
-    TGW-->>ALB: Response
-    ALB-->>CF: Response
+    POD-->>ALB: 200 OK
+    ALB-->>TGW: Response
+    TGW-->>API: Response
+    API-->>CF: Response
     CF-->>C: ✅ Payment complete
 ```
 
@@ -250,19 +395,19 @@ flowchart LR
 | # | Service | Layer | Responsibility | Stack | Data Store |
 |:-:|---|:-:|---|---|---|
 | 1 | 🎨 **web-frontend** | Frontend | Customer web UI | React, Next.js | CDN / S3 |
-| 2 | 🔀 **web-bff** | BFF | Aggregates APIs for web | Node.js, GraphQL | Redis |
-| 3 | 📱 **mobile-bff** | BFF | Aggregates APIs for mobile | Node.js, REST | Redis |
-| 4 | 🔑 **auth-service** | App | Login, OAuth2, JWT, MFA | Java / Spring Boot | Redis, Aurora |
-| 5 | 🪪 **customer-kyc-service** | App | Onboarding and KYC checks | Python / FastAPI | Aurora |
-| 6 | 🏦 **accounts-service** | App | Accounts and balances | Java / Spring Boot | Aurora |
-| 7 | 💸 **payments-service** | App | Payment initiation and orchestration | Go | Aurora |
-| 8 | 🔁 **transactions-service** | App | Transaction history and events | Go | Aurora, Kafka |
-| 9 | 📒 **ledger-service** | App | Double-entry ledger | Java / Spring Boot | Aurora |
-| 10 | 🔔 **notification-service** | App | Email, SMS and push | Python | Kafka |
+| 2 | 🔀 **web-bff** | BFF | Aggregates APIs for web | Node.js, GraphQL | Valkey |
+| 3 | 📱 **mobile-bff** | BFF | Aggregates APIs for mobile | Node.js, REST | Valkey |
+| 4 | 🔑 **auth-service** | App | Login, OAuth2, JWT, MFA | Java / Spring Boot | Valkey, MySQL |
+| 5 | 🪪 **customer-kyc-service** | App | Onboarding and KYC checks | Python / FastAPI | MongoDB |
+| 6 | 🏦 **accounts-service** | App | Accounts and balances | Java / Spring Boot | MySQL |
+| 7 | 💸 **payments-service** | App | Payment initiation and orchestration | Go | MySQL, Kafka |
+| 8 | 🔁 **transactions-service** | App | Transaction history and events | Go | MySQL, Kafka, OpenSearch |
+| 9 | 📒 **ledger-service** | App | Double-entry ledger | Java / Spring Boot | MySQL |
+| 10 | 🔔 **notification-service** | App | Email, SMS and push | Node.js | Kafka, MongoDB |
 | 11 | 🕵️ **fraud-detection-api** | ML | Real-time fraud scoring | Python, KServe | S3 / MLflow |
 | 12 | 📊 **credit-scoring-api** | ML | Credit risk prediction | Python, KServe | S3 / MLflow |
 | 13 | 🏋️ **model-training-pipeline** | ML | Feature engineering, training, evaluation | Airflow, MLflow, Kubeflow | S3, Feast |
-| 14 | 🧠 **genai-assistant** | AI | RAG assistant with guardrails | Python, LangChain, Bedrock | pgvector |
+| 14 | 🧠 **genai-assistant** | AI | RAG assistant with guardrails | Python, LangChain, Bedrock | OpenSearch (vectors) |
 
 </div>
 
@@ -301,7 +446,7 @@ graph LR
 
 ```mermaid
 flowchart TB
-    INT((🌍 Internet)):::net --> CFN[CloudFront + WAF + Shield]:::edge
+    INT((🌍 Internet)):::net --> CFN[CloudFront + WAF + Shield Advanced<br/>→ API Gateway]:::edge
 
     subgraph REGION["☁️ AWS Region"]
         subgraph VPC["🔒 VPCs · edge 10.10 · app 10.20 · data 10.30 · ops 10.40 · joined by Transit Gateway"]
@@ -317,9 +462,10 @@ flowchart TB
                 end
             end
             subgraph ISO["🧱 Isolated Data Subnets"]
-                AUR[(Aurora PostgreSQL<br/>Multi-AZ)]:::data
-                ECA[(ElastiCache Redis)]:::data
-                MSK{{Amazon MSK}}:::data
+                AUR[(MySQL<br/>Multi-AZ)]:::data
+                ECA[(Valkey)]:::data
+                MSK{{Amazon MSK · Kafka}}:::data
+                MDB[(MongoDB · OpenSearch)]:::data
             end
         end
         S3B[(S3 Data Lake)]:::data
@@ -330,7 +476,7 @@ flowchart TB
     end
 
     CFN --> ALB2 --> K
-    K --> AUR & ECA & MSK
+    K --> AUR & ECA & MSK & MDB
     K --> S3B
     K -.->|VPC endpoints| ECR & KMS & BED
     NAT --> INT
@@ -402,9 +548,9 @@ flowchart TB
     L2["🔀 BFF LAYER<br/>Web BFF · Mobile BFF · GraphQL · Response shaping"]:::l2
     L3["⚙️ APPLICATION LAYER<br/>Auth · KYC · Accounts · Payments · Transactions · Ledger · Notifications"]:::l3
     L4["🤖 MLOPS / AI LAYER<br/>Fraud · Credit Scoring · Training Pipeline · GenAI RAG"]:::l4
-    L5["🗄️ DATABASE LAYER<br/>Aurora · Redis · Kafka · S3 · pgvector"]:::l5
-    L6["☸️ PLATFORM LAYER<br/>EKS · Karpenter · Istio · ArgoCD · Vault · Terraform"]:::l6
-    L7["🔐 SECURITY & OBSERVABILITY<br/>Kyverno · Falco · Trivy · Prometheus · Grafana · Loki"]:::l7
+    L5["🗄️ DATABASE LAYER<br/>MySQL · Valkey · MongoDB · OpenSearch · Kafka · S3"]:::l5
+    L6["☸️ PLATFORM LAYER<br/>EKS · Karpenter · KEDA · Calico · Istio · Argo CD · Argo Rollouts · Vault · Terraform"]:::l6
+    L7["🔐 SECURITY & OBSERVABILITY<br/>IAM · Vault · Kyverno · Falco · Trivy · Prometheus · Grafana · Loki · Logstash · CloudWatch"]:::l7
 
     L1 --> L2 --> L3 --> L4 --> L5 --> L6 --> L7
 
@@ -574,7 +720,7 @@ mindmap
       Bedrock Knowledge Bases
       LangChain
       LlamaIndex
-      pgvector
+      OpenSearch vectors
       OpenSearch
     🛡️ Guardrails
       Bedrock Guardrails
@@ -600,7 +746,7 @@ mindmap
 flowchart LR
     Q[💬 User question]:::u --> G1[🛡️ Input guardrails<br/>PII · injection]:::g
     G1 --> EMB[🔢 Embed query]:::p
-    EMB --> VS[(🔎 pgvector search)]:::d
+    EMB --> VS[(🔎 OpenSearch vector search)]:::d
     VS --> CTX[📚 Retrieve top-k context]:::p
     CTX --> LLM[🧠 LLM · Bedrock]:::l
     LLM --> G2[🛡️ Output guardrails]:::g
@@ -658,24 +804,39 @@ flowchart LR
 ### ☁️ AWS Infrastructure
 | Area | Tools |
 |---|---|
-| **Compute / Containers** | Amazon EKS, **Karpenter**, Fargate, ECR, EC2 Spot |
-| **Networking** | VPC, Subnets, NAT, Transit Gateway, PrivateLink, Route 53, CloudFront, ALB/NLB |
-| **Data** | Aurora PostgreSQL, ElastiCache Redis, S3, DynamoDB, MSK (Kafka) |
-| **Security** | IAM, IRSA / Pod Identity, KMS, Secrets Manager, GuardDuty, Security Hub, WAF, Shield, Inspector, Config |
-| **Observability** | CloudWatch, X-Ray, Managed Prometheus, Managed Grafana |
+| **Compute / Containers** | Amazon EKS, **Karpenter**, **KEDA**, Fargate, ECR, EC2 Spot |
+| **Networking** | VPC, Public/Private Subnets, NAT Gateway, Transit Gateway, VPC Endpoints / PrivateLink, Route 53, CloudFront, **API Gateway (REST)**, ALB/NLB |
+| **Data** | **MySQL**, **Valkey**, **MongoDB**, **OpenSearch**, **Kafka / MSK** (event-driven), S3, DynamoDB |
+| **Security** | IAM (roles, policies), IRSA / Pod Identity, KMS, Secrets Manager, GuardDuty, Security Hub, WAF, **Shield Advanced**, Inspector, Config |
+| **Observability** | **CloudWatch**, X-Ray, Managed Prometheus, Managed Grafana |
 | **AI / ML** | Bedrock, SageMaker, Comprehend, Textract |
+
+### ☸️ Orchestration
+| Area | Tools |
+|---|---|
+| **Kubernetes** | Amazon EKS, Karpenter (node autoscaling), KEDA (event-driven pod autoscaling) |
+| **Networking & mesh** | **Calico** (network policy), **Istio** (mTLS, traffic management) |
+| **Progressive delivery** | **Argo Rollouts** (canary, blue-green) |
+
+### 🧑‍💻 Application Languages
+| Service | Language |
+|---|---|
+| BFF · Notification | **Node.js** |
+| Payment · Transactions | **Go** |
+| Ledger · Auth · Accounts | **Java** (Spring Boot) |
+| Fraud · KYC · ML · GenAI | **Python** |
 
 ### 🏗️ Infrastructure as Code & GitOps
 | Area | Tools |
 |---|---|
-| **IaC** | **Terraform**, Terragrunt, Crossplane |
+| **Source & IaC** | **Git**, **Terraform**, Terragrunt, Crossplane |
 | **GitOps** | ArgoCD, Argo Rollouts, Argo Workflows, Helm, Kustomize |
 | **CI/CD** | GitHub Actions, Jenkins, Tekton |
 
 ### 🛡️ DevSecOps
 | Area | Tools |
 |---|---|
-| **Secrets** | Gitleaks, HashiCorp Vault, External Secrets Operator |
+| **Identity & Secrets** | AWS IAM, **HashiCorp Vault**, External Secrets Operator, Gitleaks |
 | **SAST / DAST** | SonarQube, Semgrep, OWASP ZAP |
 | **Container / Supply chain** | Trivy, Grype, Syft (SBOM), **Cosign**, SLSA |
 | **IaC scanning** | Checkov, tfsec, KICS |
@@ -684,10 +845,10 @@ flowchart LR
 | **Compliance** | PCI-DSS, SOC 2, CIS Benchmarks (kube-bench) |
 
 ### 📊 Observability & Reliability
-Prometheus · Grafana · Loki · Tempo · OpenTelemetry · Alertmanager · PagerDuty · SLO/SLI · Chaos Mesh · Velero · k6
+Prometheus · Grafana · Loki · **Logstash** · **Falco** · **CloudWatch** · Tempo · OpenTelemetry · Alertmanager · PagerDuty · SLO/SLI · Chaos Mesh · Velero · k6
 
 ### 🤖 MLOps & AI
-MLflow · Kubeflow · KServe · Feast · Airflow · Evidently · SageMaker · Bedrock · LangChain · LlamaIndex · pgvector · Ray
+MLflow · Kubeflow (ML Pipelines) · KServe · Airflow · Feast · **Evidently AI** · **WhyLogs** · SageMaker · Bedrock · LangChain · LlamaIndex · OpenSearch (vectors) · Ray
 
 ---
 
@@ -776,27 +937,27 @@ flowchart TB
 
         subgraph EDGE["🚪 EDGE · 10.10.0.0/16"]
             EIGW[🌐 IGW]:::gw
-            EPUB[public 10.10.1-3.0/24<br/>⚖️ ALB]:::pub
+            EPUB[public 10.10.1-3.0/24<br/>🔌 API Gateway · WAF]:::pub
             EPRIV[private 10.10.11-13.0/24]:::priv
         end
 
         subgraph APP["⚙️ APP · 10.20.0.0/16"]
             AIGW[🌐 IGW]:::gw
             ANAT[🔁 NAT Gateway]:::gw
-            APUB[public 10.20.1-3.0/24]:::pub
+            APUB[public 10.20.1-3.0/24<br/>⚖️ ALB]:::pub
             ACP[EKS control plane<br/>10.20.11-13.0/24]:::priv
             ADP[EKS data plane<br/>10.20.21-23.0/24]:::priv
         end
 
         subgraph DATA["🗄️ DATA · 10.30.0.0/16 · no internet"]
-            DDB[DBs 10.30.11-13.0/24]:::priv
-            DKF[Kafka + Redis<br/>10.30.21-23.0/24]:::priv
+            DDB[MySQL · MongoDB · OpenSearch<br/>10.30.11-13.0/24]:::priv
+            DKF[Kafka + Valkey<br/>10.30.21-23.0/24]:::priv
         end
 
         subgraph OPS["🛠️ OPS · 10.40.0.0/16"]
             OIGW[🌐 IGW]:::gw
             OPUB[public 10.40.1-3.0/24]:::pub
-            OPRIV[Monitoring + Vault<br/>10.40.11-13.0/24]:::priv
+            OPRIV[Prometheus · Grafana · Argo<br/>Vault · Kubeflow · MLflow<br/>10.40.11-13.0/24]:::priv
         end
 
         TGW{{"🔀 TRANSIT GATEWAY<br/>10.0.0.0/8"}}:::tgw
@@ -849,7 +1010,7 @@ flowchart TB
 |---|---|:-:|:-:|:-:|---|---|
 | 🚪 **edge** | `10.10.0.0/16` | 3 | 3 | – | s3 | – |
 | ⚙️ **app** | `10.20.0.0/16` | 3 | 6 (EKS control + data plane) | ✅ | s3 | ecr.api, ecr.dkr, logs, secretsmanager |
-| 🗄️ **data** | `10.30.0.0/16` | – | 6 (DBs + Kafka/Redis) | – | s3, dynamodb | kms |
+| 🗄️ **data** | `10.30.0.0/16` | – | 6 (DBs + Kafka/Valkey) | – | s3, dynamodb | kms |
 | 🛠️ **ops** | `10.40.0.0/16` | 3 | 3 | – | s3 | ssm, ssmmessages, ec2messages |
 
 **In simple words:**
@@ -932,7 +1093,7 @@ sequenceDiagram
     participant ART as 🗺️ app private route table
     participant TGW as 🔀 Transit Gateway
     participant TRT as 📋 TGW route table
-    participant DB as 🐘 Aurora 10.30.11.20
+    participant DB as 🐬 MySQL 10.30.11.20
 
     POD->>ART: Send to 10.30.11.20
     ART->>ART: 10.20.0.0/16 local? ✖ · 10.0.0.0/8 → TGW ✅
@@ -1186,7 +1347,7 @@ gantt
     Terraform VPC + EKS + Karpenter   :active,  f2, 2026-11-04, 14d
     section Application
     Frontend + 2 BFFs                 :         a1, after f2, 21d
-    7 core app microservices + Aurora :         a2, after a1, 35d
+    7 core app microservices + MySQL  :         a2, after a1, 35d
     section DevSecOps
     CI/CD, scanning, signing          :         d1, after f2, 21d
     Kyverno, Falco, Vault, Istio      :         d2, after d1, 28d
@@ -1203,7 +1364,7 @@ gantt
 timeline
     title Evolution of the Platform
     Phase 1 - Foundation : Repository and docs : Terraform VPC, EKS, Karpenter
-    Phase 2 - Services : Frontend and BFFs : 7 application microservices : Aurora, Redis, Kafka
+    Phase 2 - Services : Frontend and BFFs : 7 application microservices : MySQL, Valkey, MongoDB, OpenSearch, Kafka
     Phase 3 - Security : CI/CD scanning and signing : Kyverno, Falco, Vault : Istio mTLS
     Phase 4 - Delivery : ArgoCD GitOps : Canary rollouts : Observability stack
     Phase 5 - Intelligence : MLOps pipeline : Fraud and credit scoring : GenAI RAG assistant
