@@ -34,6 +34,7 @@
 
 - [About](#-about-this-project)
 - [Architecture](#%EF%B8%8F-high-level-architecture)
+- [Live Traffic Flow](#-live-traffic-flow)
 - [The 14 Microservices](#-the-14-microservices)
 - [AWS Infrastructure](#%EF%B8%8F-aws-infrastructure-layout)
 - [Request Flow](#-request-flow-making-a-payment)
@@ -151,6 +152,97 @@ flowchart TB
 
 ---
 
+## 🚦 Live Traffic Flow
+
+<div align="center">
+
+<img src="docs/diagrams/traffic-flow.svg" width="100%" alt="Animated diagram of traffic flowing from the customer through CloudFront, the edge VPC, the Transit Gateway, the app VPC and the data and ops VPCs"/>
+
+<sub>🎬 Animated: every moving dot is a real traffic type travelling through the network.</sub>
+
+</div>
+
+### 🛣️ Hop by hop: one payment request through the network
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor C as 👤 Customer
+    participant R53 as 🌐 Route 53
+    participant CF as ☁️ CloudFront + 🛡️ WAF
+    participant ALB as ⚖️ ALB (edge VPC)
+    participant TGW as 🔀 Transit Gateway
+    participant POD as 💸 payments pod (app VPC)
+    participant SM as 🔑 Secrets Manager
+    participant DB as 🐘 Aurora (data VPC)
+    participant PSP as 🌍 Payment network
+
+    C->>R53: api.fintech.example → resolve
+    R53-->>C: CloudFront edge IP
+    C->>CF: HTTPS request (TLS 1.3)
+    CF->>CF: WAF rules · rate limit · Shield
+    CF->>ALB: Forward via Internet Gateway (10.10.1.0/24)
+    ALB->>TGW: Target 10.20.x.x → route 10.0.0.0/8 → TGW
+    TGW->>POD: Deliver into app VPC private subnet
+    POD->>SM: Fetch DB secret via Interface endpoint 🚇 (never leaves AWS)
+    SM-->>POD: Secret
+    POD->>TGW: Query 10.30.x.x → route 10.0.0.0/8 → TGW
+    TGW->>DB: Deliver into data VPC (10.30.11.0/24)
+    DB-->>TGW: Rows
+    TGW-->>POD: Rows
+    POD->>PSP: Authorise card via NAT Gateway → IGW (outbound only)
+    PSP-->>POD: ✅ Approved
+    POD-->>TGW: 200 OK
+    TGW-->>ALB: Response
+    ALB-->>CF: Response
+    CF-->>C: ✅ Payment complete
+```
+
+### 🧭 How a packet picks its path (route table decision)
+
+```mermaid
+flowchart LR
+    P([📦 Packet leaves a pod]):::start --> Q1{Destination inside<br/>my own /16?}:::q
+    Q1 -->|yes| L[🏠 local route<br/>stays in the VPC]:::local
+    Q1 -->|no| Q2{AWS service with<br/>a VPC endpoint?}:::q
+    Q2 -->|S3 / DynamoDB| G[🟢 Gateway endpoint<br/>prefix-list route]:::gw
+    Q2 -->|ECR · Secrets · KMS · SSM · Logs| I[🟣 Interface endpoint<br/>private DNS → ENI]:::ifep
+    Q2 -->|no| Q3{Destination in<br/>10.0.0.0/8?}:::q
+    Q3 -->|yes| T[🔀 Transit Gateway<br/>to another VPC]:::tgw
+    Q3 -->|no| Q4{VPC has a<br/>NAT Gateway?}:::q
+    Q4 -->|yes · app| N[🔁 NAT → IGW<br/>outbound internet]:::nat
+    Q4 -->|no · data| X[⛔ Dropped<br/>no internet path]:::drop
+
+    classDef start fill:#4facfe,stroke:#fff,color:#000,stroke-width:2px
+    classDef q fill:#ffd200,stroke:#fff,color:#000
+    classDef local fill:#8fd3f4,stroke:#fff,color:#000
+    classDef gw fill:#43e97b,stroke:#fff,color:#000
+    classDef ifep fill:#c471f5,stroke:#fff,color:#fff
+    classDef tgw fill:#ff9900,stroke:#fff,color:#000,stroke-width:2px
+    classDef nat fill:#ff4081,stroke:#fff,color:#fff
+    classDef drop fill:#434343,stroke:#ff416c,color:#fff,stroke-width:2px
+```
+
+### 🛡️ Security checkpoints on the way in
+
+```mermaid
+flowchart LR
+    A[👤 Internet]:::i --> B[🛡️ Shield<br/>DDoS]:::s1 --> C[🧱 WAF<br/>OWASP rules]:::s2 --> D[🔒 TLS<br/>CloudFront]:::s3 --> E[🚪 Public SG<br/>443 only]:::s4 --> F[⚖️ ALB<br/>listener rules]:::s5 --> G[🔀 TGW<br/>10.0.0.0/8]:::s6 --> H[🔐 Private SG<br/>allowed CIDRs]:::s7 --> I[🕸️ Istio mTLS<br/>AuthZ policy]:::s8 --> J[💸 Service]:::ok
+
+    classDef i fill:#ff9a9e,color:#000
+    classDef s1 fill:#ff416c,color:#fff
+    classDef s2 fill:#ff6a3d,color:#fff
+    classDef s3 fill:#f7971e,color:#000
+    classDef s4 fill:#ffd200,color:#000
+    classDef s5 fill:#84fab0,color:#000
+    classDef s6 fill:#ff9900,color:#000
+    classDef s7 fill:#4facfe,color:#000
+    classDef s8 fill:#c471f5,color:#fff
+    classDef ok fill:#43e97b,color:#000,stroke:#fff,stroke-width:3px
+```
+
+---
+
 ## 🧩 The 14 Microservices
 
 <div align="center">
@@ -212,7 +304,7 @@ flowchart TB
     INT((🌍 Internet)):::net --> CFN[CloudFront + WAF + Shield]:::edge
 
     subgraph REGION["☁️ AWS Region"]
-        subgraph VPC["🔒 VPC 10.0.0.0/16"]
+        subgraph VPC["🔒 VPCs · edge 10.10 · app 10.20 · data 10.30 · ops 10.40 · joined by Transit Gateway"]
             subgraph PUB["🌐 Public Subnets · 3 AZs"]
                 ALB2[Application Load Balancer]:::pub
                 NAT[NAT Gateways]:::pub
@@ -639,7 +731,7 @@ quadrantChart
 
 <div align="center">
 
-[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=20&pause=900&color=FF9900&center=true&vCenter=true&width=900&lines=4+isolated+VPCs+in+us-east-1;Private+VPC+endpoints+%E2%80%94+no+internet+for+AWS+traffic;Least-privilege+IAM+roles+per+environment;Multi+state+files+in+one+encrypted+S3+backend;Terraform+1.17.1+%7C+AWS+provider+6.72+%7C+IAM+module+6.8.2)](https://git.io/typing-svg)
+[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=20&pause=900&color=FF9900&center=true&vCenter=true&width=900&lines=4+isolated+VPCs+joined+by+a+Transit+Gateway;Private+VPC+endpoints+%E2%80%94+no+internet+for+AWS+traffic;Least-privilege+IAM+roles+per+environment;Multi+state+files+in+one+encrypted+S3+backend;Terraform+1.17.1+%7C+AWS+provider+6.72+%7C+IAM+module+6.8.2)](https://git.io/typing-svg)
 
 ![Terraform](https://img.shields.io/badge/Terraform-%E2%89%A5%201.17.1-7B42BC?style=for-the-badge&logo=terraform&logoColor=white)
 ![AWS Provider](https://img.shields.io/badge/AWS%20Provider-~%3E%206.72-FF9900?style=for-the-badge&logo=amazonaws&logoColor=white)
@@ -659,104 +751,116 @@ timeline
     State backend : S3 state bucket : Encrypted state : Native S3 lock file (no DynamoDB)
     IAM : Reusable child module : Platform, App team and CI/CD roles : One root stack per environment (ops, qa, uat, prod)
     Networking : Reusable network module : 4 VPCs from one for_each : Gateway + Interface VPC endpoints
+    Connectivity : Transit Gateway hub : Subnets round-robin across 3 AZs : Corrected CIDRs 10.10 to 10.40
     Hardening : Fixed SG and AZ bugs : Private SG limited to VPC CIDR : Pinned latest Terraform, provider and module versions
 ```
 
 ---
 
-### 🌐 Networking: 4 Isolated VPCs
+### 🌐 Networking: 4 VPCs + Transit Gateway
 
-One reusable module (`prod/Networking/network/`) is called **once per VPC** from the root module with `for_each`. Each VPC gets its own subnets, route tables, security groups and VPC endpoints.
+One reusable module (`prod/Networking/network/`) is called **once per VPC** from the root module with `for_each`. Each VPC gets its own subnets, route tables, security groups and VPC endpoints. A **Transit Gateway** (`transit_gateway.tf`) joins them all.
+
+<div align="center">
+
+<img src="docs/diagrams/network-topology.svg" width="100%" alt="Animated hub-and-spoke diagram: edge, app, data and ops VPCs with their subnets per AZ, connected through a Transit Gateway"/>
+
+</div>
 
 ```mermaid
 flowchart TB
     INET((🌍 Internet)):::net
 
-    subgraph REGION["☁️ AWS us-east-1"]
+    subgraph REGION["☁️ AWS us-east-1 · AZs 1a · 1b · 1c"]
         direction TB
 
-        subgraph EDGE["🚪 EDGE VPC · 10.0.0.0/16"]
-            direction TB
-            IGW[🌐 Internet Gateway]:::gw
-            subgraph EPUB["Public subnets · 1a · 1b · 1c"]
-                EP1[10.0.0.0/24]:::pub
-                EP2[10.0.1.0/24]:::pub
-                EP3[10.0.2.0/24]:::pub
-                NAT[🔁 NAT Gateway + EIP]:::gw
-            end
-            subgraph EPRIV["Private subnets · 1a · 1b · 1c"]
-                EV1[10.0.10.0/24]:::priv
-                EV2[10.0.11.0/24]:::priv
-                EV3[10.0.12.0/24]:::priv
-            end
+        subgraph EDGE["🚪 EDGE · 10.10.0.0/16"]
+            EIGW[🌐 IGW]:::gw
+            EPUB[public 10.10.1-3.0/24<br/>⚖️ ALB]:::pub
+            EPRIV[private 10.10.11-13.0/24]:::priv
         end
 
-        subgraph APP["⚙️ APP VPC · 10.1.0.0/16 · private only"]
-            AV[10.1.10-12.0/24<br/>3 private subnets]:::priv
+        subgraph APP["⚙️ APP · 10.20.0.0/16"]
+            AIGW[🌐 IGW]:::gw
+            ANAT[🔁 NAT Gateway]:::gw
+            APUB[public 10.20.1-3.0/24]:::pub
+            ACP[EKS control plane<br/>10.20.11-13.0/24]:::priv
+            ADP[EKS data plane<br/>10.20.21-23.0/24]:::priv
         end
-        subgraph DATA["🗄️ DATA VPC · 10.2.0.0/16 · private only"]
-            DV[10.2.10-12.0/24<br/>3 private subnets]:::priv
+
+        subgraph DATA["🗄️ DATA · 10.30.0.0/16 · no internet"]
+            DDB[DBs 10.30.11-13.0/24]:::priv
+            DKF[Kafka + Redis<br/>10.30.21-23.0/24]:::priv
         end
-        subgraph OPS["🛠️ OPS VPC · 10.3.0.0/16 · private only"]
-            OV[10.3.10-12.0/24<br/>3 private subnets]:::priv
+
+        subgraph OPS["🛠️ OPS · 10.40.0.0/16"]
+            OIGW[🌐 IGW]:::gw
+            OPUB[public 10.40.1-3.0/24]:::pub
+            OPRIV[Monitoring + Vault<br/>10.40.11-13.0/24]:::priv
         end
+
+        TGW{{"🔀 TRANSIT GATEWAY<br/>10.0.0.0/8"}}:::tgw
 
         subgraph AWS["🔒 AWS services via VPC endpoints"]
             S3[(🪣 S3)]:::gwep
-            DDB[(⚡ DynamoDB)]:::gwep
-            ECR[📦 ECR api + dkr]:::ifep
-            LOGS[📜 CloudWatch Logs]:::ifep
-            SEC[🔑 Secrets Manager]:::ifep
+            DYN[(⚡ DynamoDB)]:::gwep
+            ECR[📦 ECR]:::ifep
+            SEC[🔑 Secrets · 📜 Logs]:::ifep
             KMS[🔐 KMS]:::ifep
-            SSM[🖥️ SSM · ssmmessages · ec2messages]:::ifep
+            SSM[🖥️ SSM]:::ifep
         end
     end
 
-    INET <--> IGW
-    IGW --- EPUB
-    EPRIV -->|outbound only| NAT --> IGW
-    EPRIV -.-> S3
-    AV -.-> S3
-    AV ==> ECR & LOGS & SEC
-    DV -.-> S3 & DDB
-    DV ==> SEC & KMS
-    OV -.-> S3
-    OV ==> SSM
+    INET <--> EIGW --- EPUB
+    INET <--> AIGW
+    INET <--> OIGW --- OPUB
+    ADP -->|outbound| ANAT --> AIGW
+
+    EPRIV <==> TGW
+    ACP <==> TGW
+    ADP <==> TGW
+    DDB <==> TGW
+    DKF <==> TGW
+    OPRIV <==> TGW
+
+    ADP -.-> S3 & ECR & SEC
+    DDB -.-> S3 & DYN & KMS
+    OPRIV -.-> S3 & SSM
 
     classDef net fill:#ff9a9e,stroke:#fff,color:#000,stroke-width:2px
-    classDef gw fill:#ff9900,stroke:#fff,color:#000,stroke-width:2px
+    classDef gw fill:#ff9900,stroke:#fff,color:#000
     classDef pub fill:#84fab0,stroke:#0b3d2e,color:#000
     classDef priv fill:#8fd3f4,stroke:#12263f,color:#000
+    classDef tgw fill:#ff7a00,stroke:#ffd200,color:#000,stroke-width:3px
     classDef gwep fill:#43e97b,stroke:#fff,color:#000,stroke-width:2px
     classDef ifep fill:#c471f5,stroke:#fff,color:#fff,stroke-width:2px
 
     style REGION fill:#0f2027,stroke:#ff9900,color:#fff,stroke-width:3px
     style EDGE fill:#10372b,stroke:#84fab0,color:#fff,stroke-width:2px
-    style EPUB fill:#14532d,stroke:#84fab0,color:#fff
-    style EPRIV fill:#12263f,stroke:#4facfe,color:#fff
     style APP fill:#12263f,stroke:#4facfe,color:#fff,stroke-width:2px
     style DATA fill:#2b1a1a,stroke:#ff416c,color:#fff,stroke-width:2px
     style OPS fill:#2a1245,stroke:#c471f5,color:#fff,stroke-width:2px
     style AWS fill:#1a1a1a,stroke:#ffd200,color:#fff,stroke-width:2px
 ```
 
-> 🟢 dotted arrows = **Gateway endpoints** (free, route-table based) · 🟣 thick arrows = **Interface endpoints** (private IPs in each AZ)
+> 🟠 thick arrows = **Transit Gateway** · 🟢/🟣 dotted arrows = **VPC endpoints** · 🌐 = Internet Gateway
 
 | VPC | CIDR | Public subnets | Private subnets | NAT | Gateway endpoints | Interface endpoints |
 |---|---|:-:|:-:|:-:|---|---|
-| 🚪 **edge** | `10.0.0.0/16` | 3 | 3 | ✅ | s3 | – |
-| ⚙️ **app** | `10.1.0.0/16` | – | 3 | – | s3 | ecr.api, ecr.dkr, logs, secretsmanager |
-| 🗄️ **data** | `10.2.0.0/16` | – | 3 | – | s3, dynamodb | secretsmanager, kms |
-| 🛠️ **ops** | `10.3.0.0/16` | – | 3 | – | s3 | ssm, ssmmessages, ec2messages |
+| 🚪 **edge** | `10.10.0.0/16` | 3 | 3 | – | s3 | – |
+| ⚙️ **app** | `10.20.0.0/16` | 3 | 6 (EKS control + data plane) | ✅ | s3 | ecr.api, ecr.dkr, logs, secretsmanager |
+| 🗄️ **data** | `10.30.0.0/16` | – | 6 (DBs + Kafka/Redis) | – | s3, dynamodb | kms |
+| 🛠️ **ops** | `10.40.0.0/16` | 3 | 3 | – | s3 | ssm, ssmmessages, ec2messages |
 
 **In simple words:**
-- 🏢 Each **VPC is a separate building** with its own address range. CIDRs don't overlap, so a Transit Gateway can connect them later.
-- 🌐 **Public subnets** (edge only) face the internet through the **Internet Gateway**.
-- 🔐 **Private subnets** can't be reached from outside. Apps and databases live here.
-- 🔁 The **NAT Gateway** lets edge's private servers go *out* to the internet, but nothing can come *in*.
-- 🚇 **VPC endpoints** are private tunnels to AWS services, so app, data and ops reach ECR, S3, Secrets Manager and so on **without any internet access**.
-- 🛡️ **Security groups:** private resources only accept traffic from inside their own VPC. Endpoints only accept HTTPS (443) from the VPC.
-- 🏗️ Subnets are spread across **3 Availability Zones** (us-east-1a/b/c), so one data center failing doesn't take the network down.
+- 🏢 Each **VPC is a separate building** with its own address range. The `10.10 / 10.20 / 10.30 / 10.40` CIDRs never overlap, so they can all be joined.
+- 🔀 The **Transit Gateway is the central hub** that connects the buildings. Every private route table has one route, `10.0.0.0/8 → TGW`, and traffic inside a VPC stays local because its own `/16` is more specific.
+- 🌐 **Public subnets** face the internet through an **Internet Gateway**.
+- 🔐 **Private subnets** can't be reached from outside. Apps, databases and monitoring live here.
+- 🔁 **NAT Gateway** (app): pods can call out, for example to a payment network, but nothing can come in.
+- 🚇 **VPC endpoints** are private tunnels to AWS services, so ECR, S3, Secrets Manager and KMS are reached **without the internet**.
+- 🗄️ The **data VPC has no internet path at all**. It's reachable only through the TGW.
+- 🏗️ Subnets go **round-robin across 3 AZs** (1a → 1b → 1c → 1a …), so 6 subnets give 2 per AZ, and the first 3 (one per AZ) host the TGW attachment and endpoint ENIs.
 
 #### 🔀 How the root module creates all 4 VPCs
 
@@ -768,6 +872,7 @@ flowchart LR
     M --> D["🗄️ module.network[data]"]:::data
     M --> O["🛠️ module.network[ops]"]:::ops
     E & A & D & O --> R["📦 Each instance creates:<br/>VPC · subnets · route tables<br/>SGs · NAT/IGW if public<br/>Gateway + Interface endpoints"]:::res
+    R --> T["🔀 transit_gateway.tf<br/>attach + route every VPC<br/>(for_each = local.vpcs)"]:::tgw
 
     classDef loc fill:#ffd200,stroke:#fff,color:#000,stroke-width:2px
     classDef mod fill:#7B42BC,stroke:#fff,color:#fff,stroke-width:2px
@@ -776,6 +881,7 @@ flowchart LR
     classDef data fill:#ff416c,stroke:#fff,color:#fff
     classDef ops fill:#c471f5,stroke:#fff,color:#fff
     classDef res fill:#0f2027,stroke:#00c9a7,color:#fff,stroke-width:2px
+    classDef tgw fill:#ff7a00,stroke:#ffd200,color:#000,stroke-width:2px
 ```
 
 #### 🚇 VPC endpoints: Gateway vs Interface
@@ -809,7 +915,7 @@ flowchart LR
 | `data.aws_region.current` | Reads the provider's region, so endpoint names are never hardcoded |
 | `aws_vpc_endpoint.gateway` | `for_each = toset(var.gateway_endpoints)` creates one free Gateway endpoint per service and attaches it to the private route tables |
 | `aws_security_group.endpoint_sg` | Created only if `interface_endpoints` isn't empty. Allows HTTPS 443 from the VPC CIDR |
-| `aws_vpc_endpoint.interface` | `for_each = toset(var.interface_endpoints)` places an ENI in every private subnet (one per AZ). `private_dns_enabled = true` means application code needs **no changes** |
+| `aws_vpc_endpoint.interface` | `for_each = toset(var.interface_endpoints)` places an ENI in the first private subnet of each AZ (`private_subnet_ids_per_az`). `private_dns_enabled = true` means application code needs **no changes** |
 
 ```hcl
 # Per-VPC input: just two simple lists
@@ -817,19 +923,51 @@ gateway_endpoints   = ["s3", "dynamodb"]
 interface_endpoints = ["secretsmanager", "kms"]
 ```
 
+#### 🔀 Transit Gateway: how VPCs talk to each other
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant POD as ⚙️ app pod 10.20.21.15
+    participant ART as 🗺️ app private route table
+    participant TGW as 🔀 Transit Gateway
+    participant TRT as 📋 TGW route table
+    participant DB as 🐘 Aurora 10.30.11.20
+
+    POD->>ART: Send to 10.30.11.20
+    ART->>ART: 10.20.0.0/16 local? ✖ · 10.0.0.0/8 → TGW ✅
+    ART->>TGW: Forward via app attachment
+    TGW->>TRT: Look up 10.30.11.20
+    TRT-->>TGW: 10.30.0.0/16 → data attachment (propagated)
+    TGW->>DB: Deliver into data VPC
+    DB-->>TGW: Reply to 10.20.21.15
+    TGW-->>POD: 10.20.0.0/16 → app attachment
+    Note over POD,DB: Routing opens the path · security groups still decide what is allowed
+```
+
+| Block (`transit_gateway.tf`) | What it does |
+|---|---|
+| `aws_ec2_transit_gateway.main` | The hub router. Every attachment auto-associates and auto-propagates its CIDR |
+| `aws_ec2_transit_gateway_vpc_attachment.vpc` | `for_each = local.vpcs` plugs every VPC in using one private subnet per AZ |
+| `aws_route.private_to_tgw` | `10.0.0.0/8 → TGW` in every private route table |
+| `aws_route.public_to_tgw` | The same route in public route tables (edge, app, ops) |
+
+> ➕ **Reusable:** add a VPC to `locals.tf` and it's created, attached to the TGW and routed automatically.
+
 #### 📦 What one `terraform apply` creates
 
 | Resource | Count |
 |---|:-:|
 | VPCs | 4 |
-| Subnets (6 edge + 3 × 3 private) | 15 |
-| Route tables | 5 |
-| Internet Gateway / NAT Gateway / Elastic IP | 1 / 1 / 1 |
-| Security groups (public, private, endpoint) | 8 |
+| Subnets (9 public + 18 private) | 27 |
+| Route tables (3 public + 4 private) | 7 |
+| Internet Gateways / NAT Gateway / Elastic IP | 3 / 1 / 1 |
+| Security groups (public, private, endpoint) | 10 |
 | Gateway endpoints | 5 |
-| Interface endpoints | 9 |
+| Interface endpoints | 8 |
+| Transit Gateway / attachments / TGW routes | 1 / 4 / 7 |
 
-> 💰 **Cost note:** Gateway endpoints are free. Interface endpoints cost about $7.30 per AZ per month each (9 × 3 AZs ≈ $200 per month), and the NAT Gateway about $33 per month, both before data charges. Add Interface endpoints only to VPCs that need them.
+> 💰 **Cost note:** Gateway endpoints are free. Interface endpoints cost about $7.30 per AZ per month each (8 × 3 AZs ≈ $175 per month), the NAT Gateway about $33 per month, and TGW attachments about $36 per month each (≈ $146 per month), all before data charges.
 
 ---
 
@@ -855,13 +993,13 @@ flowchart TB
         OPS["🛠️ product-ops-role<br/>enable_platform_role"]:::env
         QA["🧪 product-qa-role<br/>enable_product_role<br/>enable_cicd_role"]:::env
         UAT["🧷 product-uat-role<br/>enable_product_role<br/>enable_cicd_role"]:::env
-        PRD["🏦 product-prod-role<br/>⚠️ role flags pending"]:::warn
+        PRD["🏦 product-prod-role<br/>enable_product_role<br/>enable_cicd_role"]:::env
     end
 
     OPS -.-> R1
     QA -.-> R2 & R3
     UAT -.-> R2 & R3
-    PRD -.-> ROLES
+    PRD -.-> R2 & R3
 
     classDef mod fill:#7B42BC,stroke:#fff,color:#fff,stroke-width:2px
     classDef plat fill:#ff9900,stroke:#fff,color:#000
@@ -902,6 +1040,12 @@ sequenceDiagram
 
 Every stack keeps its **own state file** inside a single encrypted S3 bucket, **`fintech-project-statefile-bucket`**. Locking uses Terraform's **native S3 lock file** (`use_lockfile = true`), so no DynamoDB table is needed.
 
+<div align="center">
+
+<img src="docs/diagrams/state-backend.svg" width="100%" alt="Animated diagram of eight Terraform stacks each writing its own state file into one encrypted S3 bucket"/>
+
+</div>
+
 **Why split the state?**
 - 💥 **Smaller blast radius:** a bad apply on QA IAM can't touch prod networking.
 - ⚡ **Faster plans:** each stack only refreshes its own resources.
@@ -930,7 +1074,8 @@ flowchart LR
         K4["product-iam/envs/iam-uat-role.tfstate"]:::ki
         K5["product-iam/envs/iam-prod-role.tfstate"]:::ki
         K6["product-name/envs/qa/s3.tfstate"]:::ks
-        K7["product-name/envs/prod/s3.tfstate"]:::ks
+        K7["product-name/envs/stage/s3.tfstate"]:::ks
+        K8["product-name/envs/prod/s3.tfstate"]:::ks
     end
 
     N --> K1
@@ -939,8 +1084,8 @@ flowchart LR
     I3 --> K4
     I4 --> K5
     S1 --> K6
-    S2 -.->|⚠️ shares prod key| K7
-    S3 --> K7
+    S2 --> K7
+    S3 --> K8
 
     classDef net fill:#4facfe,stroke:#fff,color:#000
     classDef iam fill:#ff9900,stroke:#fff,color:#000
@@ -960,8 +1105,8 @@ flowchart LR
 | 🧷 iam/product-uat-role | `product-iam/envs/iam-uat-role.tfstate` |
 | 🏦 iam/product-prod-role | `product-iam/envs/iam-prod-role.tfstate` |
 | 🪣 qa/s3 | `product-name/envs/qa/s3.tfstate` |
+| 🪣 stage/s3 | `product-name/envs/stage/s3.tfstate` |
 | 🪣 prod/s3 | `product-name/envs/prod/s3.tfstate` |
-| 🪣 stage/s3 | `product-name/envs/prod/s3.tfstate` ⚠️ *same as prod, to be fixed* |
 
 #### 🔒 How native S3 locking protects state
 
@@ -1000,23 +1145,31 @@ sequenceDiagram
 - 🛡️ Private SG no longer hardcodes `0.0.0.0/0` ingress. Rules now come from the root module (VPC CIDR only)
 - 🔁 VPC endpoint code rewritten: no hardcoded region, no fragile `slice()`, no `[0]` index crash, descriptions + tags added (clears the KICS findings)
 - 📌 Pinned latest Terraform, AWS provider and IAM module versions everywhere
+- 🗺️ CIDRs re-planned to `10.10 / 10.20 / 10.30 / 10.40` with edge subnets fixed to sit inside `10.10.0.0/16`
+- 🏗️ Subnets now round-robin across 3 AZs, and TGW and endpoints use one subnet per AZ
+- 🐞 `outputs.tf`: `aws.subnet` → `aws_subnet`, added CIDR, public subnet and route table outputs
+- 🔐 `product-prod-role` now uses real module inputs (`enable_product_role`, `enable_cicd_role`)
+- 🪣 `stage/s3` has its own state key, no longer sharing prod's
 
 ### 🚀 How to Deploy the Networking Stack
 
 ```bash
 cd infra-modules/prod/Networking
 terraform init -reconfigure          # connect to the S3 backend
-terraform plan -out=network.tfplan   # review: 4 VPCs, 15 subnets, 14 endpoints
+terraform plan -out=network.tfplan   # review: 4 VPCs, 27 subnets, 13 endpoints, 1 TGW
 terraform apply network.tfplan
 ```
 
 ### 🔜 Next Up
 
-- [ ] Fix the `product-prod-role` role flags (`enable_prod_role` isn't a module input)
-- [ ] Give `stage/s3` its own state key
-- [ ] Add `network/outputs.tf` (VPC ID, subnet IDs, route table IDs) for EKS and RDS stacks
-- [ ] Unique route table names per VPC
-- [ ] Transit Gateway to connect edge ↔ app ↔ data ↔ ops
+- [x] Transit Gateway connecting edge ↔ app ↔ data ↔ ops
+- [x] Separate state key for `stage/s3`
+- [x] Fix `product-prod-role` role flags
+- [ ] VPC Flow Logs (PCI-DSS / SOC 2)
+- [ ] Lock down the default security group (CIS 5.4)
+- [ ] EKS subnet tags (`kubernetes.io/role/elb`, `internal-elb`)
+- [ ] `default_tags` in the provider + unique route table names
+- [ ] TGW segmentation (separate route tables so edge can't reach data directly)
 - [ ] EKS + Karpenter in the app VPC
 
 ---
@@ -1062,8 +1215,9 @@ timeline
 | ✅ | Terraform remote backend: multi state files in S3 with native locking |
 | ✅ | IAM: reusable child module + ops / qa / uat environment roles (GitHub OIDC for CI/CD) |
 | ✅ | Networking: 4 VPCs (edge, app, data, ops) with Gateway + Interface VPC endpoints |
-| 🚧 | IAM prod role flags · stage S3 state key · network outputs |
-| 🔜 | Terraform: EKS cluster, Karpenter, Transit Gateway |
+| ✅ | Transit Gateway hub · round-robin subnets across 3 AZs · module outputs |
+| 🚧 | Flow Logs · default SG lockdown · EKS subnet tags · default tags |
+| 🔜 | Terraform: EKS cluster, Karpenter |
 | 🔜 | Frontend, 2 BFFs and 7 application microservices |
 | 🔜 | CI/CD with scanning, SBOM and image signing |
 | 🔜 | ArgoCD GitOps, Kyverno policies, Falco, Istio |
@@ -1078,6 +1232,7 @@ timeline
 ```text
 FinTech-Enterprise-Project/
 ├── .github/workflows/            # Terraform CI pipelines (GitHub OIDC → AWS)
+├── docs/diagrams/                # animated SVG diagrams used in this README
 ├── infra-modules/
 │   ├── iam/
 │   │   ├── child-module/         # 3 roles via terraform-aws-modules/iam 6.8.2
@@ -1087,7 +1242,7 @@ FinTech-Enterprise-Project/
 │   │       ├── product-uat-role/ # app team + CI/CD roles
 │   │       └── product-prod-role/
 │   ├── prod/
-│   │   ├── Networking/           # root: backend, provider, locals (4 VPCs), module call
+│   │   ├── Networking/           # root: backend, provider, locals (4 VPCs), module call, transit_gateway.tf
 │   │   │   └── network/          # child: VPC, subnets, NAT, SGs, VPC endpoints
 │   │   └── s3/
 │   ├── qa/   (s3, EKS)
