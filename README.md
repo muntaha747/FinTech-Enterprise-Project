@@ -40,7 +40,7 @@
 
 <div align="center">
 
-<img src="docs/diagrams/infrastructure-layers.svg?v=20261111b" width="100%" alt="Animated stack of six infrastructure layers (CI/CD, Edge, Network, Orchestration, Application, Data) with Identity and Access and Observability as cross-cutting pillars"/>
+<img src="docs/diagrams/infrastructure-layers-v2.svg" width="100%" alt="Animated stack of six infrastructure layers (CI/CD, Edge, Network, Orchestration, Application, Data) with Identity and Access and Observability as cross-cutting pillars"/>
 
 </div>
 
@@ -48,7 +48,7 @@
 
 <div align="center">
 
-<img src="docs/diagrams/architecture-overview.svg?v=20261111b" width="100%" alt="Animated regional architecture: edge, app, data and ops VPCs connected by a Transit Gateway, with EKS microservices, data stores, ops tooling, VPC endpoints to ECR, S3 and KMS, and NAT egress"/>
+<img src="docs/diagrams/architecture-overview-v2.svg" width="100%" alt="Animated regional architecture: edge, app, data and ops VPCs connected by a Transit Gateway, with EKS microservices, data stores, ops tooling, VPC endpoints to ECR, S3 and KMS, and NAT egress"/>
 
 </div>
 
@@ -56,7 +56,7 @@
 
 <div align="center">
 
-<img src="docs/diagrams/traffic-flow.svg?v=20261111b" width="100%" alt="Animated diagram of a customer request flowing through CloudFront, API Gateway, the Transit Gateway, the ALB and EKS services into the data and ops VPCs"/>
+<img src="docs/diagrams/traffic-flow-v2.svg" width="100%" alt="Animated diagram of a customer request flowing through CloudFront, API Gateway, the Transit Gateway, the ALB and EKS services into the data and ops VPCs"/>
 
 </div>
 
@@ -64,7 +64,7 @@
 
 <div align="center">
 
-<img src="docs/diagrams/network-topology.svg?v=20261111b" width="100%" alt="Animated hub-and-spoke diagram: edge, app, data and ops VPCs with their subnets per AZ, connected through a Transit Gateway"/>
+<img src="docs/diagrams/network-topology-v2.svg" width="100%" alt="Animated hub-and-spoke diagram: edge, app, data and ops VPCs with their subnets per AZ, connected through a Transit Gateway"/>
 
 </div>
 
@@ -72,7 +72,7 @@
 
 <div align="center">
 
-<img src="docs/diagrams/state-backend.svg?v=20261111b" width="100%" alt="Animated diagram of Terraform stacks each writing its own state file into one encrypted S3 bucket"/>
+<img src="docs/diagrams/state-backend-v2.svg" width="100%" alt="Animated diagram of Terraform stacks each writing its own state file into one encrypted S3 bucket"/>
 
 </div>
 
