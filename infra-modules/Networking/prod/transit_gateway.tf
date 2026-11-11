@@ -1,5 +1,5 @@
 ############################## Transit Gateway - connects all VPCs in local.vpcs ##############################
-# Add a VPC in locals.tf and it is automatically attached and routed here.
+# Added a VPC in locals.tf and it is automatically attached and routed here.
 
 # 1. The hub router
 resource "aws_ec2_transit_gateway" "main" {
