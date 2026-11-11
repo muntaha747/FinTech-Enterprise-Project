@@ -46,7 +46,7 @@
 - [MLOps](#-mlops-lifecycle)
 - [AI / GenAI](#-ai--genai-capabilities)
 - [Observability](#-observability)
-- [Tech Stack](#-tech-stack)
+- [Tech Stack](#-complete-tools--tech-stack)
 - [Infrastructure Build: Networking & IAM](#%EF%B8%8F-infrastructure-build-networking--iam)
 - [Roadmap](#%EF%B8%8F-roadmap)
 
@@ -76,7 +76,7 @@ The project **will be upgraded over time**. Each upgrade showcases a modern tool
 
 <div align="center">
 
-[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=20&pause=900&color=00C9A7&center=true&vCenter=true&width=900&lines=6+infrastructure+layers+%C2%B7+2+cross-cutting+pillars;4+VPCs+%C2%B7+1+Transit+Gateway+%C2%B7+Amazon+EKS;40%2B+tools+from+Git+to+Evidently+AI)](https://git.io/typing-svg)
+[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=20&pause=900&color=00C9A7&center=true&vCenter=true&width=900&lines=6+infrastructure+layers+%C2%B7+2+cross-cutting+pillars;4+VPCs+%C2%B7+1+Transit+Gateway+%C2%B7+Amazon+EKS;122+tools+from+Git+to+GenAI)](https://git.io/typing-svg)
 
 </div>
 
@@ -87,6 +87,197 @@ The project **will be upgraded over time**. Each upgrade showcases a modern tool
 <img src="docs/diagrams/infrastructure-layers.svg" width="100%" alt="Animated stack of six infrastructure layers (CI/CD, Edge, Network, Orchestration, Application, Data) with Identity and Access and Observability as cross-cutting pillars"/>
 
 </div>
+
+### 🏛️ Regional Architecture: 4 VPCs on AWS
+
+<div align="center">
+
+<img src="docs/diagrams/architecture-overview.svg" width="100%" alt="Animated regional architecture: edge, app, data and ops VPCs connected by a Transit Gateway, with EKS microservices, data stores, ops tooling, VPC endpoints to ECR, S3 and KMS, and NAT egress"/>
+
+<sub>🎬 Animated: request, response, Transit Gateway, data, metrics, GitOps, endpoint and egress traffic.</sub>
+
+</div>
+
+### 🧰 Complete Tools & Tech Stack
+
+Every tool this project uses or will use: **122 tools across 11 categories**, from source control to GenAI.
+
+#### ☁️ AWS Cloud
+
+![Amazon EKS](https://img.shields.io/badge/Amazon%20EKS-FF9900?style=for-the-badge&logo=amazoneks&logoColor=white)
+![EC2 Spot](https://img.shields.io/badge/EC2%20Spot-FF9900?style=for-the-badge&logo=amazonec2&logoColor=white)
+![Fargate](https://img.shields.io/badge/Fargate-FF9900?style=for-the-badge)
+![Amazon ECR](https://img.shields.io/badge/Amazon%20ECR-FF9900?style=for-the-badge&logo=amazonecs&logoColor=white)
+![Amazon S3](https://img.shields.io/badge/Amazon%20S3-569A31?style=for-the-badge&logo=amazons3&logoColor=white)
+![DynamoDB](https://img.shields.io/badge/DynamoDB-4053D6?style=for-the-badge&logo=amazondynamodb&logoColor=white)
+![Amazon MSK](https://img.shields.io/badge/Amazon%20MSK-231F20?style=for-the-badge&logo=apachekafka&logoColor=white)
+![AWS KMS](https://img.shields.io/badge/AWS%20KMS-DD344C?style=for-the-badge)
+![Secrets Manager](https://img.shields.io/badge/Secrets%20Manager-DD344C?style=for-the-badge)
+![AWS IAM](https://img.shields.io/badge/AWS%20IAM-DD344C?style=for-the-badge&logo=amazoniam&logoColor=white)
+![CloudWatch](https://img.shields.io/badge/CloudWatch-FF4F8B?style=for-the-badge&logo=amazoncloudwatch&logoColor=white)
+![X-Ray](https://img.shields.io/badge/X--Ray-8C4FFF?style=for-the-badge)
+![GuardDuty](https://img.shields.io/badge/GuardDuty-DD344C?style=for-the-badge)
+![Security Hub](https://img.shields.io/badge/Security%20Hub-DD344C?style=for-the-badge)
+![Inspector](https://img.shields.io/badge/Inspector-DD344C?style=for-the-badge)
+![AWS Config](https://img.shields.io/badge/AWS%20Config-E7157B?style=for-the-badge)
+![Managed Prometheus](https://img.shields.io/badge/Managed%20Prometheus-E6522C?style=for-the-badge&logo=prometheus&logoColor=white)
+![Managed Grafana](https://img.shields.io/badge/Managed%20Grafana-F46800?style=for-the-badge&logo=grafana&logoColor=white)
+![Bedrock](https://img.shields.io/badge/Bedrock-01A88D?style=for-the-badge)
+![SageMaker](https://img.shields.io/badge/SageMaker-01A88D?style=for-the-badge)
+![Comprehend](https://img.shields.io/badge/Comprehend-01A88D?style=for-the-badge)
+![Textract](https://img.shields.io/badge/Textract-01A88D?style=for-the-badge)
+
+#### 🌐 Edge & Network
+
+![Route 53](https://img.shields.io/badge/Route%2053-8C4FFF?style=for-the-badge&logo=amazonroute53&logoColor=white)
+![CloudFront](https://img.shields.io/badge/CloudFront-8C4FFF?style=for-the-badge)
+![AWS WAF](https://img.shields.io/badge/AWS%20WAF-DD344C?style=for-the-badge)
+![Shield Advanced](https://img.shields.io/badge/Shield%20Advanced-DD344C?style=for-the-badge)
+![API Gateway (REST)](https://img.shields.io/badge/API%20Gateway%20%28REST%29-FF4F8B?style=for-the-badge&logo=amazonapigateway&logoColor=white)
+![VPC](https://img.shields.io/badge/VPC-8C4FFF?style=for-the-badge)
+![Public Subnets](https://img.shields.io/badge/Public%20Subnets-43E97B?style=for-the-badge)
+![Private Subnets](https://img.shields.io/badge/Private%20Subnets-326CE5?style=for-the-badge)
+![Transit Gateway](https://img.shields.io/badge/Transit%20Gateway-FF7A00?style=for-the-badge)
+![NAT Gateway](https://img.shields.io/badge/NAT%20Gateway-FF4081?style=for-the-badge)
+![ALB / NLB](https://img.shields.io/badge/ALB%20%2F%20NLB-8C4FFF?style=for-the-badge)
+![VPC Endpoints / PrivateLink](https://img.shields.io/badge/VPC%20Endpoints%20%2F%20PrivateLink-C471F5?style=for-the-badge)
+
+#### 🏗️ Source, IaC & Config
+
+![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)
+![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)
+![Terraform](https://img.shields.io/badge/Terraform-7B42BC?style=for-the-badge&logo=terraform&logoColor=white)
+![Terragrunt](https://img.shields.io/badge/Terragrunt-5C4EE5?style=for-the-badge)
+![Crossplane](https://img.shields.io/badge/Crossplane-EF7B4D?style=for-the-badge)
+![Helm](https://img.shields.io/badge/Helm-0F1689?style=for-the-badge&logo=helm&logoColor=white)
+![Kustomize](https://img.shields.io/badge/Kustomize-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white)
+
+#### 🔁 CI/CD & GitOps
+
+![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-2088FF?style=for-the-badge&logo=githubactions&logoColor=white)
+![Jenkins](https://img.shields.io/badge/Jenkins-D24939?style=for-the-badge&logo=jenkins&logoColor=white)
+![Tekton](https://img.shields.io/badge/Tekton-FD495C?style=for-the-badge&logo=tekton&logoColor=white)
+![Argo CD](https://img.shields.io/badge/Argo%20CD-EF7B4D?style=for-the-badge&logo=argo&logoColor=white)
+![Argo Rollouts](https://img.shields.io/badge/Argo%20Rollouts-EF7B4D?style=for-the-badge&logo=argo&logoColor=white)
+![Argo Workflows](https://img.shields.io/badge/Argo%20Workflows-EF7B4D?style=for-the-badge&logo=argo&logoColor=white)
+
+#### ☸️ Orchestration
+
+![Kubernetes](https://img.shields.io/badge/Kubernetes-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white)
+![Karpenter](https://img.shields.io/badge/Karpenter-FF9900?style=for-the-badge)
+![KEDA](https://img.shields.io/badge/KEDA-2A5CAA?style=for-the-badge)
+![Calico](https://img.shields.io/badge/Calico-FB8C00?style=for-the-badge)
+![Cilium](https://img.shields.io/badge/Cilium-F8C517?style=for-the-badge&logo=cilium&logoColor=white)
+![Istio](https://img.shields.io/badge/Istio-466BB0?style=for-the-badge&logo=istio&logoColor=white)
+
+#### ⚙️ Application
+
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
+![Go](https://img.shields.io/badge/Go-00ADD8?style=for-the-badge&logo=go&logoColor=white)
+![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white)
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=white)
+![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)
+![GraphQL](https://img.shields.io/badge/GraphQL-E10098?style=for-the-badge&logo=graphql&logoColor=white)
+![REST APIs](https://img.shields.io/badge/REST%20APIs-0096D6?style=for-the-badge)
+
+#### 🗄️ Data
+
+![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
+![Valkey](https://img.shields.io/badge/Valkey-6983FF?style=for-the-badge)
+![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white)
+![OpenSearch](https://img.shields.io/badge/OpenSearch-005EB8?style=for-the-badge&logo=opensearch&logoColor=white)
+![Apache Kafka](https://img.shields.io/badge/Apache%20Kafka-231F20?style=for-the-badge&logo=apachekafka&logoColor=white)
+![Amazon S3](https://img.shields.io/badge/Amazon%20S3-569A31?style=for-the-badge&logo=amazons3&logoColor=white)
+![DynamoDB](https://img.shields.io/badge/DynamoDB-4053D6?style=for-the-badge&logo=amazondynamodb&logoColor=white)
+
+#### 🛡️ DevSecOps
+
+![Gitleaks](https://img.shields.io/badge/Gitleaks-DD344C?style=for-the-badge)
+![SonarQube](https://img.shields.io/badge/SonarQube-4E9BCD?style=for-the-badge&logo=sonarqube&logoColor=white)
+![Semgrep](https://img.shields.io/badge/Semgrep-2B6ACF?style=for-the-badge)
+![OWASP ZAP](https://img.shields.io/badge/OWASP%20ZAP-00549E?style=for-the-badge&logo=owasp&logoColor=white)
+![Snyk](https://img.shields.io/badge/Snyk-4C4A73?style=for-the-badge&logo=snyk&logoColor=white)
+![Trivy](https://img.shields.io/badge/Trivy-1904DA?style=for-the-badge&logo=aqua&logoColor=white)
+![Grype](https://img.shields.io/badge/Grype-7E56C2?style=for-the-badge)
+![Syft (SBOM)](https://img.shields.io/badge/Syft%20%28SBOM%29-7E56C2?style=for-the-badge)
+![Cosign](https://img.shields.io/badge/Cosign-4A90E2?style=for-the-badge)
+![SLSA](https://img.shields.io/badge/SLSA-F06292?style=for-the-badge)
+![Checkov](https://img.shields.io/badge/Checkov-6E40C9?style=for-the-badge)
+![tfsec](https://img.shields.io/badge/tfsec-2D7FF9?style=for-the-badge)
+![KICS](https://img.shields.io/badge/KICS-4B3BBF?style=for-the-badge)
+![Kyverno](https://img.shields.io/badge/Kyverno-FF6F00?style=for-the-badge)
+![OPA Gatekeeper](https://img.shields.io/badge/OPA%20Gatekeeper-7D9199?style=for-the-badge&logo=openpolicyagent&logoColor=white)
+![Pod Security Standards](https://img.shields.io/badge/Pod%20Security%20Standards-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white)
+![Falco](https://img.shields.io/badge/Falco-00AEC7?style=for-the-badge)
+![Tetragon](https://img.shields.io/badge/Tetragon-F8C517?style=for-the-badge)
+![HashiCorp Vault](https://img.shields.io/badge/HashiCorp%20Vault-FFEC6E?style=for-the-badge&logo=vault&logoColor=white)
+![External Secrets](https://img.shields.io/badge/External%20Secrets-326CE5?style=for-the-badge)
+![kube-bench](https://img.shields.io/badge/kube--bench-326CE5?style=for-the-badge)
+
+#### 📊 Observability & Reliability
+
+![Prometheus](https://img.shields.io/badge/Prometheus-E6522C?style=for-the-badge&logo=prometheus&logoColor=white)
+![Grafana](https://img.shields.io/badge/Grafana-F46800?style=for-the-badge&logo=grafana&logoColor=white)
+![Loki](https://img.shields.io/badge/Loki-F46800?style=for-the-badge&logo=grafana&logoColor=white)
+![Tempo](https://img.shields.io/badge/Tempo-F46800?style=for-the-badge&logo=grafana&logoColor=white)
+![Logstash](https://img.shields.io/badge/Logstash-005571?style=for-the-badge&logo=logstash&logoColor=white)
+![OpenTelemetry](https://img.shields.io/badge/OpenTelemetry-425CC7?style=for-the-badge&logo=opentelemetry&logoColor=white)
+![Alertmanager](https://img.shields.io/badge/Alertmanager-E6522C?style=for-the-badge&logo=prometheus&logoColor=white)
+![PagerDuty](https://img.shields.io/badge/PagerDuty-06AC38?style=for-the-badge&logo=pagerduty&logoColor=white)
+![CloudWatch](https://img.shields.io/badge/CloudWatch-FF4F8B?style=for-the-badge&logo=amazoncloudwatch&logoColor=white)
+![Chaos Mesh](https://img.shields.io/badge/Chaos%20Mesh-172B4D?style=for-the-badge)
+![Velero](https://img.shields.io/badge/Velero-3E7BB6?style=for-the-badge)
+![k6](https://img.shields.io/badge/k6-7D64FF?style=for-the-badge&logo=k6&logoColor=white)
+
+#### 🤖 MLOps & AI
+
+![MLflow](https://img.shields.io/badge/MLflow-0194E2?style=for-the-badge&logo=mlflow&logoColor=white)
+![Kubeflow](https://img.shields.io/badge/Kubeflow-326CE5?style=for-the-badge&logo=kubeflow&logoColor=white)
+![KServe](https://img.shields.io/badge/KServe-1F6FEB?style=for-the-badge)
+![Apache Airflow](https://img.shields.io/badge/Apache%20Airflow-017CEE?style=for-the-badge&logo=apacheairflow&logoColor=white)
+![Feast](https://img.shields.io/badge/Feast-D63C3C?style=for-the-badge)
+![Ray](https://img.shields.io/badge/Ray-028CF0?style=for-the-badge&logo=ray&logoColor=white)
+![Evidently AI](https://img.shields.io/badge/Evidently%20AI-ED0400?style=for-the-badge)
+![WhyLogs](https://img.shields.io/badge/WhyLogs-6B48FF?style=for-the-badge)
+![SageMaker](https://img.shields.io/badge/SageMaker-01A88D?style=for-the-badge)
+![Bedrock + Guardrails](https://img.shields.io/badge/Bedrock%20%2B%20Guardrails-01A88D?style=for-the-badge)
+![Bedrock Agents](https://img.shields.io/badge/Bedrock%20Agents-01A88D?style=for-the-badge)
+![LangChain](https://img.shields.io/badge/LangChain-1C3C3C?style=for-the-badge&logo=langchain&logoColor=white)
+![LlamaIndex](https://img.shields.io/badge/LlamaIndex-000000?style=for-the-badge)
+![OpenSearch Vectors](https://img.shields.io/badge/OpenSearch%20Vectors-005EB8?style=for-the-badge&logo=opensearch&logoColor=white)
+![MCP Servers](https://img.shields.io/badge/MCP%20Servers-D97757?style=for-the-badge)
+
+#### 📜 Compliance & Standards
+
+![PCI-DSS](https://img.shields.io/badge/PCI--DSS-6E7681?style=for-the-badge)
+![SOC 2](https://img.shields.io/badge/SOC%202-6E7681?style=for-the-badge)
+![CIS Benchmarks](https://img.shields.io/badge/CIS%20Benchmarks-6E7681?style=for-the-badge)
+![AWS Well-Architected](https://img.shields.io/badge/AWS%20Well--Architected-FF9900?style=for-the-badge)
+
+<details>
+<summary><b>📋 Tools at a glance (table)</b></summary>
+
+| Category | Tools | # |
+|---|---|:-:|
+| ☁️ **AWS Cloud** | Amazon EKS · EC2 Spot · Fargate · Amazon ECR · Amazon S3 · DynamoDB · Amazon MSK · AWS KMS · Secrets Manager · AWS IAM · CloudWatch · X-Ray · GuardDuty · Security Hub · Inspector · AWS Config · Managed Prometheus · Managed Grafana · Bedrock · SageMaker · Comprehend · Textract | 22 |
+| 🌐 **Edge & Network** | Route 53 · CloudFront · AWS WAF · Shield Advanced · API Gateway (REST) · VPC · Public Subnets · Private Subnets · Transit Gateway · NAT Gateway · ALB / NLB · VPC Endpoints / PrivateLink | 12 |
+| 🏗️ **Source, IaC & Config** | Git · GitHub · Terraform · Terragrunt · Crossplane · Helm · Kustomize | 7 |
+| 🔁 **CI/CD & GitOps** | GitHub Actions · Jenkins · Tekton · Argo CD · Argo Rollouts · Argo Workflows | 6 |
+| ☸️ **Orchestration** | Kubernetes · Karpenter · KEDA · Calico · Cilium · Istio | 6 |
+| ⚙️ **Application** | Node.js · Go · Java · Spring Boot · Python · FastAPI · React · Next.js · GraphQL · REST APIs | 10 |
+| 🗄️ **Data** | MySQL · Valkey · MongoDB · OpenSearch · Apache Kafka · Amazon S3 · DynamoDB | 7 |
+| 🛡️ **DevSecOps** | Gitleaks · SonarQube · Semgrep · OWASP ZAP · Snyk · Trivy · Grype · Syft (SBOM) · Cosign · SLSA · Checkov · tfsec · KICS · Kyverno · OPA Gatekeeper · Pod Security Standards · Falco · Tetragon · HashiCorp Vault · External Secrets · kube-bench | 21 |
+| 📊 **Observability & Reliability** | Prometheus · Grafana · Loki · Tempo · Logstash · OpenTelemetry · Alertmanager · PagerDuty · CloudWatch · Chaos Mesh · Velero · k6 | 12 |
+| 🤖 **MLOps & AI** | MLflow · Kubeflow · KServe · Apache Airflow · Feast · Ray · Evidently AI · WhyLogs · SageMaker · Bedrock + Guardrails · Bedrock Agents · LangChain · LlamaIndex · OpenSearch Vectors · MCP Servers | 15 |
+| 📜 **Compliance & Standards** | PCI-DSS · SOC 2 · CIS Benchmarks · AWS Well-Architected | 4 |
+| | **Total** | **122** |
+
+</details>
+
+### 📋 Layers at a glance
 
 | # | Layer | Tools | Purpose |
 |:-:|---|---|---|
@@ -156,15 +347,7 @@ mindmap
       CloudWatch
 ```
 
-### 🏛️ Regional Architecture: 4 VPCs on AWS
-
-<div align="center">
-
-<img src="docs/diagrams/architecture-overview.svg" width="100%" alt="Animated regional architecture: edge, app, data and ops VPCs connected by a Transit Gateway, with EKS microservices, data stores, ops tooling, VPC endpoints to ECR, S3 and KMS, and NAT egress"/>
-
-<sub>🎬 Animated: request, response, Transit Gateway, data, metrics, GitOps, endpoint and egress traffic.</sub>
-
-</div>
+### 🗺️ VPC breakdown & service flow
 
 | VPC | What runs there | How it connects |
 |---|---|---|
@@ -796,59 +979,6 @@ flowchart LR
     style STORE fill:#3d2400,stroke:#f7971e,color:#fff
     style VIZ fill:#0b3d2e,stroke:#43e97b,color:#fff
 ```
-
----
-
-## 🧰 Tech Stack
-
-### ☁️ AWS Infrastructure
-| Area | Tools |
-|---|---|
-| **Compute / Containers** | Amazon EKS, **Karpenter**, **KEDA**, Fargate, ECR, EC2 Spot |
-| **Networking** | VPC, Public/Private Subnets, NAT Gateway, Transit Gateway, VPC Endpoints / PrivateLink, Route 53, CloudFront, **API Gateway (REST)**, ALB/NLB |
-| **Data** | **MySQL**, **Valkey**, **MongoDB**, **OpenSearch**, **Kafka / MSK** (event-driven), S3, DynamoDB |
-| **Security** | IAM (roles, policies), IRSA / Pod Identity, KMS, Secrets Manager, GuardDuty, Security Hub, WAF, **Shield Advanced**, Inspector, Config |
-| **Observability** | **CloudWatch**, X-Ray, Managed Prometheus, Managed Grafana |
-| **AI / ML** | Bedrock, SageMaker, Comprehend, Textract |
-
-### ☸️ Orchestration
-| Area | Tools |
-|---|---|
-| **Kubernetes** | Amazon EKS, Karpenter (node autoscaling), KEDA (event-driven pod autoscaling) |
-| **Networking & mesh** | **Calico** (network policy), **Istio** (mTLS, traffic management) |
-| **Progressive delivery** | **Argo Rollouts** (canary, blue-green) |
-
-### 🧑‍💻 Application Languages
-| Service | Language |
-|---|---|
-| BFF · Notification | **Node.js** |
-| Payment · Transactions | **Go** |
-| Ledger · Auth · Accounts | **Java** (Spring Boot) |
-| Fraud · KYC · ML · GenAI | **Python** |
-
-### 🏗️ Infrastructure as Code & GitOps
-| Area | Tools |
-|---|---|
-| **Source & IaC** | **Git**, **Terraform**, Terragrunt, Crossplane |
-| **GitOps** | ArgoCD, Argo Rollouts, Argo Workflows, Helm, Kustomize |
-| **CI/CD** | GitHub Actions, Jenkins, Tekton |
-
-### 🛡️ DevSecOps
-| Area | Tools |
-|---|---|
-| **Identity & Secrets** | AWS IAM, **HashiCorp Vault**, External Secrets Operator, Gitleaks |
-| **SAST / DAST** | SonarQube, Semgrep, OWASP ZAP |
-| **Container / Supply chain** | Trivy, Grype, Syft (SBOM), **Cosign**, SLSA |
-| **IaC scanning** | Checkov, tfsec, KICS |
-| **Policy** | **Kyverno**, OPA Gatekeeper, Pod Security Standards |
-| **Runtime** | Falco, Tetragon, Istio mTLS, Network Policies, Cilium |
-| **Compliance** | PCI-DSS, SOC 2, CIS Benchmarks (kube-bench) |
-
-### 📊 Observability & Reliability
-Prometheus · Grafana · Loki · **Logstash** · **Falco** · **CloudWatch** · Tempo · OpenTelemetry · Alertmanager · PagerDuty · SLO/SLI · Chaos Mesh · Velero · k6
-
-### 🤖 MLOps & AI
-MLflow · Kubeflow (ML Pipelines) · KServe · Airflow · Feast · **Evidently AI** · **WhyLogs** · SageMaker · Bedrock · LangChain · LlamaIndex · OpenSearch (vectors) · Ray
 
 ---
 
