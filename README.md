@@ -45,6 +45,7 @@
 - [AI / GenAI](#-ai--genai-capabilities)
 - [Observability](#-observability)
 - [Tech Stack](#-tech-stack)
+- [Infrastructure Build: Networking & IAM](#%EF%B8%8F-infrastructure-build-networking--iam)
 - [Roadmap](#%EF%B8%8F-roadmap)
 
 ---
@@ -634,6 +635,392 @@ quadrantChart
 
 ---
 
+## 🏗️ Infrastructure Build: Networking & IAM
+
+<div align="center">
+
+[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=20&pause=900&color=FF9900&center=true&vCenter=true&width=900&lines=4+isolated+VPCs+in+us-east-1;Private+VPC+endpoints+%E2%80%94+no+internet+for+AWS+traffic;Least-privilege+IAM+roles+per+environment;Multi+state+files+in+one+encrypted+S3+backend;Terraform+1.17.1+%7C+AWS+provider+6.72+%7C+IAM+module+6.8.2)](https://git.io/typing-svg)
+
+![Terraform](https://img.shields.io/badge/Terraform-%E2%89%A5%201.17.1-7B42BC?style=for-the-badge&logo=terraform&logoColor=white)
+![AWS Provider](https://img.shields.io/badge/AWS%20Provider-~%3E%206.72-FF9900?style=for-the-badge&logo=amazonaws&logoColor=white)
+![IAM Module](https://img.shields.io/badge/terraform--aws--modules%2Fiam-6.8.2-844FBA?style=for-the-badge&logo=terraform&logoColor=white)
+![Region](https://img.shields.io/badge/Region-us--east--1-232F3E?style=for-the-badge&logo=amazonaws&logoColor=FF9900)
+![State](https://img.shields.io/badge/State-S3%20%2B%20native%20lock-569A31?style=for-the-badge&logo=amazons3&logoColor=white)
+
+</div>
+
+This section documents what has been **built so far** in `infra-modules/`.
+
+### 🧭 Build Journey
+
+```mermaid
+timeline
+    title Infrastructure work completed
+    State backend : S3 state bucket : Encrypted state : Native S3 lock file (no DynamoDB)
+    IAM : Reusable child module : Platform, App team and CI/CD roles : One root stack per environment (ops, qa, uat, prod)
+    Networking : Reusable network module : 4 VPCs from one for_each : Gateway + Interface VPC endpoints
+    Hardening : Fixed SG and AZ bugs : Private SG limited to VPC CIDR : Pinned latest Terraform, provider and module versions
+```
+
+---
+
+### 🌐 Networking: 4 Isolated VPCs
+
+One reusable module (`prod/Networking/network/`) is called **once per VPC** from the root module with `for_each`. Each VPC gets its own subnets, route tables, security groups and VPC endpoints.
+
+```mermaid
+flowchart TB
+    INET((🌍 Internet)):::net
+
+    subgraph REGION["☁️ AWS us-east-1"]
+        direction TB
+
+        subgraph EDGE["🚪 EDGE VPC · 10.0.0.0/16"]
+            direction TB
+            IGW[🌐 Internet Gateway]:::gw
+            subgraph EPUB["Public subnets · 1a · 1b · 1c"]
+                EP1[10.0.0.0/24]:::pub
+                EP2[10.0.1.0/24]:::pub
+                EP3[10.0.2.0/24]:::pub
+                NAT[🔁 NAT Gateway + EIP]:::gw
+            end
+            subgraph EPRIV["Private subnets · 1a · 1b · 1c"]
+                EV1[10.0.10.0/24]:::priv
+                EV2[10.0.11.0/24]:::priv
+                EV3[10.0.12.0/24]:::priv
+            end
+        end
+
+        subgraph APP["⚙️ APP VPC · 10.1.0.0/16 · private only"]
+            AV[10.1.10-12.0/24<br/>3 private subnets]:::priv
+        end
+        subgraph DATA["🗄️ DATA VPC · 10.2.0.0/16 · private only"]
+            DV[10.2.10-12.0/24<br/>3 private subnets]:::priv
+        end
+        subgraph OPS["🛠️ OPS VPC · 10.3.0.0/16 · private only"]
+            OV[10.3.10-12.0/24<br/>3 private subnets]:::priv
+        end
+
+        subgraph AWS["🔒 AWS services via VPC endpoints"]
+            S3[(🪣 S3)]:::gwep
+            DDB[(⚡ DynamoDB)]:::gwep
+            ECR[📦 ECR api + dkr]:::ifep
+            LOGS[📜 CloudWatch Logs]:::ifep
+            SEC[🔑 Secrets Manager]:::ifep
+            KMS[🔐 KMS]:::ifep
+            SSM[🖥️ SSM · ssmmessages · ec2messages]:::ifep
+        end
+    end
+
+    INET <--> IGW
+    IGW --- EPUB
+    EPRIV -->|outbound only| NAT --> IGW
+    EPRIV -.-> S3
+    AV -.-> S3
+    AV ==> ECR & LOGS & SEC
+    DV -.-> S3 & DDB
+    DV ==> SEC & KMS
+    OV -.-> S3
+    OV ==> SSM
+
+    classDef net fill:#ff9a9e,stroke:#fff,color:#000,stroke-width:2px
+    classDef gw fill:#ff9900,stroke:#fff,color:#000,stroke-width:2px
+    classDef pub fill:#84fab0,stroke:#0b3d2e,color:#000
+    classDef priv fill:#8fd3f4,stroke:#12263f,color:#000
+    classDef gwep fill:#43e97b,stroke:#fff,color:#000,stroke-width:2px
+    classDef ifep fill:#c471f5,stroke:#fff,color:#fff,stroke-width:2px
+
+    style REGION fill:#0f2027,stroke:#ff9900,color:#fff,stroke-width:3px
+    style EDGE fill:#10372b,stroke:#84fab0,color:#fff,stroke-width:2px
+    style EPUB fill:#14532d,stroke:#84fab0,color:#fff
+    style EPRIV fill:#12263f,stroke:#4facfe,color:#fff
+    style APP fill:#12263f,stroke:#4facfe,color:#fff,stroke-width:2px
+    style DATA fill:#2b1a1a,stroke:#ff416c,color:#fff,stroke-width:2px
+    style OPS fill:#2a1245,stroke:#c471f5,color:#fff,stroke-width:2px
+    style AWS fill:#1a1a1a,stroke:#ffd200,color:#fff,stroke-width:2px
+```
+
+> 🟢 dotted arrows = **Gateway endpoints** (free, route-table based) · 🟣 thick arrows = **Interface endpoints** (private IPs in each AZ)
+
+| VPC | CIDR | Public subnets | Private subnets | NAT | Gateway endpoints | Interface endpoints |
+|---|---|:-:|:-:|:-:|---|---|
+| 🚪 **edge** | `10.0.0.0/16` | 3 | 3 | ✅ | s3 | – |
+| ⚙️ **app** | `10.1.0.0/16` | – | 3 | – | s3 | ecr.api, ecr.dkr, logs, secretsmanager |
+| 🗄️ **data** | `10.2.0.0/16` | – | 3 | – | s3, dynamodb | secretsmanager, kms |
+| 🛠️ **ops** | `10.3.0.0/16` | – | 3 | – | s3 | ssm, ssmmessages, ec2messages |
+
+**In simple words:**
+- 🏢 Each **VPC is a separate building** with its own address range. CIDRs don't overlap, so a Transit Gateway can connect them later.
+- 🌐 **Public subnets** (edge only) face the internet through the **Internet Gateway**.
+- 🔐 **Private subnets** can't be reached from outside. Apps and databases live here.
+- 🔁 The **NAT Gateway** lets edge's private servers go *out* to the internet, but nothing can come *in*.
+- 🚇 **VPC endpoints** are private tunnels to AWS services, so app, data and ops reach ECR, S3, Secrets Manager and so on **without any internet access**.
+- 🛡️ **Security groups:** private resources only accept traffic from inside their own VPC. Endpoints only accept HTTPS (443) from the VPC.
+- 🏗️ Subnets are spread across **3 Availability Zones** (us-east-1a/b/c), so one data center failing doesn't take the network down.
+
+#### 🔀 How the root module creates all 4 VPCs
+
+```mermaid
+flowchart LR
+    L["📄 locals.tf<br/>vpcs = { edge, app, data, ops }"]:::loc --> M{"🔁 module network<br/>for_each = local.vpcs"}:::mod
+    M --> E["🚪 module.network[edge]"]:::edge
+    M --> A["⚙️ module.network[app]"]:::app
+    M --> D["🗄️ module.network[data]"]:::data
+    M --> O["🛠️ module.network[ops]"]:::ops
+    E & A & D & O --> R["📦 Each instance creates:<br/>VPC · subnets · route tables<br/>SGs · NAT/IGW if public<br/>Gateway + Interface endpoints"]:::res
+
+    classDef loc fill:#ffd200,stroke:#fff,color:#000,stroke-width:2px
+    classDef mod fill:#7B42BC,stroke:#fff,color:#fff,stroke-width:2px
+    classDef edge fill:#84fab0,stroke:#fff,color:#000
+    classDef app fill:#4facfe,stroke:#fff,color:#000
+    classDef data fill:#ff416c,stroke:#fff,color:#fff
+    classDef ops fill:#c471f5,stroke:#fff,color:#fff
+    classDef res fill:#0f2027,stroke:#00c9a7,color:#fff,stroke-width:2px
+```
+
+#### 🚇 VPC endpoints: Gateway vs Interface
+
+```mermaid
+flowchart LR
+    subgraph GW["🟢 Gateway endpoint · S3 / DynamoDB · FREE"]
+        direction LR
+        P1[🖥️ Private workload]:::wl --> RT[🗺️ Private route table<br/>prefix list → vpce]:::rt --> G[(🪣 S3 / DynamoDB)]:::svc
+    end
+    subgraph IF["🟣 Interface endpoint · ECR, Secrets, KMS, SSM, Logs"]
+        direction LR
+        P2[🖥️ Private workload]:::wl -->|DNS: service.us-east-1.amazonaws.com| DNS[🔎 Private DNS<br/>→ endpoint private IP]:::dns
+        DNS --> SG[🛡️ Endpoint SG<br/>443 from VPC CIDR]:::sg --> ENI[🔌 ENI in each AZ<br/>1a · 1b · 1c]:::eni --> I[☁️ AWS service]:::svc
+    end
+
+    classDef wl fill:#4facfe,stroke:#fff,color:#000
+    classDef rt fill:#43e97b,stroke:#fff,color:#000
+    classDef dns fill:#ffd200,stroke:#fff,color:#000
+    classDef sg fill:#ff416c,stroke:#fff,color:#fff
+    classDef eni fill:#c471f5,stroke:#fff,color:#fff
+    classDef svc fill:#ff9900,stroke:#fff,color:#000,stroke-width:2px
+    style GW fill:#0b3d2e,stroke:#43e97b,color:#fff,stroke-width:2px
+    style IF fill:#2a1245,stroke:#c471f5,color:#fff,stroke-width:2px
+```
+
+**How the endpoint code works** (`network/main.tf`):
+
+| Resource | What it does |
+|---|---|
+| `data.aws_region.current` | Reads the provider's region, so endpoint names are never hardcoded |
+| `aws_vpc_endpoint.gateway` | `for_each = toset(var.gateway_endpoints)` creates one free Gateway endpoint per service and attaches it to the private route tables |
+| `aws_security_group.endpoint_sg` | Created only if `interface_endpoints` isn't empty. Allows HTTPS 443 from the VPC CIDR |
+| `aws_vpc_endpoint.interface` | `for_each = toset(var.interface_endpoints)` places an ENI in every private subnet (one per AZ). `private_dns_enabled = true` means application code needs **no changes** |
+
+```hcl
+# Per-VPC input: just two simple lists
+gateway_endpoints   = ["s3", "dynamodb"]
+interface_endpoints = ["secretsmanager", "kms"]
+```
+
+#### 📦 What one `terraform apply` creates
+
+| Resource | Count |
+|---|:-:|
+| VPCs | 4 |
+| Subnets (6 edge + 3 × 3 private) | 15 |
+| Route tables | 5 |
+| Internet Gateway / NAT Gateway / Elastic IP | 1 / 1 / 1 |
+| Security groups (public, private, endpoint) | 8 |
+| Gateway endpoints | 5 |
+| Interface endpoints | 9 |
+
+> 💰 **Cost note:** Gateway endpoints are free. Interface endpoints cost about $7.30 per AZ per month each (9 × 3 AZs ≈ $200 per month), and the NAT Gateway about $33 per month, both before data charges. Add Interface endpoints only to VPCs that need them.
+
+---
+
+### 🔐 IAM: Least-Privilege Roles per Environment
+
+A **child module** (`iam/child-module/`) wraps `terraform-aws-modules/iam/aws//modules/iam-role` **v6.8.2** and defines three roles. Each **environment stack** (`iam/environments/*`) turns on only the roles it needs, using feature flags.
+
+```mermaid
+flowchart TB
+    CM{{"🧩 iam/child-module<br/>terraform-aws-modules/iam 6.8.2"}}:::mod
+
+    subgraph ROLES["🎭 Roles defined in the child module"]
+        direction LR
+        R1["👑 FinTech-Platform-Admin<br/>VPC + RDS full · eks:* · KMS manage<br/>⛔ DENY s3:GetObject, dynamodb:GetItem,<br/>rds-db:connect, kms:Decrypt (PII guard)"]:::plat
+        R2["👩‍💻 AppTeam-env-Role<br/>qa: eks/rds/ecr full<br/>uat/prod: read-only + rds-db:connect env_user<br/>⛔ DENY delete VPC/Subnet/TGW, terminate EC2"]:::prod
+        R3["🤖 FinTech-CI-CD-Deployer-env<br/>GitHub OIDC trust (this repo only)<br/>ECR push · EKS update · Secrets read"]:::cicd
+    end
+
+    CM --> R1 & R2 & R3
+
+    subgraph ENVS["🌍 Environment stacks"]
+        direction LR
+        OPS["🛠️ product-ops-role<br/>enable_platform_role"]:::env
+        QA["🧪 product-qa-role<br/>enable_product_role<br/>enable_cicd_role"]:::env
+        UAT["🧷 product-uat-role<br/>enable_product_role<br/>enable_cicd_role"]:::env
+        PRD["🏦 product-prod-role<br/>⚠️ role flags pending"]:::warn
+    end
+
+    OPS -.-> R1
+    QA -.-> R2 & R3
+    UAT -.-> R2 & R3
+    PRD -.-> ROLES
+
+    classDef mod fill:#7B42BC,stroke:#fff,color:#fff,stroke-width:2px
+    classDef plat fill:#ff9900,stroke:#fff,color:#000
+    classDef prod fill:#4facfe,stroke:#fff,color:#000
+    classDef cicd fill:#43e97b,stroke:#fff,color:#000
+    classDef env fill:#0f2027,stroke:#00c9a7,color:#fff,stroke-width:2px
+    classDef warn fill:#3a1a10,stroke:#ff416c,color:#fff,stroke-width:2px,stroke-dasharray: 5 5
+    style ROLES fill:#16222a,stroke:#ffd200,color:#fff,stroke-width:2px
+    style ENVS fill:#12263f,stroke:#4facfe,color:#fff,stroke-width:2px
+```
+
+#### 🤖 How GitHub Actions gets AWS access (no stored keys)
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant GH as 🐙 GitHub Actions
+    participant OIDC as 🎫 GitHub OIDC
+    participant STS as 🔐 AWS STS
+    participant ROLE as 🤖 CI-CD-Deployer role
+    participant AWS as ☁️ ECR / EKS
+
+    GH->>OIDC: Request ID token for this job
+    OIDC-->>GH: JWT (sub = repo:muntaha747/FinTech-Enterprise-Project:*)
+    GH->>STS: AssumeRoleWithWebIdentity(JWT)
+    STS->>ROLE: Check trust policy condition on sub
+    alt ✅ Repo matches
+        STS-->>GH: Short-lived credentials
+        GH->>AWS: Push image / update cluster
+    else ⛔ Any other repo
+        STS-->>GH: AccessDenied
+    end
+```
+
+---
+
+### 🗃️ Multi State Files in One Remote Backend
+
+Every stack keeps its **own state file** inside a single encrypted S3 bucket, **`fintech-project-statefile-bucket`**. Locking uses Terraform's **native S3 lock file** (`use_lockfile = true`), so no DynamoDB table is needed.
+
+**Why split the state?**
+- 💥 **Smaller blast radius:** a bad apply on QA IAM can't touch prod networking.
+- ⚡ **Faster plans:** each stack only refreshes its own resources.
+- 🔒 **Parallel work:** different teams or pipelines lock different files.
+- 🧑‍⚖️ **Access control:** bucket policies can restrict who reads which prefix.
+
+```mermaid
+flowchart LR
+    subgraph STACKS["📂 Terraform root stacks"]
+        direction TB
+        N["🌐 prod/Networking"]:::net
+        I1["🛠️ iam/product-ops-role"]:::iam
+        I2["🧪 iam/product-qa-role"]:::iam
+        I3["🧷 iam/product-uat-role"]:::iam
+        I4["🏦 iam/product-prod-role"]:::iam
+        S1["🪣 qa/s3"]:::s3
+        S2["🪣 stage/s3"]:::s3
+        S3["🪣 prod/s3"]:::s3
+    end
+
+    subgraph BUCKET["🔐 s3://fintech-project-statefile-bucket · encrypted · native lock"]
+        direction TB
+        K1["product-networking/envs/prod/networking.tfstate"]:::kn
+        K2["product-iam/envs/iam-ops-role.tfstate"]:::ki
+        K3["product-iam/envs/iam-qa-role.tfstate"]:::ki
+        K4["product-iam/envs/iam-uat-role.tfstate"]:::ki
+        K5["product-iam/envs/iam-prod-role.tfstate"]:::ki
+        K6["product-name/envs/qa/s3.tfstate"]:::ks
+        K7["product-name/envs/prod/s3.tfstate"]:::ks
+    end
+
+    N --> K1
+    I1 --> K2
+    I2 --> K3
+    I3 --> K4
+    I4 --> K5
+    S1 --> K6
+    S2 -.->|⚠️ shares prod key| K7
+    S3 --> K7
+
+    classDef net fill:#4facfe,stroke:#fff,color:#000
+    classDef iam fill:#ff9900,stroke:#fff,color:#000
+    classDef s3 fill:#43e97b,stroke:#fff,color:#000
+    classDef kn fill:#12263f,stroke:#4facfe,color:#fff
+    classDef ki fill:#3d2400,stroke:#ff9900,color:#fff
+    classDef ks fill:#0b3d2e,stroke:#43e97b,color:#fff
+    style STACKS fill:#0f2027,stroke:#00c9a7,color:#fff,stroke-width:2px
+    style BUCKET fill:#1a1a1a,stroke:#ffd200,color:#fff,stroke-width:3px
+```
+
+| Stack | State key |
+|---|---|
+| 🌐 prod/Networking | `product-networking/envs/prod/networking.tfstate` |
+| 🛠️ iam/product-ops-role | `product-iam/envs/iam-ops-role.tfstate` |
+| 🧪 iam/product-qa-role | `product-iam/envs/iam-qa-role.tfstate` |
+| 🧷 iam/product-uat-role | `product-iam/envs/iam-uat-role.tfstate` |
+| 🏦 iam/product-prod-role | `product-iam/envs/iam-prod-role.tfstate` |
+| 🪣 qa/s3 | `product-name/envs/qa/s3.tfstate` |
+| 🪣 prod/s3 | `product-name/envs/prod/s3.tfstate` |
+| 🪣 stage/s3 | `product-name/envs/prod/s3.tfstate` ⚠️ *same as prod, to be fixed* |
+
+#### 🔒 How native S3 locking protects state
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor A as 👩‍💻 Engineer A
+    actor B as 👨‍💻 Engineer B
+    participant S3 as 🪣 S3 state bucket
+
+    A->>S3: terraform apply → create networking.tfstate.tflock
+    S3-->>A: 🔒 Lock acquired
+    B->>S3: terraform apply (same stack)
+    S3-->>B: ⛔ Error acquiring the state lock
+    A->>S3: Write new networking.tfstate (encrypted)
+    A->>S3: Delete .tflock
+    S3-->>A: 🔓 Lock released
+    B->>S3: Retry → lock acquired ✅
+```
+
+---
+
+### 📌 Pinned Versions
+
+| Component | Version | Where |
+|---|---|---|
+| Terraform | `>= 1.17.1` | every `versions.tf` + CI (`terraform_version: "1.17.1"`) |
+| AWS provider | `~> 6.72` (locked at 6.72.0) | every `versions.tf` + `.terraform.lock.hcl` |
+| terraform-aws-modules/iam | `6.8.2` | `iam/child-module/main.tf` (all 3 roles) |
+
+### ✅ Fixes Applied During the Build
+
+- 🐞 `availability_zones.all.name` → `.names` (public subnets)
+- 🐞 Restored the missing `resource "aws_security_group" "public"` header around dangling `dynamic` blocks
+- 🐞 Variable typos: `sting` → `string`, `cidr_block` → `cidr_blocks`, `Environment` default `{}` → `"prod"`
+- 🛡️ Private SG no longer hardcodes `0.0.0.0/0` ingress. Rules now come from the root module (VPC CIDR only)
+- 🔁 VPC endpoint code rewritten: no hardcoded region, no fragile `slice()`, no `[0]` index crash, descriptions + tags added (clears the KICS findings)
+- 📌 Pinned latest Terraform, AWS provider and IAM module versions everywhere
+
+### 🚀 How to Deploy the Networking Stack
+
+```bash
+cd infra-modules/prod/Networking
+terraform init -reconfigure          # connect to the S3 backend
+terraform plan -out=network.tfplan   # review: 4 VPCs, 15 subnets, 14 endpoints
+terraform apply network.tfplan
+```
+
+### 🔜 Next Up
+
+- [ ] Fix the `product-prod-role` role flags (`enable_prod_role` isn't a module input)
+- [ ] Give `stage/s3` its own state key
+- [ ] Add `network/outputs.tf` (VPC ID, subnet IDs, route table IDs) for EKS and RDS stacks
+- [ ] Unique route table names per VPC
+- [ ] Transit Gateway to connect edge ↔ app ↔ data ↔ ops
+- [ ] EKS + Karpenter in the app VPC
+
+---
+
 ## 🗺️ Roadmap
 
 ```mermaid
@@ -672,7 +1059,11 @@ timeline
 | Status | Item |
 |:--:|---|
 | ✅ | Repository scaffold, README, `.gitignore` |
-| 🔜 | Terraform: VPC, EKS cluster, Karpenter |
+| ✅ | Terraform remote backend: multi state files in S3 with native locking |
+| ✅ | IAM: reusable child module + ops / qa / uat environment roles (GitHub OIDC for CI/CD) |
+| ✅ | Networking: 4 VPCs (edge, app, data, ops) with Gateway + Interface VPC endpoints |
+| 🚧 | IAM prod role flags · stage S3 state key · network outputs |
+| 🔜 | Terraform: EKS cluster, Karpenter, Transit Gateway |
 | 🔜 | Frontend, 2 BFFs and 7 application microservices |
 | 🔜 | CI/CD with scanning, SBOM and image signing |
 | 🔜 | ArgoCD GitOps, Kyverno policies, Falco, Istio |
@@ -686,8 +1077,23 @@ timeline
 
 ```text
 FinTech-Enterprise-Project/
+├── .github/workflows/            # Terraform CI pipelines (GitHub OIDC → AWS)
+├── infra-modules/
+│   ├── iam/
+│   │   ├── child-module/         # 3 roles via terraform-aws-modules/iam 6.8.2
+│   │   └── environments/
+│   │       ├── product-ops-role/ # platform admin role
+│   │       ├── product-qa-role/  # app team + CI/CD roles
+│   │       ├── product-uat-role/ # app team + CI/CD roles
+│   │       └── product-prod-role/
+│   ├── prod/
+│   │   ├── Networking/           # root: backend, provider, locals (4 VPCs), module call
+│   │   │   └── network/          # child: VPC, subnets, NAT, SGs, VPC endpoints
+│   │   └── s3/
+│   ├── qa/   (s3, EKS)
+│   └── stage/ (s3)
 ├── .gitignore
-└── README.md             # more folders are added as the project grows
+└── README.md
 ```
 
 ---

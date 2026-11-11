@@ -15,6 +15,7 @@ override.tf.json
 terraform.rc
 *.tfplan
 tfplan
+**/iamplan*
 
 # ---------- Secrets / credentials ----------
 .env
