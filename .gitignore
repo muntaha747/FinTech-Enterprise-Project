@@ -7,6 +7,8 @@ crash.*.log
 *.tfvars
 *.tfvars.json
 !*.tfvars.example
+# terraform.tfvars in terraform-infra hold no secrets, so they are committed
+!terraform-infra/**/terraform.tfvars
 override.tf
 override.tf.json
 *_override.tf

@@ -13,7 +13,7 @@ jobs:
 #
     defaults:
       run:
-        working-directory: ./infra-modules/qa/s3
+        working-directory: ./terraform-infra/s3
 
     steps:
       - name: Checkout Code

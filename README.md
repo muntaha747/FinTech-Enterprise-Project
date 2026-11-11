@@ -148,7 +148,7 @@
 
 <div align="center">
 
-<img src="docs/diagrams/iam-roles.svg" width="100%" alt="IAM roles per environment: Who assumes which role, and which environment enables it"/>
+<img src="docs/diagrams/iam-roles-v2.svg" width="100%" alt="IAM roles per environment: Who assumes which role, and which environment enables it"/>
 
 <sub>Who assumes which role, and which environment enables it</sub>
 
@@ -180,9 +180,9 @@
 
 <div align="center">
 
-<img src="docs/diagrams/terraform-foreach.svg" width="100%" alt="Terraform for_each to four VPCs: locals.tf → module → 4 VPCs → Transit Gateway"/>
+<img src="docs/diagrams/terraform-foreach-v2.svg" width="100%" alt="Terraform for_each to four VPCs: terraform.tfvars → module → 4 VPCs → Transit Gateway"/>
 
-<sub>locals.tf → module → 4 VPCs → Transit Gateway</sub>
+<sub>terraform.tfvars → module → 4 VPCs → Transit Gateway</sub>
 
 </div>
 
@@ -200,7 +200,7 @@
 
 <div align="center">
 
-<img src="docs/diagrams/state-backend-v2.svg" width="100%" alt="Multi state file backend: Every stack writes its own state into one encrypted S3 bucket"/>
+<img src="docs/diagrams/state-backend-v4.svg" width="100%" alt="Multi state file backend: Every stack writes its own state into one encrypted S3 bucket"/>
 
 <sub>Every stack writes its own state into one encrypted S3 bucket</sub>
 
@@ -582,7 +582,49 @@ The **ops VPC** collects telemetry from every layer over the **Transit Gateway**
 
 </div>
 
-This section documents what has been **built so far** in `infra-modules/`.
+This section documents what has been **built so far** in `terraform-infra/`.
+
+### 📂 Terraform layout
+
+Every stack follows the same pattern: **reusable child modules** in `modules/`, and **root modules** where you run `terraform`.
+
+- 🌍 **Global stacks** (one root, no environments): `s3/`, `iam/` and, later, `ecr/`
+- 🧪 **Environment stacks** (one root per environment): `networking/prod/`, and future stacks such as EKS
+
+```text
+terraform-infra/
+├── modules/                       # CHILD MODULES: reusable building blocks
+│   ├── networking/                #   VPC, subnets, NAT, security groups, VPC endpoints
+│   ├── s3-bucket/                 #   versioned buckets with lifecycle rules
+│   └── iam-roles/                 #   platform, app-team and CI/CD roles
+│       ├── main.tf                #   the resources
+│       ├── variables.tf           #   inputs the module accepts
+│       ├── outputs.tf             #   values the module returns
+│       └── versions.tf            #   Terraform + AWS provider versions
+│
+├── s3/                            # ROOT (global): all buckets
+├── iam/                           # ROOT (global): all roles for every environment
+├── networking/
+│   └── prod/                      # ROOT (per environment): 4 VPCs + Transit Gateway
+│
+└── every root module contains:
+    ├── backend.tf                 #   where the state file is stored (S3)
+    ├── providers.tf               #   AWS provider + region
+    ├── variables.tf               #   inputs this stack accepts
+    ├── terraform.tfvars           #   the values (edit here)
+    ├── locals.tf                  #   values worked out from the inputs
+    ├── main.tf                    #   calls the child module
+    └── outputs.tf                 #   values printed after apply
+```
+
+| File | Question it answers |
+|---|---|
+| `terraform.tfvars` | **What** values does this stack use? |
+| `variables.tf` | **Which** inputs exist, and what type are they? |
+| `locals.tf` | What can be **worked out** from those inputs? |
+| `main.tf` | **What** gets built, and from which module? |
+| `outputs.tf` | What do we **get back** after apply? |
+| `backend.tf` / `providers.tf` | **Where** is the state, and which AWS region? |
 
 ### 🧭 Build Journey
 
@@ -592,7 +634,7 @@ This section documents what has been **built so far** in `infra-modules/`.
 
 ### 🌐 Networking: 4 VPCs + Transit Gateway
 
-One reusable module (`prod/Networking/network/`) is called **once per VPC** from the root module with `for_each`. Each VPC gets its own subnets, route tables, security groups and VPC endpoints. A **Transit Gateway** (`transit_gateway.tf`) joins them all.
+One reusable module (`terraform-infra/modules/networking/`) is called **once per VPC** from the root module (`terraform-infra/networking/prod/`) with `for_each`. Each VPC gets its own subnets, route tables, security groups and VPC endpoints. A **Transit Gateway** (in the root `main.tf`) joins them all.
 
 > 🎬 Animated diagram: [3. Hub-and-spoke network](#3-hub-and-spoke-network) in the gallery at the top.
 
@@ -640,14 +682,14 @@ interface_endpoints = ["secretsmanager", "kms"]
 
 > 🎬 Animated diagram: [8. Transit Gateway route lookup](#8-transit-gateway-route-lookup) in the gallery at the top.
 
-| Block (`transit_gateway.tf`) | What it does |
+| Block (`networking/prod/main.tf`) | What it does |
 |---|---|
 | `aws_ec2_transit_gateway.main` | The hub router. Every attachment auto-associates and auto-propagates its CIDR |
 | `aws_ec2_transit_gateway_vpc_attachment.vpc` | `for_each = local.vpcs` plugs every VPC in using one private subnet per AZ |
 | `aws_route.private_to_tgw` | `10.0.0.0/8 → TGW` in every private route table |
 | `aws_route.public_to_tgw` | The same route in public route tables (edge, app, ops) |
 
-> ➕ **Reusable:** add a VPC to `locals.tf` and it's created, attached to the TGW and routed automatically.
+> ➕ **Reusable:** add a VPC to `terraform.tfvars` and it's created, attached to the TGW and routed automatically.
 
 #### 📦 What one `terraform apply` creates
 
@@ -668,7 +710,7 @@ interface_endpoints = ["secretsmanager", "kms"]
 
 ### 🔐 IAM: Least-Privilege Roles per Environment
 
-A **child module** (`iam/child-module/`) wraps `terraform-aws-modules/iam/aws//modules/iam-role` **v6.8.2** and defines three roles. Each **environment stack** (`iam/environments/*`) turns on only the roles it needs, using feature flags.
+A **child module** (`terraform-infra/modules/iam-roles/`) wraps `terraform-aws-modules/iam/aws//modules/iam-role` **v6.8.2** and defines three roles. One **global root** (`terraform-infra/iam/`) calls it once per entry in `terraform.tfvars` (`platform`, `qa`, `uat`, `prod`), and each entry turns on only the roles that environment needs.
 
 > 🎬 Animated diagram: [11. IAM roles per environment](#11-iam-roles-per-environment) in the gallery at the top.
 
@@ -692,14 +734,9 @@ Every stack keeps its **own state file** inside a single encrypted S3 bucket, **
 
 | Stack | State key |
 |---|---|
-| 🌐 prod/Networking | `product-networking/envs/prod/networking.tfstate` |
-| 🛠️ iam/product-ops-role | `product-iam/envs/iam-ops-role.tfstate` |
-| 🧪 iam/product-qa-role | `product-iam/envs/iam-qa-role.tfstate` |
-| 🧷 iam/product-uat-role | `product-iam/envs/iam-uat-role.tfstate` |
-| 🏦 iam/product-prod-role | `product-iam/envs/iam-prod-role.tfstate` |
-| 🪣 qa/s3 | `product-name/envs/qa/s3.tfstate` |
-| 🪣 stage/s3 | `product-name/envs/stage/s3.tfstate` |
-| 🪣 prod/s3 | `product-name/envs/prod/s3.tfstate` |
+| 🌐 networking/prod | `product-networking/envs/prod/networking.tfstate` |
+| 🔐 iam | `product-iam/iam-roles.tfstate` |
+| 🪣 s3 | `product-s3/envs/s3.tfstate` |
 
 #### 🔒 How native S3 locking protects state
 
@@ -711,9 +748,9 @@ Every stack keeps its **own state file** inside a single encrypted S3 bucket, **
 
 | Component | Version | Where |
 |---|---|---|
-| Terraform | `>= 1.17.1` | every `versions.tf` + CI (`terraform_version: "1.17.1"`) |
-| AWS provider | `~> 6.72` (locked at 6.72.0) | every `versions.tf` + `.terraform.lock.hcl` |
-| terraform-aws-modules/iam | `6.8.2` | `iam/child-module/main.tf` (all 3 roles) |
+| Terraform | `>= 1.17.1` | every module `versions.tf` + CI (`terraform_version: "1.17.1"`) |
+| AWS provider | `~> 6.72` (locked at 6.72.0) | every module `versions.tf` + `.terraform.lock.hcl` |
+| terraform-aws-modules/iam | `6.8.2` | `modules/iam-roles/main.tf` (all 3 roles) |
 
 ### ✅ Fixes Applied During the Build
 
@@ -728,11 +765,13 @@ Every stack keeps its **own state file** inside a single encrypted S3 bucket, **
 - 🐞 `outputs.tf`: `aws.subnet` → `aws_subnet`, added CIDR, public subnet and route table outputs
 - 🔐 `product-prod-role` now uses real module inputs (`enable_product_role`, `enable_cicd_role`)
 - 🪣 `stage/s3` has its own state key, no longer sharing prod's
+- 📂 Restructured into `terraform-infra/`: child modules in `modules/` (main · variables · outputs · versions) and identical root folders (backend · providers · variables · terraform.tfvars · locals · main · outputs)
+- 🔐 IAM is one global root: `terraform.tfvars` lists which roles each environment gets, the module runs once per entry, and the account ID is read automatically (`aws_caller_identity`)
 
 ### 🚀 How to Deploy the Networking Stack
 
 ```bash
-cd infra-modules/prod/Networking
+cd terraform-infra/networking/prod
 terraform init -reconfigure          # connect to the S3 backend
 terraform plan -out=network.tfplan   # review: 4 VPCs, 27 subnets, 13 endpoints, 1 TGW
 terraform apply network.tfplan
@@ -777,22 +816,13 @@ terraform apply network.tfplan
 
 ```text
 FinTech-Enterprise-Project/
-├── .github/workflows/            # Terraform CI pipelines (GitHub OIDC → AWS)
-├── docs/diagrams/                # animated SVG diagrams used in this README
-├── infra-modules/
-│   ├── iam/
-│   │   ├── child-module/         # 3 roles via terraform-aws-modules/iam 6.8.2
-│   │   └── environments/
-│   │       ├── product-ops-role/ # platform admin role
-│   │       ├── product-qa-role/  # app team + CI/CD roles
-│   │       ├── product-uat-role/ # app team + CI/CD roles
-│   │       └── product-prod-role/
-│   ├── prod/
-│   │   ├── Networking/           # root: backend, provider, locals (4 VPCs), module call, transit_gateway.tf
-│   │   │   └── network/          # child: VPC, subnets, NAT, SGs, VPC endpoints
-│   │   └── s3/
-│   ├── qa/   (s3, EKS)
-│   └── stage/ (s3)
+├── .github/workflows/        # Terraform CI pipelines (GitHub OIDC → AWS)
+├── docs/diagrams/            # 20 animated SVG diagrams used in this README
+├── terraform-infra/
+│   ├── modules/              # child modules: network · s3-bucket · iam-roles
+│   ├── networking/prod/      # root: 4 VPCs + Transit Gateway
+│   ├── s3/                   # root: compliance buckets
+│   └── iam/                  # root: all IAM roles (no environments)
 ├── .gitignore
 └── README.md
 ```
