@@ -34,45 +34,219 @@
 
 ## 🎬 Architecture at a Glance
 
-> Five animated diagrams: every moving dot is real traffic, state or telemetry flowing through the platform.
+> **20 animated diagrams.** Every moving dot is real traffic, a query, an event or state flowing through the platform.
 
-### 🧱 1. FinTech Infrastructure Layers (AWS)
+### 🏛️ Architecture
+
+#### 1. FinTech infrastructure layers
 
 <div align="center">
 
-<img src="docs/diagrams/infrastructure-layers-v2.svg" width="100%" alt="Animated stack of six infrastructure layers (CI/CD, Edge, Network, Orchestration, Application, Data) with Identity and Access and Observability as cross-cutting pillars"/>
+<img src="docs/diagrams/infrastructure-layers-v2.svg" width="100%" alt="FinTech infrastructure layers: Six layers plus identity and observability pillars · the comet is a request travelling down the stack"/>
+
+<sub>Six layers plus identity and observability pillars · the comet is a request travelling down the stack</sub>
 
 </div>
 
-### 🏛️ 2. Regional Architecture: 4 VPCs on AWS
+#### 2. Regional architecture
 
 <div align="center">
 
-<img src="docs/diagrams/architecture-overview-v2.svg" width="100%" alt="Animated regional architecture: edge, app, data and ops VPCs connected by a Transit Gateway, with EKS microservices, data stores, ops tooling, VPC endpoints to ECR, S3 and KMS, and NAT egress"/>
+<img src="docs/diagrams/architecture-overview-v2.svg" width="100%" alt="Regional architecture: Edge, app, data and ops VPCs on one Transit Gateway · request, data, metrics, GitOps, endpoint and egress traffic"/>
+
+<sub>Edge, app, data and ops VPCs on one Transit Gateway · request, data, metrics, GitOps, endpoint and egress traffic</sub>
 
 </div>
 
-### 🚦 3. Live Traffic Flow
+#### 3. Hub-and-spoke network
 
 <div align="center">
 
-<img src="docs/diagrams/traffic-flow-v2.svg" width="100%" alt="Animated diagram of a customer request flowing through CloudFront, API Gateway, the Transit Gateway, the ALB and EKS services into the data and ops VPCs"/>
+<img src="docs/diagrams/network-topology-v2.svg" width="100%" alt="Hub-and-spoke network: Every subnet per AZ · traffic moving through each Transit Gateway attachment"/>
+
+<sub>Every subnet per AZ · traffic moving through each Transit Gateway attachment</sub>
 
 </div>
 
-### 🕸️ 4. Hub-and-Spoke Network
+### 🚦 Traffic & Requests
+
+#### 4. Live traffic flow
 
 <div align="center">
 
-<img src="docs/diagrams/network-topology-v2.svg" width="100%" alt="Animated hub-and-spoke diagram: edge, app, data and ops VPCs with their subnets per AZ, connected through a Transit Gateway"/>
+<img src="docs/diagrams/traffic-flow-v2.svg" width="100%" alt="Live traffic flow: Six traffic types moving through the platform at once"/>
+
+<sub>Six traffic types moving through the platform at once</sub>
 
 </div>
 
-### 🗃️ 5. Multi State File Backend
+#### 5. Payment request hop by hop
 
 <div align="center">
 
-<img src="docs/diagrams/state-backend-v2.svg" width="100%" alt="Animated diagram of Terraform stacks each writing its own state file into one encrypted S3 bucket"/>
+<img src="docs/diagrams/payment-hops.svg" width="100%" alt="Payment request hop by hop: Every network hop of one payment, step by step"/>
+
+<sub>Every network hop of one payment, step by step</sub>
+
+</div>
+
+#### 6. Payment flow through the services
+
+<div align="center">
+
+<img src="docs/diagrams/payment-flow.svg" width="100%" alt="Payment flow through the services: BFF → Payment → Fraud (KServe) → Ledger → Kafka → Notification · low and high risk"/>
+
+<sub>BFF → Payment → Fraud (KServe) → Ledger → Kafka → Notification · low and high risk</sub>
+
+</div>
+
+#### 7. How a packet picks its path
+
+<div align="center">
+
+<img src="docs/diagrams/route-decision.svg" width="100%" alt="How a packet picks its path: Six packets, six destinations: local, S3, ECR/KMS, Transit Gateway, NAT, dropped"/>
+
+<sub>Six packets, six destinations: local, S3, ECR/KMS, Transit Gateway, NAT, dropped</sub>
+
+</div>
+
+#### 8. Transit Gateway route lookup
+
+<div align="center">
+
+<img src="docs/diagrams/tgw-lookup.svg" width="100%" alt="Transit Gateway route lookup: How a pod in the app VPC reaches MySQL in the data VPC"/>
+
+<sub>How a pod in the app VPC reaches MySQL in the data VPC</sub>
+
+</div>
+
+### 🧩 Services & Data
+
+#### 9. Microservices calls, events and data
+
+<div align="center">
+
+<img src="docs/diagrams/microservices.svg" width="100%" alt="Microservices calls, events and data: Service calls, Kafka events, data queries and model inference"/>
+
+<sub>Service calls, Kafka events, data queries and model inference</sub>
+
+</div>
+
+### 🛡️ Security & Identity
+
+#### 10. Security checkpoints and layers
+
+<div align="center">
+
+<img src="docs/diagrams/security-layers.svg" width="100%" alt="Security checkpoints and layers: A clean request passes 9 gates · a malicious one is blocked at the WAF"/>
+
+<sub>A clean request passes 9 gates · a malicious one is blocked at the WAF</sub>
+
+</div>
+
+#### 11. IAM roles per environment
+
+<div align="center">
+
+<img src="docs/diagrams/iam-roles.svg" width="100%" alt="IAM roles per environment: Who assumes which role, and which environment enables it"/>
+
+<sub>Who assumes which role, and which environment enables it</sub>
+
+</div>
+
+#### 12. GitHub Actions to AWS with OIDC
+
+<div align="center">
+
+<img src="docs/diagrams/github-oidc.svg" width="100%" alt="GitHub Actions to AWS with OIDC: Short-lived credentials, no stored keys"/>
+
+<sub>Short-lived credentials, no stored keys</sub>
+
+</div>
+
+### 🔁 Delivery & Infrastructure as Code
+
+#### 13. CI/CD and GitOps
+
+<div align="center">
+
+<img src="docs/diagrams/cicd-gitops.svg" width="100%" alt="CI/CD and GitOps: App images, infrastructure changes and models flowing to production"/>
+
+<sub>App images, infrastructure changes and models flowing to production</sub>
+
+</div>
+
+#### 14. Terraform for_each to four VPCs
+
+<div align="center">
+
+<img src="docs/diagrams/terraform-foreach.svg" width="100%" alt="Terraform for_each to four VPCs: locals.tf → module → 4 VPCs → Transit Gateway"/>
+
+<sub>locals.tf → module → 4 VPCs → Transit Gateway</sub>
+
+</div>
+
+#### 15. VPC endpoints
+
+<div align="center">
+
+<img src="docs/diagrams/vpc-endpoints.svg" width="100%" alt="VPC endpoints: Gateway vs Interface endpoints, and the internet path they replace"/>
+
+<sub>Gateway vs Interface endpoints, and the internet path they replace</sub>
+
+</div>
+
+#### 16. Multi state file backend
+
+<div align="center">
+
+<img src="docs/diagrams/state-backend-v2.svg" width="100%" alt="Multi state file backend: Every stack writes its own state into one encrypted S3 bucket"/>
+
+<sub>Every stack writes its own state into one encrypted S3 bucket</sub>
+
+</div>
+
+#### 17. Native S3 state locking
+
+<div align="center">
+
+<img src="docs/diagrams/state-locking.svg" width="100%" alt="Native S3 state locking: One writer at a time, no DynamoDB"/>
+
+<sub>One writer at a time, no DynamoDB</sub>
+
+</div>
+
+### 🔭 Operations & MLOps
+
+#### 18. Observability
+
+<div align="center">
+
+<img src="docs/diagrams/observability.svg" width="100%" alt="Observability: Metrics, logs, AWS telemetry, runtime security and ML drift into Grafana"/>
+
+<sub>Metrics, logs, AWS telemetry, runtime security and ML drift into Grafana</sub>
+
+</div>
+
+#### 19. MLOps continuous training loop
+
+<div align="center">
+
+<img src="docs/diagrams/mlops-loop.svg" width="100%" alt="MLOps continuous training loop: Train → register → serve → monitor → retrain"/>
+
+<sub>Train → register → serve → monitor → retrain</sub>
+
+</div>
+
+### 🗺️ Roadmap
+
+#### 20. Roadmap
+
+<div align="center">
+
+<img src="docs/diagrams/roadmap.svg" width="100%" alt="Roadmap: Done, in progress and planned, layer by layer"/>
+
+<sub>Done, in progress and planned, layer by layer</sub>
 
 </div>
 
@@ -311,89 +485,19 @@ The project grows in stages. Each stage adds a layer of the architecture below, 
 
 ## 🚦 Live Traffic Flow
 
-> 🎬 Animated view: [Live traffic flow](#-3-live-traffic-flow) at the top of this page.
+> 🎬 Animated diagram: [4. Live traffic flow](#4-live-traffic-flow) in the gallery at the top.
 
 ### 🛣️ Hop by hop: one payment request through the network
 
-```mermaid
-sequenceDiagram
-    autonumber
-    actor C as 👤 Customer
-    participant R53 as 🧭 Route 53
-    participant CF as ☁️ CloudFront + 🧱 WAF
-    participant API as 🔌 API Gateway (edge VPC)
-    participant TGW as 🔀 Transit Gateway
-    participant ALB as ⚖️ ALB (app VPC)
-    participant POD as 💸 payment pod (EKS)
-    participant SM as 🔐 HashiCorp Vault (ops VPC)
-    participant DB as 🐬 MySQL (data VPC)
-    participant PSP as 🌍 Payment network
-
-    C->>R53: api.fintech.example → resolve
-    R53-->>C: CloudFront edge IP
-    C->>CF: HTTPS request (TLS 1.3)
-    CF->>CF: WAF rules · rate limit · Shield Advanced
-    CF->>API: Forward to the REST API
-    API->>TGW: VPC Link to 10.20.x.x → route 10.0.0.0/8 → TGW
-    TGW->>ALB: Deliver into the app VPC
-    ALB->>POD: Route via BFF to the payment service
-    POD->>SM: Fetch DB credentials via TGW (Istio mTLS)
-    SM-->>POD: Secret
-    POD->>TGW: Query 10.30.x.x → route 10.0.0.0/8 → TGW
-    TGW->>DB: Deliver into data VPC (10.30.11.0/24)
-    DB-->>TGW: Rows
-    TGW-->>POD: Rows
-    POD->>PSP: Authorise card via NAT Gateway (outbound only)
-    PSP-->>POD: ✅ Approved
-    POD-->>ALB: 200 OK
-    ALB-->>TGW: Response
-    TGW-->>API: Response
-    API-->>CF: Response
-    CF-->>C: ✅ Payment complete
-```
+> 🎬 Animated diagram: [5. Payment request hop by hop](#5-payment-request-hop-by-hop) in the gallery at the top.
 
 ### 🧭 How a packet picks its path (route table decision)
 
-```mermaid
-flowchart LR
-    P([📦 Packet leaves a pod]):::start --> Q1{Destination inside<br/>my own /16?}:::q
-    Q1 -->|yes| L[🏠 local route<br/>stays in the VPC]:::local
-    Q1 -->|no| Q2{AWS service with<br/>a VPC endpoint?}:::q
-    Q2 -->|S3| G[🟢 Gateway endpoint<br/>prefix-list route]:::gw
-    Q2 -->|ECR · KMS| I[🟣 Interface endpoint<br/>private DNS → ENI]:::ifep
-    Q2 -->|no| Q3{Destination in<br/>10.0.0.0/8?}:::q
-    Q3 -->|yes| T[🔀 Transit Gateway<br/>to another VPC]:::tgw
-    Q3 -->|no| Q4{VPC has a<br/>NAT Gateway?}:::q
-    Q4 -->|yes · app| N[🔁 NAT → IGW<br/>outbound internet]:::nat
-    Q4 -->|no · data| X[⛔ Dropped<br/>no internet path]:::drop
-
-    classDef start fill:#4facfe,stroke:#fff,color:#000,stroke-width:2px
-    classDef q fill:#ffd200,stroke:#fff,color:#000
-    classDef local fill:#8fd3f4,stroke:#fff,color:#000
-    classDef gw fill:#43e97b,stroke:#fff,color:#000
-    classDef ifep fill:#c471f5,stroke:#fff,color:#fff
-    classDef tgw fill:#ff9900,stroke:#fff,color:#000,stroke-width:2px
-    classDef nat fill:#ff4081,stroke:#fff,color:#fff
-    classDef drop fill:#434343,stroke:#ff416c,color:#fff,stroke-width:2px
-```
+> 🎬 Animated diagram: [7. How a packet picks its path](#7-how-a-packet-picks-its-path) in the gallery at the top.
 
 ### 🛡️ Security checkpoints on the way in
 
-```mermaid
-flowchart LR
-    A[👤 Internet]:::i --> B[🛡️ Shield Advanced<br/>DDoS]:::s1 --> C[🧱 WAF<br/>L7 rules]:::s2 --> D[☁️ CloudFront<br/>TLS]:::s3 --> E[🔌 API Gateway<br/>throttling]:::s4 --> F[🔀 Transit Gateway<br/>10.0.0.0/8]:::s5 --> G[⚖️ ALB<br/>listener rules]:::s6 --> H[🐯 Calico<br/>network policy]:::s7 --> I[🕸️ Istio<br/>mTLS]:::s8 --> J[⚙️ Service]:::ok
-
-    classDef i fill:#ff9a9e,color:#000
-    classDef s1 fill:#ff416c,color:#fff
-    classDef s2 fill:#ff6a3d,color:#fff
-    classDef s3 fill:#f7971e,color:#000
-    classDef s4 fill:#ffd200,color:#000
-    classDef s5 fill:#ff9900,color:#000
-    classDef s6 fill:#84fab0,color:#000
-    classDef s7 fill:#4facfe,color:#000
-    classDef s8 fill:#c471f5,color:#fff
-    classDef ok fill:#43e97b,color:#000,stroke:#fff,stroke-width:3px
-```
+> 🎬 Animated diagram: [10. Security checkpoints and layers](#10-security-checkpoints-and-layers) in the gallery at the top.
 
 ---
 
@@ -422,71 +526,13 @@ All five services run on **Amazon EKS in the app VPC**, behind the **ALB**, insi
 
 ### 🕸️ Service Dependency Map
 
-```mermaid
-flowchart LR
-    ALB[⚖️ ALB]:::net --> BFF([🔀 BFF · Node.js]):::svc
-    BFF --> PAY([💸 Payment · Go]):::svc
-    BFF --> LED([📒 Ledger · Java]):::svc
-    PAY --> FR([🕵️ Fraud · Python]):::svc
-    PAY --> LED
-    FR --> KS[🚀 KServe]:::ml
-    PAY -->|PaymentCompleted| KF{{📨 Kafka}}:::data
-    KF --> NOT([🔔 Notification · Node.js]):::svc
-    BFF -.-> VK[(⚡ Valkey)]:::data
-    PAY -.-> MY[(🐬 MySQL)]:::data
-    LED -.-> MY
-    LED -.-> OS[(🔎 OpenSearch)]:::data
-    FR -.-> MG[(🍃 MongoDB)]:::data
-    NOT -.-> MG
-    ML[📒 MLflow]:::ml -.->|model version| KS
-
-    classDef net fill:#43e97b,stroke:#fff,color:#000
-    classDef svc fill:#4facfe,stroke:#fff,color:#000,stroke-width:2px
-    classDef ml fill:#f7971e,stroke:#fff,color:#000
-    classDef data fill:#3a1424,stroke:#ff416c,color:#fff,stroke-width:2px
-```
+> 🎬 Animated diagram: [9. Microservices calls, events and data](#9-microservices-calls-events-and-data) in the gallery at the top.
 
 ---
 
 ## 💸 Request Flow: Making a Payment
 
-```mermaid
-sequenceDiagram
-    autonumber
-    actor C as 👤 Customer
-    participant API as 🔌 API Gateway
-    participant BFF as 🔀 BFF Service
-    participant PAY as 💸 Payment Service
-    participant FR as 🕵️ Fraud Service
-    participant KS as 🚀 KServe
-    participant LED as 📒 Ledger Service
-    participant K as 📨 Kafka
-    participant NT as 🔔 Notification Service
-
-    C->>API: POST /payments (via Route 53 · CloudFront · WAF)
-    API->>BFF: Forward through Transit Gateway → ALB
-    BFF->>PAY: Create payment
-    PAY->>FR: Score transaction
-    FR->>KS: Predict
-    KS-->>FR: risk score
-    alt 🟢 Low risk
-        FR-->>PAY: risk = 0.04
-        PAY->>LED: Post debit / credit entries (MySQL)
-        LED-->>PAY: ✅ Committed
-        PAY->>K: PaymentCompleted event
-        K->>NT: Consume event
-        NT-->>C: 📱 Push + email receipt
-        PAY-->>BFF: 200 OK
-    else 🔴 High risk
-        FR-->>PAY: risk = 0.93
-        PAY-->>BFF: 403 Held for review
-        PAY->>K: PaymentFlagged event
-        K->>NT: Consume event
-        NT-->>C: ⚠️ Verify this payment
-    end
-    BFF-->>API: Response
-    API-->>C: Show result
-```
+> 🎬 Animated diagram: [6. Payment flow through the services](#6-payment-flow-through-the-services) in the gallery at the top.
 
 ---
 
@@ -494,36 +540,7 @@ sequenceDiagram
 
 Every layer in the architecture adds its own control, and nothing depends on a single defence.
 
-```mermaid
-flowchart TB
-    subgraph L1["🌐 Edge"]
-        E1[Shield Advanced · WAF · CloudFront TLS · API Gateway throttling]
-    end
-    subgraph L2["🕸️ Network"]
-        E2[4 isolated VPCs · private subnets · security groups · Transit Gateway routing · VPC endpoints]
-    end
-    subgraph L3["☸️ Orchestration"]
-        E3[Calico network policies · Istio mTLS · Argo Rollouts safe releases]
-    end
-    subgraph L4["🔑 Identity & Access"]
-        E4[IAM least-privilege roles · GitHub OIDC for CI · HashiCorp Vault secrets · KMS encryption]
-    end
-    subgraph L5["🔭 Detection"]
-        E5[Falco runtime security · Prometheus + Grafana alerts · Loki · Logstash · CloudWatch]
-    end
-    subgraph L6["🤖 Model & Data Trust"]
-        E6[Evidently AI drift · WhyLogs data profiling · MLflow model lineage]
-    end
-
-    L1 --> L2 --> L3 --> L4 --> L5 --> L6
-
-    style L1 fill:#ff416c,stroke:#fff,color:#fff
-    style L2 fill:#43e97b,stroke:#fff,color:#000
-    style L3 fill:#f7971e,stroke:#fff,color:#000
-    style L4 fill:#ffd200,stroke:#fff,color:#000
-    style L5 fill:#00c9a7,stroke:#fff,color:#000
-    style L6 fill:#c471f5,stroke:#fff,color:#fff
-```
+> 🎬 Animated diagram: [10. Security checkpoints and layers](#10-security-checkpoints-and-layers) in the gallery at the top.
 
 ---
 
@@ -531,44 +548,7 @@ flowchart TB
 
 **GitHub Actions** builds, **Terraform** provisions, **Argo CD** (ops VPC) syncs and **Argo Rollouts** releases progressively onto **EKS** (app VPC). Models follow the same path through **Airflow → Kubeflow → MLflow → KServe**.
 
-```mermaid
-flowchart LR
-    subgraph SRC["🌿 Source"]
-        G[Git · GitHub]:::s
-    end
-    subgraph CI["🐙 CI · GitHub Actions"]
-        T[Lint + test]:::ci --> B[Build image]:::ci --> P[Push to ECR]:::ci
-        TF[Terraform plan / apply]:::ci
-    end
-    subgraph CD["🔁 CD · Argo (ops VPC)"]
-        A[Argo CD sync]:::cd --> R[Argo Rollouts<br/>canary / blue-green]:::cd
-    end
-    subgraph ENV["☸️ EKS environments"]
-        Q[qa]:::env --> U[uat]:::env --> PR[prod]:::env
-    end
-    subgraph ML["🤖 Model delivery"]
-        AF[Airflow]:::ml --> KF[Kubeflow pipelines]:::ml --> MF[MLflow registry]:::ml --> KS[KServe]:::ml
-    end
-
-    G --> T
-    G --> TF
-    P -->|update image tag| G
-    G -->|watch| A
-    R --> Q
-    PR -.->|Prometheus metrics gate| R
-    MF -.->|new model version| A
-
-    classDef s fill:#f05032,color:#fff
-    classDef ci fill:#2088ff,color:#fff
-    classDef cd fill:#ef7b4d,color:#fff
-    classDef env fill:#43e97b,color:#000
-    classDef ml fill:#f7971e,color:#000
-    style SRC fill:#2b1a1a,stroke:#f05032,color:#fff
-    style CI fill:#12263f,stroke:#2088ff,color:#fff
-    style CD fill:#3a1a10,stroke:#ef7b4d,color:#fff
-    style ENV fill:#0b3d2e,stroke:#43e97b,color:#fff
-    style ML fill:#3d2400,stroke:#f7971e,color:#fff
-```
+> 🎬 Animated diagram: [13. CI/CD and GitOps](#13-cicd-and-gitops) in the gallery at the top.
 
 > 🔐 CI never stores AWS keys: GitHub Actions assumes the `FinTech-CI-CD-Deployer-<env>` IAM role through **GitHub OIDC**, as defined in the IAM module below.
 
@@ -576,25 +556,7 @@ flowchart LR
 
 ## 🤖 MLOps Lifecycle
 
-```mermaid
-flowchart LR
-    DATA[(📥 MySQL · MongoDB<br/>Kafka · S3)]:::d --> AF[🌬️ Airflow<br/>ingest + orchestrate]:::p
-    AF --> KF[🧪 Kubeflow Pipelines<br/>train + evaluate]:::t
-    KF --> MF[📒 MLflow<br/>track + register]:::t
-    MF --> GATE{✅ Meets<br/>threshold?}:::g
-    GATE -->|yes| KS[🚀 KServe<br/>serve]:::s
-    GATE -->|no| KF
-    KS --> FR[🕵️ Fraud Service]:::s
-    FR --> MON[📉 Evidently AI drift<br/>📊 WhyLogs profiles<br/>🔥 Prometheus]:::m
-    MON -->|drift detected| AF
-
-    classDef d fill:#3a1424,stroke:#ff416c,color:#fff
-    classDef p fill:#4facfe,color:#000
-    classDef t fill:#f7971e,color:#000
-    classDef g fill:#ffd200,color:#000
-    classDef s fill:#43e97b,color:#000
-    classDef m fill:#c471f5,color:#fff
-```
+> 🎬 Animated diagram: [19. MLOps continuous training loop](#19-mlops-continuous-training-loop) in the gallery at the top.
 
 ---
 
@@ -602,41 +564,7 @@ flowchart LR
 
 The **ops VPC** collects telemetry from every layer over the **Transit Gateway**.
 
-```mermaid
-flowchart LR
-    subgraph SRC["📡 Sources"]
-        P1[5 microservices]
-        P2[EKS nodes + Istio]
-        P3[AWS: API Gateway · ALB · TGW]
-        P4[KServe models]
-    end
-    subgraph COL["🔌 Collect"]
-        PR[🔥 Prometheus<br/>metrics]
-        LS[🧾 Logstash<br/>log pipeline]
-        CW[☁️ CloudWatch<br/>AWS telemetry]
-        FA[🦅 Falco<br/>runtime events]
-        EV[📉 Evidently AI · 📊 WhyLogs<br/>ML + data drift]
-    end
-    subgraph STORE["💾 Store"]
-        LK[(🪵 Loki)]
-        OS[(🔎 OpenSearch)]
-    end
-    subgraph VIZ["📈 Visualise & Alert"]
-        GF[Grafana dashboards + alerts]
-    end
-
-    P1 & P2 --> PR
-    P1 & P2 --> LS --> LK & OS
-    P3 --> CW
-    P2 --> FA
-    P4 --> EV
-    PR & LK & CW & FA & EV --> GF
-
-    style SRC fill:#12263f,stroke:#4facfe,color:#fff
-    style COL fill:#2a1245,stroke:#c471f5,color:#fff
-    style STORE fill:#3d2400,stroke:#f7971e,color:#fff
-    style VIZ fill:#0b3d2e,stroke:#43e97b,color:#fff
-```
+> 🎬 Animated diagram: [18. Observability](#18-observability) in the gallery at the top.
 
 ---
 
@@ -658,15 +586,7 @@ This section documents what has been **built so far** in `infra-modules/`.
 
 ### 🧭 Build Journey
 
-```mermaid
-timeline
-    title Infrastructure work completed
-    State backend : S3 state bucket : Encrypted state : Native S3 lock file (no DynamoDB)
-    IAM : Reusable child module : Platform, App team and CI/CD roles : One root stack per environment (ops, qa, uat, prod)
-    Networking : Reusable network module : 4 VPCs from one for_each : Gateway + Interface VPC endpoints
-    Connectivity : Transit Gateway hub : Subnets round-robin across 3 AZs : Corrected CIDRs 10.10 to 10.40
-    Hardening : Fixed SG and AZ bugs : Private SG limited to VPC CIDR : Pinned latest Terraform, provider and module versions
-```
+> 🎬 Animated diagram: [20. Roadmap](#20-roadmap) in the gallery at the top.
 
 ---
 
@@ -674,7 +594,7 @@ timeline
 
 One reusable module (`prod/Networking/network/`) is called **once per VPC** from the root module with `for_each`. Each VPC gets its own subnets, route tables, security groups and VPC endpoints. A **Transit Gateway** (`transit_gateway.tf`) joins them all.
 
-> 🎬 Animated view: [Hub-and-spoke network](#%EF%B8%8F-4-hub-and-spoke-network) at the top of this page.
+> 🎬 Animated diagram: [3. Hub-and-spoke network](#3-hub-and-spoke-network) in the gallery at the top.
 
 | VPC | CIDR | Public subnets | Private subnets | NAT | Gateway endpoints | Interface endpoints |
 |---|---|:-:|:-:|:-:|---|---|
@@ -695,49 +615,11 @@ One reusable module (`prod/Networking/network/`) is called **once per VPC** from
 
 #### 🔀 How the root module creates all 4 VPCs
 
-```mermaid
-flowchart LR
-    L["📄 locals.tf<br/>vpcs = { edge, app, data, ops }"]:::loc --> M{"🔁 module network<br/>for_each = local.vpcs"}:::mod
-    M --> E["🚪 module.network[edge]"]:::edge
-    M --> A["⚙️ module.network[app]"]:::app
-    M --> D["🗄️ module.network[data]"]:::data
-    M --> O["🛠️ module.network[ops]"]:::ops
-    E & A & D & O --> R["📦 Each instance creates:<br/>VPC · subnets · route tables<br/>SGs · NAT/IGW if public<br/>Gateway + Interface endpoints"]:::res
-    R --> T["🔀 transit_gateway.tf<br/>attach + route every VPC<br/>(for_each = local.vpcs)"]:::tgw
-
-    classDef loc fill:#ffd200,stroke:#fff,color:#000,stroke-width:2px
-    classDef mod fill:#7B42BC,stroke:#fff,color:#fff,stroke-width:2px
-    classDef edge fill:#84fab0,stroke:#fff,color:#000
-    classDef app fill:#4facfe,stroke:#fff,color:#000
-    classDef data fill:#ff416c,stroke:#fff,color:#fff
-    classDef ops fill:#c471f5,stroke:#fff,color:#fff
-    classDef res fill:#0f2027,stroke:#00c9a7,color:#fff,stroke-width:2px
-    classDef tgw fill:#ff7a00,stroke:#ffd200,color:#000,stroke-width:2px
-```
+> 🎬 Animated diagram: [14. Terraform for_each to four VPCs](#14-terraform-for_each-to-four-vpcs) in the gallery at the top.
 
 #### 🚇 VPC endpoints: Gateway vs Interface
 
-```mermaid
-flowchart LR
-    subgraph GW["🟢 Gateway endpoint · S3 / DynamoDB · FREE"]
-        direction LR
-        P1[🖥️ Private workload]:::wl --> RT[🗺️ Private route table<br/>prefix list → vpce]:::rt --> G[(🪣 S3 / DynamoDB)]:::svc
-    end
-    subgraph IF["🟣 Interface endpoint · e.g. ECR, KMS"]
-        direction LR
-        P2[🖥️ Private workload]:::wl -->|DNS: service.us-east-1.amazonaws.com| DNS[🔎 Private DNS<br/>→ endpoint private IP]:::dns
-        DNS --> SG[🛡️ Endpoint SG<br/>443 from VPC CIDR]:::sg --> ENI[🔌 ENI in each AZ<br/>1a · 1b · 1c]:::eni --> I[☁️ AWS service]:::svc
-    end
-
-    classDef wl fill:#4facfe,stroke:#fff,color:#000
-    classDef rt fill:#43e97b,stroke:#fff,color:#000
-    classDef dns fill:#ffd200,stroke:#fff,color:#000
-    classDef sg fill:#ff416c,stroke:#fff,color:#fff
-    classDef eni fill:#c471f5,stroke:#fff,color:#fff
-    classDef svc fill:#ff9900,stroke:#fff,color:#000,stroke-width:2px
-    style GW fill:#0b3d2e,stroke:#43e97b,color:#fff,stroke-width:2px
-    style IF fill:#2a1245,stroke:#c471f5,color:#fff,stroke-width:2px
-```
+> 🎬 Animated diagram: [15. VPC endpoints](#15-vpc-endpoints) in the gallery at the top.
 
 **How the endpoint code works** (`network/main.tf`):
 
@@ -756,25 +638,7 @@ interface_endpoints = ["secretsmanager", "kms"]
 
 #### 🔀 Transit Gateway: how VPCs talk to each other
 
-```mermaid
-sequenceDiagram
-    autonumber
-    participant POD as ⚙️ app pod 10.20.21.15
-    participant ART as 🗺️ app private route table
-    participant TGW as 🔀 Transit Gateway
-    participant TRT as 📋 TGW route table
-    participant DB as 🐬 MySQL 10.30.11.20
-
-    POD->>ART: Send to 10.30.11.20
-    ART->>ART: 10.20.0.0/16 local? ✖ · 10.0.0.0/8 → TGW ✅
-    ART->>TGW: Forward via app attachment
-    TGW->>TRT: Look up 10.30.11.20
-    TRT-->>TGW: 10.30.0.0/16 → data attachment (propagated)
-    TGW->>DB: Deliver into data VPC
-    DB-->>TGW: Reply to 10.20.21.15
-    TGW-->>POD: 10.20.0.0/16 → app attachment
-    Note over POD,DB: Routing opens the path · security groups still decide what is allowed
-```
+> 🎬 Animated diagram: [8. Transit Gateway route lookup](#8-transit-gateway-route-lookup) in the gallery at the top.
 
 | Block (`transit_gateway.tf`) | What it does |
 |---|---|
@@ -806,64 +670,11 @@ sequenceDiagram
 
 A **child module** (`iam/child-module/`) wraps `terraform-aws-modules/iam/aws//modules/iam-role` **v6.8.2** and defines three roles. Each **environment stack** (`iam/environments/*`) turns on only the roles it needs, using feature flags.
 
-```mermaid
-flowchart TB
-    CM{{"🧩 iam/child-module<br/>terraform-aws-modules/iam 6.8.2"}}:::mod
-
-    subgraph ROLES["🎭 Roles defined in the child module"]
-        direction LR
-        R1["👑 FinTech-Platform-Admin<br/>VPC + RDS full · eks:* · KMS manage<br/>⛔ DENY s3:GetObject, dynamodb:GetItem,<br/>rds-db:connect, kms:Decrypt (PII guard)"]:::plat
-        R2["👩‍💻 AppTeam-env-Role<br/>qa: eks/rds/ecr full<br/>uat/prod: read-only + rds-db:connect env_user<br/>⛔ DENY delete VPC/Subnet/TGW, terminate EC2"]:::prod
-        R3["🤖 FinTech-CI-CD-Deployer-env<br/>GitHub OIDC trust (this repo only)<br/>ECR push · EKS update · Secrets read"]:::cicd
-    end
-
-    CM --> R1 & R2 & R3
-
-    subgraph ENVS["🌍 Environment stacks"]
-        direction LR
-        OPS["🛠️ product-ops-role<br/>enable_platform_role"]:::env
-        QA["🧪 product-qa-role<br/>enable_product_role<br/>enable_cicd_role"]:::env
-        UAT["🧷 product-uat-role<br/>enable_product_role<br/>enable_cicd_role"]:::env
-        PRD["🏦 product-prod-role<br/>enable_product_role<br/>enable_cicd_role"]:::env
-    end
-
-    OPS -.-> R1
-    QA -.-> R2 & R3
-    UAT -.-> R2 & R3
-    PRD -.-> R2 & R3
-
-    classDef mod fill:#7B42BC,stroke:#fff,color:#fff,stroke-width:2px
-    classDef plat fill:#ff9900,stroke:#fff,color:#000
-    classDef prod fill:#4facfe,stroke:#fff,color:#000
-    classDef cicd fill:#43e97b,stroke:#fff,color:#000
-    classDef env fill:#0f2027,stroke:#00c9a7,color:#fff,stroke-width:2px
-    classDef warn fill:#3a1a10,stroke:#ff416c,color:#fff,stroke-width:2px,stroke-dasharray: 5 5
-    style ROLES fill:#16222a,stroke:#ffd200,color:#fff,stroke-width:2px
-    style ENVS fill:#12263f,stroke:#4facfe,color:#fff,stroke-width:2px
-```
+> 🎬 Animated diagram: [11. IAM roles per environment](#11-iam-roles-per-environment) in the gallery at the top.
 
 #### 🤖 How GitHub Actions gets AWS access (no stored keys)
 
-```mermaid
-sequenceDiagram
-    autonumber
-    participant GH as 🐙 GitHub Actions
-    participant OIDC as 🎫 GitHub OIDC
-    participant STS as 🔐 AWS STS
-    participant ROLE as 🤖 CI-CD-Deployer role
-    participant AWS as ☁️ ECR / EKS
-
-    GH->>OIDC: Request ID token for this job
-    OIDC-->>GH: JWT (sub = repo:muntaha747/FinTech-Enterprise-Project:*)
-    GH->>STS: AssumeRoleWithWebIdentity(JWT)
-    STS->>ROLE: Check trust policy condition on sub
-    alt ✅ Repo matches
-        STS-->>GH: Short-lived credentials
-        GH->>AWS: Push image / update cluster
-    else ⛔ Any other repo
-        STS-->>GH: AccessDenied
-    end
-```
+> 🎬 Animated diagram: [12. GitHub Actions to AWS with OIDC](#12-github-actions-to-aws-with-oidc) in the gallery at the top.
 
 ---
 
@@ -871,7 +682,7 @@ sequenceDiagram
 
 Every stack keeps its **own state file** inside a single encrypted S3 bucket, **`fintech-project-statefile-bucket`**. Locking uses Terraform's **native S3 lock file** (`use_lockfile = true`), so no DynamoDB table is needed.
 
-> 🎬 Animated view: [Multi state file backend](#%EF%B8%8F-5-multi-state-file-backend) at the top of this page.
+> 🎬 Animated diagram: [16. Multi state file backend](#16-multi-state-file-backend) in the gallery at the top.
 
 **Why split the state?**
 - 💥 **Smaller blast radius:** a bad apply on QA IAM can't touch prod networking.
@@ -892,22 +703,7 @@ Every stack keeps its **own state file** inside a single encrypted S3 bucket, **
 
 #### 🔒 How native S3 locking protects state
 
-```mermaid
-sequenceDiagram
-    autonumber
-    actor A as 👩‍💻 Engineer A
-    actor B as 👨‍💻 Engineer B
-    participant S3 as 🪣 S3 state bucket
-
-    A->>S3: terraform apply → create networking.tfstate.tflock
-    S3-->>A: 🔒 Lock acquired
-    B->>S3: terraform apply (same stack)
-    S3-->>B: ⛔ Error acquiring the state lock
-    A->>S3: Write new networking.tfstate (encrypted)
-    A->>S3: Delete .tflock
-    S3-->>A: 🔓 Lock released
-    B->>S3: Retry → lock acquired ✅
-```
+> 🎬 Animated diagram: [17. Native S3 state locking](#17-native-s3-state-locking) in the gallery at the top.
 
 ---
 
@@ -958,42 +754,7 @@ terraform apply network.tfplan
 
 ## 🗺️ Roadmap
 
-```mermaid
-gantt
-    title Project Roadmap
-    dateFormat  YYYY-MM-DD
-    axisFormat  %b %Y
-    section Foundation
-    Repo, README, state backend, IAM     :done,    f1, 2026-11-01, 8d
-    Network: 4 VPCs + Transit Gateway    :done,    f2, 2026-11-07, 5d
-    section Edge
-    Route 53, CloudFront, WAF, Shield, API Gateway :active, e1, 2026-11-12, 10d
-    section Orchestration
-    EKS + Karpenter + KEDA               :         o1, after e1, 14d
-    Calico + Istio                       :         o2, after o1, 10d
-    section Data
-    MySQL, Valkey, MongoDB, OpenSearch, Kafka :    d1, after o1, 14d
-    section Application
-    BFF, Payment, Ledger, Fraud, Notification :    a1, after d1, 28d
-    section Delivery
-    GitHub Actions + Argo CD + Argo Rollouts  :    g1, after o2, 14d
-    section Observability and Security
-    Prometheus, Grafana, Loki, Logstash, CloudWatch : s1, after g1, 14d
-    Vault + Falco                        :         s2, after s1, 10d
-    section MLOps
-    Airflow, Kubeflow, MLflow, KServe    :         m1, after a1, 21d
-    Evidently AI + WhyLogs               :         m2, after m1, 10d
-```
-
-```mermaid
-timeline
-    title Evolution of the Platform
-    Phase 1 - Foundation : State backend and IAM : 4 VPCs and Transit Gateway
-    Phase 2 - Edge and Platform : Route 53, CloudFront, WAF, Shield, API Gateway : EKS, Karpenter, KEDA, Calico, Istio
-    Phase 3 - Data and Services : MySQL, Valkey, MongoDB, OpenSearch, Kafka : BFF, Payment, Ledger, Fraud, Notification
-    Phase 4 - Delivery and Operations : GitHub Actions, Argo CD, Argo Rollouts : Prometheus, Grafana, Loki, Logstash, CloudWatch, Vault, Falco
-    Phase 5 - Intelligence : Airflow, Kubeflow, MLflow, KServe : Evidently AI and WhyLogs
-```
+> 🎬 Animated diagram: [20. Roadmap](#20-roadmap) in the gallery at the top.
 
 | Status | Item |
 |:--:|---|

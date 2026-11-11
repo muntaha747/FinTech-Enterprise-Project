@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1400 520" width="1400" height="520" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+<title>🗺️ Roadmap · building the platform layer by layer</title>
+<defs>
+<linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0a0f1e"/><stop offset="1" stop-color="#151b31"/></linearGradient>
+<filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<style>
+.flow{fill:none;stroke-dasharray:9 7;animation:dash 1.1s linear infinite}
+.line{fill:none}
+@keyframes dash{to{stroke-dashoffset:-16}}
+.pulse{animation:pulse 2.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.7}50%{opacity:1}}
+.t{fill:#eef3f8;font-size:13.5px;font-weight:700}
+.ts{fill:#aab8cb;font-size:11.5px}
+.h{fill:#0a0f1e;font-size:14px;font-weight:800}
+.hc{fill:#0a0f1e;font-size:11px;font-weight:700}
+.lab{fill:#d6deea;font-size:11px;font-style:italic}
+</style></defs>
+<rect width="1400" height="520" rx="18" fill="url(#bgGrad)"/>
+<text x="36" y="42" class="t" font-size="21">🗺️ Roadmap · building the platform layer by layer</text>
+<text x="36" y="66" class="ts" font-size="12.5">Done → in progress → planned · the marker shows where the project is today</text>
+<path id="p1" class="flow" d="M90,190 H1310" stroke="#00e5ff" stroke-width="0.01" opacity="0"/>
+<rect x="90" y="185" width="1220" height="10" rx="5" fill="#2b3a55"/>
+<rect x="90" y="185" width="0" height="10" rx="5" fill="#43e97b"><animate attributeName="width" values="0;305.0;305.0" keyTimes="0;.6;1" dur="5s" repeatCount="indefinite"/></rect>
+<circle cx="90.0" cy="190" r="15" fill="#43e97b" stroke="#43e97b" stroke-width="3"/>
+<text x="90.0" y="195" text-anchor="middle" font-size="12">✅</text>
+<line x1="90.0" y1="205" x2="90.0" y2="240" stroke="#43e97b" stroke-opacity=".5" stroke-dasharray="3 4"/>
+<rect x="8.0" y="240" width="164" height="92" rx="12" fill="#0d2a22" stroke="#43e97b" stroke-width="1.8"/>
+<text x="90.0" y="283.0" text-anchor="middle" class="t" font-size="12.5">🏗️ Foundation</text>
+<text x="90.0" y="300.0" text-anchor="middle" class="ts">state backend</text>
+<text x="90.0" y="314.0" text-anchor="middle" class="ts">IAM roles</text>
+<circle cx="242.5" cy="190" r="15" fill="#43e97b" stroke="#43e97b" stroke-width="3"/>
+<text x="242.5" y="195" text-anchor="middle" font-size="12">✅</text>
+<line x1="242.5" y1="205" x2="242.5" y2="350" stroke="#43e97b" stroke-opacity=".5" stroke-dasharray="3 4"/>
+<rect x="160.5" y="350" width="164" height="92" rx="12" fill="#0d2a22" stroke="#43e97b" stroke-width="1.8"/>
+<text x="242.5" y="393.0" text-anchor="middle" class="t" font-size="12.5">🕸️ Network</text>
+<text x="242.5" y="410.0" text-anchor="middle" class="ts">4 VPCs · TGW</text>
+<text x="242.5" y="424.0" text-anchor="middle" class="ts">VPC endpoints</text>
+<circle cx="395.0" cy="190" r="15" fill="#ffd200" stroke="#ffd200" stroke-width="3" class="pulse" filter="url(#glow)"/>
+<text x="395.0" y="195" text-anchor="middle" font-size="12">🚧</text>
+<line x1="395.0" y1="205" x2="395.0" y2="240" stroke="#ffd200" stroke-opacity=".5" stroke-dasharray="3 4"/>
+<rect x="313.0" y="240" width="164" height="92" rx="12" fill="#2e2708" stroke="#ffd200" stroke-width="1.8"/>
+<text x="395.0" y="283.0" text-anchor="middle" class="t" font-size="12.5">🌐 Edge</text>
+<text x="395.0" y="300.0" text-anchor="middle" class="ts">Route 53 · CloudFront</text>
+<text x="395.0" y="314.0" text-anchor="middle" class="ts">WAF · Shield</text>
+<text x="395.0" y="328.0" text-anchor="middle" class="ts">API Gateway</text>
+<circle cx="547.5" cy="190" r="15" fill="#1a2233" stroke="#4facfe" stroke-width="3"/>
+<text x="547.5" y="195" text-anchor="middle" font-size="12">🔜</text>
+<line x1="547.5" y1="205" x2="547.5" y2="350" stroke="#4facfe" stroke-opacity=".5" stroke-dasharray="3 4"/>
+<rect x="465.5" y="350" width="164" height="92" rx="12" fill="#0f2036" stroke="#4facfe" stroke-width="1.8"/>
+<text x="547.5" y="393.0" text-anchor="middle" class="t" font-size="12.5">☸️ Orchestration</text>
+<text x="547.5" y="410.0" text-anchor="middle" class="ts">EKS · Karpenter</text>
+<text x="547.5" y="424.0" text-anchor="middle" class="ts">KEDA · Calico</text>
+<text x="547.5" y="438.0" text-anchor="middle" class="ts">Istio</text>
+<circle cx="700.0" cy="190" r="15" fill="#1a2233" stroke="#ff416c" stroke-width="3"/>
+<text x="700.0" y="195" text-anchor="middle" font-size="12">🔜</text>
+<line x1="700.0" y1="205" x2="700.0" y2="240" stroke="#ff416c" stroke-opacity=".5" stroke-dasharray="3 4"/>
+<rect x="618.0" y="240" width="164" height="92" rx="12" fill="#3a1424" stroke="#ff416c" stroke-width="1.8"/>
+<text x="700.0" y="283.0" text-anchor="middle" class="t" font-size="12.5">🗄️ Data</text>
+<text x="700.0" y="300.0" text-anchor="middle" class="ts">MySQL · Valkey</text>
+<text x="700.0" y="314.0" text-anchor="middle" class="ts">MongoDB</text>
+<text x="700.0" y="328.0" text-anchor="middle" class="ts">OpenSearch · Kafka</text>
+<circle cx="852.5" cy="190" r="15" fill="#1a2233" stroke="#c471f5" stroke-width="3"/>
+<text x="852.5" y="195" text-anchor="middle" font-size="12">🔜</text>
+<line x1="852.5" y1="205" x2="852.5" y2="350" stroke="#c471f5" stroke-opacity=".5" stroke-dasharray="3 4"/>
+<rect x="770.5" y="350" width="164" height="92" rx="12" fill="#22123a" stroke="#c471f5" stroke-width="1.8"/>
+<text x="852.5" y="393.0" text-anchor="middle" class="t" font-size="12.5">⚙️ Services</text>
+<text x="852.5" y="410.0" text-anchor="middle" class="ts">BFF · Payment</text>
+<text x="852.5" y="424.0" text-anchor="middle" class="ts">Ledger · Fraud</text>
+<text x="852.5" y="438.0" text-anchor="middle" class="ts">Notification</text>
+<circle cx="1005.0" cy="190" r="15" fill="#1a2233" stroke="#4facfe" stroke-width="3"/>
+<text x="1005.0" y="195" text-anchor="middle" font-size="12">🔜</text>
+<line x1="1005.0" y1="205" x2="1005.0" y2="240" stroke="#4facfe" stroke-opacity=".5" stroke-dasharray="3 4"/>
+<rect x="923.0" y="240" width="164" height="92" rx="12" fill="#0f2036" stroke="#4facfe" stroke-width="1.8"/>
+<text x="1005.0" y="283.0" text-anchor="middle" class="t" font-size="12.5">🔁 Delivery</text>
+<text x="1005.0" y="300.0" text-anchor="middle" class="ts">GitHub Actions</text>
+<text x="1005.0" y="314.0" text-anchor="middle" class="ts">Argo CD</text>
+<text x="1005.0" y="328.0" text-anchor="middle" class="ts">Argo Rollouts</text>
+<circle cx="1157.5" cy="190" r="15" fill="#1a2233" stroke="#00c9a7" stroke-width="3"/>
+<text x="1157.5" y="195" text-anchor="middle" font-size="12">🔜</text>
+<line x1="1157.5" y1="205" x2="1157.5" y2="350" stroke="#00c9a7" stroke-opacity=".5" stroke-dasharray="3 4"/>
+<rect x="1075.5" y="350" width="164" height="92" rx="12" fill="#062620" stroke="#00c9a7" stroke-width="1.8"/>
+<text x="1157.5" y="393.0" text-anchor="middle" class="t" font-size="12.5">🔭 Operate</text>
+<text x="1157.5" y="410.0" text-anchor="middle" class="ts">Prometheus · Grafana</text>
+<text x="1157.5" y="424.0" text-anchor="middle" class="ts">Loki · Logstash</text>
+<text x="1157.5" y="438.0" text-anchor="middle" class="ts">CloudWatch · Vault · Falco</text>
+<circle cx="1310.0" cy="190" r="15" fill="#1a2233" stroke="#f7971e" stroke-width="3"/>
+<text x="1310.0" y="195" text-anchor="middle" font-size="12">🔜</text>
+<line x1="1310.0" y1="205" x2="1310.0" y2="240" stroke="#f7971e" stroke-opacity=".5" stroke-dasharray="3 4"/>
+<rect x="1228.0" y="240" width="164" height="92" rx="12" fill="#3d2400" stroke="#f7971e" stroke-width="1.8"/>
+<text x="1310.0" y="283.0" text-anchor="middle" class="t" font-size="12.5">🤖 MLOps</text>
+<text x="1310.0" y="300.0" text-anchor="middle" class="ts">Airflow · Kubeflow</text>
+<text x="1310.0" y="314.0" text-anchor="middle" class="ts">MLflow · KServe</text>
+<text x="1310.0" y="328.0" text-anchor="middle" class="ts">Evidently · WhyLogs</text>
+<text x="395.0" y="160" text-anchor="middle" class="t" fill="#ffd200">📍 we are here</text>
+<rect x="24" y="469" width="1352" height="46" rx="12" fill="#0d1526" stroke="#2b3a55"/>
+<circle cx="40" cy="492" r="6" fill="#43e97b"/>
+<text x="52" y="496" text-anchor="start" class="t" font-size="12">done</text>
+<circle cx="115.6" cy="492" r="6" fill="#ffd200"/>
+<text x="127.6" y="496" text-anchor="start" class="t" font-size="12">in progress</text>
+<circle cx="243.0" cy="492" r="6" fill="#4facfe"/>
+<text x="255.0" y="496" text-anchor="start" class="t" font-size="12">planned</text>
+<g filter="url(#glow)">
+<circle r="5" fill="#00e5ff"><animateMotion dur="9s" repeatCount="indefinite" begin="0s"><mpath xlink:href="#p1"/></animateMotion></circle>
+<circle r="5" fill="#00e5ff"><animateMotion dur="9s" repeatCount="indefinite" begin="3s"><mpath xlink:href="#p1"/></animateMotion></circle>
+<circle r="5" fill="#00e5ff"><animateMotion dur="9s" repeatCount="indefinite" begin="6s"><mpath xlink:href="#p1"/></animateMotion></circle>
+</g>
+</svg>

@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1400 820" width="1400" height="820" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+<title>🤖 MLOps lifecycle · continuous training loop</title>
+<defs>
+<linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0a0f1e"/><stop offset="1" stop-color="#151b31"/></linearGradient>
+<filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<style>
+.flow{fill:none;stroke-dasharray:9 7;animation:dash 1.1s linear infinite}
+.line{fill:none}
+@keyframes dash{to{stroke-dashoffset:-16}}
+.pulse{animation:pulse 2.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.7}50%{opacity:1}}
+.t{fill:#eef3f8;font-size:13.5px;font-weight:700}
+.ts{fill:#aab8cb;font-size:11.5px}
+.h{fill:#0a0f1e;font-size:14px;font-weight:800}
+.hc{fill:#0a0f1e;font-size:11px;font-weight:700}
+.lab{fill:#d6deea;font-size:11px;font-style:italic}
+</style></defs>
+<rect width="1400" height="820" rx="18" fill="url(#bgGrad)"/>
+<text x="36" y="42" class="t" font-size="21">🤖 MLOps lifecycle · continuous training loop</text>
+<text x="36" y="66" class="ts" font-size="12.5">Data → Airflow → Kubeflow → MLflow → quality gate → KServe → Fraud Service → drift monitoring → retrain</text>
+<path id="p1" class="flow" d="M700,150 A280,280 0 0,1 700,710 A280,280 0 0,1 700,150" stroke="#00c9a7" stroke-width="3" opacity="0.85"/>
+<path id="p2" class="flow" d="M640.0,678.0 L940.0,462.0" stroke="#ff416c" stroke-width="2.4" opacity="0.85"/>
+<circle cx="700" cy="430" r="280" fill="none" stroke="#2b3a55" stroke-width="3"/>
+<rect x="585.0" y="118.0" width="230" height="64" rx="12" fill="#3a1424" stroke="#ff416c" stroke-width="1.8"/>
+<text x="700.0" y="147.0" text-anchor="middle" class="t" font-size="13">🗄️ Data</text>
+<text x="700.0" y="164.0" text-anchor="middle" class="ts">MySQL · MongoDB · Kafka · S3</text>
+<rect x="797.9898987322333" y="200.01010126776671" width="200" height="64" rx="12" fill="#0f2036" stroke="#4facfe" stroke-width="1.8"/>
+<text x="897.9898987322333" y="229.01010126776671" text-anchor="middle" class="t" font-size="13">🌬️ Airflow</text>
+<text x="897.9898987322333" y="246.01010126776671" text-anchor="middle" class="ts">ingest + orchestrate</text>
+<rect x="880.0" y="398.0" width="200" height="64" rx="12" fill="#3d2400" stroke="#f7971e" stroke-width="1.8"/>
+<text x="980.0" y="427.0" text-anchor="middle" class="t" font-size="13">🧪 Kubeflow</text>
+<text x="980.0" y="444.0" text-anchor="middle" class="ts">train + evaluate</text>
+<rect x="797.9898987322333" y="595.9898987322333" width="200" height="64" rx="12" fill="#22123a" stroke="#c471f5" stroke-width="1.8"/>
+<text x="897.9898987322333" y="624.9898987322333" text-anchor="middle" class="t" font-size="13">📒 MLflow</text>
+<text x="897.9898987322333" y="641.9898987322333" text-anchor="middle" class="ts">track + register</text>
+<rect x="600.0" y="678.0" width="200" height="64" rx="12" fill="#2e2708" stroke="#ffd200" stroke-width="1.8"/>
+<text x="700.0" y="707.0" text-anchor="middle" class="t" font-size="13">✅ Quality gate</text>
+<text x="700.0" y="724.0" text-anchor="middle" class="ts">meets threshold?</text>
+<rect x="402.0101012677667" y="595.9898987322333" width="200" height="64" rx="12" fill="#2d1c05" stroke="#ff9900" stroke-width="1.8"/>
+<text x="502.0101012677667" y="624.9898987322333" text-anchor="middle" class="t" font-size="13">🚀 KServe</text>
+<text x="502.0101012677667" y="641.9898987322333" text-anchor="middle" class="ts">serve model</text>
+<rect x="320.0" y="398.00000000000006" width="200" height="64" rx="12" fill="#0d2a22" stroke="#43e97b" stroke-width="1.8"/>
+<text x="420.0" y="427.00000000000006" text-anchor="middle" class="t" font-size="13">🕵️ Fraud Service</text>
+<text x="420.0" y="444.00000000000006" text-anchor="middle" class="ts">real-time scoring</text>
+<rect x="387.0101012677667" y="200.01010126776671" width="230" height="64" rx="12" fill="#3a1424" stroke="#ff4081" stroke-width="1.8"/>
+<text x="502.0101012677667" y="229.01010126776671" text-anchor="middle" class="t" font-size="13">📉 Monitoring</text>
+<text x="502.0101012677667" y="246.01010126776671" text-anchor="middle" class="ts">Evidently AI · WhyLogs · Prometheus</text>
+<text x="750.0" y="590.0" text-anchor="middle" class="lab">fails gate → retrain</text>
+<text x="700" y="424" text-anchor="middle" class="t" font-size="18">🔁 Continuous training</text>
+<text x="700" y="448" text-anchor="middle" class="ts" font-size="13">drift detected → new run</text>
+<rect x="24" y="769" width="1352" height="46" rx="12" fill="#0d1526" stroke="#2b3a55"/>
+<circle cx="40" cy="792" r="6" fill="#00c9a7"/>
+<text x="52" y="796" text-anchor="start" class="t" font-size="12">lifecycle loop</text>
+<circle cx="189.60000000000002" cy="792" r="6" fill="#ff416c"/>
+<text x="201.60000000000002" y="796" text-anchor="start" class="t" font-size="12">gate failure → back to training</text>
+<circle cx="465.0" cy="792" r="6" fill="#ff4081"/>
+<text x="477.0" y="796" text-anchor="start" class="t" font-size="12">drift → retrain</text>
+<g filter="url(#glow)">
+<circle r="7" fill="#00e5ff"><animateMotion dur="12s" repeatCount="indefinite" begin="0s"><mpath xlink:href="#p1"/></animateMotion></circle>
+<circle r="7" fill="#ffd200"><animateMotion dur="12s" repeatCount="indefinite" begin="2s"><mpath xlink:href="#p1"/></animateMotion></circle>
+<circle r="7" fill="#f7971e"><animateMotion dur="12s" repeatCount="indefinite" begin="4s"><mpath xlink:href="#p1"/></animateMotion></circle>
+<circle r="7" fill="#43e97b"><animateMotion dur="12s" repeatCount="indefinite" begin="6s"><mpath xlink:href="#p1"/></animateMotion></circle>
+<circle r="7" fill="#c471f5"><animateMotion dur="12s" repeatCount="indefinite" begin="8s"><mpath xlink:href="#p1"/></animateMotion></circle>
+<circle r="7" fill="#ff4081"><animateMotion dur="12s" repeatCount="indefinite" begin="10s"><mpath xlink:href="#p1"/></animateMotion></circle>
+<circle r="6" fill="#ff416c"><animateMotion dur="2.4s" repeatCount="indefinite" begin="1.0s"><mpath xlink:href="#p2"/></animateMotion></circle>
+</g>
+</svg>

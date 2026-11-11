@@ -1,0 +1,133 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1500 980" width="1500" height="980" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+<title>💸 Payment flow · services, fraud check and events</title>
+<defs>
+<linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0a0f1e"/><stop offset="1" stop-color="#151b31"/></linearGradient>
+<filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<style>
+.flow{fill:none;stroke-dasharray:9 7;animation:dash 1.1s linear infinite}
+.line{fill:none}
+@keyframes dash{to{stroke-dashoffset:-16}}
+.pulse{animation:pulse 2.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.7}50%{opacity:1}}
+.t{fill:#eef3f8;font-size:13.5px;font-weight:700}
+.ts{fill:#aab8cb;font-size:11.5px}
+.h{fill:#0a0f1e;font-size:14px;font-weight:800}
+.hc{fill:#0a0f1e;font-size:11px;font-weight:700}
+.lab{fill:#d6deea;font-size:11px;font-style:italic}
+</style></defs>
+<rect width="1500" height="980" rx="18" fill="url(#bgGrad)"/>
+<text x="36" y="42" class="t" font-size="21">💸 Payment flow · services, fraud check and events</text>
+<text x="36" y="66" class="ts" font-size="12.5">BFF → Payment → Fraud (KServe) → Ledger → Kafka → Notification · low-risk and high-risk paths</text>
+<rect x="30" y="406" width="1440" height="238" rx="10" fill="#0d2a22" fill-opacity=".6" stroke="#43e97b" stroke-dasharray="6 4"/>
+<text x="44" y="422" text-anchor="start" class="t" font-size="12" fill="#43e97b">🟢 low risk</text>
+<rect x="30" y="646" width="1440" height="158" rx="10" fill="#3a1424" fill-opacity=".6" stroke="#ff416c" stroke-dasharray="6 4"/>
+<text x="44" y="662" text-anchor="start" class="t" font-size="12" fill="#ff416c">🔴 high risk</text>
+<line x1="125.0" y1="144" x2="125.0" y2="950" stroke="#ff4081" stroke-opacity=".45" stroke-width="2" stroke-dasharray="4 6"/>
+<rect x="52.875" y="100" width="144.25" height="44" rx="12" fill="#3a1424" stroke="#ff4081" stroke-width="1.8"/>
+<text x="125.0" y="127.0" text-anchor="middle" class="t" font-size="12.5">👤 Customer</text>
+<line x1="281.25" y1="144" x2="281.25" y2="950" stroke="#4facfe" stroke-opacity=".45" stroke-width="2" stroke-dasharray="4 6"/>
+<rect x="209.125" y="100" width="144.25" height="44" rx="12" fill="#0f2036" stroke="#4facfe" stroke-width="1.8"/>
+<text x="281.25" y="127.0" text-anchor="middle" class="t" font-size="12.5">🔌 API Gateway</text>
+<line x1="437.5" y1="144" x2="437.5" y2="950" stroke="#c471f5" stroke-opacity=".45" stroke-width="2" stroke-dasharray="4 6"/>
+<rect x="365.375" y="100" width="144.25" height="44" rx="12" fill="#22123a" stroke="#c471f5" stroke-width="1.8"/>
+<text x="437.5" y="127.0" text-anchor="middle" class="t" font-size="12.5">🔀 BFF · Node.js</text>
+<line x1="593.75" y1="144" x2="593.75" y2="950" stroke="#43e97b" stroke-opacity=".45" stroke-width="2" stroke-dasharray="4 6"/>
+<rect x="521.625" y="100" width="144.25" height="44" rx="12" fill="#0d2a22" stroke="#43e97b" stroke-width="1.8"/>
+<text x="593.75" y="127.0" text-anchor="middle" class="t" font-size="12.5">💸 Payment · Go</text>
+<line x1="750.0" y1="144" x2="750.0" y2="950" stroke="#f7971e" stroke-opacity=".45" stroke-width="2" stroke-dasharray="4 6"/>
+<rect x="677.875" y="100" width="144.25" height="44" rx="12" fill="#3d2400" stroke="#f7971e" stroke-width="1.8"/>
+<text x="750.0" y="127.0" text-anchor="middle" class="t" font-size="12.5">🕵️ Fraud · Python</text>
+<line x1="906.25" y1="144" x2="906.25" y2="950" stroke="#ff9900" stroke-opacity=".45" stroke-width="2" stroke-dasharray="4 6"/>
+<rect x="834.125" y="100" width="144.25" height="44" rx="12" fill="#2d1c05" stroke="#ff9900" stroke-width="1.8"/>
+<text x="906.25" y="127.0" text-anchor="middle" class="t" font-size="12.5">🚀 KServe</text>
+<line x1="1062.5" y1="144" x2="1062.5" y2="950" stroke="#43e97b" stroke-opacity=".45" stroke-width="2" stroke-dasharray="4 6"/>
+<rect x="990.375" y="100" width="144.25" height="44" rx="12" fill="#0d2a22" stroke="#43e97b" stroke-width="1.8"/>
+<text x="1062.5" y="127.0" text-anchor="middle" class="t" font-size="12.5">📒 Ledger · Java</text>
+<line x1="1218.75" y1="144" x2="1218.75" y2="950" stroke="#ffd200" stroke-opacity=".45" stroke-width="2" stroke-dasharray="4 6"/>
+<rect x="1146.625" y="100" width="144.25" height="44" rx="12" fill="#2e2708" stroke="#ffd200" stroke-width="1.8"/>
+<text x="1218.75" y="127.0" text-anchor="middle" class="t" font-size="12.5">📨 Kafka</text>
+<line x1="1375.0" y1="144" x2="1375.0" y2="950" stroke="#4facfe" stroke-opacity=".45" stroke-width="2" stroke-dasharray="4 6"/>
+<rect x="1302.875" y="100" width="144.25" height="44" rx="12" fill="#0f2036" stroke="#4facfe" stroke-width="1.8"/>
+<text x="1375.0" y="127.0" text-anchor="middle" class="t" font-size="12.5">🔔 Notification</text>
+<g><path d="M125.0,190 H273.25" fill="none" stroke="#00e5ff" stroke-width="2.2"/><polygon points="281.25,190 269.25,184 269.25,196" fill="#00e5ff"/><text x="203.125" y="182" text-anchor="middle" class="ts" fill="#e6edf3">POST /payments</text><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.0214;0.0254;1" dur="18.70s" repeatCount="indefinite"/></g>
+<g><circle cx="107.0" cy="190" r="9" fill="#00e5ff"/><text x="107.0" y="194" text-anchor="middle" font-size="10" font-weight="800" fill="#0a0f1e">1</text><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.0214;0.0254;1" dur="18.70s" repeatCount="indefinite"/></g>
+<path id="m0" d="M125.0,190 H273.25" fill="none" stroke="none"/>
+<g><path d="M281.25,230 H429.5" fill="none" stroke="#00e5ff" stroke-width="2.2"/><polygon points="437.5,230 425.5,224 425.5,236" fill="#00e5ff"/><text x="359.375" y="222" text-anchor="middle" class="ts" fill="#e6edf3">via TGW → ALB</text><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.0695;0.0735;1" dur="18.70s" repeatCount="indefinite"/></g>
+<g><circle cx="263.25" cy="230" r="9" fill="#00e5ff"/><text x="263.25" y="234" text-anchor="middle" font-size="10" font-weight="800" fill="#0a0f1e">2</text><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.0695;0.0735;1" dur="18.70s" repeatCount="indefinite"/></g>
+<path id="m1" d="M281.25,230 H429.5" fill="none" stroke="none"/>
+<g><path d="M437.5,270 H585.75" fill="none" stroke="#00e5ff" stroke-width="2.2"/><polygon points="593.75,270 581.75,264 581.75,276" fill="#00e5ff"/><text x="515.625" y="262" text-anchor="middle" class="ts" fill="#e6edf3">create payment</text><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.1176;0.1216;1" dur="18.70s" repeatCount="indefinite"/></g>
+<g><circle cx="419.5" cy="270" r="9" fill="#00e5ff"/><text x="419.5" y="274" text-anchor="middle" font-size="10" font-weight="800" fill="#0a0f1e">3</text><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.1176;0.1216;1" dur="18.70s" repeatCount="indefinite"/></g>
+<path id="m2" d="M437.5,270 H585.75" fill="none" stroke="none"/>
+<g><path d="M593.75,310 H742.0" fill="none" stroke="#00e5ff" stroke-width="2.2"/><polygon points="750.0,310 738.0,304 738.0,316" fill="#00e5ff"/><text x="671.875" y="302" text-anchor="middle" class="ts" fill="#e6edf3">score transaction</text><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.1658;0.1698;1" dur="18.70s" repeatCount="indefinite"/></g>
+<g><circle cx="575.75" cy="310" r="9" fill="#00e5ff"/><text x="575.75" y="314" text-anchor="middle" font-size="10" font-weight="800" fill="#0a0f1e">4</text><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.1658;0.1698;1" dur="18.70s" repeatCount="indefinite"/></g>
+<path id="m3" d="M593.75,310 H742.0" fill="none" stroke="none"/>
+<g><path d="M750.0,350 H898.25" fill="none" stroke="#00e5ff" stroke-width="2.2"/><polygon points="906.25,350 894.25,344 894.25,356" fill="#00e5ff"/><text x="828.125" y="342" text-anchor="middle" class="ts" fill="#e6edf3">predict</text><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.2139;0.2179;1" dur="18.70s" repeatCount="indefinite"/></g>
+<g><circle cx="732.0" cy="350" r="9" fill="#00e5ff"/><text x="732.0" y="354" text-anchor="middle" font-size="10" font-weight="800" fill="#0a0f1e">5</text><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.2139;0.2179;1" dur="18.70s" repeatCount="indefinite"/></g>
+<path id="m4" d="M750.0,350 H898.25" fill="none" stroke="none"/>
+<g><path d="M906.25,390 H758.0" fill="none" stroke="#43e97b" stroke-width="2.2" stroke-dasharray="7 5"/><polygon points="750.0,390 762.0,384 762.0,396" fill="#43e97b"/><text x="828.125" y="382" text-anchor="middle" class="ts" fill="#e6edf3">risk score</text><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.2620;0.2660;1" dur="18.70s" repeatCount="indefinite"/></g>
+<g><circle cx="732.0" cy="390" r="9" fill="#43e97b"/><text x="732.0" y="394" text-anchor="middle" font-size="10" font-weight="800" fill="#0a0f1e">6</text><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.2620;0.2660;1" dur="18.70s" repeatCount="indefinite"/></g>
+<path id="m5" d="M906.25,390 H758.0" fill="none" stroke="none"/>
+<g><path d="M750.0,430 H601.75" fill="none" stroke="#43e97b" stroke-width="2.2" stroke-dasharray="7 5"/><polygon points="593.75,430 605.75,424 605.75,436" fill="#43e97b"/><text x="671.875" y="422" text-anchor="middle" class="ts" fill="#e6edf3">low risk 0.04</text><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.3102;0.3142;1" dur="18.70s" repeatCount="indefinite"/></g>
+<g><circle cx="575.75" cy="430" r="9" fill="#43e97b"/><text x="575.75" y="434" text-anchor="middle" font-size="10" font-weight="800" fill="#0a0f1e">7</text><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.3102;0.3142;1" dur="18.70s" repeatCount="indefinite"/></g>
+<path id="m6" d="M750.0,430 H601.75" fill="none" stroke="none"/>
+<g><path d="M593.75,470 H1054.5" fill="none" stroke="#00e5ff" stroke-width="2.2"/><polygon points="1062.5,470 1050.5,464 1050.5,476" fill="#00e5ff"/><text x="828.125" y="462" text-anchor="middle" class="ts" fill="#e6edf3">post debit / credit (MySQL)</text><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.3583;0.3623;1" dur="18.70s" repeatCount="indefinite"/></g>
+<g><circle cx="575.75" cy="470" r="9" fill="#00e5ff"/><text x="575.75" y="474" text-anchor="middle" font-size="10" font-weight="800" fill="#0a0f1e">8</text><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.3583;0.3623;1" dur="18.70s" repeatCount="indefinite"/></g>
+<path id="m7" d="M593.75,470 H1054.5" fill="none" stroke="none"/>
+<g><path d="M1062.5,510 H601.75" fill="none" stroke="#43e97b" stroke-width="2.2" stroke-dasharray="7 5"/><polygon points="593.75,510 605.75,504 605.75,516" fill="#43e97b"/><text x="828.125" y="502" text-anchor="middle" class="ts" fill="#e6edf3">committed</text><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.4064;0.4104;1" dur="18.70s" repeatCount="indefinite"/></g>
+<g><circle cx="575.75" cy="510" r="9" fill="#43e97b"/><text x="575.75" y="514" text-anchor="middle" font-size="10" font-weight="800" fill="#0a0f1e">9</text><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.4064;0.4104;1" dur="18.70s" repeatCount="indefinite"/></g>
+<path id="m8" d="M1062.5,510 H601.75" fill="none" stroke="none"/>
+<g><path d="M593.75,550 H1210.75" fill="none" stroke="#00e5ff" stroke-width="2.2"/><polygon points="1218.75,550 1206.75,544 1206.75,556" fill="#00e5ff"/><text x="906.25" y="542" text-anchor="middle" class="ts" fill="#e6edf3">PaymentCompleted</text><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.4545;0.4585;1" dur="18.70s" repeatCount="indefinite"/></g>
+<g><circle cx="575.75" cy="550" r="9" fill="#00e5ff"/><text x="575.75" y="554" text-anchor="middle" font-size="10" font-weight="800" fill="#0a0f1e">10</text><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.4545;0.4585;1" dur="18.70s" repeatCount="indefinite"/></g>
+<path id="m9" d="M593.75,550 H1210.75" fill="none" stroke="none"/>
+<g><path d="M1218.75,590 H1367.0" fill="none" stroke="#00e5ff" stroke-width="2.2"/><polygon points="1375.0,590 1363.0,584 1363.0,596" fill="#00e5ff"/><text x="1296.875" y="582" text-anchor="middle" class="ts" fill="#e6edf3">consume event</text><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.5027;0.5067;1" dur="18.70s" repeatCount="indefinite"/></g>
+<g><circle cx="1200.75" cy="590" r="9" fill="#00e5ff"/><text x="1200.75" y="594" text-anchor="middle" font-size="10" font-weight="800" fill="#0a0f1e">11</text><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.5027;0.5067;1" dur="18.70s" repeatCount="indefinite"/></g>
+<path id="m10" d="M1218.75,590 H1367.0" fill="none" stroke="none"/>
+<g><path d="M1375.0,630 H133.0" fill="none" stroke="#43e97b" stroke-width="2.2" stroke-dasharray="7 5"/><polygon points="125.0,630 137.0,624 137.0,636" fill="#43e97b"/><text x="750.0" y="622" text-anchor="middle" class="ts" fill="#e6edf3">📱 receipt</text><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.5508;0.5548;1" dur="18.70s" repeatCount="indefinite"/></g>
+<g><circle cx="107.0" cy="630" r="9" fill="#43e97b"/><text x="107.0" y="634" text-anchor="middle" font-size="10" font-weight="800" fill="#0a0f1e">12</text><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.5508;0.5548;1" dur="18.70s" repeatCount="indefinite"/></g>
+<path id="m11" d="M1375.0,630 H133.0" fill="none" stroke="none"/>
+<g><path d="M750.0,670 H601.75" fill="none" stroke="#43e97b" stroke-width="2.2" stroke-dasharray="7 5"/><polygon points="593.75,670 605.75,664 605.75,676" fill="#43e97b"/><text x="671.875" y="662" text-anchor="middle" class="ts" fill="#e6edf3">high risk 0.93</text><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.5989;0.6029;1" dur="18.70s" repeatCount="indefinite"/></g>
+<g><circle cx="575.75" cy="670" r="9" fill="#43e97b"/><text x="575.75" y="674" text-anchor="middle" font-size="10" font-weight="800" fill="#0a0f1e">13</text><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.5989;0.6029;1" dur="18.70s" repeatCount="indefinite"/></g>
+<path id="m12" d="M750.0,670 H601.75" fill="none" stroke="none"/>
+<g><path d="M593.75,710 H1210.75" fill="none" stroke="#00e5ff" stroke-width="2.2"/><polygon points="1218.75,710 1206.75,704 1206.75,716" fill="#00e5ff"/><text x="906.25" y="702" text-anchor="middle" class="ts" fill="#e6edf3">PaymentFlagged</text><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.6471;0.6511;1" dur="18.70s" repeatCount="indefinite"/></g>
+<g><circle cx="575.75" cy="710" r="9" fill="#00e5ff"/><text x="575.75" y="714" text-anchor="middle" font-size="10" font-weight="800" fill="#0a0f1e">14</text><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.6471;0.6511;1" dur="18.70s" repeatCount="indefinite"/></g>
+<path id="m13" d="M593.75,710 H1210.75" fill="none" stroke="none"/>
+<g><path d="M1218.75,750 H1367.0" fill="none" stroke="#00e5ff" stroke-width="2.2"/><polygon points="1375.0,750 1363.0,744 1363.0,756" fill="#00e5ff"/><text x="1296.875" y="742" text-anchor="middle" class="ts" fill="#e6edf3">consume event</text><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.6952;0.6992;1" dur="18.70s" repeatCount="indefinite"/></g>
+<g><circle cx="1200.75" cy="750" r="9" fill="#00e5ff"/><text x="1200.75" y="754" text-anchor="middle" font-size="10" font-weight="800" fill="#0a0f1e">15</text><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.6952;0.6992;1" dur="18.70s" repeatCount="indefinite"/></g>
+<path id="m14" d="M1218.75,750 H1367.0" fill="none" stroke="none"/>
+<g><path d="M1375.0,790 H133.0" fill="none" stroke="#43e97b" stroke-width="2.2" stroke-dasharray="7 5"/><polygon points="125.0,790 137.0,784 137.0,796" fill="#43e97b"/><text x="750.0" y="782" text-anchor="middle" class="ts" fill="#e6edf3">⚠️ verify payment</text><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.7433;0.7473;1" dur="18.70s" repeatCount="indefinite"/></g>
+<g><circle cx="107.0" cy="790" r="9" fill="#43e97b"/><text x="107.0" y="794" text-anchor="middle" font-size="10" font-weight="800" fill="#0a0f1e">16</text><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.7433;0.7473;1" dur="18.70s" repeatCount="indefinite"/></g>
+<path id="m15" d="M1375.0,790 H133.0" fill="none" stroke="none"/>
+<g><path d="M593.75,830 H445.5" fill="none" stroke="#43e97b" stroke-width="2.2" stroke-dasharray="7 5"/><polygon points="437.5,830 449.5,824 449.5,836" fill="#43e97b"/><text x="515.625" y="822" text-anchor="middle" class="ts" fill="#e6edf3">200 OK / 403 held</text><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.7914;0.7954;1" dur="18.70s" repeatCount="indefinite"/></g>
+<g><circle cx="419.5" cy="830" r="9" fill="#43e97b"/><text x="419.5" y="834" text-anchor="middle" font-size="10" font-weight="800" fill="#0a0f1e">17</text><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.7914;0.7954;1" dur="18.70s" repeatCount="indefinite"/></g>
+<path id="m16" d="M593.75,830 H445.5" fill="none" stroke="none"/>
+<g><path d="M437.5,870 H133.0" fill="none" stroke="#43e97b" stroke-width="2.2" stroke-dasharray="7 5"/><polygon points="125.0,870 137.0,864 137.0,876" fill="#43e97b"/><text x="281.25" y="862" text-anchor="middle" class="ts" fill="#e6edf3">show result</text><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.8396;0.8436;1" dur="18.70s" repeatCount="indefinite"/></g>
+<g><circle cx="107.0" cy="870" r="9" fill="#43e97b"/><text x="107.0" y="874" text-anchor="middle" font-size="10" font-weight="800" fill="#0a0f1e">18</text><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.8396;0.8436;1" dur="18.70s" repeatCount="indefinite"/></g>
+<path id="m17" d="M437.5,870 H133.0" fill="none" stroke="none"/>
+<rect x="24" y="932" width="1452" height="46" rx="12" fill="#0d1526" stroke="#2b3a55"/>
+<circle cx="40" cy="955" r="6" fill="#00e5ff"/>
+<text x="52" y="959" text-anchor="start" class="t" font-size="12">Request / call</text>
+<circle cx="189.60000000000002" cy="955" r="6" fill="#43e97b"/>
+<text x="201.60000000000002" y="959" text-anchor="start" class="t" font-size="12">Response</text>
+<circle cx="294.8" cy="955" r="6" fill="#ffd200"/>
+<text x="306.8" y="959" text-anchor="start" class="t" font-size="12">Internal step</text>
+<g filter="url(#glow)">
+<circle r="6.5" fill="#00e5ff" opacity="0"><animateMotion dur="18.70s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.0214;0.0623;1" calcMode="linear"><mpath xlink:href="#m0"/></animateMotion><animate attributeName="opacity" values="0;1;0" keyTimes="0;0.0214;0.0623" calcMode="discrete" dur="18.70s" repeatCount="indefinite"/></circle>
+<circle r="6.5" fill="#00e5ff" opacity="0"><animateMotion dur="18.70s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.0695;0.1104;1" calcMode="linear"><mpath xlink:href="#m1"/></animateMotion><animate attributeName="opacity" values="0;1;0" keyTimes="0;0.0695;0.1104" calcMode="discrete" dur="18.70s" repeatCount="indefinite"/></circle>
+<circle r="6.5" fill="#00e5ff" opacity="0"><animateMotion dur="18.70s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.1176;0.1586;1" calcMode="linear"><mpath xlink:href="#m2"/></animateMotion><animate attributeName="opacity" values="0;1;0" keyTimes="0;0.1176;0.1586" calcMode="discrete" dur="18.70s" repeatCount="indefinite"/></circle>
+<circle r="6.5" fill="#00e5ff" opacity="0"><animateMotion dur="18.70s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.1658;0.2067;1" calcMode="linear"><mpath xlink:href="#m3"/></animateMotion><animate attributeName="opacity" values="0;1;0" keyTimes="0;0.1658;0.2067" calcMode="discrete" dur="18.70s" repeatCount="indefinite"/></circle>
+<circle r="6.5" fill="#00e5ff" opacity="0"><animateMotion dur="18.70s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.2139;0.2548;1" calcMode="linear"><mpath xlink:href="#m4"/></animateMotion><animate attributeName="opacity" values="0;1;0" keyTimes="0;0.2139;0.2548" calcMode="discrete" dur="18.70s" repeatCount="indefinite"/></circle>
+<circle r="6.5" fill="#43e97b" opacity="0"><animateMotion dur="18.70s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.2620;0.3029;1" calcMode="linear"><mpath xlink:href="#m5"/></animateMotion><animate attributeName="opacity" values="0;1;0" keyTimes="0;0.2620;0.3029" calcMode="discrete" dur="18.70s" repeatCount="indefinite"/></circle>
+<circle r="6.5" fill="#43e97b" opacity="0"><animateMotion dur="18.70s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.3102;0.3511;1" calcMode="linear"><mpath xlink:href="#m6"/></animateMotion><animate attributeName="opacity" values="0;1;0" keyTimes="0;0.3102;0.3511" calcMode="discrete" dur="18.70s" repeatCount="indefinite"/></circle>
+<circle r="6.5" fill="#00e5ff" opacity="0"><animateMotion dur="18.70s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.3583;0.3992;1" calcMode="linear"><mpath xlink:href="#m7"/></animateMotion><animate attributeName="opacity" values="0;1;0" keyTimes="0;0.3583;0.3992" calcMode="discrete" dur="18.70s" repeatCount="indefinite"/></circle>
+<circle r="6.5" fill="#43e97b" opacity="0"><animateMotion dur="18.70s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.4064;0.4473;1" calcMode="linear"><mpath xlink:href="#m8"/></animateMotion><animate attributeName="opacity" values="0;1;0" keyTimes="0;0.4064;0.4473" calcMode="discrete" dur="18.70s" repeatCount="indefinite"/></circle>
+<circle r="6.5" fill="#00e5ff" opacity="0"><animateMotion dur="18.70s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.4545;0.4955;1" calcMode="linear"><mpath xlink:href="#m9"/></animateMotion><animate attributeName="opacity" values="0;1;0" keyTimes="0;0.4545;0.4955" calcMode="discrete" dur="18.70s" repeatCount="indefinite"/></circle>
+<circle r="6.5" fill="#00e5ff" opacity="0"><animateMotion dur="18.70s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.5027;0.5436;1" calcMode="linear"><mpath xlink:href="#m10"/></animateMotion><animate attributeName="opacity" values="0;1;0" keyTimes="0;0.5027;0.5436" calcMode="discrete" dur="18.70s" repeatCount="indefinite"/></circle>
+<circle r="6.5" fill="#43e97b" opacity="0"><animateMotion dur="18.70s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.5508;0.5917;1" calcMode="linear"><mpath xlink:href="#m11"/></animateMotion><animate attributeName="opacity" values="0;1;0" keyTimes="0;0.5508;0.5917" calcMode="discrete" dur="18.70s" repeatCount="indefinite"/></circle>
+<circle r="6.5" fill="#43e97b" opacity="0"><animateMotion dur="18.70s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.5989;0.6398;1" calcMode="linear"><mpath xlink:href="#m12"/></animateMotion><animate attributeName="opacity" values="0;1;0" keyTimes="0;0.5989;0.6398" calcMode="discrete" dur="18.70s" repeatCount="indefinite"/></circle>
+<circle r="6.5" fill="#00e5ff" opacity="0"><animateMotion dur="18.70s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.6471;0.6880;1" calcMode="linear"><mpath xlink:href="#m13"/></animateMotion><animate attributeName="opacity" values="0;1;0" keyTimes="0;0.6471;0.6880" calcMode="discrete" dur="18.70s" repeatCount="indefinite"/></circle>
+<circle r="6.5" fill="#00e5ff" opacity="0"><animateMotion dur="18.70s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.6952;0.7361;1" calcMode="linear"><mpath xlink:href="#m14"/></animateMotion><animate attributeName="opacity" values="0;1;0" keyTimes="0;0.6952;0.7361" calcMode="discrete" dur="18.70s" repeatCount="indefinite"/></circle>
+<circle r="6.5" fill="#43e97b" opacity="0"><animateMotion dur="18.70s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.7433;0.7842;1" calcMode="linear"><mpath xlink:href="#m15"/></animateMotion><animate attributeName="opacity" values="0;1;0" keyTimes="0;0.7433;0.7842" calcMode="discrete" dur="18.70s" repeatCount="indefinite"/></circle>
+<circle r="6.5" fill="#43e97b" opacity="0"><animateMotion dur="18.70s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.7914;0.8324;1" calcMode="linear"><mpath xlink:href="#m16"/></animateMotion><animate attributeName="opacity" values="0;1;0" keyTimes="0;0.7914;0.8324" calcMode="discrete" dur="18.70s" repeatCount="indefinite"/></circle>
+<circle r="6.5" fill="#43e97b" opacity="0"><animateMotion dur="18.70s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.8396;0.8805;1" calcMode="linear"><mpath xlink:href="#m17"/></animateMotion><animate attributeName="opacity" values="0;1;0" keyTimes="0;0.8396;0.8805" calcMode="discrete" dur="18.70s" repeatCount="indefinite"/></circle>
+</g>
+</svg>
