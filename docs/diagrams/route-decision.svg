@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1400 640" width="1400" height="640" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+<title>🧭 How a packet picks its path</title>
+<defs>
+<linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0a0f1e"/><stop offset="1" stop-color="#151b31"/></linearGradient>
+<filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<style>
+.flow{fill:none;stroke-dasharray:9 7;animation:dash 1.1s linear infinite}
+.line{fill:none}
+@keyframes dash{to{stroke-dashoffset:-16}}
+.pulse{animation:pulse 2.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.7}50%{opacity:1}}
+.t{fill:#eef3f8;font-size:13.5px;font-weight:700}
+.ts{fill:#aab8cb;font-size:11.5px}
+.h{fill:#0a0f1e;font-size:14px;font-weight:800}
+.hc{fill:#0a0f1e;font-size:11px;font-weight:700}
+.lab{fill:#d6deea;font-size:11px;font-style:italic}
+</style></defs>
+<rect width="1400" height="640" rx="18" fill="url(#bgGrad)"/>
+<text x="36" y="42" class="t" font-size="21">🧭 How a packet picks its path</text>
+<text x="36" y="66" class="ts" font-size="12.5">Every packet leaving a pod is matched against the route table · six real destinations, six moving packets</text>
+<path id="p1" class="flow" d="M190,360 H245" stroke="#3b4a66" stroke-width="2" opacity="0.9"/>
+<path id="p2" class="flow" d="M330,308 V220" stroke="#3b4a66" stroke-width="2" opacity="0.9"/>
+<text x="348" y="270" text-anchor="middle" class="lab">yes</text>
+<path id="p3" class="flow" d="M415,360 H515" stroke="#3b4a66" stroke-width="2" opacity="0.9"/>
+<text x="465" y="352" text-anchor="middle" class="lab">no</text>
+<path id="p4" class="flow" d="M600,308 V220" stroke="#3b4a66" stroke-width="2" opacity="0.9"/>
+<text x="618" y="270" text-anchor="middle" class="lab">S3</text>
+<path id="p5" class="flow" d="M600,412 V500" stroke="#3b4a66" stroke-width="2" opacity="0.9"/>
+<text x="640" y="462" text-anchor="middle" class="lab">ECR · KMS</text>
+<path id="p6" class="flow" d="M685,360 H785" stroke="#3b4a66" stroke-width="2" opacity="0.9"/>
+<text x="735" y="352" text-anchor="middle" class="lab">no</text>
+<path id="p7" class="flow" d="M870,308 V220" stroke="#3b4a66" stroke-width="2" opacity="0.9"/>
+<text x="888" y="270" text-anchor="middle" class="lab">yes</text>
+<path id="p8" class="flow" d="M955,360 H1055" stroke="#3b4a66" stroke-width="2" opacity="0.9"/>
+<text x="1005" y="352" text-anchor="middle" class="lab">no</text>
+<path id="p9" class="flow" d="M1140,308 V220" stroke="#3b4a66" stroke-width="2" opacity="0.9"/>
+<text x="1158" y="270" text-anchor="middle" class="lab">yes</text>
+<path id="p10" class="flow" d="M1225,360 H1250" stroke="#3b4a66" stroke-width="2" opacity="0.9"/>
+<path id="p11" class="line" d="M190,360 H330 V220" stroke="#326ce5" stroke-width="0.01" opacity="0"/>
+<path id="p12" class="line" d="M190,360 H600 V220" stroke="#43e97b" stroke-width="0.01" opacity="0"/>
+<path id="p13" class="line" d="M190,360 H600 V500" stroke="#c471f5" stroke-width="0.01" opacity="0"/>
+<path id="p14" class="line" d="M190,360 H870 V220" stroke="#ff9900" stroke-width="0.01" opacity="0"/>
+<path id="p15" class="line" d="M190,360 H1140 V220" stroke="#ff4081" stroke-width="0.01" opacity="0"/>
+<path id="p16" class="line" d="M190,360 H1250" stroke="#ff416c" stroke-width="0.01" opacity="0"/>
+<rect x="30" y="330" width="160" height="60" rx="12" fill="#0f2036" stroke="#4facfe" stroke-width="1.8"/>
+<text x="110.0" y="357.0" text-anchor="middle" class="t">📦 Packet</text>
+<text x="110.0" y="374.0" text-anchor="middle" class="ts">leaves a pod</text>
+<polygon points="330,308.0 415.0,360 330,412.0 245.0,360" fill="#2e2708" stroke="#ffd200" stroke-width="2"/>
+<text x="330" y="358" text-anchor="middle" class="t" font-size="12.5">Own /16?</text>
+<text x="330" y="374" text-anchor="middle" class="ts">same VPC</text>
+<polygon points="600,308.0 685.0,360 600,412.0 515.0,360" fill="#2e2708" stroke="#ffd200" stroke-width="2"/>
+<text x="600" y="358" text-anchor="middle" class="t" font-size="12.5">AWS service?</text>
+<text x="600" y="374" text-anchor="middle" class="ts">S3 · ECR · KMS</text>
+<polygon points="870,308.0 955.0,360 870,412.0 785.0,360" fill="#2e2708" stroke="#ffd200" stroke-width="2"/>
+<text x="870" y="358" text-anchor="middle" class="t" font-size="12.5">In 10.0.0.0/8?</text>
+<text x="870" y="374" text-anchor="middle" class="ts">another VPC</text>
+<polygon points="1140,308.0 1225.0,360 1140,412.0 1055.0,360" fill="#2e2708" stroke="#ffd200" stroke-width="2"/>
+<text x="1140" y="358" text-anchor="middle" class="t" font-size="12.5">NAT in VPC?</text>
+<text x="1140" y="374" text-anchor="middle" class="ts">app · ops</text>
+<rect x="250" y="150" width="160" height="70" rx="12" fill="#0e1f3a" stroke="#326ce5" stroke-width="1.8"/>
+<text x="330.0" y="182.0" text-anchor="middle" class="t">🏠 Local route</text>
+<text x="330.0" y="199.0" text-anchor="middle" class="ts">10.20.x.x stays inside</text>
+<rect x="520" y="150" width="160" height="70" rx="12" fill="#0d2a22" stroke="#43e97b" stroke-width="1.8"/>
+<text x="600.0" y="182.0" text-anchor="middle" class="t">🟢 Gateway endpoint</text>
+<text x="600.0" y="199.0" text-anchor="middle" class="ts">S3 via route table</text>
+<rect x="520" y="500" width="160" height="70" rx="12" fill="#22123a" stroke="#c471f5" stroke-width="1.8"/>
+<text x="600.0" y="532.0" text-anchor="middle" class="t">🟣 Interface endpoint</text>
+<text x="600.0" y="549.0" text-anchor="middle" class="ts">ECR · KMS via ENI</text>
+<rect x="790" y="150" width="160" height="70" rx="12" fill="#2d1c05" stroke="#ff9900" stroke-width="1.8"/>
+<text x="870.0" y="182.0" text-anchor="middle" class="t">🔀 Transit Gateway</text>
+<text x="870.0" y="199.0" text-anchor="middle" class="ts">→ data / ops VPC</text>
+<rect x="1060" y="150" width="160" height="70" rx="12" fill="#3a1424" stroke="#ff4081" stroke-width="1.8"/>
+<text x="1140.0" y="182.0" text-anchor="middle" class="t">🔁 NAT → internet</text>
+<text x="1140.0" y="199.0" text-anchor="middle" class="ts">payment network</text>
+<rect x="1250" y="325" width="130" height="70" rx="12" fill="#3a1424" stroke="#ff416c" stroke-width="1.8"/>
+<text x="1315.0" y="357.0" text-anchor="middle" class="t">⛔ Dropped</text>
+<text x="1315.0" y="374.0" text-anchor="middle" class="ts">data VPC: no internet</text>
+<rect x="24" y="589" width="1352" height="46" rx="12" fill="#0d1526" stroke="#2b3a55"/>
+<circle cx="40" cy="612" r="6" fill="#326ce5"/>
+<text x="52" y="616" text-anchor="start" class="t" font-size="12">local</text>
+<circle cx="123.0" cy="612" r="6" fill="#43e97b"/>
+<text x="135.0" y="616" text-anchor="start" class="t" font-size="12">S3 gateway endpoint</text>
+<circle cx="309.6" cy="612" r="6" fill="#c471f5"/>
+<text x="321.6" y="616" text-anchor="start" class="t" font-size="12">ECR / KMS interface endpoint</text>
+<circle cx="562.8000000000001" cy="612" r="6" fill="#ff9900"/>
+<text x="574.8000000000001" y="616" text-anchor="start" class="t" font-size="12">Transit Gateway</text>
+<circle cx="719.8000000000001" cy="612" r="6" fill="#ff4081"/>
+<text x="731.8000000000001" y="616" text-anchor="start" class="t" font-size="12">NAT egress</text>
+<circle cx="839.8000000000001" cy="612" r="6" fill="#ff416c"/>
+<text x="851.8000000000001" y="616" text-anchor="start" class="t" font-size="12">no route → dropped</text>
+<g filter="url(#glow)">
+<circle r="7" fill="#326ce5"><animateMotion dur="2.4s" repeatCount="indefinite" begin="0.0s"><mpath xlink:href="#p11"/></animateMotion></circle>
+<circle r="7" fill="#326ce5"><animateMotion dur="2.4s" repeatCount="indefinite" begin="1.2s"><mpath xlink:href="#p11"/></animateMotion></circle>
+<circle r="7" fill="#43e97b"><animateMotion dur="3.0s" repeatCount="indefinite" begin="0.7s"><mpath xlink:href="#p12"/></animateMotion></circle>
+<circle r="7" fill="#43e97b"><animateMotion dur="3.0s" repeatCount="indefinite" begin="2.2s"><mpath xlink:href="#p12"/></animateMotion></circle>
+<circle r="7" fill="#c471f5"><animateMotion dur="3.0s" repeatCount="indefinite" begin="1.4s"><mpath xlink:href="#p13"/></animateMotion></circle>
+<circle r="7" fill="#c471f5"><animateMotion dur="3.0s" repeatCount="indefinite" begin="2.9s"><mpath xlink:href="#p13"/></animateMotion></circle>
+<circle r="7" fill="#ff9900"><animateMotion dur="3.6s" repeatCount="indefinite" begin="2.0999999999999996s"><mpath xlink:href="#p14"/></animateMotion></circle>
+<circle r="7" fill="#ff9900"><animateMotion dur="3.6s" repeatCount="indefinite" begin="3.8999999999999995s"><mpath xlink:href="#p14"/></animateMotion></circle>
+<circle r="7" fill="#ff4081"><animateMotion dur="4.2s" repeatCount="indefinite" begin="2.8s"><mpath xlink:href="#p15"/></animateMotion></circle>
+<circle r="7" fill="#ff4081"><animateMotion dur="4.2s" repeatCount="indefinite" begin="4.9s"><mpath xlink:href="#p15"/></animateMotion></circle>
+<circle r="7" fill="#ff416c"><animateMotion dur="4.0s" repeatCount="indefinite" begin="3.5s"><mpath xlink:href="#p16"/></animateMotion></circle>
+<circle r="7" fill="#ff416c"><animateMotion dur="4.0s" repeatCount="indefinite" begin="5.5s"><mpath xlink:href="#p16"/></animateMotion></circle>
+</g>
+</svg>

@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1200 620" width="1200" height="620" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+<title>🔒 Native S3 state locking</title>
+<defs>
+<linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0a0f1e"/><stop offset="1" stop-color="#151b31"/></linearGradient>
+<filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<style>
+.flow{fill:none;stroke-dasharray:9 7;animation:dash 1.1s linear infinite}
+.line{fill:none}
+@keyframes dash{to{stroke-dashoffset:-16}}
+.pulse{animation:pulse 2.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.7}50%{opacity:1}}
+.t{fill:#eef3f8;font-size:13.5px;font-weight:700}
+.ts{fill:#aab8cb;font-size:11.5px}
+.h{fill:#0a0f1e;font-size:14px;font-weight:800}
+.hc{fill:#0a0f1e;font-size:11px;font-weight:700}
+.lab{fill:#d6deea;font-size:11px;font-style:italic}
+</style></defs>
+<rect width="1200" height="620" rx="18" fill="url(#bgGrad)"/>
+<text x="36" y="42" class="t" font-size="21">🔒 Native S3 state locking</text>
+<text x="36" y="66" class="ts" font-size="12.5">use_lockfile = true · one writer at a time · no DynamoDB table</text>
+<line x1="125.0" y1="144" x2="125.0" y2="590" stroke="#4facfe" stroke-opacity=".45" stroke-width="2" stroke-dasharray="4 6"/>
+<rect x="30.0" y="100" width="190" height="44" rx="12" fill="#0f2036" stroke="#4facfe" stroke-width="1.8"/>
+<text x="125.0" y="127.0" text-anchor="middle" class="t" font-size="12.5">👩‍💻 Engineer A</text>
+<line x1="600.0" y1="144" x2="600.0" y2="590" stroke="#43e97b" stroke-opacity=".45" stroke-width="2" stroke-dasharray="4 6"/>
+<rect x="505.0" y="100" width="190" height="44" rx="12" fill="#0d2a22" stroke="#43e97b" stroke-width="1.8"/>
+<text x="600.0" y="127.0" text-anchor="middle" class="t" font-size="12.5">🪣 S3 state bucket</text>
+<line x1="1075.0" y1="144" x2="1075.0" y2="590" stroke="#c471f5" stroke-opacity=".45" stroke-width="2" stroke-dasharray="4 6"/>
+<rect x="980.0" y="100" width="190" height="44" rx="12" fill="#22123a" stroke="#c471f5" stroke-width="1.8"/>
+<text x="1075.0" y="127.0" text-anchor="middle" class="t" font-size="12.5">👨‍💻 Engineer B</text>
+<g><path d="M125.0,190 H592.0" fill="none" stroke="#00e5ff" stroke-width="2.2"/><polygon points="600.0,190 588.0,184 588.0,196" fill="#00e5ff"/><text x="362.5" y="182" text-anchor="middle" class="ts" fill="#e6edf3">apply → create .tflock</text><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.0377;0.0417;1" dur="10.60s" repeatCount="indefinite"/></g>
+<g><circle cx="107.0" cy="190" r="9" fill="#00e5ff"/><text x="107.0" y="194" text-anchor="middle" font-size="10" font-weight="800" fill="#0a0f1e">1</text><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.0377;0.0417;1" dur="10.60s" repeatCount="indefinite"/></g>
+<path id="m0" d="M125.0,190 H592.0" fill="none" stroke="none"/>
+<g><path d="M600.0,230 H133.0" fill="none" stroke="#43e97b" stroke-width="2.2" stroke-dasharray="7 5"/><polygon points="125.0,230 137.0,224 137.0,236" fill="#43e97b"/><text x="362.5" y="222" text-anchor="middle" class="ts" fill="#e6edf3">🔒 lock acquired</text><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.1226;0.1266;1" dur="10.60s" repeatCount="indefinite"/></g>
+<g><circle cx="107.0" cy="230" r="9" fill="#43e97b"/><text x="107.0" y="234" text-anchor="middle" font-size="10" font-weight="800" fill="#0a0f1e">2</text><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.1226;0.1266;1" dur="10.60s" repeatCount="indefinite"/></g>
+<path id="m1" d="M600.0,230 H133.0" fill="none" stroke="none"/>
+<g><path d="M1075.0,270 H608.0" fill="none" stroke="#00e5ff" stroke-width="2.2"/><polygon points="600.0,270 612.0,264 612.0,276" fill="#00e5ff"/><text x="837.5" y="262" text-anchor="middle" class="ts" fill="#e6edf3">apply (same stack)</text><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.2075;0.2115;1" dur="10.60s" repeatCount="indefinite"/></g>
+<g><circle cx="582.0" cy="270" r="9" fill="#00e5ff"/><text x="582.0" y="274" text-anchor="middle" font-size="10" font-weight="800" fill="#0a0f1e">3</text><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.2075;0.2115;1" dur="10.60s" repeatCount="indefinite"/></g>
+<path id="m2" d="M1075.0,270 H608.0" fill="none" stroke="none"/>
+<g><path d="M600.0,310 H1067.0" fill="none" stroke="#43e97b" stroke-width="2.2" stroke-dasharray="7 5"/><polygon points="1075.0,310 1063.0,304 1063.0,316" fill="#43e97b"/><text x="837.5" y="302" text-anchor="middle" class="ts" fill="#e6edf3">⛔ state is locked</text><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.2925;0.2965;1" dur="10.60s" repeatCount="indefinite"/></g>
+<g><circle cx="582.0" cy="310" r="9" fill="#43e97b"/><text x="582.0" y="314" text-anchor="middle" font-size="10" font-weight="800" fill="#0a0f1e">4</text><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.2925;0.2965;1" dur="10.60s" repeatCount="indefinite"/></g>
+<path id="m3" d="M600.0,310 H1067.0" fill="none" stroke="none"/>
+<g><path d="M125.0,350 H592.0" fill="none" stroke="#00e5ff" stroke-width="2.2"/><polygon points="600.0,350 588.0,344 588.0,356" fill="#00e5ff"/><text x="362.5" y="342" text-anchor="middle" class="ts" fill="#e6edf3">write networking.tfstate</text><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.3774;0.3814;1" dur="10.60s" repeatCount="indefinite"/></g>
+<g><circle cx="107.0" cy="350" r="9" fill="#00e5ff"/><text x="107.0" y="354" text-anchor="middle" font-size="10" font-weight="800" fill="#0a0f1e">5</text><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.3774;0.3814;1" dur="10.60s" repeatCount="indefinite"/></g>
+<path id="m4" d="M125.0,350 H592.0" fill="none" stroke="none"/>
+<g><path d="M125.0,390 H592.0" fill="none" stroke="#00e5ff" stroke-width="2.2"/><polygon points="600.0,390 588.0,384 588.0,396" fill="#00e5ff"/><text x="362.5" y="382" text-anchor="middle" class="ts" fill="#e6edf3">delete .tflock</text><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.4623;0.4663;1" dur="10.60s" repeatCount="indefinite"/></g>
+<g><circle cx="107.0" cy="390" r="9" fill="#00e5ff"/><text x="107.0" y="394" text-anchor="middle" font-size="10" font-weight="800" fill="#0a0f1e">6</text><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.4623;0.4663;1" dur="10.60s" repeatCount="indefinite"/></g>
+<path id="m5" d="M125.0,390 H592.0" fill="none" stroke="none"/>
+<g><path d="M600.0,430 H133.0" fill="none" stroke="#43e97b" stroke-width="2.2" stroke-dasharray="7 5"/><polygon points="125.0,430 137.0,424 137.0,436" fill="#43e97b"/><text x="362.5" y="422" text-anchor="middle" class="ts" fill="#e6edf3">🔓 released</text><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.5472;0.5512;1" dur="10.60s" repeatCount="indefinite"/></g>
+<g><circle cx="107.0" cy="430" r="9" fill="#43e97b"/><text x="107.0" y="434" text-anchor="middle" font-size="10" font-weight="800" fill="#0a0f1e">7</text><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.5472;0.5512;1" dur="10.60s" repeatCount="indefinite"/></g>
+<path id="m6" d="M600.0,430 H133.0" fill="none" stroke="none"/>
+<g><path d="M1075.0,470 H608.0" fill="none" stroke="#00e5ff" stroke-width="2.2"/><polygon points="600.0,470 612.0,464 612.0,476" fill="#00e5ff"/><text x="837.5" y="462" text-anchor="middle" class="ts" fill="#e6edf3">retry</text><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.6321;0.6361;1" dur="10.60s" repeatCount="indefinite"/></g>
+<g><circle cx="582.0" cy="470" r="9" fill="#00e5ff"/><text x="582.0" y="474" text-anchor="middle" font-size="10" font-weight="800" fill="#0a0f1e">8</text><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.6321;0.6361;1" dur="10.60s" repeatCount="indefinite"/></g>
+<path id="m7" d="M1075.0,470 H608.0" fill="none" stroke="none"/>
+<g><path d="M600.0,510 H1067.0" fill="none" stroke="#43e97b" stroke-width="2.2" stroke-dasharray="7 5"/><polygon points="1075.0,510 1063.0,504 1063.0,516" fill="#43e97b"/><text x="837.5" y="502" text-anchor="middle" class="ts" fill="#e6edf3">✅ lock acquired</text><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.7170;0.7210;1" dur="10.60s" repeatCount="indefinite"/></g>
+<g><circle cx="582.0" cy="510" r="9" fill="#43e97b"/><text x="582.0" y="514" text-anchor="middle" font-size="10" font-weight="800" fill="#0a0f1e">9</text><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.7170;0.7210;1" dur="10.60s" repeatCount="indefinite"/></g>
+<path id="m8" d="M600.0,510 H1067.0" fill="none" stroke="none"/>
+<rect x="24" y="572" width="1152" height="46" rx="12" fill="#0d1526" stroke="#2b3a55"/>
+<circle cx="40" cy="595" r="6" fill="#00e5ff"/>
+<text x="52" y="599" text-anchor="start" class="t" font-size="12">Request / call</text>
+<circle cx="189.60000000000002" cy="595" r="6" fill="#43e97b"/>
+<text x="201.60000000000002" y="599" text-anchor="start" class="t" font-size="12">Response</text>
+<circle cx="294.8" cy="595" r="6" fill="#ffd200"/>
+<text x="306.8" y="599" text-anchor="start" class="t" font-size="12">Internal step</text>
+<g filter="url(#glow)">
+<circle r="6.5" fill="#00e5ff" opacity="0"><animateMotion dur="10.60s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.0377;0.1099;1" calcMode="linear"><mpath xlink:href="#m0"/></animateMotion><animate attributeName="opacity" values="0;1;0" keyTimes="0;0.0377;0.1099" calcMode="discrete" dur="10.60s" repeatCount="indefinite"/></circle>
+<circle r="6.5" fill="#43e97b" opacity="0"><animateMotion dur="10.60s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.1226;0.1948;1" calcMode="linear"><mpath xlink:href="#m1"/></animateMotion><animate attributeName="opacity" values="0;1;0" keyTimes="0;0.1226;0.1948" calcMode="discrete" dur="10.60s" repeatCount="indefinite"/></circle>
+<circle r="6.5" fill="#00e5ff" opacity="0"><animateMotion dur="10.60s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.2075;0.2797;1" calcMode="linear"><mpath xlink:href="#m2"/></animateMotion><animate attributeName="opacity" values="0;1;0" keyTimes="0;0.2075;0.2797" calcMode="discrete" dur="10.60s" repeatCount="indefinite"/></circle>
+<circle r="6.5" fill="#43e97b" opacity="0"><animateMotion dur="10.60s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.2925;0.3646;1" calcMode="linear"><mpath xlink:href="#m3"/></animateMotion><animate attributeName="opacity" values="0;1;0" keyTimes="0;0.2925;0.3646" calcMode="discrete" dur="10.60s" repeatCount="indefinite"/></circle>
+<circle r="6.5" fill="#00e5ff" opacity="0"><animateMotion dur="10.60s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.3774;0.4495;1" calcMode="linear"><mpath xlink:href="#m4"/></animateMotion><animate attributeName="opacity" values="0;1;0" keyTimes="0;0.3774;0.4495" calcMode="discrete" dur="10.60s" repeatCount="indefinite"/></circle>
+<circle r="6.5" fill="#00e5ff" opacity="0"><animateMotion dur="10.60s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.4623;0.5344;1" calcMode="linear"><mpath xlink:href="#m5"/></animateMotion><animate attributeName="opacity" values="0;1;0" keyTimes="0;0.4623;0.5344" calcMode="discrete" dur="10.60s" repeatCount="indefinite"/></circle>
+<circle r="6.5" fill="#43e97b" opacity="0"><animateMotion dur="10.60s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.5472;0.6193;1" calcMode="linear"><mpath xlink:href="#m6"/></animateMotion><animate attributeName="opacity" values="0;1;0" keyTimes="0;0.5472;0.6193" calcMode="discrete" dur="10.60s" repeatCount="indefinite"/></circle>
+<circle r="6.5" fill="#00e5ff" opacity="0"><animateMotion dur="10.60s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.6321;0.7042;1" calcMode="linear"><mpath xlink:href="#m7"/></animateMotion><animate attributeName="opacity" values="0;1;0" keyTimes="0;0.6321;0.7042" calcMode="discrete" dur="10.60s" repeatCount="indefinite"/></circle>
+<circle r="6.5" fill="#43e97b" opacity="0"><animateMotion dur="10.60s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.7170;0.7892;1" calcMode="linear"><mpath xlink:href="#m8"/></animateMotion><animate attributeName="opacity" values="0;1;0" keyTimes="0;0.7170;0.7892" calcMode="discrete" dur="10.60s" repeatCount="indefinite"/></circle>
+</g>
+</svg>
