@@ -20,3 +20,59 @@ variable "ingress_values" {
   default = [22, "tcp", 443]
 }
 
+
+variable "bucket_name" {
+  type    = list(string)
+  default = ["muntaha-bucket-0", "muntaha-bucket-1", "muntaha-bucket-2"]
+}
+
+
+
+variable "bucket_name_set" {
+  type    = set(string)
+  default = ["muntaha-bucket-0", "muntaha-bucket-1", "muntaha-bucket-2"]
+}
+
+
+
+
+variable "servers" {
+  description = "Iterating over the servers"
+  type = map(object({
+    name = number
+    instance_type = string,
+    env = string,
+    tenancy = bool
+  }))
+  default = { 
+    web = {
+    name = 1,
+    instance_type = "t3.micro",
+    env = "dev",
+    tenancy = false
+  },
+    app = {
+      name = 2,
+      instance_type = "t3.medium",
+      env = "qa",
+      tenancy = false
+    },
+    backend = {
+      name = 3,
+      instance_type = "t3.large",
+      env = "stage",
+      tenancy = true
+    },
+
+    iam = {
+      name = 4,
+      instance_type = "t2.xlarge",
+      env = "prod",
+      tenancy = true
+    }
+}
+}
+
+{ for k, v in var.servers : k => v.tenancy}
+
+{for k, v in var.servers : k => v.instance_type}
