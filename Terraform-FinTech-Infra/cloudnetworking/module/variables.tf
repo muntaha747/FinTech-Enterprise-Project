@@ -73,9 +73,9 @@ variable "egress" {
 variable "private_ingress" {
   description = "list of private subnet ingress rule"
   type = map(object({
-    from_port = number
-    to_port = number
-    protocol = string
+    from_port   = number
+    to_port     = number
+    protocol    = string
     cidr_blocks = list(string)
   }))
 }
@@ -83,25 +83,33 @@ variable "private_ingress" {
 variable "private_egress" {
   description = "list of private subnet egress rule"
   type = map(object({
-    from_port = number
-    to_port = number
-    protocol = string
+    from_port   = number
+    to_port     = number
+    protocol    = string
     cidr_blocks = list(string)
   }))
 }
 
 
 variable "enable_nat_gateway" {
-  type = bool
+  type    = bool
+  default = false
 }
 
 
 variable "nat_gateway_destination_cidr_block" {
   type    = string
-  default = "0.0.0.0/0"   # all internet traffic
+  default = "0.0.0.0/0" # all internet traffic
 }
 
 variable "interface_endpoints" {
   type    = list(string)
   default = ["secretsmanager", "ssm", "ecr.api", "ecr.dkr"]
+}
+
+
+
+variable "tgw_id" {
+  description = "ID of the Transit Gateway this VPC attaches to"
+  type        = string
 }
