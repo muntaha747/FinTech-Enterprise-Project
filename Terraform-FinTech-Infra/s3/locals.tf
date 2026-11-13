@@ -1,9 +1,12 @@
-# locals.tf: values WORKED OUT once and reused.
+# locals.tf: values WORKED OUT from the variables, so main.tf only reads locals.
 
 locals {
-  # Extra tags added to every bucket
+  # Tags added to every bucket
   common_tags = {
-    Project = "FinTech-Enterprise-Project"
-    Stack   = "s3"
+    Project = var.project_name
+    Stack   = var.stack_name
   }
+
+  environment  = var.environment
+  bucket_names = var.bucket_names
 }

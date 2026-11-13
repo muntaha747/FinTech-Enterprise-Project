@@ -5,6 +5,16 @@ variable "region" {
   type        = string
 }
 
+variable "project_name" {
+  description = "Project tag value on every bucket"
+  type        = string
+}
+
+variable "stack_name" {
+  description = "Stack tag value on every bucket"
+  type        = string
+}
+
 variable "environment" {
   description = "Environment name, e.g. production"
   type        = string
