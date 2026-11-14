@@ -7,8 +7,8 @@ crash.*.log
 *.tfvars
 *.tfvars.json
 !*.tfvars.example
-# terraform.tfvars in terraform-infra hold no secrets, so they are committed
-!terraform-infra/**/terraform.tfvars
+# terraform.tfvars in Terraform-FinTech-Infra hold no secrets, so they are committed
+!Terraform-FinTech-Infra/**/terraform.tfvars
 override.tf
 override.tf.json
 *_override.tf
@@ -16,6 +16,8 @@ override.tf.json
 .terraformrc
 terraform.rc
 *.tfplan
+tfplan.json
+plan1
 tfplan
 **/iamplan*
 
