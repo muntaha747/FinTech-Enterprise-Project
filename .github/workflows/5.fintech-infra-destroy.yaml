@@ -73,6 +73,9 @@ jobs:
           terraform_wrapper: false
 
       # ---------- 2. Destroy each stack in reverse order ----------
+      # ORDER GUARANTEE: steps in one job run strictly one after another on the SAME runner.
+      # A step starts only after the previous one has finished successfully; if any step
+      # fails, all later steps are skipped. So stack N+1 never begins before stack N completes.
       # Every stack: init -> plan the destroy (shown in the log) -> apply that plan.
       - name: "1/5 EKS"
         working-directory: ${{ env.INFRA_DIR }}/EKS

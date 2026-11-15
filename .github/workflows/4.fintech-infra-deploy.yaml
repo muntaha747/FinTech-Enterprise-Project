@@ -76,6 +76,9 @@ jobs:
         run: terraform fmt -check -recursive
 
       # ---------- 2. Deploy each stack in order ----------
+      # ORDER GUARANTEE: steps in one job run strictly one after another on the SAME runner.
+      # A step starts only after the previous one has finished successfully; if any step
+      # fails, all later steps are skipped. So stack N+1 never begins before stack N completes.
       # Every stack runs the same steps: init -> validate -> plan -> apply the saved plan.
       - name: "1/5 IAM"
         working-directory: ${{ env.INFRA_DIR }}/IAM
