@@ -18,9 +18,9 @@ data "aws_subnets" "control_plane" {
   }
 }
 
-resource "aws_eks_cluster" "EKS-Control-Plane" {
+resource "aws_eks_cluster" "eks_control_plane" {
   name                          = var.cluster_name
-  role_arn                      = aws_iam_role.EKS-FinTech-Cluster-Role.arn
+  role_arn                      = aws_iam_role.eks_fintech_cluster_role.arn
   version                       = var.cluster_version
   bootstrap_self_managed_addons = true
 
@@ -41,19 +41,19 @@ resource "aws_eks_cluster" "EKS-Control-Plane" {
     Env  = var.env
   }
 
-  depends_on = [aws_iam_role_policy_attachment.EKS_CLUSTER_POLICY_ATTACHMENT]
+  depends_on = [aws_iam_role_policy_attachment.eks_cluster_policy_attachment]
 }
 
 data "aws_caller_identity" "current_aws_user" {}
 
 resource "aws_eks_access_entry" "root_admin_entry" {
-  cluster_name  = aws_eks_cluster.EKS-Control-Plane.name
+  cluster_name  = aws_eks_cluster.eks_control_plane.name
   principal_arn = "arn:aws:iam::${data.aws_caller_identity.current_aws_user.account_id}:root"
   type          = "STANDARD"
 }
 
 resource "aws_eks_access_policy_association" "root_admin_policy" {
-  cluster_name  = aws_eks_cluster.EKS-Control-Plane.name
+  cluster_name  = aws_eks_cluster.eks_control_plane.name
   principal_arn = aws_eks_access_entry.root_admin_entry.principal_arn
   policy_arn    = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
   access_scope {
@@ -61,9 +61,9 @@ resource "aws_eks_access_policy_association" "root_admin_policy" {
   }
 }
 
-resource "aws_eks_access_entry" "Hassan-devops-engineer-entry" {
-  cluster_name      = aws_eks_cluster.EKS-Control-Plane.name
-  principal_arn     = aws_iam_role.Hassan-iam-role.arn
+resource "aws_eks_access_entry" "hassan_devops_engineer_entry" {
+  cluster_name      = aws_eks_cluster.eks_control_plane.name
+  principal_arn     = aws_iam_role.hassan_iam_role.arn
   type              = "STANDARD"
   kubernetes_groups = ["hassan-devops"]
 }
