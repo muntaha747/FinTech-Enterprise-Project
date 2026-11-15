@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 690" width="1400" height="690" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <title>Terraform remote state layout in one S3 bucket</title>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b1020"/>
+      <stop offset="1" stop-color="#131c33"/>
+    </linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3.5" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <marker id="a00c9a7" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#00c9a7"/></marker><marker id="a43e97b" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#43e97b"/></marker><marker id="a4facfe" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#4facfe"/></marker><marker id="ac471f5" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#c471f5"/></marker><marker id="aff5c7a" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#ff5c7a"/></marker><marker id="aff9900" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#ff9900"/></marker>
+    <style>
+      .flow { stroke-dasharray: 10 8; animation: dash 1.1s linear infinite; opacity: .9 }
+      .solid { opacity: .9 }
+      @keyframes dash { to { stroke-dashoffset: -18 } }
+      .pulse { animation: pulse 2.4s ease-in-out infinite }
+      @keyframes pulse { 0%,100% { opacity: .6 } 50% { opacity: 1 } }
+    </style>
+  </defs>
+  <rect width="1400" height="690" rx="18" fill="url(#bg)"/>
+  <text x="36" y="42" font-size="20" font-weight="700" fill="#ffffff">🗃️ One S3 bucket · eleven state files · one per stack and environment</text>
+  <text x="36" y="66" font-size="13" fill="#b6c2d1">encrypt = true · use_lockfile = true (native S3 locking, no DynamoDB table) · a stack can only lock and change its own file</text>
+  <rect x="36" y="120" width="300" height="42" rx="12" fill="#ff5c7a" fill-opacity="0.14" stroke="#ff5c7a" stroke-width="1.6"/>
+  <text x="186.0" y="146.8" font-size="13.5" fill="#ffffff" text-anchor="middle" font-weight="700">🔐 IAM/</text>
+  <rect x="36" y="176" width="300" height="42" rx="12" fill="#43e97b" fill-opacity="0.14" stroke="#43e97b" stroke-width="1.6"/>
+  <text x="186.0" y="202.8" font-size="13.5" fill="#ffffff" text-anchor="middle" font-weight="700">🪣 S3/</text>
+  <rect x="36" y="232" width="300" height="42" rx="12" fill="#ff9900" fill-opacity="0.14" stroke="#ff9900" stroke-width="1.6"/>
+  <text x="186.0" y="258.8" font-size="13.5" fill="#ffffff" text-anchor="middle" font-weight="700">📦 ECR/</text>
+  <text x="186.0" y="106.0" font-size="11.5" fill="#8b98ad" text-anchor="middle" font-weight="700">GLOBAL STACKS</text>
+  <text x="186.0" y="322.0" font-size="11.5" fill="#8b98ad" text-anchor="middle" font-weight="700">PER-ENVIRONMENT STACKS</text>
+  <rect x="36" y="336" width="300" height="84" rx="12" fill="#4facfe" fill-opacity="0.14" stroke="#4facfe" stroke-width="1.6"/>
+  <text x="186.0" y="368.8" font-size="13.5" fill="#ffffff" text-anchor="middle" font-weight="700">🌐 Networking/</text>
+  <text x="186.0" y="384.8" font-size="11.5" fill="#b6c2d1" text-anchor="middle">Prod · Stage · QA · Dev</text>
+  <text x="186.0" y="399.8" font-size="11.5" fill="#b6c2d1" text-anchor="middle">4 VPCs + Transit Gateway each</text>
+  <rect x="36" y="476" width="300" height="84" rx="12" fill="#c471f5" fill-opacity="0.14" stroke="#c471f5" stroke-width="1.6"/>
+  <text x="186.0" y="508.8" font-size="13.5" fill="#ffffff" text-anchor="middle" font-weight="700">☸️ EKS/</text>
+  <text x="186.0" y="524.8" font-size="11.5" fill="#b6c2d1" text-anchor="middle">Prod · Stage · QA · Dev</text>
+  <text x="186.0" y="539.8" font-size="11.5" fill="#b6c2d1" text-anchor="middle">cluster + node groups each</text>
+  <rect x="420" y="96" width="944" height="494" rx="16" fill="#ffd166" fill-opacity="0.05" stroke="#ffd166" stroke-width="1.8"/>
+  <text x="436.0" y="122.0" font-size="14.5" fill="#ffd166" text-anchor="start" font-weight="700">🪣 s3://fintech-project-statefile-bucket</text>
+  <rect x="440" y="120" width="440" height="42" rx="12" fill="#ff5c7a" fill-opacity="0.14" stroke="#ff5c7a" stroke-width="1.6"/>
+  <text x="660.0" y="146.5" font-size="13" fill="#ffffff" text-anchor="middle" font-weight="700">product-iam/iam-roles.tfstate</text>
+  <rect x="440" y="176" width="440" height="42" rx="12" fill="#43e97b" fill-opacity="0.14" stroke="#43e97b" stroke-width="1.6"/>
+  <text x="660.0" y="202.5" font-size="13" fill="#ffffff" text-anchor="middle" font-weight="700">product-s3/envs/s3.tfstate</text>
+  <rect x="440" y="232" width="440" height="42" rx="12" fill="#ff9900" fill-opacity="0.14" stroke="#ff9900" stroke-width="1.6"/>
+  <text x="660.0" y="258.5" font-size="13" fill="#ffffff" text-anchor="middle" font-weight="700">ecr/envs/ecr.tfstate</text>
+  <rect x="910" y="120" width="434" height="154" rx="12" fill="#ffd166" fill-opacity="0.14" stroke="#ffd166" stroke-width="1.6" class="pulse"/>
+  <text x="1127.0" y="180.2" font-size="13.5" fill="#ffffff" text-anchor="middle" font-weight="700">🔒 &lt;state file&gt;.tflock</text>
+  <text x="1127.0" y="196.2" font-size="11.5" fill="#b6c2d1" text-anchor="middle">created when a plan or apply starts</text>
+  <text x="1127.0" y="211.2" font-size="11.5" fill="#b6c2d1" text-anchor="middle">deleted when it finishes</text>
+  <text x="1127.0" y="226.2" font-size="11.5" fill="#b6c2d1" text-anchor="middle">a second writer on the SAME stack must wait</text>
+  <rect x="440" y="336" width="442" height="38" rx="12" fill="#4facfe" fill-opacity="0.14" stroke="#4facfe" stroke-width="1.6"/>
+  <text x="661.0" y="360.2" font-size="12.5" fill="#ffffff" text-anchor="middle" font-weight="700">cloudnetworking/prod/networking.tfstate</text>
+  <rect x="902" y="336" width="442" height="38" rx="12" fill="#4facfe" fill-opacity="0.14" stroke="#4facfe" stroke-width="1.6"/>
+  <text x="1123.0" y="360.2" font-size="12.5" fill="#ffffff" text-anchor="middle" font-weight="700">cloudnetworking/stage/networking.tfstate</text>
+  <rect x="440" y="384" width="442" height="38" rx="12" fill="#4facfe" fill-opacity="0.14" stroke="#4facfe" stroke-width="1.6"/>
+  <text x="661.0" y="408.2" font-size="12.5" fill="#ffffff" text-anchor="middle" font-weight="700">cloudnetworking/qa/networking.tfstate</text>
+  <rect x="902" y="384" width="442" height="38" rx="12" fill="#4facfe" fill-opacity="0.14" stroke="#4facfe" stroke-width="1.6"/>
+  <text x="1123.0" y="408.2" font-size="12.5" fill="#ffffff" text-anchor="middle" font-weight="700">cloudnetworking/dev/networking.tfstate</text>
+  <rect x="440" y="476" width="442" height="38" rx="12" fill="#c471f5" fill-opacity="0.14" stroke="#c471f5" stroke-width="1.6"/>
+  <text x="661.0" y="500.2" font-size="12.5" fill="#ffffff" text-anchor="middle" font-weight="700">EKS/Prod/eks.tfstate</text>
+  <rect x="902" y="476" width="442" height="38" rx="12" fill="#c471f5" fill-opacity="0.14" stroke="#c471f5" stroke-width="1.6"/>
+  <text x="1123.0" y="500.2" font-size="12.5" fill="#ffffff" text-anchor="middle" font-weight="700">EKS/Stage/eks.tfstate</text>
+  <rect x="440" y="524" width="442" height="38" rx="12" fill="#c471f5" fill-opacity="0.14" stroke="#c471f5" stroke-width="1.6"/>
+  <text x="661.0" y="548.2" font-size="12.5" fill="#ffffff" text-anchor="middle" font-weight="700">EKS/QA/eks.tfstate</text>
+  <rect x="902" y="524" width="442" height="38" rx="12" fill="#c471f5" fill-opacity="0.14" stroke="#c471f5" stroke-width="1.6"/>
+  <text x="1123.0" y="548.2" font-size="12.5" fill="#ffffff" text-anchor="middle" font-weight="700">EKS/Dev/eks.tfstate</text>
+  <path id="p1" d="M 336.0 141.0 L 438.0 141.0" stroke="#ff5c7a" stroke-width="2.4" fill="none" stroke-linejoin="round" class="flow" marker-end="url(#aff5c7a)"/>
+  <circle r="4.5" fill="#ff5c7a" filter="url(#glow)"><animateMotion dur="1.2s" begin="0.00s" repeatCount="indefinite"><mpath href="#p1"/></animateMotion></circle>
+  <path id="p2" d="M 336.0 197.0 L 438.0 197.0" stroke="#43e97b" stroke-width="2.4" fill="none" stroke-linejoin="round" class="flow" marker-end="url(#a43e97b)"/>
+  <circle r="4.5" fill="#43e97b" filter="url(#glow)"><animateMotion dur="1.2s" begin="0.00s" repeatCount="indefinite"><mpath href="#p2"/></animateMotion></circle>
+  <path id="p3" d="M 336.0 253.0 L 438.0 253.0" stroke="#ff9900" stroke-width="2.4" fill="none" stroke-linejoin="round" class="flow" marker-end="url(#aff9900)"/>
+  <circle r="4.5" fill="#ff9900" filter="url(#glow)"><animateMotion dur="1.2s" begin="0.00s" repeatCount="indefinite"><mpath href="#p3"/></animateMotion></circle>
+  <path id="p4" d="M 336.0 378.0 L 438.0 378.0" stroke="#4facfe" stroke-width="2.4" fill="none" stroke-linejoin="round" class="flow" marker-end="url(#a4facfe)"/>
+  <circle r="4.5" fill="#4facfe" filter="url(#glow)"><animateMotion dur="1.2s" begin="0.00s" repeatCount="indefinite"><mpath href="#p4"/></animateMotion></circle>
+  <path id="p5" d="M 336.0 518.0 L 438.0 518.0" stroke="#c471f5" stroke-width="2.4" fill="none" stroke-linejoin="round" class="flow" marker-end="url(#ac471f5)"/>
+  <circle r="4.5" fill="#c471f5" filter="url(#glow)"><animateMotion dur="1.2s" begin="0.00s" repeatCount="indefinite"><mpath href="#p5"/></animateMotion></circle>
+  <path id="p6" d="M 661.0 424.0 L 661.0 474.0" stroke="#00c9a7" stroke-width="2.4" fill="none" stroke-linejoin="round" class="flow" marker-end="url(#a00c9a7)"/>
+  <circle r="4.5" fill="#00c9a7" filter="url(#glow)"><animateMotion dur="1.2s" begin="0.00s" repeatCount="indefinite"><mpath href="#p6"/></animateMotion></circle>
+  <text x="990.0" y="453.0" font-size="11" fill="#00c9a7" text-anchor="middle" font-weight="700">EKS/&lt;env&gt; READS the outputs of Networking/&lt;env&gt; (terraform_remote_state, read-only)</text>
+  <rect x="24" y="628" width="1352" height="40" rx="12" fill="#8b98ad" fill-opacity="0.05" stroke="#8b98ad" stroke-width="1"/>
+  <circle cx="40" cy="647" r="6" fill="#43e97b"/>
+  <text x="53.0" y="651.5" font-size="12" fill="#e6edf3" text-anchor="start" font-weight="700">A stack writes only its own state file</text>
+  <circle cx="346.81488000000013" cy="647" r="6" fill="#00c9a7"/>
+  <text x="359.8" y="651.5" font-size="12" fill="#e6edf3" text-anchor="start" font-weight="700">Read-only lookup between stacks</text>
+  <circle cx="619.6292000000003" cy="647" r="6" fill="#ffd166"/>
+  <text x="632.6" y="651.5" font-size="12" fill="#e6edf3" text-anchor="start" font-weight="700">Lock file: one writer at a time</text>
+</svg>

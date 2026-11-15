@@ -1,0 +1,145 @@
+# ============================================================================
+# 5. FinTech Infra - DESTROY
+# ----------------------------------------------------------------------------
+# Tears down the Terraform-FinTech-Infra platform on ONE GitHub-hosted runner,
+# in the REVERSE of the deploy order:
+#
+#     EKS/<env>  ->  Networking/<env>  ->  ECR  ->  S3  ->  IAM
+#
+# EKS goes first because its cluster and nodes live inside the Networking
+# subnets; a VPC cannot be deleted while nodes are still attached to it.
+#
+# Runs ONLY by hand: GitHub -> Actions -> "5. FinTech Infra - Destroy"
+# -> Run workflow (branch: dev) -> pick the environment -> type  destroy  -> Run.
+#
+# Notes:
+#   - ECR, S3 and IAM are GLOBAL (shared by every environment). Untick
+#     "destroy_global_stacks" when another environment is still running.
+#   - The state bucket (fintech-project-statefile-bucket) is NOT destroyed;
+#     the emptied state files stay there for the next deploy.
+#   - S3 buckets and ECR repositories must be EMPTY, otherwise AWS refuses
+#     to delete them (force_destroy / force_delete are off on purpose).
+# ============================================================================
+name: "5. FinTech Infra - Destroy"
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Environment to destroy (folder under Networking/ and EKS/)"
+        required: true
+        type: choice
+        default: Prod
+        options:
+          - Prod
+          - Stage
+          - QA
+          - Dev
+      destroy_global_stacks:
+        description: "Also destroy the shared stacks (ECR, S3, IAM). Untick if another environment is still running."
+        required: true
+        type: boolean
+        default: true
+      confirm:
+        description: 'Type "destroy" to confirm'
+        required: true
+        type: string
+
+permissions:
+  id-token: write
+  contents: read
+
+# Shares the lock with the deploy workflow, so they never overlap
+concurrency:
+  group: fintech-infra
+  cancel-in-progress: false
+
+env:
+  AWS_REGION: us-east-1
+  TF_VERSION: "1.17.2"
+  TF_IN_AUTOMATION: "true"
+  TF_INPUT: "false"
+  INFRA_DIR: Terraform-FinTech-Infra
+  ENVIRONMENT: ${{ inputs.environment }}
+
+jobs:
+  destroy:
+    name: Destroy EKS → Networking → ECR → S3 → IAM
+    runs-on: ubuntu-latest
+    # Safety: only from dev, and only when the word "destroy" was typed
+    if: github.ref == 'refs/heads/dev' && inputs.confirm == 'destroy'
+    timeout-minutes: 120
+
+    steps:
+      # ---------- 1. Prepare the runner ----------
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Show target environment
+        run: echo "Destroying environment -> $ENVIRONMENT (global stacks too -> ${{ inputs.destroy_global_stacks }})"
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.FinTech_Enterprise_Project_GithubActions_OIDC_Role }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Show AWS identity
+        run: aws sts get-caller-identity
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ env.TF_VERSION }}
+          terraform_wrapper: false
+
+      # ---------- 2. Destroy each stack in reverse order ----------
+      # ORDER GUARANTEE: steps in one job run strictly one after another on the SAME runner.
+      # A step starts only after the previous one has finished successfully; if any step
+      # fails, all later steps are skipped. So stack N+1 never begins before stack N completes.
+      # Every stack: init -> plan the destroy (shown in the log) -> apply that plan.
+      - name: "1/5 EKS (${{ env.ENVIRONMENT }})"
+        working-directory: ${{ env.INFRA_DIR }}/EKS/${{ env.ENVIRONMENT }}
+        run: |
+          terraform init
+          terraform plan -destroy -var-file="terraform.tfvars" -out destroyplan
+          terraform apply destroyplan
+
+      - name: "2/5 Networking (${{ env.ENVIRONMENT }})"
+        working-directory: ${{ env.INFRA_DIR }}/Networking/${{ env.ENVIRONMENT }}
+        run: |
+          terraform init
+          terraform plan -destroy -var-file="terraform.tfvars" -out destroyplan
+          terraform apply destroyplan
+
+      - name: "3/5 ECR (global)"
+        if: inputs.destroy_global_stacks
+        working-directory: ${{ env.INFRA_DIR }}/ECR
+        run: |
+          terraform init
+          terraform plan -destroy -var-file="terraform.tfvars" -out destroyplan
+          terraform apply destroyplan
+
+      - name: "4/5 S3 (global)"
+        if: inputs.destroy_global_stacks
+        working-directory: ${{ env.INFRA_DIR }}/S3
+        run: |
+          terraform init
+          terraform plan -destroy -var-file="terraform.tfvars" -out destroyplan
+          terraform apply destroyplan
+
+      - name: "5/5 IAM (global)"
+        if: inputs.destroy_global_stacks
+        working-directory: ${{ env.INFRA_DIR }}/IAM
+        run: |
+          terraform init
+          terraform plan -destroy -var-file="terraform.tfvars" -out destroyplan
+          terraform apply destroyplan
+
+      # ---------- 3. Confirm nothing costly is left ----------
+      - name: Check for leftover resources
+        run: |
+          echo "EKS clusters:  $(aws eks list-clusters --query 'clusters' --output text)"
+          echo "NAT gateways:  $(aws ec2 describe-nat-gateways --filter Name=state,Values=available,pending --query 'NatGateways[].NatGatewayId' --output text)"
+          echo "Elastic IPs:   $(aws ec2 describe-addresses --query 'Addresses[].PublicIp' --output text)"
+          echo "Custom VPCs:   $(aws ec2 describe-vpcs --filters Name=is-default,Values=false --query 'Vpcs[].VpcId' --output text)"

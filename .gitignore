@@ -18,6 +18,7 @@ terraform.rc
 *.tfplan
 tfplan.json
 plan1
+destroyplan
 tfplan
 **/iamplan*
 

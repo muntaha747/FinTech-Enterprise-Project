@@ -1,15 +1,21 @@
 name: AIOps Autonomous Code Remediation Pipeline
 
+# 🔒 DISABLED: automatic triggers are commented out so this workflow never runs on its own.
+#    Every job also has "if: false", so even a manual run does nothing. Remove it to re-enable.
+# on:
+#   pull_request:
+#     types: [opened, edited]
+#     paths:
+#       - 'demo/**'
+#     branches:
+#       - main
+
 on:
-  pull_request:
-    types: [opened, edited]
-    paths:
-      - 'demo/**'
-    branches:
-      - main
+  workflow_dispatch:
 
 jobs:
   code-remediation-gate:
+    if: false # 🔒 DISABLED: this job never runs, even when started by hand
     runs-on: ubuntu-latest
     defaults:
       run:

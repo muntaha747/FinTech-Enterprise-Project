@@ -17,7 +17,7 @@
 </style></defs>
 <rect width="1400" height="660" rx="18" fill="url(#bgGrad)"/>
 <text x="36" y="42" class="t" font-size="21">🔐 IAM · least-privilege roles per environment</text>
-<text x="36" y="66" class="ts" font-size="12.5">One global root (iam/) · one child module · terraform.tfvars says which roles each environment gets</text>
+<text x="36" y="66" class="ts" font-size="12.5">One global root (IAM/) · one child module · terraform.tfvars says which roles each environment gets</text>
 <path id="p1" class="flow" d="M300,300 H500" stroke="#ff9900" stroke-width="2.4" opacity="0.85"/>
 <text x="400" y="290" text-anchor="middle" class="lab">AssumeRole</text>
 <path id="p2" class="flow" d="M300,400 H500" stroke="#4facfe" stroke-width="2.4" opacity="0.85"/>
@@ -35,7 +35,7 @@
 <path id="p12" class="flow" d="M700,154 V360" stroke="#c471f5" stroke-width="2.4" opacity="0.85"/>
 <path id="p13" class="flow" d="M700,154 V460" stroke="#c471f5" stroke-width="2.4" opacity="0.85"/>
 <rect x="560" y="90" width="280" height="64" rx="12" fill="#22123a" stroke="#c471f5" stroke-width="1.8" filter="url(#glow)"/>
-<text x="700.0" y="119.0" text-anchor="middle" class="t">🧩 modules/iam-roles</text>
+<text x="700.0" y="119.0" text-anchor="middle" class="t">🧩 modules/iam_roles</text>
 <text x="700.0" y="136.0" text-anchor="middle" class="ts">terraform-aws-modules/iam 6.8.2</text>
 <rect x="500" y="260" width="400" height="84" rx="12" fill="#2d1c05" stroke="#ff9900" stroke-width="1.8"/>
 <text x="700.0" y="299.0" text-anchor="middle" class="t" font-size="13">👑 FinTech-Platform-Admin</text>
@@ -43,7 +43,7 @@
 <text x="700.0" y="330.0" text-anchor="middle" class="ts">⛔ deny PII data access</text>
 <rect x="500" y="360" width="400" height="84" rx="12" fill="#0f2036" stroke="#4facfe" stroke-width="1.8"/>
 <text x="700.0" y="399.0" text-anchor="middle" class="t" font-size="13">👩‍💻 AppTeam-&lt;env&gt;-Role</text>
-<text x="700.0" y="416.0" text-anchor="middle" class="ts">qa: full · uat/prod: read-only</text>
+<text x="700.0" y="416.0" text-anchor="middle" class="ts">dev/qa: full · stage/prod: read-only</text>
 <text x="700.0" y="430.0" text-anchor="middle" class="ts">⛔ deny delete VPC / terminate EC2</text>
 <rect x="500" y="460" width="400" height="84" rx="12" fill="#0d2a22" stroke="#43e97b" stroke-width="1.8"/>
 <text x="700.0" y="499.0" text-anchor="middle" class="t" font-size="13">🤖 FinTech-CI-CD-Deployer-&lt;env&gt;</text>
@@ -59,13 +59,13 @@
 <text x="180.0" y="497.0" text-anchor="middle" class="t">🐙 GitHub Actions</text>
 <text x="180.0" y="514.0" text-anchor="middle" class="ts">OIDC web identity</text>
 <rect x="1110" y="178" width="230" height="64" rx="12" fill="#2d1c05" stroke="#ff9900" stroke-width="1.8"/>
-<text x="1225.0" y="207.0" text-anchor="middle" class="t">🛠️ ops</text>
+<text x="1225.0" y="207.0" text-anchor="middle" class="t">🛠️ platform</text>
 <text x="1225.0" y="224.0" text-anchor="middle" class="ts">platform admin</text>
 <rect x="1110" y="298" width="230" height="64" rx="12" fill="#0f2036" stroke="#4facfe" stroke-width="1.8"/>
-<text x="1225.0" y="327.0" text-anchor="middle" class="t">🧪 qa</text>
+<text x="1225.0" y="327.0" text-anchor="middle" class="t">🧪 dev · qa</text>
 <text x="1225.0" y="344.0" text-anchor="middle" class="ts">app team + CI/CD</text>
 <rect x="1110" y="418" width="230" height="64" rx="12" fill="#0f2036" stroke="#4facfe" stroke-width="1.8"/>
-<text x="1225.0" y="447.0" text-anchor="middle" class="t">🧷 uat</text>
+<text x="1225.0" y="447.0" text-anchor="middle" class="t">🧷 stage</text>
 <text x="1225.0" y="464.0" text-anchor="middle" class="ts">app team + CI/CD</text>
 <rect x="1110" y="538" width="230" height="64" rx="12" fill="#3a1424" stroke="#ff416c" stroke-width="1.8"/>
 <text x="1225.0" y="567.0" text-anchor="middle" class="t">🏦 prod</text>
@@ -74,9 +74,9 @@
 <circle cx="40" cy="632" r="6" fill="#c471f5"/>
 <text x="52" y="636" text-anchor="start" class="t" font-size="12">module creates roles</text>
 <circle cx="234.0" cy="632" r="6" fill="#ff9900"/>
-<text x="246.0" y="636" text-anchor="start" class="t" font-size="12">ops enables platform admin</text>
+<text x="246.0" y="636" text-anchor="start" class="t" font-size="12">platform: the admin role</text>
 <circle cx="472.4" cy="632" r="6" fill="#4facfe"/>
-<text x="484.4" y="636" text-anchor="start" class="t" font-size="12">qa / uat enable app team + CI/CD</text>
+<text x="484.4" y="636" text-anchor="start" class="t" font-size="12">dev / qa / stage: team + CI/CD</text>
 <circle cx="755.2" cy="632" r="6" fill="#ff416c"/>
 <text x="767.2" y="636" text-anchor="start" class="t" font-size="12">prod enables app team + CI/CD</text>
 <circle cx="1015.8000000000001" cy="632" r="6" fill="#43e97b"/>

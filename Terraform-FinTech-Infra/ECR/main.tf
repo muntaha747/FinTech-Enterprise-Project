@@ -1,10 +1,9 @@
+# main.tf: WHAT to build. Every value comes from locals.tf.
+
+# One private ECR repository per name in terraform.tfvars
 module "ecr_repo" {
-  source = "./modules/"
-  ecr_repository = [
-    "fintech-ledgerservice",
-    "fintech-payment",
-    "fintech-bff",
-    "fintech-notifications",
-  ]
-  image_mutability = var.image_mutability
+  source           = "./modules/ecr_repository"
+  repository_names = local.repository_names
+  image_mutability = local.image_mutability
+  tags             = local.common_tags
 }

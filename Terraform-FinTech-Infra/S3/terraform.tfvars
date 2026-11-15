@@ -2,7 +2,7 @@
 region       = "us-east-1"
 project_name = "FinTech-Enterprise-Project"
 stack_name   = "s3"
-environment  = "production"
+environment  = "Prod"
 bucket_names = [
   "muntaha-fintech-dvc-data-lake",
   "muntaha-fintech-applog",
