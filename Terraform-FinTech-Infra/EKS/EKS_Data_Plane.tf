@@ -13,6 +13,12 @@ resource "aws_eks_node_group" "core_data_plane_blue" {
   }
   lifecycle {
     create_before_destroy = true
+
+    # desired_size is managed by the Cluster Autoscaler at runtime (it scales between
+    # min_size and max_size). Terraform only uses desired_size when the group is first
+    # created and never resets it afterwards, so a push cannot remove busy nodes.
+    # To force more nodes, raise min_size instead.
+    ignore_changes = [scaling_config[0].desired_size]
   }
 
   update_config {
@@ -42,6 +48,12 @@ resource "aws_eks_node_group" "core_data_plane_green" {
   }
   lifecycle {
     create_before_destroy = true
+
+    # desired_size is managed by the Cluster Autoscaler at runtime (it scales between
+    # min_size and max_size). Terraform only uses desired_size when the group is first
+    # created and never resets it afterwards, so a push cannot remove busy nodes.
+    # To force more nodes, raise min_size instead.
+    ignore_changes = [scaling_config[0].desired_size]
   }
 
   update_config {
@@ -78,6 +90,12 @@ resource "aws_eks_node_group" "ml_data_plane_blue" {
   }
   lifecycle {
     create_before_destroy = true
+
+    # desired_size is managed by the Cluster Autoscaler at runtime (it scales between
+    # min_size and max_size). Terraform only uses desired_size when the group is first
+    # created and never resets it afterwards, so a push cannot remove busy nodes.
+    # To force more nodes, raise min_size instead.
+    ignore_changes = [scaling_config[0].desired_size]
   }
 
   update_config {
@@ -114,6 +132,12 @@ resource "aws_eks_node_group" "ml_data_plane_green" {
   }
   lifecycle {
     create_before_destroy = true
+
+    # desired_size is managed by the Cluster Autoscaler at runtime (it scales between
+    # min_size and max_size). Terraform only uses desired_size when the group is first
+    # created and never resets it afterwards, so a push cannot remove busy nodes.
+    # To force more nodes, raise min_size instead.
+    ignore_changes = [scaling_config[0].desired_size]
   }
 
   update_config {
