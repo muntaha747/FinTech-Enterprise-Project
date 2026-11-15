@@ -21,12 +21,12 @@ variable "tags" {
   default     = {}
 }
 
-variable "Environment" {
+variable "environment" {
   description = "vpc environment"
   type        = string
 }
 
-variable "Organization" {
+variable "organization" {
   description = "vpc organization"
   type        = string
 }

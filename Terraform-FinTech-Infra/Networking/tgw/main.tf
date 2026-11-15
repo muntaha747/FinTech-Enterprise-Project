@@ -5,7 +5,7 @@ resource "aws_ec2_transit_gateway" "tgw" {
 
   tags = {
     Name         = var.tgw_name
-    Environment  = var.Environment
-    Organization = var.Organization
+    Environment  = var.environment
+    Organization = var.organization
   }
 }

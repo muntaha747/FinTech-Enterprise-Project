@@ -5,8 +5,8 @@ resource "aws_vpc" "vpc" {
   enable_dns_hostnames = true
   tags = merge(var.tags, {
     Name         = var.vpc_name
-    Environment  = var.Environment
-    Organization = var.Organization
+    Environment  = var.environment
+    Organization = var.organization
   })
 }
 ##################################Internet Gateway########################################
@@ -15,8 +15,8 @@ resource "aws_internet_gateway" "my_igw" {
   vpc_id = aws_vpc.vpc.id
   tags = merge(var.tags, {
     Name         = "${var.vpc_name}-igw"
-    Environment  = var.Environment
-    Organization = var.Organization
+    Environment  = var.environment
+    Organization = var.organization
   })
 }
 ##################################Public Subnet Creation########################################
@@ -28,8 +28,8 @@ resource "aws_subnet" "public_subnet" {
 
   tags = merge(var.tags, {
     Name         = "${var.vpc_name}-public-${count.index + 1}"
-    Environment  = var.Environment
-    Organization = var.Organization
+    Environment  = var.environment
+    Organization = var.organization
   })
 }
 ###############################Public route table creation########################################
@@ -38,8 +38,8 @@ resource "aws_route_table" "public_route_table" {
   vpc_id = aws_vpc.vpc.id
   tags = merge(var.tags, {
     Name         = "${var.vpc_name}-public-rt"
-    Environment  = var.Environment
-    Organization = var.Organization
+    Environment  = var.environment
+    Organization = var.organization
   })
 }
 ###############################Public route table association with the public subnets########################################
@@ -63,8 +63,8 @@ resource "aws_security_group" "public_subnet_sg" {
   vpc_id = aws_vpc.vpc.id
   tags = merge(var.tags, {
     Name         = "${var.vpc_name}-${each.key}-sg"
-    Environment  = var.Environment
-    Organization = var.Organization
+    Environment  = var.environment
+    Organization = var.organization
   })
 
   dynamic "ingress" {
@@ -95,8 +95,8 @@ resource "aws_subnet" "private_subnet" {
   availability_zone = var.availability_zones[count.index % length(var.availability_zones)] # Or you can simply use element(var.availability_zones, count.index)
   tags = merge(var.tags, {
     Name         = "${var.vpc_name}-private-${count.index + 1}"
-    Environment  = var.Environment
-    Organization = var.Organization
+    Environment  = var.environment
+    Organization = var.organization
   })
 }
 ###############################Private Route Table######################################## 
@@ -105,8 +105,8 @@ resource "aws_route_table" "private_route_table" {
   vpc_id = aws_vpc.vpc.id
   tags = merge(var.tags, {
     Name         = "${var.vpc_name}-private-rt"
-    Environment  = var.Environment
-    Organization = var.Organization
+    Environment  = var.environment
+    Organization = var.organization
   })
 }
 ####################################Associate the RouteTable to Private Subnets################################### 
@@ -152,7 +152,7 @@ resource "aws_nat_gateway" "nat_gateway" {
   depends_on    = [aws_internet_gateway.my_igw]
 }
 #######################################MAP ROUTE FOR NAT GATEWAY#################################
-resource "aws_route" "Nat_Gateway_Route_table" {
+resource "aws_route" "nat_gateway_route_table" {
   count                  = var.enable_nat_gateway && length(var.public_subnet) > 0 && length(var.private_subnet) > 0 ? 1 : 0
   route_table_id         = aws_route_table.private_route_table[0].id
   destination_cidr_block = var.nat_gateway_destination_cidr_block

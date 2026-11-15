@@ -62,3 +62,13 @@ variable "node_color" {
     error_message = "node_color must be blue, green, or both."
   }
 }
+
+variable "cluster_autoscaler_chart_version" {
+  type        = string
+  description = "Version of the cluster-autoscaler Helm chart"
+}
+
+variable "cluster_autoscaler_image_tag" {
+  type        = string
+  description = "Cluster Autoscaler image tag; must match the Kubernetes minor version (e.g. v1.36.x for 1.36)"
+}

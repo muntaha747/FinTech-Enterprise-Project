@@ -9,12 +9,12 @@ variable "tgw_description" {
   default     = "Central hub for FinTech VPCs"
 }
 
-variable "Environment" {
+variable "environment" {
   description = "Environment tag"
   type        = string
 }
 
-variable "Organization" {
+variable "organization" {
   description = "Organization tag"
   type        = string
 }

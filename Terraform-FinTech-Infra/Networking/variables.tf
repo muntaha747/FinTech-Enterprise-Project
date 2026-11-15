@@ -15,12 +15,12 @@ variable "stack_name" {
   type        = string
 }
 
-variable "Environment" {
+variable "environment" {
   description = "Environment name, e.g. Production"
   type        = string
 }
 
-variable "Organization" {
+variable "organization" {
   description = "Organization name tagged on every resource"
   type        = string
 }

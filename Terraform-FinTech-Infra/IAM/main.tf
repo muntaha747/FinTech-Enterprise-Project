@@ -6,7 +6,7 @@ data "aws_caller_identity" "current" {}
 # The module runs once for each environment in terraform.tfvars (role_sets).
 # Inside the module call, each.key is the environment name (e.g. "qa") and each.value is its settings.
 module "iam_roles" {
-  source   = "../modules/iam-roles"
+  source   = "./iam_roles"
   for_each = local.role_sets
 
   account_id           = local.account_id
