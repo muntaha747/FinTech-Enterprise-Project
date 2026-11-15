@@ -72,3 +72,8 @@ variable "cluster_autoscaler_image_tag" {
   type        = string
   description = "Cluster Autoscaler image tag; must match the Kubernetes minor version (e.g. v1.36.x for 1.36)"
 }
+
+variable "cluster_admin_arns" {
+  type        = list(string)
+  description = "IAM users/roles that get cluster-admin on EKS (the creator is skipped automatically)"
+}

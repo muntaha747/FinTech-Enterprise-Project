@@ -1,12 +1,17 @@
 name: AIOps Autonomous Code Remediation Pipeline
 
+# 🔒 DISABLED: automatic triggers are commented out so this workflow never runs on its own.
+#    It can still be started by hand from the Actions tab (workflow_dispatch) if ever needed.
+# on:
+#   pull_request:
+#     types: [opened, edited]
+#     paths:
+#       - 'demo/**'
+#     branches:
+#       - main
+
 on:
-  pull_request:
-    types: [opened, edited]
-    paths:
-      - 'demo/**'
-    branches:
-      - main
+  workflow_dispatch:
 
 jobs:
   code-remediation-gate:

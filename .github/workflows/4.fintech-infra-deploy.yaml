@@ -1,0 +1,130 @@
+# ============================================================================
+# 4. FinTech Infra - DEPLOY
+# ----------------------------------------------------------------------------
+# Builds the whole Terraform-FinTech-Infra platform on ONE GitHub-hosted runner,
+# one stack after another, in this order:
+#
+#     IAM  ->  S3  ->  ECR  ->  Networking  ->  EKS
+#
+# Networking must finish before EKS, because EKS reads the VPC subnets
+# from the Networking remote state.
+#
+# Runs when:
+#   - code under Terraform-FinTech-Infra/ is pushed to the dev branch, or
+#   - you click "Run workflow" in the GitHub Actions tab (dev branch only).
+#
+# AWS login: GitHub OIDC -> IAM role (no access keys stored in GitHub).
+# ============================================================================
+name: "4. FinTech Infra - Deploy"
+
+on:
+  push:
+    branches:
+      - dev
+    paths:
+      - "Terraform-FinTech-Infra/**"
+      - "!Terraform-FinTech-Infra/**/*.md" # README changes do not redeploy
+      - ".github/workflows/4.fintech-infra-deploy.yaml"
+  workflow_dispatch: # manual "Run workflow" button
+
+# id-token: write lets the job request an OIDC token to log in to AWS
+permissions:
+  id-token: write
+  contents: read
+
+# Never let a deploy and a destroy (or two deploys) run at the same time
+concurrency:
+  group: fintech-infra
+  cancel-in-progress: false
+
+env:
+  AWS_REGION: us-east-1
+  TF_VERSION: "1.17.2"
+  TF_IN_AUTOMATION: "true" # shorter, CI-friendly Terraform output
+  TF_INPUT: "false" # never wait for keyboard input
+  INFRA_DIR: Terraform-FinTech-Infra
+
+jobs:
+  deploy:
+    name: Deploy IAM → S3 → ECR → Networking → EKS
+    runs-on: ubuntu-latest # GitHub-hosted runner (not self-hosted)
+    if: github.ref == 'refs/heads/dev' # manual runs are allowed from dev only
+    timeout-minutes: 120 # EKS alone can take ~20 minutes
+
+    steps:
+      # ---------- 1. Prepare the runner ----------
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.FinTech_Enterprise_Project_GithubActions_OIDC_Role }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Show AWS identity
+        run: aws sts get-caller-identity
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ env.TF_VERSION }}
+          terraform_wrapper: false # plain terraform output, no wrapper script
+
+      - name: Terraform format check (all stacks)
+        working-directory: ${{ env.INFRA_DIR }}
+        run: terraform fmt -check -recursive
+
+      # ---------- 2. Deploy each stack in order ----------
+      # Every stack runs the same steps: init -> validate -> plan -> apply the saved plan.
+      - name: "1/5 IAM"
+        working-directory: ${{ env.INFRA_DIR }}/IAM
+        run: |
+          rm -f plan1
+          terraform init
+          terraform validate
+          terraform plan -var-file="terraform.tfvars" -out plan1
+          terraform apply plan1
+
+      - name: "2/5 S3"
+        working-directory: ${{ env.INFRA_DIR }}/S3
+        run: |
+          rm -f plan1
+          terraform init
+          terraform validate
+          terraform plan -var-file="terraform.tfvars" -out plan1
+          terraform apply plan1
+
+      - name: "3/5 ECR"
+        working-directory: ${{ env.INFRA_DIR }}/ECR
+        run: |
+          rm -f plan1
+          terraform init
+          terraform validate
+          terraform plan -var-file="terraform.tfvars" -out plan1
+          terraform apply plan1
+
+      - name: "4/5 Networking"
+        working-directory: ${{ env.INFRA_DIR }}/Networking
+        run: |
+          rm -f plan1
+          terraform init
+          terraform validate
+          terraform plan -var-file="terraform.tfvars" -out plan1
+          terraform apply plan1
+
+      - name: "5/5 EKS"
+        working-directory: ${{ env.INFRA_DIR }}/EKS
+        run: |
+          rm -f plan1
+          terraform init
+          terraform validate
+          terraform plan -var-file="terraform.tfvars" -out plan1
+          terraform apply plan1
+
+      # ---------- 3. Quick health check ----------
+      - name: Verify EKS nodes and autoscaler
+        run: |
+          aws eks update-kubeconfig --name FinTech-Cluster --region "$AWS_REGION"
+          kubectl get nodes -o wide
+          kubectl get pods -n kube-system
