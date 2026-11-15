@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1300 420" width="1300" height="420" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+<title>🗃️ Multi state files · one encrypted S3 backend</title>
+<defs>
+<linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0a0f1e"/><stop offset="1" stop-color="#151b31"/></linearGradient>
+<filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<style>
+.flow{fill:none;stroke-dasharray:9 7;animation:dash 1.1s linear infinite}
+.line{fill:none}
+@keyframes dash{to{stroke-dashoffset:-16}}
+.pulse{animation:pulse 2.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.7}50%{opacity:1}}
+.t{fill:#eef3f8;font-size:13.5px;font-weight:700}
+.ts{fill:#aab8cb;font-size:11.5px}
+.h{fill:#0a0f1e;font-size:14px;font-weight:800}
+.hc{fill:#0a0f1e;font-size:11px;font-weight:700}
+.lab{fill:#d6deea;font-size:11px;font-style:italic}
+</style></defs>
+<rect width="1300" height="420" rx="18" fill="url(#bgGrad)"/>
+<text x="36" y="42" class="t" font-size="21">🗃️ Multi state files · one encrypted S3 backend</text>
+<text x="36" y="66" class="ts" font-size="12.5">Each root module in terraform-infra/ writes its own .tfstate · small blast radius · parallel work · native S3 locking</text>
+<path id="p1" class="flow" d="M320,182 C470,182 520,182 670,182" stroke="#4facfe" stroke-width="2.4" opacity="0.85"/>
+<path id="p2" class="flow" d="M320,240 C470,240 520,240 670,240" stroke="#ff9900" stroke-width="2.4" opacity="0.85"/>
+<path id="p3" class="flow" d="M320,298 C470,298 520,298 670,298" stroke="#43e97b" stroke-width="2.4" opacity="0.85"/>
+<rect x="640" y="100" width="620" height="250" rx="20" fill="#173a16" stroke="#7ddc5f" stroke-width="2.5" filter="url(#glow)"/>
+<text x="660" y="130" text-anchor="start" class="t" fill="#c8f7b5" font-size="15">🪣 s3://fintech-project-statefile-bucket</text>
+<text x="660" y="330" text-anchor="start" class="ts" fill="#c8f7b5" font-size="12.5">🔐 encrypt = true  ·  🔒 use_lockfile = true (no DynamoDB)</text>
+<rect x="40" y="160" width="280" height="44" rx="12" fill="#0f2036" stroke="#4facfe" stroke-width="1.8"/>
+<text x="180.0" y="187.0" text-anchor="middle" class="t">🌐 networking/prod</text>
+<text x="680" y="187" text-anchor="start" font-size="12.5" fill="#dff7d9" font-family="Consolas, Menlo, monospace">product-networking/envs/prod/networking.tfstate</text>
+<rect x="40" y="218" width="280" height="44" rx="12" fill="#2d1c05" stroke="#ff9900" stroke-width="1.8"/>
+<text x="180.0" y="245.0" text-anchor="middle" class="t">🔐 iam</text>
+<text x="680" y="245" text-anchor="start" font-size="12.5" fill="#dff7d9" font-family="Consolas, Menlo, monospace">product-iam/iam-roles.tfstate</text>
+<rect x="40" y="276" width="280" height="44" rx="12" fill="#0d2a22" stroke="#43e97b" stroke-width="1.8"/>
+<text x="180.0" y="303.0" text-anchor="middle" class="t">🪣 s3</text>
+<text x="680" y="303" text-anchor="start" font-size="12.5" fill="#dff7d9" font-family="Consolas, Menlo, monospace">product-s3/envs/s3.tfstate</text>
+<g><rect x="1150" y="167" width="96" height="24" rx="12" fill="#ffd200"/><text x="1198" y="184" text-anchor="middle" font-size="11.5" font-weight="800" fill="#2b2200">🔒 .tflock</text><animate attributeName="opacity" values="1;1;0;0;1" keyTimes="0;.45;.5;.95;1" dur="2.4s" repeatCount="indefinite"/></g>
+<rect x="24" y="369" width="1252" height="46" rx="12" fill="#0d1526" stroke="#2b3a55"/>
+<circle cx="40" cy="392" r="6" fill="#4facfe"/>
+<text x="52" y="396" text-anchor="start" class="t" font-size="12">networking state (per environment)</text>
+<circle cx="337.6" cy="392" r="6" fill="#ff9900"/>
+<text x="349.6" y="396" text-anchor="start" class="t" font-size="12">IAM state (global)</text>
+<circle cx="516.8000000000001" cy="392" r="6" fill="#43e97b"/>
+<text x="528.8000000000001" y="396" text-anchor="start" class="t" font-size="12">S3 state (global)</text>
+<g filter="url(#glow)">
+<rect x="-8" y="-5.5" width="16" height="11" rx="2.5" fill="#4facfe"><animateMotion dur="2.6s" repeatCount="indefinite" begin="0.0s"><mpath xlink:href="#p1"/></animateMotion></rect>
+<rect x="-8" y="-5.5" width="16" height="11" rx="2.5" fill="#ff9900"><animateMotion dur="2.6s" repeatCount="indefinite" begin="0.4s"><mpath xlink:href="#p2"/></animateMotion></rect>
+<rect x="-8" y="-5.5" width="16" height="11" rx="2.5" fill="#43e97b"><animateMotion dur="2.6s" repeatCount="indefinite" begin="0.8s"><mpath xlink:href="#p3"/></animateMotion></rect>
+</g>
+</svg>
