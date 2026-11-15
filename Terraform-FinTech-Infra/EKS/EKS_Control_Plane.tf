@@ -46,20 +46,8 @@ resource "aws_eks_cluster" "eks_control_plane" {
 
 data "aws_caller_identity" "current_aws_user" {}
 
-resource "aws_eks_access_entry" "root_admin_entry" {
-  cluster_name  = aws_eks_cluster.eks_control_plane.name
-  principal_arn = "arn:aws:iam::${data.aws_caller_identity.current_aws_user.account_id}:root"
-  type          = "STANDARD"
-}
-
-resource "aws_eks_access_policy_association" "root_admin_policy" {
-  cluster_name  = aws_eks_cluster.eks_control_plane.name
-  principal_arn = aws_eks_access_entry.root_admin_entry.principal_arn
-  policy_arn    = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
-  access_scope {
-    type = "cluster"
-  }
-}
+# The cluster creator (root) already gets cluster-admin from
+# bootstrap_cluster_creator_admin_permissions = true, so no separate root access entry is needed.
 
 resource "aws_eks_access_entry" "hassan_devops_engineer_entry" {
   cluster_name      = aws_eks_cluster.eks_control_plane.name
