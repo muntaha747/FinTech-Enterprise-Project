@@ -76,7 +76,7 @@
     <rect x="1098" y="240" width="92" height="24" rx="12" fill="#a0c4ff"/><text x="1144" y="257" class="chip" text-anchor="middle">10.20.23.0</text>
     <text x="820" y="292" class="ts">🌐 IGW ✅   🔁 NAT ✅</text>
     <text x="820" y="314" class="ts">🟢 gateway: s3</text>
-    <text x="820" y="336" class="ts">🟣 interface: ecr.api · ecr.dkr · logs · secretsmanager</text>
+    <text x="820" y="336" class="ts">🟣 interface: ecr.api · ecr.dkr · secretsmanager · kms</text>
   </g>
 
   <!-- DATA -->
@@ -95,7 +95,7 @@
     <rect x="220" y="574" width="100" height="26" rx="13" fill="#ffd6a5"/><text x="270" y="592" class="chip" text-anchor="middle">10.30.22.0/24</text>
     <rect x="340" y="574" width="90"  height="26" rx="13" fill="#ffd6a5"/><text x="385" y="592" class="chip" text-anchor="middle">10.30.23.0/24</text>
     <text x="60" y="636" class="ts">🌐 IGW ✖   🔁 NAT ✖   (no internet path)</text>
-    <text x="60" y="658" class="ts">🟢 gateway: s3 · dynamodb</text>
+    <text x="60" y="658" class="ts">🟢 gateway: s3</text>
     <text x="60" y="680" class="ts">🟣 interface: kms</text>
   </g>
 
@@ -114,9 +114,9 @@
     <rect x="886" y="574" width="100" height="26" rx="13" fill="#d7b8ff"/><text x="936" y="592" class="chip" text-anchor="middle">10.40.11.0/24</text>
     <rect x="990" y="574" width="100" height="26" rx="13" fill="#d7b8ff"/><text x="1040" y="592" class="chip" text-anchor="middle">10.40.12.0/24</text>
     <rect x="1094" y="574" width="100" height="26" rx="13" fill="#d7b8ff"/><text x="1144" y="592" class="chip" text-anchor="middle">10.40.13.0/24</text>
-    <text x="820" y="636" class="ts">🌐 IGW ✅   🔁 NAT ✖</text>
+    <text x="820" y="636" class="ts">🌐 IGW ✅   🔁 NAT ✅</text>
     <text x="820" y="658" class="ts">🟢 gateway: s3</text>
-    <text x="820" y="680" class="ts">🟣 interface: ssm · ssmmessages · ec2messages</text>
+    <text x="820" y="680" class="ts">🟣 interface: —</text>
   </g>
 
   <!-- ===== hub ===== -->

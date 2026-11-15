@@ -1,308 +1,132 @@
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=venom&color=0:0f2027,40:203a43,70:2c5364,100:00c9a7&height=280&section=header&text=FinTech%20Enterprise%20Project&fontSize=56&fontColor=ffffff&animation=twinkling&fontAlignY=40&desc=4%20VPCs%20%7C%20Transit%20Gateway%20%7C%20EKS%20%7C%20GitOps%20%7C%20MLOps&descAlignY=62&descSize=20" alt="banner"/>
-
-[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=22&pause=1000&color=00C9A7&center=true&vCenter=true&width=900&lines=A+replica+of+real-world+FinTech+platforms;5+microservices+on+Amazon+EKS;Edge+%C2%B7+App+%C2%B7+Data+%C2%B7+Ops+VPCs+joined+by+a+Transit+Gateway;Argo+CD+GitOps+%2B+Kubeflow+%2F+MLflow+%2F+KServe+MLOps;Built+for+Platform+%2F+Senior+DevOps+Engineers)](https://git.io/typing-svg)
+<img src="https://capsule-render.vercel.app/api?type=venom&color=0:0f2027,40:203a43,70:2c5364,100:00c9a7&height=240&section=header&text=FinTech%20Enterprise%20Project&fontSize=56&fontColor=ffffff&animation=twinkling&fontAlignY=40&desc=4%20VPCs%20%7C%20Transit%20Gateway%20%7C%20EKS%20%7C%20GitOps%20%7C%20MLOps&descAlignY=62&descSize=20" alt="banner"/>
 
 ![AWS](https://img.shields.io/badge/AWS-232F3E?style=for-the-badge&logo=amazonaws&logoColor=FF9900)
-![Kubernetes](https://img.shields.io/badge/Amazon%20EKS-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white)
+![Amazon EKS](https://img.shields.io/badge/Amazon%20EKS-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white)
 ![Terraform](https://img.shields.io/badge/Terraform-7B42BC?style=for-the-badge&logo=terraform&logoColor=white)
 ![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-2088FF?style=for-the-badge&logo=githubactions&logoColor=white)
-![Argo CD](https://img.shields.io/badge/Argo%20CD-EF7B4D?style=for-the-badge&logo=argo&logoColor=white)
-![Istio](https://img.shields.io/badge/Istio-466BB0?style=for-the-badge&logo=istio&logoColor=white)
-![Vault](https://img.shields.io/badge/Vault-FFEC6E?style=for-the-badge&logo=vault&logoColor=black)
-![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
-![Go](https://img.shields.io/badge/Go-00ADD8?style=for-the-badge&logo=go&logoColor=white)
-![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
-![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
-![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white)
-![Kafka](https://img.shields.io/badge/Kafka-231F20?style=for-the-badge&logo=apachekafka&logoColor=white)
-![MLflow](https://img.shields.io/badge/MLflow-0194E2?style=for-the-badge&logo=mlflow&logoColor=white)
-![Prometheus](https://img.shields.io/badge/Prometheus-E6522C?style=for-the-badge&logo=prometheus&logoColor=white)
-![Grafana](https://img.shields.io/badge/Grafana-F46800?style=for-the-badge&logo=grafana&logoColor=white)
-
-![Microservices](https://img.shields.io/badge/Microservices-5-00c9a7?style=flat-square)
-![VPCs](https://img.shields.io/badge/VPCs-Edge%20%7C%20App%20%7C%20Data%20%7C%20Ops-ff9900?style=flat-square)
-![Layers](https://img.shields.io/badge/Layers-CI%2FCD%20%7C%20Edge%20%7C%20Network%20%7C%20Orchestration%20%7C%20App%20%7C%20Data-blueviolet?style=flat-square)
-![Region](https://img.shields.io/badge/Region-us--east--1-232F3E?style=flat-square)
-![Status](https://img.shields.io/badge/Status-Actively%20Evolving-brightgreen?style=flat-square)
+![Checkov](https://img.shields.io/badge/Checkov-0%20failed-43e97b?style=for-the-badge)
 
 </div>
 
----
-
-## 🎬 Architecture at a Glance
-
-> **20 animated diagrams.** Every moving dot is real traffic, a query, an event or state flowing through the platform.
-
-### 🏛️ Architecture
-
-#### 1. FinTech infrastructure layers
-
-<div align="center">
-
-<img src="docs/diagrams/infrastructure-layers-v2.svg" width="100%" alt="FinTech infrastructure layers: Six layers plus identity and observability pillars · the comet is a request travelling down the stack"/>
-
-<sub>Six layers plus identity and observability pillars · the comet is a request travelling down the stack</sub>
-
-</div>
-
-#### 2. Regional architecture
-
-<div align="center">
-
-<img src="docs/diagrams/architecture-overview-v2.svg" width="100%" alt="Regional architecture: Edge, app, data and ops VPCs on one Transit Gateway · request, data, metrics, GitOps, endpoint and egress traffic"/>
-
-<sub>Edge, app, data and ops VPCs on one Transit Gateway · request, data, metrics, GitOps, endpoint and egress traffic</sub>
-
-</div>
-
-#### 3. Hub-and-spoke network
-
-<div align="center">
-
-<img src="docs/diagrams/network-topology-v2.svg" width="100%" alt="Hub-and-spoke network: Every subnet per AZ · traffic moving through each Transit Gateway attachment"/>
-
-<sub>Every subnet per AZ · traffic moving through each Transit Gateway attachment</sub>
-
-</div>
-
-### 🚦 Traffic & Requests
-
-#### 4. Live traffic flow
-
-<div align="center">
-
-<img src="docs/diagrams/traffic-flow-v2.svg" width="100%" alt="Live traffic flow: Six traffic types moving through the platform at once"/>
-
-<sub>Six traffic types moving through the platform at once</sub>
-
-</div>
-
-#### 5. Payment request hop by hop
-
-<div align="center">
-
-<img src="docs/diagrams/payment-hops.svg" width="100%" alt="Payment request hop by hop: Every network hop of one payment, step by step"/>
-
-<sub>Every network hop of one payment, step by step</sub>
-
-</div>
-
-#### 6. Payment flow through the services
-
-<div align="center">
-
-<img src="docs/diagrams/payment-flow.svg" width="100%" alt="Payment flow through the services: BFF → Payment → Fraud (KServe) → Ledger → Kafka → Notification · low and high risk"/>
-
-<sub>BFF → Payment → Fraud (KServe) → Ledger → Kafka → Notification · low and high risk</sub>
-
-</div>
-
-#### 7. How a packet picks its path
-
-<div align="center">
-
-<img src="docs/diagrams/route-decision.svg" width="100%" alt="How a packet picks its path: Six packets, six destinations: local, S3, ECR/KMS, Transit Gateway, NAT, dropped"/>
-
-<sub>Six packets, six destinations: local, S3, ECR/KMS, Transit Gateway, NAT, dropped</sub>
-
-</div>
-
-#### 8. Transit Gateway route lookup
-
-<div align="center">
-
-<img src="docs/diagrams/tgw-lookup.svg" width="100%" alt="Transit Gateway route lookup: How a pod in the app VPC reaches MySQL in the data VPC"/>
-
-<sub>How a pod in the app VPC reaches MySQL in the data VPC</sub>
-
-</div>
-
-### 🧩 Services & Data
-
-#### 9. Microservices calls, events and data
-
-<div align="center">
-
-<img src="docs/diagrams/microservices.svg" width="100%" alt="Microservices calls, events and data: Service calls, Kafka events, data queries and model inference"/>
-
-<sub>Service calls, Kafka events, data queries and model inference</sub>
-
-</div>
-
-### 🛡️ Security & Identity
-
-#### 10. Security checkpoints and layers
-
-<div align="center">
-
-<img src="docs/diagrams/security-layers.svg" width="100%" alt="Security checkpoints and layers: A clean request passes 9 gates · a malicious one is blocked at the WAF"/>
-
-<sub>A clean request passes 9 gates · a malicious one is blocked at the WAF</sub>
-
-</div>
-
-#### 11. IAM roles per environment
-
-<div align="center">
-
-<img src="docs/diagrams/iam-roles-v2.svg" width="100%" alt="IAM roles per environment: Who assumes which role, and which environment enables it"/>
-
-<sub>Who assumes which role, and which environment enables it</sub>
-
-</div>
-
-#### 12. GitHub Actions to AWS with OIDC
-
-<div align="center">
-
-<img src="docs/diagrams/github-oidc.svg" width="100%" alt="GitHub Actions to AWS with OIDC: Short-lived credentials, no stored keys"/>
-
-<sub>Short-lived credentials, no stored keys</sub>
-
-</div>
-
-### 🔁 Delivery & Infrastructure as Code
-
-#### 13. CI/CD and GitOps
-
-<div align="center">
-
-<img src="docs/diagrams/cicd-gitops.svg" width="100%" alt="CI/CD and GitOps: App images, infrastructure changes and models flowing to production"/>
-
-<sub>App images, infrastructure changes and models flowing to production</sub>
-
-</div>
-
-#### 14. Terraform for_each to four VPCs
-
-<div align="center">
-
-<img src="docs/diagrams/terraform-foreach-v2.svg" width="100%" alt="Terraform for_each to four VPCs: terraform.tfvars → module → 4 VPCs → Transit Gateway"/>
-
-<sub>terraform.tfvars → module → 4 VPCs → Transit Gateway</sub>
-
-</div>
-
-#### 15. VPC endpoints
-
-<div align="center">
-
-<img src="docs/diagrams/vpc-endpoints.svg" width="100%" alt="VPC endpoints: Gateway vs Interface endpoints, and the internet path they replace"/>
-
-<sub>Gateway vs Interface endpoints, and the internet path they replace</sub>
-
-</div>
-
-#### 16. Multi state file backend
-
-<div align="center">
-
-<img src="docs/diagrams/state-backend-v4.svg" width="100%" alt="Multi state file backend: Every stack writes its own state into one encrypted S3 bucket"/>
-
-<sub>Every stack writes its own state into one encrypted S3 bucket</sub>
-
-</div>
-
-#### 17. Native S3 state locking
-
-<div align="center">
-
-<img src="docs/diagrams/state-locking.svg" width="100%" alt="Native S3 state locking: One writer at a time, no DynamoDB"/>
-
-<sub>One writer at a time, no DynamoDB</sub>
-
-</div>
-
-### 🔭 Operations & MLOps
-
-#### 18. Observability
-
-<div align="center">
-
-<img src="docs/diagrams/observability.svg" width="100%" alt="Observability: Metrics, logs, AWS telemetry, runtime security and ML drift into Grafana"/>
-
-<sub>Metrics, logs, AWS telemetry, runtime security and ML drift into Grafana</sub>
-
-</div>
-
-#### 19. MLOps continuous training loop
-
-<div align="center">
-
-<img src="docs/diagrams/mlops-loop.svg" width="100%" alt="MLOps continuous training loop: Train → register → serve → monitor → retrain"/>
-
-<sub>Train → register → serve → monitor → retrain</sub>
-
-</div>
-
-### 🗺️ Roadmap
-
-#### 20. Roadmap
-
-<div align="center">
-
-<img src="docs/diagrams/roadmap.svg" width="100%" alt="Roadmap: Done, in progress and planned, layer by layer"/>
-
-<sub>Done, in progress and planned, layer by layer</sub>
-
-</div>
+> **An AWS FinTech platform, built layer by layer with Terraform.**
+> Four isolated VPCs joined by a Transit Gateway, Amazon EKS with blue/green node groups, security scanned with Checkov, and deployed by a GitHub Actions pipeline that never stores an AWS key.
 
 ---
 
 ## 📑 Table of Contents
 
-- [Architecture at a Glance](#-architecture-at-a-glance)
-- [About](#-about-this-project)
-- [Project Overview & Architecture](#%EF%B8%8F-project-overview--architecture)
-- [Tech Stack](#-tech-stack)
-- [Live Traffic Flow](#-live-traffic-flow)
-- [Microservices](#-microservices)
-- [Request Flow](#-request-flow-making-a-payment)
-- [Security by Layer](#%EF%B8%8F-security-by-layer)
-- [CI/CD & GitOps](#-cicd--gitops)
-- [MLOps](#-mlops-lifecycle)
-- [Observability](#-observability)
-- [Infrastructure Build: Networking & IAM](#%EF%B8%8F-infrastructure-build-networking--iam)
-- [Roadmap](#%EF%B8%8F-roadmap)
+| # | Section | What you will find |
+|:-:|---|---|
+| 1 | [About This Project](#1-about-this-project) | What it is, and what is built today vs planned |
+| 2 | [Platform Architecture](#2-platform-architecture) | The six layers, the regional picture, the tech stack |
+| 3 | [Terraform Infrastructure: The 4 VPCs](#3-terraform-infrastructure-the-4-vpcs) | What Terraform builds, each VPC in plain words, routing and endpoints |
+| 4 | [Traffic and Request Flows](#4-traffic-and-request-flows) | How a request and a payment travel through the platform |
+| 5 | [Kubernetes Platform on EKS](#5-kubernetes-platform-on-eks) | Control plane, node groups, autoscaling, blue/green upgrades |
+| 6 | [Microservices](#6-microservices) | The five services and how they talk |
+| 7 | [Security](#7-security) | Defence in depth, the Checkov scan, IAM roles, keyless CI |
+| 8 | [Infrastructure as Code](#8-infrastructure-as-code) | Folder layout, the four environments, remote state and locking |
+| 9 | [CI/CD](#9-cicd) | The infrastructure pipeline and the application delivery path |
+| 10 | [Observability](#10-observability) | Metrics, logs and alerts |
+| 11 | [MLOps](#11-mlops) | The fraud model's training loop |
+| 12 | [Roadmap](#12-roadmap) | Done, in progress, planned |
+| 13 | [Repository Structure](#13-repository-structure) | Where everything lives |
+
+<details>
+<summary><b>Full list of the 24 diagrams</b></summary>
+
+| Section | Diagrams |
+|---|---|
+| 2 | [Infrastructure layers](#21-infrastructure-layers) · [Regional architecture](#22-regional-architecture) |
+| 3 | [What Terraform builds today](#31-what-terraform-builds-today) · [Hub-and-spoke network](#33-hub-and-spoke-network) · [One module, four VPCs](#34-one-module-four-vpcs) · [VPC endpoints](#35-vpc-endpoints) · [How a packet picks its path](#36-how-a-packet-picks-its-path) · [Transit Gateway route lookup](#37-transit-gateway-route-lookup) |
+| 4 | [Live traffic flow](#41-live-traffic-flow) · [Payment hop by hop](#42-one-payment-hop-by-hop) · [Payment through the services](#43-one-payment-through-the-services) |
+| 5 | [EKS platform](#5-kubernetes-platform-on-eks) |
+| 6 | [Microservices](#6-microservices) |
+| 7 | [Security checkpoints](#71-security-checkpoints) · [Checkov hardening](#72-checkov-security-scan) · [IAM roles](#73-iam-roles-per-environment) · [GitHub OIDC](#74-github-actions-to-aws-without-keys) |
+| 8 | [State files](#82-remote-state-one-file-per-stack) · [State locking](#83-state-locking) |
+| 9 | [Pipeline and environments](#91-infrastructure-pipeline-and-environments) · [App delivery and GitOps](#92-application-delivery-and-gitops) |
+| 10–12 | [Observability](#10-observability) · [MLOps loop](#11-mlops) · [Roadmap](#12-roadmap) |
+
+</details>
+
+> **How to read this page:** every diagram is animated (the moving dots are traffic, events or state) and has a short explanation under it, followed by **🎤 interview talking points** you can say out loud.
+> Sections are tagged 🟢 **Built** (the Terraform code is in this repository) or 🔵 **Target design** (the architecture the project is growing into).
 
 ---
 
-## 🌟 About This Project
+## 1. About This Project
 
 > **This repository is a replica of the FinTech platform from my past projects and professional work experience.**
 
-It is an **AWS FinTech platform on Amazon EKS** built from **6 infrastructure layers** (CI/CD & DevTools → Edge → Network → Orchestration → Application → Data) plus two cross-cutting pillars (**Identity & Access** and **Observability**). It runs across **4 VPCs** (edge, app, data, ops) joined by a **Transit Gateway**.
+It is an **AWS FinTech platform on Amazon EKS** made of **6 infrastructure layers** (CI/CD → Edge → Network → Orchestration → Application → Data) plus two pillars that cut across all of them (**Identity & Access** and **Observability**). It runs in **4 VPCs** (Edge, App, Database, Ops) joined by a **Transit Gateway**.
 
-- 🌐 **Edge:** Route 53, CloudFront, WAF, Shield Advanced and API Gateway
-- ⚙️ **Microservices:** **5** services on EKS: BFF (Node.js), Payment (Go), Ledger (Java), Fraud (Python) and Notification (Node.js)
-- 🗄️ **Data:** MySQL, Valkey, MongoDB, OpenSearch and Kafka
-- 🛠️ **Ops:** Prometheus, Grafana, Argo CD, Vault, Kubeflow and MLflow
-- 🤖 **MLOps:** Airflow, Kubeflow, MLflow and KServe for fraud scoring, monitored by Evidently AI and WhyLogs
-
-The project grows in stages. Each stage adds a layer of the architecture below, with security built in at every layer.
+The project grows in stages. Each stage adds one layer, with security built in from the start.
 
 <div align="center">
 
-| ⚙️ Microservices | 🧱 Layers | 🏢 VPCs | 🧰 Tools | ☁️ Region |
-|:---:|:---:|:---:|:---:|:---:|
-| **5** | **6 + 2 pillars** | **4** | **48** | **us-east-1** |
+| ⚙️ Microservices | 🧱 Layers | 🏢 VPCs | 🌍 Environments | 🧰 Tools | ☁️ Region |
+|:---:|:---:|:---:|:---:|:---:|:---:|
+| **5** | **6 + 2 pillars** | **4 per environment** | **Prod · Stage · QA · Dev** | **48** | **us-east-1** |
 
 </div>
+
+### What is built today, and what is planned
+
+| Status | Layer | What exists in this repository |
+|:--:|---|---|
+| 🟢 Built | **Foundation** | Remote state in S3 with native locking · IAM roles for the platform team, app teams and CI/CD |
+| 🟢 Built | **Network** | 4 VPCs + Transit Gateway per environment · NAT · VPC endpoints · VPC Flow Logs · locked default security groups |
+| 🟢 Built | **Storage and registry** | Versioned, KMS-encrypted S3 buckets with lifecycle rules · 4 ECR repositories with immutable tags and scan on push |
+| 🟢 Built | **Kubernetes** | Amazon EKS 1.36 · 4 managed node groups (blue/green × core/ML) · Cluster Autoscaler with IRSA · encrypted secrets · audit logs |
+| 🟢 Built | **Infrastructure pipeline** | GitHub Actions deploy and destroy workflows · OIDC login · Checkov gate · 4 environments |
+| 🔵 Planned | **Edge** | Route 53 · CloudFront · WAF · Shield Advanced · API Gateway |
+| 🔵 Planned | **Platform add-ons** | Karpenter · KEDA · Calico · Istio · Argo CD · Argo Rollouts |
+| 🔵 Planned | **Data and services** | MySQL · Valkey · MongoDB · OpenSearch · Kafka · the 5 microservices |
+| 🔵 Planned | **Operate and MLOps** | Prometheus · Grafana · Loki · Vault · Falco · Airflow · Kubeflow · MLflow · KServe |
 
 ---
 
-## 🗺️ Project Overview & Architecture
+## 2. Platform Architecture
+
+### 2.1 Infrastructure Layers
+
+🔵 **Target design** (layers 03 and 04 are partly 🟢 built)
 
 <div align="center">
-
-[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=20&pause=900&color=00C9A7&center=true&vCenter=true&width=900&lines=6+infrastructure+layers+%C2%B7+2+cross-cutting+pillars;4+VPCs+%C2%B7+1+Transit+Gateway+%C2%B7+Amazon+EKS;48+tools+%C2%B7+one+consistent+architecture)](https://git.io/typing-svg)
-
+<img src="docs/diagrams/infrastructure-layers-v2.svg" width="100%" alt="Six infrastructure layers plus the identity and observability pillars"/>
 </div>
 
-### 🧰 Tech Stack
+**📝 What this shows.** The platform is a stack of six layers. A customer request enters at the top (**Edge**) and travels down: through the **Network**, into **Kubernetes**, to the **Application** code and finally to the **Data** stores. **CI/CD** is the layer that ships every other layer. Two pillars stand beside the stack because every layer needs them: **Identity & Access** (who is allowed to do what) and **Observability** (can we see what is happening).
+
+Thinking in layers keeps responsibilities clear. A network engineer can change a route without touching application code, and each layer adds its own security control, so no single mistake exposes the platform.
+
+> 🎤 **Interview talking points**
+> - "I design in layers so each team owns one concern and a change in one layer has a small blast radius."
+> - "Identity and observability are not layers, they are cross-cutting: every layer authenticates, and every layer emits telemetry."
+
+### 2.2 Regional Architecture
+
+🔵 **Target design** (the VPCs, Transit Gateway, NAT, endpoints and EKS are 🟢 built)
+
+<div align="center">
+<img src="docs/diagrams/architecture-overview-v2.svg" width="100%" alt="Regional architecture: Edge, App, Data and Ops VPCs on one Transit Gateway"/>
+</div>
+
+**📝 What this shows.** One AWS region, four VPCs, one hub. Each VPC has one job:
+
+- **Edge** is the front door. It is the only place the public internet is meant to reach.
+- **App** runs the workloads on EKS.
+- **Data** holds the databases and has **no route to the internet at all**.
+- **Ops** holds the tooling: monitoring, GitOps and secrets.
+
+The **Transit Gateway** in the middle is the only road between them. AWS services such as ECR, S3 and KMS are reached through **VPC endpoints**, so that traffic never leaves the AWS network. Outbound calls to the internet go through a **NAT Gateway**, which allows traffic out but never in.
+
+> 🎤 **Interview talking points**
+> - "Separating edge, app, data and ops into their own VPCs is network segmentation, a core PCI-DSS requirement."
+> - "The data tier has no internet path, in or out. It is reachable only over the Transit Gateway from the CIDRs I allow."
+
+### 2.3 Tech Stack
 
 **48 tools**, every one of them shown in the two diagrams above, grouped exactly like the layers.
 
@@ -457,7 +281,7 @@ The project grows in stages. Each stage adds a layer of the architecture below, 
 
 </details>
 
-### 📋 Layers at a glance
+### 2.4 Layers at a Glance
 
 | # | Layer | Tools | Purpose |
 |:-:|---|---|---|
@@ -470,40 +294,238 @@ The project grows in stages. Each stage adds a layer of the architecture below, 
 | 🔑 | **Identity & Access** | AWS IAM (roles, policies) · HashiCorp Vault | Least privilege and secrets, across every layer |
 | 🔭 | **Observability** | Prometheus · Grafana · Loki · Logstash · Falco · Evidently AI · WhyLogs · CloudWatch | Metrics, logs, runtime security and ML/data drift, across every layer |
 
-### 🗺️ VPC breakdown
+---
 
-| VPC | What runs there | How it connects |
+## 3. Terraform Infrastructure: The 4 VPCs
+
+🟢 **Built** · code in [`Terraform-FinTech-Infra/`](Terraform-FinTech-Infra/) · detailed guide in [`Terraform-FinTech-Infra/README.md`](Terraform-FinTech-Infra/README.md)
+
+### 3.1 What Terraform Builds Today
+
+<div align="center">
+<img src="docs/diagrams/terraform-infra-4vpcs.svg" width="100%" alt="What Terraform builds: 4 VPCs, a Transit Gateway and EKS in the App VPC, with live traffic flows"/>
+</div>
+
+**📝 What this shows.** This is the real infrastructure that `terraform apply` creates for one environment. Follow the coloured arrows:
+
+| Arrow | Traffic | Path |
 |---|---|---|
-| 🚪 **VPC A · Edge** `10.10.0.0/16` | Route 53 · CloudFront · WAF + Shield Advanced · API Gateway | Internet-facing. API Gateway forwards to the app VPC's ALB (VPC Link via Transit Gateway) |
-| ⚙️ **VPC B · App** `10.20.0.0/16` | ALB → Amazon EKS: BFF, Payment, Ledger, Fraud, Notification services · KServe · Airflow · Kubeflow · Istio · Calico · KEDA · Karpenter | Transit Gateway to data and ops · VPC endpoints to ECR and S3 · NAT Gateway for outbound calls |
-| 🗄️ **VPC C · Data** `10.30.0.0/16` | MySQL · Valkey · Kafka · MongoDB · OpenSearch | Private only. Reached through the Transit Gateway · VPC endpoints to KMS and S3 |
-| 🛠️ **VPC D · Ops** `10.40.0.0/16` | Prometheus · Grafana · Argo CD · HashiCorp Vault · Kubeflow · MLflow | Scrapes metrics and syncs GitOps through the Transit Gateway · VPC endpoint to S3 · NAT for alerting |
-| 🔀 **Transit Gateway** | Hub for all 4 VPCs | `10.0.0.0/8 → TGW` in every route table |
-| ☁️ **Shared AWS services** | Amazon ECR · Amazon S3 · AWS KMS | Reached privately through VPC endpoints, never over the internet |
+| 🟢 Green | A request coming **in** | Internet → Edge VPC → Transit Gateway → EKS nodes in the App VPC |
+| 🔵 Blue | App talking to its **database** | EKS → Transit Gateway → Database VPC |
+| 🟦 Teal | **Ops** tooling | Ops VPC → Transit Gateway → App VPC (metrics, GitOps) |
+| 🩷 Pink | Calls going **out** | EKS → NAT Gateway → Internet (outbound only, nothing can come back in uninvited) |
+| 🟣 Purple | Private **AWS access** | EKS → VPC endpoints → ECR, S3, KMS, Secrets Manager (never over the internet) |
+| 🟡 Yellow | **Flow logs** | Every VPC → CloudWatch Logs (a record of every accepted and rejected connection) |
+
+Stage, QA and Dev are built from the **same code** and look exactly the same. Only the names and CIDR ranges change.
+
+> 🎤 **Interview talking points**
+> - "Inbound, east-west, outbound and AWS-service traffic each take a different, controlled path. That is the point of the design."
+> - "Private subnets reach the internet only through NAT, which is one-way: out, never in."
+> - "Flow logs on every VPC give me the evidence an auditor asks for and the data I need during an incident."
+
+### 3.2 The 4 VPCs in Plain Words
+
+Think of each VPC as a **separate building** with its own address range. Buildings do not share corridors, so a problem in one cannot walk into another. The Transit Gateway is the **guarded bridge** between them.
+
+| VPC | Think of it as | What Terraform puts in it (Prod) | Internet access | Who may connect in |
+|---|---|---|---|---|
+| 🚪 **FinTech-Edge** `10.10.0.0/16` | The **reception desk** | 3 public + 3 private subnets, Internet Gateway | Inbound HTTPS only | Anyone on `443` (public tier). Private tier: only `10.0.0.0/8` |
+| ⚙️ **FinTech-App** `10.20.0.0/16` | The **office floor** where work happens | 3 public + 6 private subnets, NAT Gateway, EKS cluster, endpoints for ECR, Secrets Manager, KMS and S3 | Out through NAT | `80`/`443` on the public tier for load balancers. Private tier: `443`, Vault `8200`, EFS `2049` from inside |
+| 🗄️ **FinTech-Database** `10.30.0.0/16` | The **vault room** | 6 private subnets only, endpoints for KMS and S3 | **None.** No Internet Gateway, no NAT | Only the App VPC on `5432`, `9092`, `443` (and Ops on `443`) |
+| 🛠️ **FinTech-Ops** `10.40.0.0/16` | The **control room** | 3 public + 3 private subnets, NAT Gateway | Out through NAT | Only `10.0.0.0/8` on `443` and Vault `8200` |
+
+**The building blocks, in simple words**
+
+- 🌐 **Public subnet**: has a route to the Internet Gateway. Only load balancers and NAT Gateways live here.
+- 🔐 **Private subnet**: no route in from the internet. Nodes, databases and tools live here.
+- 🔁 **NAT Gateway**: a one-way door. Private workloads can call out (for example to a payment network), but nobody outside can start a connection in.
+- 🚇 **VPC endpoint**: a private tunnel to an AWS service. Image pulls from ECR and secret reads never touch the internet, and you pay less NAT traffic.
+- 🔀 **Transit Gateway**: the hub. Every private route table has one extra route, `10.0.0.0/8 → Transit Gateway`. Traffic for the VPC's own `/16` stays local because the more specific route wins.
+- 🧱 **Security group**: a firewall around a resource. Routes decide *where traffic can go*; security groups decide *what is allowed*.
+- 📜 **VPC Flow Logs**: a logbook of every connection, kept for one year in CloudWatch.
+- 🏗️ **3 Availability Zones**: subnets are spread across `us-east-1a`, `1b` and `1c`, so one data centre failing does not take the platform down.
+
+> 🎤 **Interview talking points**
+> - "Each VPC has a single purpose, so its security rules are short and easy to audit."
+> - "CIDR ranges never overlap, across VPCs or across environments, so everything can be routed through one Transit Gateway without NAT tricks."
+> - "Routing answers 'can the packet get there', security groups answer 'is it allowed'. You need both."
+
+### 3.3 Hub-and-Spoke Network
+
+<div align="center">
+<img src="docs/diagrams/network-topology-v2.svg" width="100%" alt="Hub-and-spoke network: every subnet per Availability Zone and the Transit Gateway attachments"/>
+</div>
+
+**📝 What this shows.** The exact subnets of the Prod environment, laid out per Availability Zone. Every VPC is a **spoke** and the Transit Gateway is the **hub**. The dots moving along the dashed lines are packets crossing a Transit Gateway attachment.
+
+Notice the App VPC has two rows of private subnets: EKS spreads its control-plane network cards and its worker nodes across all six. The Data VPC is the only one with **no** Internet Gateway and **no** NAT.
+
+> 🎤 **Interview talking points**
+> - "With hub-and-spoke, adding a fifth VPC means one new attachment. With VPC peering it would mean four new connections; a full mesh needs n(n-1)/2."
+> - "Subnets are assigned to AZs round-robin, so six subnets give exactly two per AZ."
+
+### 3.4 One Module, Four VPCs
+
+<div align="center">
+<img src="docs/diagrams/terraform-foreach-v2.svg" width="100%" alt="terraform.tfvars drives one module that creates four VPCs and attaches them to the Transit Gateway"/>
+</div>
+
+**📝 What this shows.** All four VPCs come from **one reusable module** (`Networking/modules/vpc`). The root module loops over a map in `terraform.tfvars` with `for_each`: one map entry becomes one complete VPC with its subnets, route tables, security groups, NAT, endpoints, flow logs and Transit Gateway attachment.
+
+```hcl
+module "fintech_vpcs" {
+  source   = "../modules/vpc"
+  for_each = var.vpc_setup          # one entry per VPC in terraform.tfvars
+
+  vpc_name       = each.key         # e.g. "FinTech-App"
+  vpc_cidr_block = each.value.cidr  # e.g. "10.20.0.0/16"
+  tgw_id         = module.tgw.tgw_id
+  # ...
+}
+```
+
+Adding a fifth VPC is a **data change**, not a code change: add one entry to the map.
+
+> 🎤 **Interview talking points**
+> - "I use `for_each` instead of `count` because resources are tracked by name, so removing one VPC does not shift and recreate the others."
+> - "One module, four environments, sixteen VPCs. Roughly thirty resources per VPC from a few dozen lines of configuration."
+
+### 3.5 VPC Endpoints
+
+<div align="center">
+<img src="docs/diagrams/vpc-endpoints.svg" width="100%" alt="Gateway and interface VPC endpoints compared with the internet path they replace"/>
+</div>
+
+**📝 What this shows.** Two kinds of private tunnel to AWS services, and the path they replace:
+
+- 🟢 **Gateway endpoint (S3)**: free. It is just an entry in the private route table.
+- 🟣 **Interface endpoint (ECR, KMS, Secrets Manager)**: a network card in one private subnet per AZ, protected by a security group that allows HTTPS from inside the VPC only. Private DNS means application code needs **no changes**.
+- ❌ **Without endpoints**: the same traffic would go through the NAT Gateway and over the public internet, costing more and exposing more.
+
+> 🎤 **Interview talking points**
+> - "Endpoints keep image pulls and secret reads on the AWS backbone, which is both cheaper and a smaller attack surface."
+> - "Gateway endpoints are free, so S3 always gets one. Interface endpoints cost per AZ, so I add them only where the traffic justifies it."
+
+### 3.6 How a Packet Picks Its Path
+
+<div align="center">
+<img src="docs/diagrams/route-decision.svg" width="100%" alt="Route table decision tree: local, gateway endpoint, interface endpoint, Transit Gateway, NAT or dropped"/>
+</div>
+
+**📝 What this shows.** The questions a route table asks about every packet leaving a pod, in order:
+
+1. Is the destination in **my own VPC**? → deliver locally.
+2. Is it an **AWS service** with an endpoint? → use the endpoint.
+3. Is it in `10.0.0.0/8` (**another FinTech VPC**)? → send to the Transit Gateway.
+4. Does this VPC have a **NAT Gateway**? → send out to the internet.
+5. Otherwise → **dropped**. This is exactly what happens in the Data VPC, by design.
+
+> 🎤 **Interview talking points**
+> - "Route tables use longest-prefix match, so the VPC's own /16 always beats the 10.0.0.0/8 route to the Transit Gateway."
+> - "No default route means no internet. I do not block the Data VPC with a rule; the path simply does not exist."
+
+### 3.7 Transit Gateway Route Lookup
+
+<div align="center">
+<img src="docs/diagrams/tgw-lookup.svg" width="100%" alt="Step by step: a pod in the App VPC reaching a database in the Data VPC through the Transit Gateway"/>
+</div>
+
+**📝 What this shows.** One request from an app pod to a database, step by step. The App route table sends it to the Transit Gateway, the Transit Gateway's own route table finds which attachment owns the destination CIDR, and the packet is delivered into the Data VPC. The reply takes the same road back.
+
+Routing only makes the connection *possible*. The Database VPC's security group still has to **allow** that port from the App VPC's CIDR.
+
+> 🎤 **Interview talking points**
+> - "Two lookups happen: the VPC route table, then the Transit Gateway route table."
+> - "A next step is separate Transit Gateway route tables, so Edge can never route to Data directly, even by mistake."
+
+### 3.8 What One Apply Creates
+
+`terraform apply` on `Networking/Prod` creates **126 resources**:
+
+| Resource | Count | Resource | Count |
+|---|:-:|---|:-:|
+| VPCs | 4 | Security groups (public, private, endpoint) | 11 |
+| Subnets (9 public + 18 private) | 27 | Default security groups, locked | 4 |
+| Route tables (3 public + 4 private) | 7 | S3 gateway endpoints | 4 |
+| Internet Gateways | 3 | Interface endpoints | 5 |
+| NAT Gateways + Elastic IPs | 2 + 2 | VPC Flow Logs (+ log group and IAM role each) | 4 |
+| Transit Gateway + attachments | 1 + 4 | Routes and associations | the rest |
+
+> 💰 **Cost note (before data charges).** Gateway endpoints are free. Interface endpoints cost about $7.30 per AZ per month each (5 × 3 AZs ≈ $110), each NAT Gateway about $33 per month (2 ≈ $66), each Transit Gateway attachment about $36 per month (4 ≈ $146) and the EKS control plane about $73 per month. That is why the destroy pipeline exists: the lab is torn down when it is not in use.
 
 ---
 
-## 🚦 Live Traffic Flow
+## 4. Traffic and Request Flows
 
-> 🎬 Animated diagram: [4. Live traffic flow](#4-live-traffic-flow) in the gallery at the top.
+🔵 **Target design** · these three diagrams show how the finished platform handles traffic on top of the network in section 3
 
-### 🛣️ Hop by hop: one payment request through the network
+### 4.1 Live Traffic Flow
 
-> 🎬 Animated diagram: [5. Payment request hop by hop](#5-payment-request-hop-by-hop) in the gallery at the top.
+<div align="center">
+<img src="docs/diagrams/traffic-flow-v2.svg" width="100%" alt="Six traffic types moving through the platform at once"/>
+</div>
 
-### 🧭 How a packet picks its path (route table decision)
+**📝 What this shows.** Six kinds of traffic moving at the same time: the customer request and its response, database queries, metrics and logs, private AWS access, and outbound calls. Each one has its own colour and its own path, and none of them shares a path it does not need.
 
-> 🎬 Animated diagram: [7. How a packet picks its path](#7-how-a-packet-picks-its-path) in the gallery at the top.
+> 🎤 **Interview talking points**
+> - "North-south traffic enters at the edge; east-west traffic between VPCs always crosses the Transit Gateway."
+> - "Because every traffic type has one defined path, anything on another path is an anomaly worth alerting on."
 
-### 🛡️ Security checkpoints on the way in
+### 4.2 One Payment, Hop by Hop
 
-> 🎬 Animated diagram: [10. Security checkpoints and layers](#10-security-checkpoints-and-layers) in the gallery at the top.
+<div align="center">
+<img src="docs/diagrams/payment-hops.svg" width="100%" alt="Every network hop of one payment request"/>
+</div>
+
+**📝 What this shows.** Every network hop of a single payment, numbered in order: DNS lookup, CloudFront and WAF at the edge, API Gateway, across the Transit Gateway to the load balancer and the payment pod, a short-lived database credential from Vault, the database write, the outbound call to the card network through NAT, and the response travelling back.
+
+> 🎤 **Interview talking points**
+> - "The request is filtered three times before it reaches a pod: WAF, API Gateway throttling and the load balancer."
+> - "The pod never holds a long-lived database password. Vault issues a short-lived one for each session."
+
+### 4.3 One Payment, Through the Services
+
+<div align="center">
+<img src="docs/diagrams/payment-flow.svg" width="100%" alt="Payment flow through BFF, Payment, Fraud, Ledger, Kafka and Notification"/>
+</div>
+
+**📝 What this shows.** The same payment seen from the application side. The BFF hands it to the Payment service, which asks the Fraud service for a risk score. A **low-risk** payment is written to the ledger and an event is published; a **high-risk** one is held and flagged. The Notification service reacts to the event, so sending a receipt never slows down the payment itself.
+
+> 🎤 **Interview talking points**
+> - "The fraud check is synchronous because the decision is needed before money moves. Notifications are asynchronous through Kafka because they are not."
+> - "Event-driven design means I can add a new consumer, such as analytics, without touching the Payment service."
 
 ---
 
-## 🧩 Microservices
+## 5. Kubernetes Platform on EKS
 
-All five services run on **Amazon EKS in the app VPC**, behind the **ALB**, inside the **Istio** mesh with **Calico** network policies. **KEDA** scales pods on load and Kafka lag, and **Karpenter** adds nodes.
+🟢 **Built** · code in [`Terraform-FinTech-Infra/EKS/`](Terraform-FinTech-Infra/EKS/)
+
+<div align="center">
+<img src="docs/diagrams/eks-platform.svg" width="100%" alt="EKS control plane, four node groups, the Cluster Autoscaler loop and the blue/green switch"/>
+</div>
+
+**📝 What this shows.** Everything one Terraform module (`EKS/modules/eks_cluster`) builds:
+
+- **Control plane (left).** AWS runs the Kubernetes API. Logins use **EKS access entries** tied to IAM, Kubernetes **Secrets are encrypted** with a KMS key, and all five log types (including the **audit log**) go to CloudWatch.
+- **Data plane (middle).** Four managed node groups in the App VPC's private subnets. Only **Core blue** runs a node by default. The other three exist at **zero nodes**, so they cost nothing until needed. The **ML** groups are *tainted*, which means only pods that explicitly tolerate the taint (ML inference) can land on them.
+- **Cluster Autoscaler (right).** When a pod cannot be scheduled, the autoscaler adds a node; when nodes sit idle, it removes them. It gets AWS permissions through **IRSA**: its pod, and only its pod, can use one IAM role that is limited to this cluster's node groups.
+- **Blue/green switch (bottom).** One variable, `node_color`, moves the cluster from `blue` → `both` → `green`. New nodes come up before old ones are removed.
+
+> 🎤 **Interview talking points**
+> - "IRSA gives one pod one IAM role, instead of every pod sharing the node's role. That is least privilege at pod level."
+> - "Terraform owns `min_size` and `max_size`; the autoscaler owns `desired_size`. I use `ignore_changes` so a pipeline run never removes nodes that are busy."
+> - "Node groups at zero plus scale-from-zero give me ready capacity with no idle cost."
+> - "Blue/green at node-group level gives an instant rollback path for an AMI or Kubernetes upgrade."
+
+---
+
+## 6. Microservices
+
+🔵 **Target design**
+
+All five services run on **Amazon EKS in the App VPC**, behind the load balancer, inside the **Istio** mesh with **Calico** network policies. **KEDA** scales pods on load and Kafka lag.
 
 <div align="center">
 
@@ -524,307 +546,334 @@ All five services run on **Amazon EKS in the app VPC**, behind the **ALB**, insi
 | 🧪 **Kubeflow** | app + ops VPCs | ML pipelines: train and evaluate |
 | 📒 **MLflow** | ops VPC | Experiment tracking and model registry |
 
-### 🕸️ Service Dependency Map
-
-> 🎬 Animated diagram: [9. Microservices calls, events and data](#9-microservices-calls-events-and-data) in the gallery at the top.
-
----
-
-## 💸 Request Flow: Making a Payment
-
-> 🎬 Animated diagram: [6. Payment flow through the services](#6-payment-flow-through-the-services) in the gallery at the top.
-
----
-
-## 🛡️ Security by Layer
-
-Every layer in the architecture adds its own control, and nothing depends on a single defence.
-
-> 🎬 Animated diagram: [10. Security checkpoints and layers](#10-security-checkpoints-and-layers) in the gallery at the top.
-
----
-
-## 🔁 CI/CD & GitOps
-
-**GitHub Actions** builds, **Terraform** provisions, **Argo CD** (ops VPC) syncs and **Argo Rollouts** releases progressively onto **EKS** (app VPC). Models follow the same path through **Airflow → Kubeflow → MLflow → KServe**.
-
-> 🎬 Animated diagram: [13. CI/CD and GitOps](#13-cicd-and-gitops) in the gallery at the top.
-
-> 🔐 CI never stores AWS keys: GitHub Actions assumes the `FinTech-CI-CD-Deployer-<env>` IAM role through **GitHub OIDC**, as defined in the IAM module below.
-
----
-
-## 🤖 MLOps Lifecycle
-
-> 🎬 Animated diagram: [19. MLOps continuous training loop](#19-mlops-continuous-training-loop) in the gallery at the top.
-
----
-
-## 📊 Observability
-
-The **ops VPC** collects telemetry from every layer over the **Transit Gateway**.
-
-> 🎬 Animated diagram: [18. Observability](#18-observability) in the gallery at the top.
-
----
-
-## 🏗️ Infrastructure Build: Networking & IAM
-
 <div align="center">
-
-[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=20&pause=900&color=FF9900&center=true&vCenter=true&width=900&lines=4+isolated+VPCs+joined+by+a+Transit+Gateway;Private+VPC+endpoints+%E2%80%94+no+internet+for+AWS+traffic;Least-privilege+IAM+roles+per+environment;Multi+state+files+in+one+encrypted+S3+backend;Terraform+1.17.1+%7C+AWS+provider+6.72+%7C+IAM+module+6.8.2)](https://git.io/typing-svg)
-
-![Terraform](https://img.shields.io/badge/Terraform-%E2%89%A5%201.17.1-7B42BC?style=for-the-badge&logo=terraform&logoColor=white)
-![AWS Provider](https://img.shields.io/badge/AWS%20Provider-~%3E%206.72-FF9900?style=for-the-badge&logo=amazonaws&logoColor=white)
-![IAM Module](https://img.shields.io/badge/terraform--aws--modules%2Fiam-6.8.2-844FBA?style=for-the-badge&logo=terraform&logoColor=white)
-![Region](https://img.shields.io/badge/Region-us--east--1-232F3E?style=for-the-badge&logo=amazonaws&logoColor=FF9900)
-![State](https://img.shields.io/badge/State-S3%20%2B%20native%20lock-569A31?style=for-the-badge&logo=amazons3&logoColor=white)
-
+<img src="docs/diagrams/microservices.svg" width="100%" alt="Service calls, Kafka events, data queries and model inference between the five microservices"/>
 </div>
 
-This section documents what has been **built so far** in `terraform-infra/`.
+**📝 What this shows.** How the five services depend on each other. Solid service calls go left to right from the load balancer. Kafka events decouple the Notification service. Every database lives in the **Data VPC** and is reached over the Transit Gateway, and the Fraud service calls a model served by **KServe**.
 
-### 📂 Terraform layout
+> 🎤 **Interview talking points**
+> - "Each service owns its data store. No two services share a database, so they can be deployed and scaled independently."
+> - "The BFF (backend for frontend) gives web and mobile one API, so the internal services can change without breaking clients."
 
-Every stack follows the same pattern: **reusable child modules** in `modules/`, and **root modules** where you run `terraform`.
+---
 
-- 🌍 **Global stacks** (one root, no environments): `s3/`, `iam/` and, later, `ecr/`
-- 🧪 **Environment stacks** (one root per environment): `networking/prod/`, and future stacks such as EKS
+## 7. Security
+
+Every layer adds its own control, and nothing depends on a single defence.
+
+### 7.1 Security Checkpoints
+
+🔵 **Target design**
+
+<div align="center">
+<img src="docs/diagrams/security-layers.svg" width="100%" alt="A clean request passes nine gates while a malicious one is blocked at the WAF"/>
+</div>
+
+**📝 What this shows.** A clean request passes nine gates on its way to a service. A malicious one (here, an SQL injection) is stopped early at the WAF and never reaches the network. The six rows underneath are the defence layers: edge, network, orchestration, identity, detection, and model and data trust.
+
+> 🎤 **Interview talking points**
+> - "Defence in depth: if one control fails or is misconfigured, the next one still stands."
+> - "The earlier a bad request is dropped, the cheaper it is. That is why WAF and Shield sit at the edge."
+
+### 7.2 Checkov Security Scan
+
+🟢 **Built**
+
+<div align="center">
+<img src="docs/diagrams/security-hardening.svg" width="100%" alt="Checkov scan results before and after, with the fixes applied to each stack"/>
+</div>
+
+**📝 What this shows.** [Checkov](https://www.checkov.io/) reads the Terraform code and compares it with hundreds of security rules. The first scan found **156 failures across 22 rules**. After the fixes it reports **0 failed, 1000 passed**. Each fix has a comment next to the code that says **what changed and why**, for example:
+
+```hcl
+# CHECKOV FIX (CKV2_AWS_12)
+# WHAT: took over the VPC's built-in "default" security group and gave it NO rules.
+# WHY:  AWS creates this group in every VPC and it allows traffic by default. Anything launched
+#       without a security group lands in it, so it must allow nothing (CIS AWS benchmark 5.4).
+resource "aws_default_security_group" "default" {
+  vpc_id = aws_vpc.vpc.id
+}
+```
+
+Twelve checks are **skipped on purpose**, each with the reason written in the code. Example: the EKS public endpoint stays on because the GitHub-hosted runner and the engineer's machine sit outside the VPC, and access is still protected by IAM authentication. The same scan now runs **inside the pipeline**, before anything is created.
+
+> 🎤 **Interview talking points**
+> - "Security scanning is shift-left: the pipeline fails on a misconfiguration before any resource exists."
+> - "I do not blindly fix or blindly suppress. Every skip has a written, reviewable reason."
+> - "The biggest wins were VPC flow logs, locking the default security group, KMS encryption for S3, ECR and Kubernetes secrets, and scoping the autoscaler's IAM policy to its own cluster."
+
+### 7.3 IAM Roles per Environment
+
+🟢 **Built** · code in [`Terraform-FinTech-Infra/IAM/`](Terraform-FinTech-Infra/IAM/)
+
+<div align="center">
+<img src="docs/diagrams/iam-roles-v2.svg" width="100%" alt="Who assumes which IAM role, and which environment enables it"/>
+</div>
+
+**📝 What this shows.** Three kinds of role, created by one module that runs once per environment:
+
+| Role | Who uses it | What it may do | Guardrail (explicit Deny) |
+|---|---|---|---|
+| `FinTech-Platform-Admin` | Platform engineers | Manage VPC, RDS, EKS, KMS | Cannot read customer data (S3 objects, DB connect, KMS decrypt) |
+| `AppTeam-<env>-Role` | Developers and QA | **Full** in `dev` and `qa`, **read-only** in `stage` and `prod` | Cannot delete VPCs, subnets, the Transit Gateway or terminate instances |
+| `FinTech-CI-CD-Deployer-<env>` | GitHub Actions | Push images, update the cluster, read secrets | Trusts only this repository through OIDC |
+
+The module works out the permissions **from the environment name**, so `stage` and `prod` are automatically stricter without any extra code.
+
+> 🎤 **Interview talking points**
+> - "An explicit Deny always wins over any Allow, so the guardrails cannot be bypassed by attaching another policy."
+> - "Even the platform admin cannot read customer data. Managing the infrastructure and reading the data are separate duties."
+
+### 7.4 GitHub Actions to AWS Without Keys
+
+🟢 **Built**
+
+<div align="center">
+<img src="docs/diagrams/github-oidc.svg" width="100%" alt="GitHub Actions getting short-lived AWS credentials through OIDC"/>
+</div>
+
+**📝 What this shows.** How the pipeline logs in to AWS with **no stored access keys**. GitHub issues a signed identity token for the workflow run. AWS STS checks that the token really comes from **this repository**, and only then hands back **temporary credentials** that expire on their own.
+
+> 🎤 **Interview talking points**
+> - "There is no long-lived secret to leak or rotate. Each run gets credentials that last minutes."
+> - "The trust policy pins the role to one repository, so a workflow in any other repository cannot assume it."
+
+---
+
+## 8. Infrastructure as Code
+
+🟢 **Built**
+
+### 8.1 Folder Layout and Environments
+
+Every stack follows the same pattern: **reusable child modules** in `modules/`, and **root folders** where `terraform` is run.
+
+- 🌍 **Global stacks** (one copy for the whole AWS account): `IAM/`, `S3/`, `ECR/`
+- 🧪 **Environment stacks** (one root folder per environment): `Networking/` and `EKS/`, each with `Prod/`, `Stage/`, `QA/` and `Dev/`
 
 ```text
-terraform-infra/
-├── modules/                       # CHILD MODULES: reusable building blocks
-│   ├── networking/                #   VPC, subnets, NAT, security groups, VPC endpoints
-│   ├── s3-bucket/                 #   versioned buckets with lifecycle rules
-│   └── iam-roles/                 #   platform, app-team and CI/CD roles
-│       ├── main.tf                #   the resources
-│       ├── variables.tf           #   inputs the module accepts
-│       ├── outputs.tf             #   values the module returns
-│       └── versions.tf            #   Terraform + AWS provider versions
-│
-├── s3/                            # ROOT (global): all buckets
-├── iam/                           # ROOT (global): all roles for every environment
-├── networking/
-│   └── prod/                      # ROOT (per environment): 4 VPCs + Transit Gateway
-│
-└── every root module contains:
-    ├── backend.tf                 #   where the state file is stored (S3)
-    ├── providers.tf               #   AWS provider + region
-    ├── variables.tf               #   inputs this stack accepts
-    ├── terraform.tfvars           #   the values (edit here)
-    ├── locals.tf                  #   values worked out from the inputs
-    ├── main.tf                    #   calls the child module
-    └── outputs.tf                 #   values printed after apply
+Terraform-FinTech-Infra/
+├── IAM/                         # GLOBAL: roles for every environment
+│   └── modules/iam_roles/
+├── S3/                          # GLOBAL: compliance buckets
+│   └── modules/s3_bucket/
+├── ECR/                         # GLOBAL: container registry
+│   └── modules/ecr_repository/
+├── Networking/
+│   ├── modules/vpc/             # one VPC (reused 4 times per environment)
+│   ├── modules/tgw/             # the Transit Gateway
+│   └── Prod/ Stage/ QA/ Dev/    # one root per environment
+└── EKS/
+    ├── modules/eks_cluster/     # control plane, node groups, IAM, OIDC, autoscaler
+    └── Prod/ Stage/ QA/ Dev/    # one root per environment
 ```
+
+Every root folder holds the same seven files, so anyone who knows one stack can find their way around all of them:
 
 | File | Question it answers |
 |---|---|
-| `terraform.tfvars` | **What** values does this stack use? |
+| `terraform.tfvars` | **What** values does this stack use? (the only file you edit day to day) |
 | `variables.tf` | **Which** inputs exist, and what type are they? |
 | `locals.tf` | What can be **worked out** from those inputs? |
 | `main.tf` | **What** gets built, and from which module? |
 | `outputs.tf` | What do we **get back** after apply? |
 | `backend.tf` / `providers.tf` | **Where** is the state, and which AWS region? |
 
-### 🧭 Build Journey
+**The four environments use the same code and differ only in `terraform.tfvars`:**
 
-> 🎬 Animated diagram: [20. Roadmap](#20-roadmap) in the gallery at the top.
+| Environment | VPC CIDRs (Edge · App · Database · Ops) | EKS cluster | Node groups |
+|---|---|---|---|
+| **Prod** | `10.10` · `10.20` · `10.30` · `10.40` | `FinTech-Cluster` | blue + green |
+| **Stage** | `10.50` · `10.60` · `10.70` · `10.80` | `FinTech-Cluster-Stage` | blue |
+| **QA** | `10.90` · `10.100` · `10.110` · `10.120` | `FinTech-Cluster-QA` | blue |
+| **Dev** | `10.130` · `10.140` · `10.150` · `10.160` | `FinTech-Cluster-Dev` | blue |
 
----
+> 🎤 **Interview talking points**
+> - "Environments are folders, not branches or workspaces, so the difference between Prod and Stage is visible in a normal file diff."
+> - "The module is the single source of truth. A fix made once reaches every environment."
+> - "CIDR ranges are planned so no two VPCs overlap anywhere, which keeps future cross-environment connectivity possible."
 
-### 🌐 Networking: 4 VPCs + Transit Gateway
+### 8.2 Remote State, One File per Stack
 
-One reusable module (`terraform-infra/modules/networking/`) is called **once per VPC** from the root module (`terraform-infra/networking/prod/`) with `for_each`. Each VPC gets its own subnets, route tables, security groups and VPC endpoints. A **Transit Gateway** (in the root `main.tf`) joins them all.
+<div align="center">
+<img src="docs/diagrams/state-backend-v5.svg" width="100%" alt="Eleven Terraform state files in one S3 bucket, one per stack and environment"/>
+</div>
 
-> 🎬 Animated diagram: [3. Hub-and-spoke network](#3-hub-and-spoke-network) in the gallery at the top.
+**📝 What this shows.** Terraform remembers what it built in a **state file**. Here every stack and every environment has **its own** state file inside one encrypted S3 bucket: three global files and four each for Networking and EKS.
 
-| VPC | CIDR | Public subnets | Private subnets | NAT | Gateway endpoints | Interface endpoints |
-|---|---|:-:|:-:|:-:|---|---|
-| 🚪 **edge** | `10.10.0.0/16` | 3 | 3 | – | s3 | – |
-| ⚙️ **app** | `10.20.0.0/16` | 3 | 6 (EKS control + data plane) | ✅ | s3 | ecr.api, ecr.dkr, logs, secretsmanager |
-| 🗄️ **data** | `10.30.0.0/16` | – | 6 (DBs + Kafka/Valkey) | – | s3, dynamodb | kms |
-| 🛠️ **ops** | `10.40.0.0/16` | 3 | 3 | – | s3 | ssm, ssmmessages, ec2messages |
-
-**In simple words:**
-- 🏢 Each **VPC is a separate building** with its own address range. The `10.10 / 10.20 / 10.30 / 10.40` CIDRs never overlap, so they can all be joined.
-- 🔀 The **Transit Gateway is the central hub** that connects the buildings. Every private route table has one route, `10.0.0.0/8 → TGW`, and traffic inside a VPC stays local because its own `/16` is more specific.
-- 🌐 **Public subnets** face the internet through an **Internet Gateway**.
-- 🔐 **Private subnets** can't be reached from outside. Apps, databases and monitoring live here.
-- 🔁 **NAT Gateway** (app): pods can call out, for example to a payment network, but nothing can come in.
-- 🚇 **VPC endpoints** are private tunnels to AWS services, so ECR, S3, Secrets Manager and KMS are reached **without the internet**.
-- 🗄️ The **data VPC has no internet path at all**. It's reachable only through the TGW.
-- 🏗️ Subnets go **round-robin across 3 AZs** (1a → 1b → 1c → 1a …), so 6 subnets give 2 per AZ, and the first 3 (one per AZ) host the TGW attachment and endpoint ENIs.
-
-#### 🔀 How the root module creates all 4 VPCs
-
-> 🎬 Animated diagram: [14. Terraform for_each to four VPCs](#14-terraform-for_each-to-four-vpcs) in the gallery at the top.
-
-#### 🚇 VPC endpoints: Gateway vs Interface
-
-> 🎬 Animated diagram: [15. VPC endpoints](#15-vpc-endpoints) in the gallery at the top.
-
-**How the endpoint code works** (`network/main.tf`):
-
-| Resource | What it does |
-|---|---|
-| `data.aws_region.current` | Reads the provider's region, so endpoint names are never hardcoded |
-| `aws_vpc_endpoint.gateway` | `for_each = toset(var.gateway_endpoints)` creates one free Gateway endpoint per service and attaches it to the private route tables |
-| `aws_security_group.endpoint_sg` | Created only if `interface_endpoints` isn't empty. Allows HTTPS 443 from the VPC CIDR |
-| `aws_vpc_endpoint.interface` | `for_each = toset(var.interface_endpoints)` places an ENI in the first private subnet of each AZ (`private_subnet_ids_per_az`). `private_dns_enabled = true` means application code needs **no changes** |
-
-```hcl
-# Per-VPC input: just two simple lists
-gateway_endpoints   = ["s3", "dynamodb"]
-interface_endpoints = ["secretsmanager", "kms"]
-```
-
-#### 🔀 Transit Gateway: how VPCs talk to each other
-
-> 🎬 Animated diagram: [8. Transit Gateway route lookup](#8-transit-gateway-route-lookup) in the gallery at the top.
-
-| Block (`networking/prod/main.tf`) | What it does |
-|---|---|
-| `aws_ec2_transit_gateway.main` | The hub router. Every attachment auto-associates and auto-propagates its CIDR |
-| `aws_ec2_transit_gateway_vpc_attachment.vpc` | `for_each = local.vpcs` plugs every VPC in using one private subnet per AZ |
-| `aws_route.private_to_tgw` | `10.0.0.0/8 → TGW` in every private route table |
-| `aws_route.public_to_tgw` | The same route in public route tables (edge, app, ops) |
-
-> ➕ **Reusable:** add a VPC to `terraform.tfvars` and it's created, attached to the TGW and routed automatically.
-
-#### 📦 What one `terraform apply` creates
-
-| Resource | Count |
-|---|:-:|
-| VPCs | 4 |
-| Subnets (9 public + 18 private) | 27 |
-| Route tables (3 public + 4 private) | 7 |
-| Internet Gateways / NAT Gateway / Elastic IP | 3 / 1 / 1 |
-| Security groups (public, private, endpoint) | 10 |
-| Gateway endpoints | 5 |
-| Interface endpoints | 8 |
-| Transit Gateway / attachments / TGW routes | 1 / 4 / 7 |
-
-> 💰 **Cost note:** Gateway endpoints are free. Interface endpoints cost about $7.30 per AZ per month each (8 × 3 AZs ≈ $175 per month), the NAT Gateway about $33 per month, and TGW attachments about $36 per month each (≈ $146 per month), all before data charges.
-
----
-
-### 🔐 IAM: Least-Privilege Roles per Environment
-
-A **child module** (`terraform-infra/modules/iam-roles/`) wraps `terraform-aws-modules/iam/aws//modules/iam-role` **v6.8.2** and defines three roles. One **global root** (`terraform-infra/iam/`) calls it once per entry in `terraform.tfvars` (`platform`, `qa`, `uat`, `prod`), and each entry turns on only the roles that environment needs.
-
-> 🎬 Animated diagram: [11. IAM roles per environment](#11-iam-roles-per-environment) in the gallery at the top.
-
-#### 🤖 How GitHub Actions gets AWS access (no stored keys)
-
-> 🎬 Animated diagram: [12. GitHub Actions to AWS with OIDC](#12-github-actions-to-aws-with-oidc) in the gallery at the top.
-
----
-
-### 🗃️ Multi State Files in One Remote Backend
-
-Every stack keeps its **own state file** inside a single encrypted S3 bucket, **`fintech-project-statefile-bucket`**. Locking uses Terraform's **native S3 lock file** (`use_lockfile = true`), so no DynamoDB table is needed.
-
-> 🎬 Animated diagram: [16. Multi state file backend](#16-multi-state-file-backend) in the gallery at the top.
+The teal arrow is the only link between stacks: `EKS/<env>` **reads** the outputs of `Networking/<env>` (subnet IDs and the security group) through `terraform_remote_state`. It is read-only, so EKS can never change the network.
 
 **Why split the state?**
-- 💥 **Smaller blast radius:** a bad apply on QA IAM can't touch prod networking.
-- ⚡ **Faster plans:** each stack only refreshes its own resources.
-- 🔒 **Parallel work:** different teams or pipelines lock different files.
-- 🧑‍⚖️ **Access control:** bucket policies can restrict who reads which prefix.
 
-| Stack | State key |
-|---|---|
-| 🌐 networking/prod | `product-networking/envs/prod/networking.tfstate` |
-| 🔐 iam | `product-iam/iam-roles.tfstate` |
-| 🪣 s3 | `product-s3/envs/s3.tfstate` |
+- 💥 **Small blast radius.** A mistake in the QA network cannot touch the Prod cluster.
+- ⚡ **Faster plans.** Each stack only refreshes its own resources.
+- 🔒 **Parallel work.** Different stacks lock different files.
 
-#### 🔒 How native S3 locking protects state
+> 🎤 **Interview talking points**
+> - "`terraform destroy` empties a state file but does not delete it. The same file is reused on the next apply."
+> - "Remote state outputs are a contract between stacks: the network team publishes, application stacks consume."
+> - "Bucket versioning lets me roll back a state file if it is ever corrupted."
 
-> 🎬 Animated diagram: [17. Native S3 state locking](#17-native-s3-state-locking) in the gallery at the top.
+### 8.3 State Locking
 
----
+<div align="center">
+<img src="docs/diagrams/state-locking.svg" width="100%" alt="Native S3 state locking: one writer at a time, no DynamoDB table"/>
+</div>
 
-### 📌 Pinned Versions
+**📝 What this shows.** What happens when two people run `terraform apply` on the same stack. The first run creates a small `.tflock` file next to the state. The second run sees the lock and stops instead of overwriting the first one's work. When the first run finishes, the lock is deleted and the second can proceed.
 
-| Component | Version | Where |
+This uses Terraform's **native S3 locking** (`use_lockfile = true`), so no DynamoDB table is needed.
+
+> 🎤 **Interview talking points**
+> - "Without locking, two concurrent applies can corrupt the state. Locking makes writes one at a time."
+> - "Since Terraform 1.10 the S3 backend can lock by itself, which removes the DynamoDB table older setups needed."
+
+### 8.4 Pinned Versions
+
+| Component | Version | Where it is set |
 |---|---|---|
-| Terraform | `>= 1.17.1` | every module `versions.tf` + CI (`terraform_version: "1.17.1"`) |
-| AWS provider | `~> 6.72` (locked at 6.72.0) | every module `versions.tf` + `.terraform.lock.hcl` |
-| terraform-aws-modules/iam | `6.8.2` | `modules/iam-roles/main.tf` (all 3 roles) |
-
-### ✅ Fixes Applied During the Build
-
-- 🐞 `availability_zones.all.name` → `.names` (public subnets)
-- 🐞 Restored the missing `resource "aws_security_group" "public"` header around dangling `dynamic` blocks
-- 🐞 Variable typos: `sting` → `string`, `cidr_block` → `cidr_blocks`, `Environment` default `{}` → `"prod"`
-- 🛡️ Private SG no longer hardcodes `0.0.0.0/0` ingress. Rules now come from the root module (VPC CIDR only)
-- 🔁 VPC endpoint code rewritten: no hardcoded region, no fragile `slice()`, no `[0]` index crash, descriptions + tags added (clears the KICS findings)
-- 📌 Pinned latest Terraform, AWS provider and IAM module versions everywhere
-- 🗺️ CIDRs re-planned to `10.10 / 10.20 / 10.30 / 10.40` with edge subnets fixed to sit inside `10.10.0.0/16`
-- 🏗️ Subnets now round-robin across 3 AZs, and TGW and endpoints use one subnet per AZ
-- 🐞 `outputs.tf`: `aws.subnet` → `aws_subnet`, added CIDR, public subnet and route table outputs
-- 🔐 `product-prod-role` now uses real module inputs (`enable_product_role`, `enable_cicd_role`)
-- 🪣 `stage/s3` has its own state key, no longer sharing prod's
-- 📂 Restructured into `terraform-infra/`: child modules in `modules/` (main · variables · outputs · versions) and identical root folders (backend · providers · variables · terraform.tfvars · locals · main · outputs)
-- 🔐 IAM is one global root: `terraform.tfvars` lists which roles each environment gets, the module runs once per entry, and the account ID is read automatically (`aws_caller_identity`)
-
-### 🚀 How to Deploy the Networking Stack
-
-```bash
-cd terraform-infra/networking/prod
-terraform init -reconfigure          # connect to the S3 backend
-terraform plan -out=network.tfplan   # review: 4 VPCs, 27 subnets, 13 endpoints, 1 TGW
-terraform apply network.tfplan
-```
-
-### 🔜 Next Up
-
-- [x] Transit Gateway connecting edge ↔ app ↔ data ↔ ops
-- [x] Separate state key for `stage/s3`
-- [x] Fix `product-prod-role` role flags
-- [ ] VPC Flow Logs (PCI-DSS / SOC 2)
-- [ ] Lock down the default security group (CIS 5.4)
-- [ ] EKS subnet tags (`kubernetes.io/role/elb`, `internal-elb`)
-- [ ] `default_tags` in the provider + unique route table names
-- [ ] TGW segmentation (separate route tables so edge can't reach data directly)
-- [ ] EKS + Karpenter in the app VPC
+| Terraform | `~> 1.17` (pipeline uses `1.17.2`) | every module's `versions.tf` |
+| AWS provider | `~> 6.72` | every module's `versions.tf` + `.terraform.lock.hcl` |
+| Helm / TLS providers | `~> 3.3` / `~> 4.0` | `EKS/modules/eks_cluster/versions.tf` |
+| terraform-aws-modules/iam | `6.8.2` | `IAM/modules/iam_roles/main.tf` |
+| Kubernetes (EKS) | `1.36` | `EKS/<env>/terraform.tfvars` |
+| Cluster Autoscaler | chart `9.60.0`, image `v1.36.2` | `EKS/<env>/terraform.tfvars` |
+| Checkov | `3.4.3` | the deploy workflow |
 
 ---
 
-## 🗺️ Roadmap
+## 9. CI/CD
 
-> 🎬 Animated diagram: [20. Roadmap](#20-roadmap) in the gallery at the top.
+### 9.1 Infrastructure Pipeline and Environments
+
+🟢 **Built** · workflows in [`.github/workflows/`](.github/workflows/)
+
+<div align="center">
+<img src="docs/diagrams/pipeline-environments.svg" width="100%" alt="The deploy pipeline order, the four environments and the reverse destroy order"/>
+</div>
+
+**📝 What this shows.**
+
+- **Top row: the deploy pipeline** (`4.fintech-infra-deploy.yaml`). It logs in with OIDC, runs two quality gates (`terraform fmt` and the Checkov scan) and then builds the stacks **in dependency order** on a single runner: IAM → S3 → ECR → Networking → EKS. Each step must succeed before the next one starts. Networking has to finish before EKS because EKS is placed inside the network's subnets.
+- **Middle: the four environments.** A push to `dev` that changes Prod-related code deploys **Prod**. A manual run lets you pick Stage, QA or Dev.
+- **Bottom: the destroy pipeline** (`5.fintech-infra-destroy.yaml`). Manual only, with a typed confirmation. It runs the same road **backwards**, because a VPC cannot be deleted while a cluster is still attached to it.
+
+Deploy and destroy share one **concurrency group**, so they can never run at the same time and fight over the same state.
+
+> 🎤 **Interview talking points**
+> - "Every stack runs the same four commands: init, validate, plan to a file, apply that file. What was reviewed is exactly what is applied."
+> - "Path filters mean a change to the Stage folder or the README does not redeploy Prod."
+> - "The destroy workflow needs a typed confirmation and only runs from one branch. Destructive actions should be hard to trigger by accident."
+
+### 9.2 Application Delivery and GitOps
+
+🔵 **Target design**
+
+<div align="center">
+<img src="docs/diagrams/cicd-gitops.svg" width="100%" alt="Application images, infrastructure changes and models flowing to production"/>
+</div>
+
+**📝 What this shows.** Three delivery paths that share the same principles:
+
+- **Applications:** GitHub Actions builds and scans an image, pushes it to ECR and updates the image tag in Git. **Argo CD** notices the change and syncs the cluster, and **Argo Rollouts** releases it as a canary, promoted from `qa` to `stage` to `prod` only when the metrics look healthy.
+- **Infrastructure:** the Terraform pipeline from section 9.1.
+- **Models:** Airflow and Kubeflow train, MLflow registers, and KServe serves, through the same GitOps path.
+
+> 🎤 **Interview talking points**
+> - "With GitOps, Git is the single source of truth. The cluster pulls its desired state, so CI never needs cluster-admin credentials."
+> - "A canary release exposes a new version to a small share of traffic first, and rolls back automatically if error rates rise."
+
+---
+
+## 10. Observability
+
+🔵 **Target design**
+
+<div align="center">
+<img src="docs/diagrams/observability.svg" width="100%" alt="Metrics, logs, AWS telemetry, runtime security events and ML drift flowing into Grafana"/>
+</div>
+
+**📝 What this shows.** Five kinds of signal, each collected by the right tool and all ending in **Grafana**: metrics (Prometheus), logs (Logstash → Loki and OpenSearch), AWS telemetry (CloudWatch), runtime security events (Falco) and model drift (Evidently AI, WhyLogs). The tooling lives in the **Ops VPC** and reaches every other VPC over the Transit Gateway.
+
+Already in place today: **VPC Flow Logs** for all four VPCs and the **EKS control-plane and audit logs**, both in CloudWatch.
+
+> 🎤 **Interview talking points**
+> - "Metrics tell me something is wrong, logs tell me why, and traces tell me where."
+> - "Keeping the monitoring stack in its own VPC means it stays up, and stays trustworthy, when the application VPC has a problem."
+
+---
+
+## 11. MLOps
+
+🔵 **Target design**
+
+<div align="center">
+<img src="docs/diagrams/mlops-loop.svg" width="100%" alt="The continuous training loop: train, register, serve, monitor, retrain"/>
+</div>
+
+**📝 What this shows.** The life of the fraud model as a loop, not a one-off. Data is ingested, a model is trained and evaluated, and it is registered only if it passes a **quality gate**. KServe serves it to the Fraud service. Monitoring watches for **drift** (real-world data slowly stops looking like the training data), and drift triggers a new training run.
+
+> 🎤 **Interview talking points**
+> - "A model is deployed like any other artefact: versioned, gated and rolled out through GitOps."
+> - "Drift detection closes the loop, so the model is retrained on evidence rather than on a calendar."
+
+---
+
+## 12. Roadmap
+
+<div align="center">
+<img src="docs/diagrams/roadmap-v2.svg" width="100%" alt="Roadmap: done, in progress and planned, layer by layer"/>
+</div>
+
+**📝 What this shows.** Where the project is today. Foundation and Network are complete. **Orchestration** and **Delivery** are in progress: the EKS cluster, the autoscaler and the infrastructure pipeline are built, and the platform add-ons and GitOps tools come next.
 
 | Status | Item |
 |:--:|---|
-| ✅ | Repository, README and animated architecture diagrams |
-| ✅ | Terraform remote backend: multi state files in S3 with native locking |
-| ✅ | IAM: reusable child module and roles for ops, qa, uat and prod (GitHub OIDC for CI/CD) |
-| ✅ | Network: 4 VPCs (edge, app, data, ops), VPC endpoints and Transit Gateway |
-| 🚧 | Network hardening: Flow Logs, default SG lockdown, EKS subnet tags, default tags |
+| ✅ | Remote backend: one state file per stack and environment, native S3 locking |
+| ✅ | IAM: reusable module, roles for platform, dev, qa, stage and prod, GitHub OIDC for CI/CD |
+| ✅ | Network: 4 VPCs, Transit Gateway, NAT, VPC endpoints, flow logs, locked default security groups |
+| ✅ | Storage and registry: encrypted S3 buckets with lifecycle rules, ECR with immutable tags |
+| ✅ | EKS: cluster, blue/green node groups, Cluster Autoscaler, encrypted secrets, audit logs |
+| ✅ | Four environments (Prod, Stage, QA, Dev) from one set of modules |
+| ✅ | Checkov: 0 failed checks, and the scan runs in the pipeline |
+| ✅ | GitHub Actions deploy and destroy pipelines |
+| 🚧 | ECR pull-through cache, so cluster add-on images do not depend on the NAT path |
+| 🚧 | IAM Identity Center (SSO) for people, replacing root credentials and the IAM user |
+| 🔜 | Transit Gateway segmentation (separate route tables so Edge cannot reach Data) |
+| 🔜 | Platform add-ons: Karpenter, KEDA, Calico, Istio, Argo CD, Argo Rollouts |
 | 🔜 | Edge: Route 53, CloudFront, WAF, Shield Advanced, API Gateway |
-| 🔜 | Orchestration: EKS, Karpenter, KEDA, Calico, Istio |
-| 🔜 | Data: MySQL, Valkey, MongoDB, OpenSearch, Kafka |
-| 🔜 | Application: BFF, Payment, Ledger, Fraud and Notification services |
-| 🔜 | Delivery: GitHub Actions, Argo CD, Argo Rollouts |
-| 🔜 | Identity and observability: Vault, Falco, Prometheus, Grafana, Loki, Logstash, CloudWatch |
-| 🔜 | MLOps: Airflow, Kubeflow, MLflow, KServe, Evidently AI, WhyLogs |
+| 🔜 | Data, the five services, observability stack and MLOps |
 
 ---
 
-## 📁 Repository Structure
+## 13. Repository Structure
 
 ```text
 FinTech-Enterprise-Project/
-├── .github/workflows/        # Terraform CI pipelines (GitHub OIDC → AWS)
-├── docs/diagrams/            # 20 animated SVG diagrams used in this README
-├── terraform-infra/
-│   ├── modules/              # child modules: network · s3-bucket · iam-roles
-│   ├── networking/prod/      # root: 4 VPCs + Transit Gateway
-│   ├── s3/                   # root: compliance buckets
-│   └── iam/                  # root: all IAM roles (no environments)
-├── .gitignore
+├── .github/workflows/
+│   ├── 4.fintech-infra-deploy.yaml    # deploy: IAM → S3 → ECR → Networking → EKS
+│   ├── 5.fintech-infra-destroy.yaml   # destroy: the reverse order, manual only
+│   └── 1–3 …                          # older practice workflows, disabled
+├── docs/diagrams/                     # the animated SVG diagrams used in the READMEs
+├── Terraform-FinTech-Infra/           # all infrastructure code (see its own README)
+│   ├── IAM/ · S3/ · ECR/              # global stacks
+│   ├── Networking/                    # modules + Prod / Stage / QA / Dev
+│   └── EKS/                           # modules + Prod / Stage / QA / Dev
+├── Terraform-Coding/ · demo/          # earlier Terraform practice
 └── README.md
+```
+
+**Deploy it yourself**
+
+```bash
+# From GitHub: Actions → "4. FinTech Infra - Deploy" → Run workflow → branch dev → pick the environment
+
+# Or locally, one stack at a time, in this order:
+cd Terraform-FinTech-Infra/IAM              # then S3, ECR, Networking/Prod, EKS/Prod
+terraform init
+terraform plan -var-file="terraform.tfvars" -out plan1
+terraform apply plan1
 ```
 
 ---

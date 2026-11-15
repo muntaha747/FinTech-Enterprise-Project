@@ -30,30 +30,30 @@
 <path id="p10" class="flow" d="M1190,320 H1229" stroke="#ff9900" stroke-width="2.4" opacity="0.85"/>
 <rect x="40" y="190" width="250" height="260" rx="12" fill="#2e2708" stroke="#ffd200" stroke-width="1.8"/>
 <text x="165.0" y="317.0" text-anchor="middle" class="t">📄 terraform.tfvars</text>
-<text x="165.0" y="334.0" text-anchor="middle" class="ts">vpcs = {</text>
-<text x="165.0" y="348.0" text-anchor="middle" class="ts">  edge = 10.10.0.0/16</text>
-<text x="165.0" y="362.0" text-anchor="middle" class="ts">  app  = 10.20.0.0/16</text>
-<text x="165.0" y="376.0" text-anchor="middle" class="ts">  data = 10.30.0.0/16</text>
-<text x="165.0" y="390.0" text-anchor="middle" class="ts">  ops  = 10.40.0.0/16</text>
+<text x="165.0" y="334.0" text-anchor="middle" class="ts">vpc_setup = {</text>
+<text x="165.0" y="348.0" text-anchor="middle" class="ts">  FinTech-Edge = 10.10/16</text>
+<text x="165.0" y="362.0" text-anchor="middle" class="ts">  FinTech-App = 10.20/16</text>
+<text x="165.0" y="376.0" text-anchor="middle" class="ts">  FinTech-Database = 10.30/16</text>
+<text x="165.0" y="390.0" text-anchor="middle" class="ts">  FinTech-Ops = 10.40/16</text>
 <text x="165.0" y="404.0" text-anchor="middle" class="ts">}</text>
 <text x="165.0" y="418.0" text-anchor="middle" class="ts">azs = 1a · 1b · 1c</text>
 <rect x="350" y="270" width="210" height="100" rx="12" fill="#22123a" stroke="#c471f5" stroke-width="1.8" filter="url(#glow)"/>
-<text x="455.0" y="317.0" text-anchor="middle" class="t">🔁 module "network"</text>
-<text x="455.0" y="334.0" text-anchor="middle" class="ts">for_each = var.vpcs</text>
+<text x="455.0" y="317.0" text-anchor="middle" class="t">🔁 module "fintech_vpcs"</text>
+<text x="455.0" y="334.0" text-anchor="middle" class="ts">for_each = var.vpc_setup</text>
 <rect x="640" y="100" width="270" height="96" rx="12" fill="#10372b" stroke="#84fab0" stroke-width="1.8"/>
-<text x="775.0" y="145.0" text-anchor="middle" class="t" font-size="12.5">module.network["edge"]</text>
+<text x="775.0" y="145.0" text-anchor="middle" class="t" font-size="11.5">fintech_vpcs["FinTech-Edge"]</text>
 <text x="775.0" y="162.0" text-anchor="middle" class="ts">VPC · subnets · route tables</text>
 <text x="775.0" y="176.0" text-anchor="middle" class="ts">SGs · NAT/IGW · VPC endpoints</text>
 <rect x="640" y="220" width="270" height="96" rx="12" fill="#0f2036" stroke="#4facfe" stroke-width="1.8"/>
-<text x="775.0" y="265.0" text-anchor="middle" class="t" font-size="12.5">module.network["app"]</text>
+<text x="775.0" y="265.0" text-anchor="middle" class="t" font-size="11.5">fintech_vpcs["FinTech-App"]</text>
 <text x="775.0" y="282.0" text-anchor="middle" class="ts">VPC · subnets · route tables</text>
 <text x="775.0" y="296.0" text-anchor="middle" class="ts">SGs · NAT/IGW · VPC endpoints</text>
 <rect x="640" y="340" width="270" height="96" rx="12" fill="#3a1424" stroke="#ff416c" stroke-width="1.8"/>
-<text x="775.0" y="385.0" text-anchor="middle" class="t" font-size="12.5">module.network["data"]</text>
+<text x="775.0" y="385.0" text-anchor="middle" class="t" font-size="11.5">fintech_vpcs["FinTech-Database"]</text>
 <text x="775.0" y="402.0" text-anchor="middle" class="ts">VPC · subnets · route tables</text>
 <text x="775.0" y="416.0" text-anchor="middle" class="ts">SGs · NAT/IGW · VPC endpoints</text>
 <rect x="640" y="460" width="270" height="96" rx="12" fill="#22123a" stroke="#c471f5" stroke-width="1.8"/>
-<text x="775.0" y="505.0" text-anchor="middle" class="t" font-size="12.5">module.network["ops"]</text>
+<text x="775.0" y="505.0" text-anchor="middle" class="t" font-size="11.5">fintech_vpcs["FinTech-Ops"]</text>
 <text x="775.0" y="522.0" text-anchor="middle" class="ts">VPC · subnets · route tables</text>
 <text x="775.0" y="536.0" text-anchor="middle" class="ts">SGs · NAT/IGW · VPC endpoints</text>
 <rect x="990" y="250" width="200" height="140" rx="12" fill="#2d1c05" stroke="#ff9900" stroke-width="1.8"/>

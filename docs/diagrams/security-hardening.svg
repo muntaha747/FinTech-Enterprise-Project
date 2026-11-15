@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 700" width="1400" height="700" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <title>Checkov scan before and after: security fixes per Terraform stack</title>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b1020"/>
+      <stop offset="1" stop-color="#131c33"/>
+    </linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3.5" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <marker id="a43e97b" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#43e97b"/></marker><marker id="aff5c7a" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#ff5c7a"/></marker>
+    <style>
+      .flow { stroke-dasharray: 10 8; animation: dash 1.1s linear infinite; opacity: .9 }
+      .solid { opacity: .9 }
+      @keyframes dash { to { stroke-dashoffset: -18 } }
+      .pulse { animation: pulse 2.4s ease-in-out infinite }
+      @keyframes pulse { 0%,100% { opacity: .6 } 50% { opacity: 1 } }
+    </style>
+  </defs>
+  <rect width="1400" height="700" rx="18" fill="url(#bg)"/>
+  <text x="36" y="42" font-size="20" font-weight="700" fill="#ffffff">🛡️ Checkov security scan · 156 findings fixed down to 0</text>
+  <text x="36" y="66" font-size="13" fill="#b6c2d1">Every fix has a comment next to the code saying what changed and why · 12 checks are skipped on purpose, each with a written reason</text>
+  <rect x="36" y="96" width="300" height="130" rx="12" fill="#ff5c7a" fill-opacity="0.14" stroke="#ff5c7a" stroke-width="1.6"/>
+  <text x="186.0" y="160.0" font-size="50" fill="#ff5c7a" text-anchor="middle" font-weight="700">156</text>
+  <text x="186.0" y="190.0" font-size="12.5" fill="#e6edf3" text-anchor="middle">failed checks · 22 different rules</text>
+  <text x="186.0" y="210.0" font-size="11.5" fill="#ff5c7a" text-anchor="middle" font-weight="700">BEFORE</text>
+  <rect x="400" y="120" width="600" height="82" rx="12" fill="#ffd166" fill-opacity="0.14" stroke="#ffd166" stroke-width="1.6"/>
+  <text x="700.0" y="159.5" font-size="14" fill="#ffffff" text-anchor="middle" font-weight="700">🔎 checkov -d Terraform-FinTech-Infra --framework terraform</text>
+  <text x="700.0" y="175.5" font-size="11.5" fill="#b6c2d1" text-anchor="middle">scans every stack and module · also runs in the pipeline before anything is built</text>
+  <rect x="1064" y="96" width="300" height="130" rx="12" fill="#43e97b" fill-opacity="0.14" stroke="#43e97b" stroke-width="1.6" class="pulse"/>
+  <text x="1214.0" y="160.0" font-size="50" fill="#43e97b" text-anchor="middle" font-weight="700">0</text>
+  <text x="1214.0" y="190.0" font-size="12.5" fill="#e6edf3" text-anchor="middle">failed · 1000 passed</text>
+  <text x="1214.0" y="210.0" font-size="11.5" fill="#43e97b" text-anchor="middle" font-weight="700">AFTER</text>
+  <path id="p1" d="M 336.0 161.0 L 398.0 161.0" stroke="#ff5c7a" stroke-width="2.4" fill="none" stroke-linejoin="round" class="flow" marker-end="url(#aff5c7a)"/>
+  <circle r="4.5" fill="#ff5c7a" filter="url(#glow)"><animateMotion dur="1.0s" begin="0.00s" repeatCount="indefinite"><mpath href="#p1"/></animateMotion></circle>
+  <path id="p2" d="M 1000.0 161.0 L 1062.0 161.0" stroke="#43e97b" stroke-width="2.4" fill="none" stroke-linejoin="round" class="flow" marker-end="url(#a43e97b)"/>
+  <circle r="4.5" fill="#43e97b" filter="url(#glow)"><animateMotion dur="1.0s" begin="0.00s" repeatCount="indefinite"><mpath href="#p2"/></animateMotion></circle>
+  <rect x="31" y="262" width="318" height="326" rx="16" fill="#4facfe" fill-opacity="0.05" stroke="#4facfe" stroke-width="1.8"/>
+  <text x="47.0" y="288.0" font-size="14.5" fill="#4facfe" text-anchor="start" font-weight="700">🌐 Networking</text>
+  <rect x="47" y="304" width="286" height="78" rx="12" fill="#4facfe" fill-opacity="0.14" stroke="#4facfe" stroke-width="1.6"/>
+  <text x="190.0" y="333.8" font-size="13.5" fill="#ffffff" text-anchor="middle" font-weight="700">📜 VPC Flow Logs</text>
+  <text x="190.0" y="349.8" font-size="11.5" fill="#b6c2d1" text-anchor="middle">every connection is recorded</text>
+  <text x="190.0" y="364.8" font-size="11.5" fill="#b6c2d1" text-anchor="middle">CKV2_AWS_11</text>
+  <rect x="47" y="396" width="286" height="78" rx="12" fill="#4facfe" fill-opacity="0.14" stroke="#4facfe" stroke-width="1.6"/>
+  <text x="190.0" y="425.8" font-size="13.5" fill="#ffffff" text-anchor="middle" font-weight="700">🔒 Default SG locked</text>
+  <text x="190.0" y="441.8" font-size="11.5" fill="#b6c2d1" text-anchor="middle">no rules, so nothing slips in</text>
+  <text x="190.0" y="456.8" font-size="11.5" fill="#b6c2d1" text-anchor="middle">CKV2_AWS_12</text>
+  <rect x="47" y="488" width="286" height="78" rx="12" fill="#4facfe" fill-opacity="0.14" stroke="#4facfe" stroke-width="1.6"/>
+  <text x="190.0" y="517.8" font-size="13.5" fill="#ffffff" text-anchor="middle" font-weight="700">🏷️ Rule descriptions</text>
+  <text x="190.0" y="533.8" font-size="11.5" fill="#b6c2d1" text-anchor="middle">every open port says why</text>
+  <text x="190.0" y="548.8" font-size="11.5" fill="#b6c2d1" text-anchor="middle">CKV_AWS_23</text>
+  <rect x="371" y="262" width="318" height="326" rx="16" fill="#43e97b" fill-opacity="0.05" stroke="#43e97b" stroke-width="1.8"/>
+  <text x="387.0" y="288.0" font-size="14.5" fill="#43e97b" text-anchor="start" font-weight="700">🪣 S3</text>
+  <rect x="387" y="304" width="286" height="78" rx="12" fill="#43e97b" fill-opacity="0.14" stroke="#43e97b" stroke-width="1.6"/>
+  <text x="530.0" y="333.8" font-size="13.5" fill="#ffffff" text-anchor="middle" font-weight="700">🚫 Public access block</text>
+  <text x="530.0" y="349.8" font-size="11.5" fill="#b6c2d1" text-anchor="middle">a bucket can never go public</text>
+  <text x="530.0" y="364.8" font-size="11.5" fill="#b6c2d1" text-anchor="middle">CKV2_AWS_6</text>
+  <rect x="387" y="396" width="286" height="78" rx="12" fill="#43e97b" fill-opacity="0.14" stroke="#43e97b" stroke-width="1.6"/>
+  <text x="530.0" y="425.8" font-size="13.5" fill="#ffffff" text-anchor="middle" font-weight="700">🔐 KMS encryption</text>
+  <text x="530.0" y="441.8" font-size="11.5" fill="#b6c2d1" text-anchor="middle">every decrypt is logged</text>
+  <text x="530.0" y="456.8" font-size="11.5" fill="#b6c2d1" text-anchor="middle">CKV_AWS_145</text>
+  <rect x="387" y="488" width="286" height="78" rx="12" fill="#43e97b" fill-opacity="0.14" stroke="#43e97b" stroke-width="1.6"/>
+  <text x="530.0" y="517.8" font-size="13.5" fill="#ffffff" text-anchor="middle" font-weight="700">🧹 Abort stale uploads</text>
+  <text x="530.0" y="533.8" font-size="11.5" fill="#b6c2d1" text-anchor="middle">no hidden storage cost</text>
+  <text x="530.0" y="548.8" font-size="11.5" fill="#b6c2d1" text-anchor="middle">CKV_AWS_300</text>
+  <rect x="711" y="262" width="318" height="326" rx="16" fill="#ff9900" fill-opacity="0.05" stroke="#ff9900" stroke-width="1.8"/>
+  <text x="727.0" y="288.0" font-size="14.5" fill="#ff9900" text-anchor="start" font-weight="700">📦 ECR</text>
+  <rect x="727" y="304" width="286" height="78" rx="12" fill="#ff9900" fill-opacity="0.14" stroke="#ff9900" stroke-width="1.6"/>
+  <text x="870.0" y="333.8" font-size="13.5" fill="#ffffff" text-anchor="middle" font-weight="700">📌 Immutable tags</text>
+  <text x="870.0" y="349.8" font-size="11.5" fill="#b6c2d1" text-anchor="middle">scanned image = running image</text>
+  <text x="870.0" y="364.8" font-size="11.5" fill="#b6c2d1" text-anchor="middle">CKV_AWS_51</text>
+  <rect x="727" y="396" width="286" height="78" rx="12" fill="#ff9900" fill-opacity="0.14" stroke="#ff9900" stroke-width="1.6"/>
+  <text x="870.0" y="425.8" font-size="13.5" fill="#ffffff" text-anchor="middle" font-weight="700">🔐 KMS encryption</text>
+  <text x="870.0" y="441.8" font-size="11.5" fill="#b6c2d1" text-anchor="middle">image access is auditable</text>
+  <text x="870.0" y="456.8" font-size="11.5" fill="#b6c2d1" text-anchor="middle">CKV_AWS_136</text>
+  <rect x="727" y="488" width="286" height="78" rx="12" fill="#ff9900" fill-opacity="0.14" stroke="#ff9900" stroke-width="1.6"/>
+  <text x="870.0" y="517.8" font-size="13.5" fill="#ffffff" text-anchor="middle" font-weight="700">🔎 Scan on push</text>
+  <text x="870.0" y="533.8" font-size="11.5" fill="#b6c2d1" text-anchor="middle">already on · CVEs caught early</text>
+  <text x="870.0" y="548.8" font-size="11.5" fill="#b6c2d1" text-anchor="middle">CKV_AWS_163</text>
+  <rect x="1051" y="262" width="318" height="326" rx="16" fill="#c471f5" fill-opacity="0.05" stroke="#c471f5" stroke-width="1.8"/>
+  <text x="1067.0" y="288.0" font-size="14.5" fill="#c471f5" text-anchor="start" font-weight="700">☸️ EKS</text>
+  <rect x="1067" y="304" width="286" height="78" rx="12" fill="#c471f5" fill-opacity="0.14" stroke="#c471f5" stroke-width="1.6"/>
+  <text x="1210.0" y="333.8" font-size="13.5" fill="#ffffff" text-anchor="middle" font-weight="700">🔐 Secrets encrypted</text>
+  <text x="1210.0" y="349.8" font-size="11.5" fill="#b6c2d1" text-anchor="middle">KMS envelope encryption</text>
+  <text x="1210.0" y="364.8" font-size="11.5" fill="#b6c2d1" text-anchor="middle">CKV_AWS_58</text>
+  <rect x="1067" y="396" width="286" height="78" rx="12" fill="#c471f5" fill-opacity="0.14" stroke="#c471f5" stroke-width="1.6"/>
+  <text x="1210.0" y="425.8" font-size="13.5" fill="#ffffff" text-anchor="middle" font-weight="700">📜 Control plane logs</text>
+  <text x="1210.0" y="441.8" font-size="11.5" fill="#b6c2d1" text-anchor="middle">audit log: who did what</text>
+  <text x="1210.0" y="456.8" font-size="11.5" fill="#b6c2d1" text-anchor="middle">CKV_AWS_37</text>
+  <rect x="1067" y="488" width="286" height="78" rx="12" fill="#c471f5" fill-opacity="0.14" stroke="#c471f5" stroke-width="1.6"/>
+  <text x="1210.0" y="517.8" font-size="13.5" fill="#ffffff" text-anchor="middle" font-weight="700">🎯 Least-privilege autoscaler</text>
+  <text x="1210.0" y="533.8" font-size="11.5" fill="#b6c2d1" text-anchor="middle">only this cluster&#x27;s node groups</text>
+  <text x="1210.0" y="548.8" font-size="11.5" fill="#b6c2d1" text-anchor="middle">CKV_AWS_290 · CKV_AWS_355</text>
+  <text x="700.0" y="622.0" font-size="12" fill="#e6edf3" text-anchor="middle" font-weight="700">Skipped on purpose, with the reason written in the code:</text>
+  <text x="700.0" y="642.0" font-size="11.5" fill="#b6c2d1" text-anchor="middle">public EKS endpoint (the GitHub runner needs it) · cross-region replication · S3 access logging · IAM user (SSO is the next step)</text>
+  <text x="700.0" y="672.0" font-size="11" fill="#8b98ad" text-anchor="middle">KMS = keys managed by AWS Key Management Service · SG = security group · CVE = known vulnerability</text>
+</svg>

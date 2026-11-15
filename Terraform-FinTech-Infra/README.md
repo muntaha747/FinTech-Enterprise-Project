@@ -1,611 +1,592 @@
 # 🏦 Terraform-FinTech-Infra
 
-> Production-grade AWS infrastructure for the **FinTech Enterprise Platform**, written entirely in Terraform.
-> Five independent stacks (**S3 · Networking · IAM · ECR · EKS**), each with its own remote state, wired together through outputs and `terraform_remote_state`.
+> All the AWS infrastructure of the **FinTech Enterprise Platform**, written in Terraform.
+> Five stacks (**IAM · S3 · ECR · Networking · EKS**), four environments (**Prod · Stage · QA · Dev**), one pipeline, zero stored AWS keys.
 
 ![Terraform](https://img.shields.io/badge/Terraform-~%3E%201.17-7B42BC?logo=terraform&logoColor=white)
 ![AWS Provider](https://img.shields.io/badge/AWS%20Provider-~%3E%206.72-FF9900?logo=amazonaws&logoColor=white)
 ![EKS](https://img.shields.io/badge/EKS-1.36-326CE5?logo=kubernetes&logoColor=white)
 ![Helm](https://img.shields.io/badge/Helm%20Provider-~%3E%203.3-0F1689?logo=helm&logoColor=white)
-![Region](https://img.shields.io/badge/Region-us--east--1-232F3E?logo=amazonaws&logoColor=white)
+![Checkov](https://img.shields.io/badge/Checkov-0%20failed%20%C2%B7%201000%20passed-43e97b)
+![Environments](https://img.shields.io/badge/Environments-Prod%20%7C%20Stage%20%7C%20QA%20%7C%20Dev-4facfe)
 ![State](https://img.shields.io/badge/State-S3%20%2B%20native%20locking-569A31?logo=amazons3&logoColor=white)
-
-> 💡 The diagrams are written in **Mermaid** and render automatically on **GitHub**.
-> In VS Code, install the *Markdown Preview Mermaid Support* extension to see them in the preview.
 
 ---
 
 ## 📑 Table of Contents
 
-1. [Platform at a Glance](#-1-platform-at-a-glance)
-2. [Resources per Stack](#-2-resources-per-stack)
-3. [Deployment Order](#-3-deployment-order)
-4. [Remote State and Cross-Stack Wiring](#-4-remote-state-and-cross-stack-wiring)
-5. [Networking: Hub-and-Spoke VPC Design](#-5-networking-hub-and-spoke-vpc-design)
-6. [EKS: Control Plane and Data Plane](#-6-eks-control-plane-and-data-plane)
-7. [Blue / Green Node Group Switch](#-7-blue--green-node-group-switch)
-8. [Cluster Autoscaler with IRSA](#-8-cluster-autoscaler-with-irsa)
-9. [IAM: Environment Role Matrix](#-9-iam-environment-role-matrix)
-10. [S3: Compliance Storage Lifecycle](#-10-s3-compliance-storage-lifecycle)
-11. [ECR: Container Registry](#-11-ecr-container-registry)
-12. [Repository Tree](#-12-repository-tree)
-13. [Conventions](#-13-conventions)
-14. [How to Deploy](#-14-how-to-deploy)
-15. [Roadmap](#-15-roadmap)
+| # | Section | What you will find |
+|:-:|---|---|
+| 1 | [What This Folder Builds](#1-what-this-folder-builds) | The big picture, with live traffic flows |
+| 2 | [The 4 VPCs in Plain Words](#2-the-4-vpcs-in-plain-words) | What each VPC is for and how they connect |
+| 3 | [Folder Layout and Environments](#3-folder-layout-and-environments) | Modules, root folders, Prod / Stage / QA / Dev |
+| 4 | [The Stacks, One by One](#4-the-stacks-one-by-one) | IAM · S3 · ECR · Networking · EKS |
+| 5 | [Remote State](#5-remote-state) | Eleven state files, locking, how stacks share data |
+| 6 | [Security Hardening with Checkov](#6-security-hardening-with-checkov) | What was fixed, what is skipped and why |
+| 7 | [CI/CD Pipelines](#7-cicd-pipelines) | Deploy and destroy from GitHub Actions |
+| 8 | [Conventions](#8-conventions) | The rules every stack follows |
+| 9 | [How to Deploy and Destroy](#9-how-to-deploy-and-destroy) | Commands for the pipeline and for your laptop |
+| 10 | [Known Issues and Roadmap](#10-known-issues-and-roadmap) | What is open and what comes next |
+| 11 | [Interview Cheat Sheet](#11-interview-cheat-sheet) | Quick questions and answers to revise from |
+
+> **How to read this page:** every diagram is animated and has an explanation directly under it, followed by **🎤 interview talking points**. Section 11 collects the most common interview questions in one place.
 
 ---
 
-## 🌐 1. Platform at a Glance
+## 1. What This Folder Builds
 
-```mermaid
-flowchart LR
-    DEV(["👩‍💻 Engineer on Ubuntu VM"]):::user
+<div align="center">
+<img src="../docs/diagrams/terraform-infra-4vpcs.svg" width="100%" alt="What Terraform builds: 4 VPCs, a Transit Gateway and EKS in the App VPC, with live traffic flows"/>
+</div>
 
-    subgraph STATEBOX["🗄️ Remote State"]
-        SB[("fintech-project-statefile-bucket")]:::state
-    end
+**📝 What this shows.** The real infrastructure one environment gets from `terraform apply`. Four VPCs sit around one Transit Gateway, and the EKS cluster lives in the App VPC's private subnets. Follow the coloured arrows:
 
-    subgraph AWSBOX["☁️ AWS us-east-1"]
-        direction TB
-        S3["🪣 S3 - Compliance Buckets"]:::s3
-        NET["🌐 Networking - 4 VPCs and Transit Gateway"]:::net
-        IAM["🔐 IAM - Team and CI/CD Roles"]:::iam
-        ECR["📦 ECR - 4 Repositories"]:::ecr
-        EKS["☸️ EKS - FinTech-Cluster"]:::eks
-    end
+| Arrow | Traffic | Path |
+|---|---|---|
+| 🟢 Green | A request coming **in** | Internet → Edge VPC → Transit Gateway → EKS nodes in the App VPC |
+| 🔵 Blue | App talking to its **database** | EKS → Transit Gateway → Database VPC |
+| 🟦 Teal | **Ops** tooling | Ops VPC → Transit Gateway → App VPC |
+| 🩷 Pink | Calls going **out** | EKS → NAT Gateway → Internet (one way: out, never in) |
+| 🟣 Purple | Private **AWS access** | EKS → VPC endpoints → ECR, S3, KMS, Secrets Manager |
+| 🟡 Yellow | **Flow logs** | Every VPC → CloudWatch Logs |
 
-    DEV -->|"terraform apply"| AWSBOX
-    AWSBOX -.->|"state files"| SB
-    NET ==>|"subnets and security groups"| EKS
-    ECR ==>|"container images"| EKS
-    DEV -->|"kubectl"| EKS
+**The five stacks**
 
-    classDef user  fill:#FFD166,stroke:#B8860B,color:#000,stroke-width:2px
-    classDef state fill:#06D6A0,stroke:#047857,color:#000,stroke-width:2px
-    classDef s3    fill:#4CAF50,stroke:#1B5E20,color:#fff,stroke-width:2px
-    classDef net   fill:#118AB2,stroke:#073B4C,color:#fff,stroke-width:2px
-    classDef iam   fill:#EF476F,stroke:#9D0208,color:#fff,stroke-width:2px
-    classDef ecr   fill:#FF9F1C,stroke:#B85C00,color:#000,stroke-width:2px
-    classDef eks   fill:#7B2CBF,stroke:#3C096C,color:#fff,stroke-width:2px
-    style AWSBOX fill:#F1F5FF,stroke:#6C63FF,stroke-width:2px
-    style STATEBOX fill:#E8FFF6,stroke:#06D6A0,stroke-width:2px
-```
-
-### 📝 Explanation
-The platform is split into five **independently deployable Terraform stacks**. Each stack owns one concern and one state file, which keeps the **blast radius** of a change small: a mistake in IAM can never touch a VPC. Stacks share data only through **outputs read with `terraform_remote_state`** (Networking → EKS), never through hard-coded IDs, so any stack can be rebuilt without editing the others. All state lives in one versioned S3 bucket with **native S3 lock files** (`use_lockfile = true`), so no DynamoDB lock table is needed.
+| Stack | Scope | What it creates | Resources |
+|---|---|---|:-:|
+| 🔐 **IAM** | Global | Roles for the platform team, app teams and CI/CD, per environment | 20 |
+| 🪣 **S3** | Global | 2 versioned, KMS-encrypted compliance buckets with lifecycle rules | 10 |
+| 📦 **ECR** | Global | 4 container repositories (immutable tags, scan on push) | 4 |
+| 🌐 **Networking** | Per environment | 4 VPCs, Transit Gateway, NAT, endpoints, flow logs | 126 |
+| ☸️ **EKS** | Per environment | Cluster, 4 node groups, IAM, OIDC, Cluster Autoscaler | ~26 |
 
 > 🎤 **Interview talking points**
-> - "I split infrastructure into stacks by lifecycle and ownership to reduce blast radius."
-> - "Stacks communicate through remote-state outputs, which is the producer/consumer pattern."
-> - "State is remote, encrypted and locked using S3 native locking (Terraform 1.10+)."
+> - "I split the infrastructure into stacks by lifecycle. IAM, S3 and ECR are account-wide; Networking and EKS exist once per environment."
+> - "Inbound, east-west, outbound and AWS-service traffic each take a different, controlled path."
+> - "Private subnets reach the internet only through NAT, which is one-way."
 
 ---
 
-## 📊 2. Resources per Stack
+## 2. The 4 VPCs in Plain Words
 
-```mermaid
-%%{init: {"theme": "base", "themeVariables": {"pie1": "#118AB2", "pie2": "#7B2CBF", "pie3": "#EF476F", "pie4": "#4CAF50", "pie5": "#FF9F1C", "pieSectionTextColor": "#ffffff", "pieStrokeColor": "#ffffff"}}}%%
-pie showData
-    title Terraform-managed resources
-    "Networking" : 106
-    "EKS" : 21
-    "IAM" : 16
-    "S3" : 6
-    "ECR" : 4
-```
+Think of each VPC as a **separate building** with its own address range. Buildings do not share corridors, so a problem in one cannot walk into another. The **Transit Gateway** is the guarded bridge between them.
 
-### 📝 Explanation
-Networking has the most resources because every VPC fans out into subnets, route tables, route-table associations, security groups, VPC endpoints and a Transit Gateway attachment. EKS has fewer resources but is the most complex stack operationally: it spans **AWS** (cluster, node groups, IAM, OIDC) and **Kubernetes** (the Helm release).
+| VPC | Think of it as | What is inside (Prod) | Internet | Who may connect in |
+|---|---|---|---|---|
+| 🚪 **FinTech-Edge** `10.10.0.0/16` | The **reception desk** | 3 public + 3 private subnets, Internet Gateway | Inbound HTTPS only | Anyone on `443` (public). Private tier: only `10.0.0.0/8` |
+| ⚙️ **FinTech-App** `10.20.0.0/16` | The **office floor** | 3 public + 6 private subnets, NAT, the EKS cluster, endpoints for ECR, Secrets Manager, KMS, S3 | Out through NAT | `80`/`443` on the public tier. Private tier: `443`, Vault `8200`, EFS `2049` |
+| 🗄️ **FinTech-Database** `10.30.0.0/16` | The **vault room** | 6 private subnets only, endpoints for KMS and S3 | **None at all** | Only the App VPC on `5432`, `9092`, `443` (and Ops on `443`) |
+| 🛠️ **FinTech-Ops** `10.40.0.0/16` | The **control room** | 3 public + 3 private subnets, NAT | Out through NAT | Only `10.0.0.0/8` on `443` and Vault `8200` |
+
+<div align="center">
+<img src="../docs/diagrams/network-topology-v2.svg" width="100%" alt="Hub-and-spoke network: every subnet per Availability Zone and the Transit Gateway attachments"/>
+</div>
+
+**📝 What this shows.** The exact Prod subnets, laid out per Availability Zone. Every VPC is a **spoke**, the Transit Gateway is the **hub**, and the moving dots are packets crossing an attachment. The Database VPC is the only one with **no** Internet Gateway and **no** NAT.
+
+**The building blocks, in simple words**
+
+| Term | Simple meaning |
+|---|---|
+| 🌐 **Public subnet** | Has a route to the Internet Gateway. Only load balancers and NAT Gateways live here |
+| 🔐 **Private subnet** | No way in from the internet. Nodes, databases and tools live here |
+| 🔁 **NAT Gateway** | A one-way door. Private workloads can call out; nobody outside can call in |
+| 🚇 **VPC endpoint** | A private tunnel to an AWS service, so ECR pulls and secret reads skip the internet |
+| 🔀 **Transit Gateway** | The hub. Every private route table sends `10.0.0.0/8` to it |
+| 🧱 **Security group** | A firewall around a resource. Routes decide *where traffic can go*; security groups decide *what is allowed* |
+| 📜 **VPC Flow Logs** | A logbook of every accepted and rejected connection, kept one year in CloudWatch |
+| 🏗️ **Availability Zone** | A separate data centre. Subnets are spread over three, so one failing does not stop the platform |
 
 > 🎤 **Interview talking points**
-> - "One reusable VPC module creates about 25 resources per VPC; four VPCs give 106 resources from very little code."
-> - "Resource count is not complexity: EKS is small but crosses the AWS and Kubernetes boundary."
+> - "Each VPC has one job, so its firewall rules are short and easy to audit. That is network segmentation, a PCI-DSS requirement."
+> - "Hub-and-spoke scales linearly: a new VPC is one attachment. A full mesh of peerings needs n(n-1)/2 connections."
+> - "The Database VPC is not blocked by a rule. It simply has no route to the internet."
 
 ---
 
-## 🚦 3. Deployment Order
-
-```mermaid
-flowchart LR
-    A["1️⃣ S3 - buckets"]:::s3 --> B["2️⃣ Networking - VPCs, TGW, NAT"]:::net
-    B --> C["3️⃣ IAM - environment roles"]:::iam
-    C --> D["4️⃣ ECR - repositories"]:::ecr
-    D --> E["5️⃣ EKS - cluster, nodes, autoscaler"]:::eks
-    B -.->|"remote state: private subnets and SG"| E
-
-    classDef s3  fill:#4CAF50,stroke:#1B5E20,color:#fff,stroke-width:2px
-    classDef net fill:#118AB2,stroke:#073B4C,color:#fff,stroke-width:2px
-    classDef iam fill:#EF476F,stroke:#9D0208,color:#fff,stroke-width:2px
-    classDef ecr fill:#FF9F1C,stroke:#B85C00,color:#000,stroke-width:2px
-    classDef eks fill:#7B2CBF,stroke:#3C096C,color:#fff,stroke-width:2px
-```
-
-### 📝 Explanation
-Only one ordering is mandatory: **Networking must exist before EKS**, because EKS places the control plane and every node group in the private subnets and security group that Networking publishes as outputs. S3, IAM and ECR have no hard dependencies, but a fixed order keeps deployments predictable and auditable. **Destroy runs in reverse** (EKS first, Networking last).
-
-> 🎤 **Interview talking points**
-> - "Dependencies between stacks are explicit through remote state, so the order is enforced by data, not by memory."
-> - "Destroying in reverse order avoids errors like deleting subnets that still have ENIs attached."
-
----
-
-## 🔗 4. Remote State and Cross-Stack Wiring
-
-```mermaid
-flowchart TB
-    subgraph BUCKET["🗄️ s3://fintech-project-statefile-bucket"]
-        direction LR
-        K1["product-s3/envs/s3.tfstate"]:::s3
-        K2["cloudnetworking/prod/networking.tfstate"]:::net
-        K3["product-iam/iam-roles.tfstate"]:::iam
-        K4["ecr/envs/ecr.tfstate"]:::ecr
-        K5["EKS/Prod/eks.tfstate"]:::eks
-    end
-
-    NETOUT["📤 Networking outputs: vpc_ids, private_subnet_ids, private_security_group_ids, tgw_id"]:::net
-    EKSIN["📥 EKS reads them with data.terraform_remote_state.networking"]:::eks
-
-    K2 --> NETOUT --> EKSIN
-
-    classDef s3  fill:#4CAF50,stroke:#1B5E20,color:#fff
-    classDef net fill:#118AB2,stroke:#073B4C,color:#fff
-    classDef iam fill:#EF476F,stroke:#9D0208,color:#fff
-    classDef ecr fill:#FF9F1C,stroke:#B85C00,color:#000
-    classDef eks fill:#7B2CBF,stroke:#3C096C,color:#fff
-    style BUCKET fill:#E8FFF6,stroke:#06D6A0,stroke-width:2px
-```
-
-### 📝 Explanation
-Each stack writes to **its own key** in the state bucket. `terraform destroy` empties a state file (`resources: []`) but does **not** delete it; the same file is reused on the next apply. EKS consumes Networking through `terraform_remote_state` and narrows the `FinTech-App` private subnets to three Availability Zones with a `data "aws_subnets"` lookup. This is the **producer/consumer** pattern used by platform teams: the network team owns the VPC, and application stacks only read from it.
-
-> 🎤 **Interview talking points**
-> - "Separate state keys mean separate locks, so two teams can apply different stacks at the same time."
-> - "Bucket versioning lets us roll back a corrupted state file."
-> - "`terraform_remote_state` is read-only, so the consumer can never change the producer's resources."
-
----
-
-## 🌐 5. Networking: Hub-and-Spoke VPC Design
-
-```mermaid
-flowchart TB
-    INET(("🌍 Internet")):::inet
-    TGW{{"🔀 Transit Gateway FinTech-TGW - routes 10.0.0.0/8"}}:::tgw
-
-    subgraph EDGE["🛡️ FinTech-Edge 10.10.0.0/16"]
-        E1["Public x3 - port 443 in"]:::pub
-        E2["Private x3"]:::priv
-    end
-
-    subgraph APP["⚙️ FinTech-App 10.20.0.0/16"]
-        A1["Public x3 - ports 80 and 443 in"]:::pub
-        A2["Private x6 - EKS runs here"]:::eksn
-        A3["NAT Gateway"]:::nat
-        A4["Endpoints: ecr.api, ecr.dkr, secretsmanager, kms, S3"]:::ep
-    end
-
-    subgraph DB["🗃️ FinTech-Database 10.30.0.0/16"]
-        D1["Private only x6 - Postgres 5432, Kafka 9092, OpenSearch 443"]:::priv
-        D2["Endpoints: kms, S3"]:::ep
-    end
-
-    subgraph OPS["🧰 FinTech-Ops 10.40.0.0/16"]
-        O1["Public x3"]:::pub
-        O2["Private x3 - Vault 8200"]:::priv
-        O3["NAT Gateway"]:::nat
-    end
-
-    INET <--> E1
-    INET <--> A1
-    A2 --> A3 --> INET
-    O2 --> O3 --> INET
-    E2 <--> TGW
-    A2 <--> TGW
-    D1 <--> TGW
-    O2 <--> TGW
-
-    classDef inet fill:#FFD166,stroke:#B8860B,color:#000,stroke-width:2px
-    classDef tgw  fill:#F72585,stroke:#7A0E3E,color:#fff,stroke-width:3px
-    classDef pub  fill:#90E0EF,stroke:#0077B6,color:#000
-    classDef priv fill:#0077B6,stroke:#03045E,color:#fff
-    classDef eksn fill:#7B2CBF,stroke:#3C096C,color:#fff,stroke-width:2px
-    classDef nat  fill:#FB8500,stroke:#9A4D00,color:#fff
-    classDef ep   fill:#06D6A0,stroke:#047857,color:#000
-    style EDGE fill:#E0F7FF,stroke:#118AB2,stroke-width:2px
-    style APP  fill:#F3E8FF,stroke:#7B2CBF,stroke-width:2px
-    style DB   fill:#FFE8EE,stroke:#EF476F,stroke-width:2px
-    style OPS  fill:#FFF4E0,stroke:#FB8500,stroke-width:2px
-```
-
-### 📝 Explanation
-Four purpose-built VPCs are created from **one reusable child module** (`Networking/module`) using `for_each` over `vpc_setup` in `terraform.tfvars`. Adding a VPC is a data change, not a code change.
-
-| VPC | Role | Internet exposure | Key controls |
-|---|---|---|---|
-| **FinTech-Edge** | Ingress / WAF tier | Public 443 only | No NAT; private egress limited to `10.0.0.0/8` |
-| **FinTech-App** | EKS workloads | Public 80/443 via load balancer, private egress via NAT | Interface endpoints keep ECR, Secrets Manager and KMS traffic off the internet |
-| **FinTech-Database** | Data tier | **None** (no public subnets, no NAT) | Ingress only from the App CIDR (and Ops for OpenSearch) |
-| **FinTech-Ops** | Tooling / Vault | Egress via NAT only | Vault 8200 reachable only from `10.0.0.0/8` |
-
-The **Transit Gateway** is the single hub connecting every VPC; each private route table sends `10.0.0.0/8` to it. This replaces a mesh of VPC peerings and is the standard enterprise topology for **PCI-DSS network segmentation**.
-
-> 🎤 **Interview talking points**
-> - "Hub-and-spoke with a Transit Gateway scales linearly; full-mesh peering needs n(n-1)/2 connections."
-> - "The database VPC has no internet path at all, which is a core PCI-DSS segmentation control."
-> - "VPC endpoints cut NAT costs and keep image pulls and secret reads on the AWS backbone."
-
----
-
-## ☸️ 6. EKS: Control Plane and Data Plane
-
-```mermaid
-flowchart TB
-    subgraph CP["🧠 Control Plane - aws_eks_cluster.eks_control_plane"]
-        API["Kubernetes API v1.36 - private and public endpoint"]:::cp
-        AUTH["Authentication mode API - access entries"]:::cp
-        OIDCP["OIDC issuer registered as IAM OIDC provider - enables IRSA"]:::oidc
-    end
-
-    subgraph DP["💪 Data Plane - private subnets of FinTech-App"]
-        direction LR
-        CB["🔵 core_data_plane_blue - t3.medium - 1 node, range 1 to 10"]:::blue
-        CG["🟢 core_data_plane_green - t3.medium - 0 nodes, range 0 to 10"]:::green
-        MB["🔵 ml_data_plane_blue - taint ml-inference - 0 nodes"]:::blue
-        MG["🟢 ml_data_plane_green - taint ml-inference - 0 nodes"]:::green
-    end
-
-    ROLE["🔐 eks_fintech_worker_node_role - WorkerNode, CNI, ECR ReadOnly"]:::iam
-    CA["📈 Cluster Autoscaler - Helm chart 9.60.0, image v1.36.2"]:::ca
-    KC["💻 ~/.kube/config - written by terraform_data"]:::kc
-
-    API --> DP
-    ROLE --> DP
-    CA -->|"resizes Auto Scaling Groups"| DP
-    API --> KC
-
-    classDef cp    fill:#3A0CA3,stroke:#10002B,color:#fff,stroke-width:2px
-    classDef oidc  fill:#F72585,stroke:#7A0E3E,color:#fff
-    classDef blue  fill:#4361EE,stroke:#14213D,color:#fff,stroke-width:2px
-    classDef green fill:#2DC653,stroke:#155D27,color:#fff,stroke-width:2px
-    classDef iam   fill:#EF476F,stroke:#9D0208,color:#fff
-    classDef ca    fill:#FF9F1C,stroke:#B85C00,color:#000,stroke-width:2px
-    classDef kc    fill:#FFD166,stroke:#B8860B,color:#000
-    style CP fill:#EDE7FF,stroke:#3A0CA3,stroke-width:2px
-    style DP fill:#F0FFF4,stroke:#2DC653,stroke-width:2px
-```
-
-### 📝 Explanation
-- **Control plane.** Runs in the `FinTech-App` private subnets across `us-east-1a/b/c`, protected by the App private security group. Authentication uses the modern **EKS access entries API** (no `aws-auth` ConfigMap). The cluster creator gets admin automatically through `bootstrap_cluster_creator_admin_permissions`, and the DevOps role `hassan_iam_role` is granted access explicitly.
-- **Data plane.** Four managed node groups share one worker IAM role. Only `core_data_plane_blue` runs a node by default; the other three are **provisioned at zero**, so they cost nothing until they scale. ML groups carry a `NO_SCHEDULE` taint so only ML inference pods with a matching toleration land on them.
-- **Safe rollouts.** Every node group uses `create_before_destroy` and `max_unavailable = 1`: new capacity comes up before old nodes are drained.
-- **Developer experience.** A `terraform_data` resource runs `aws eks update-kubeconfig` after the cluster is created, so `kubectl` works immediately.
-
-> 🎤 **Interview talking points**
-> - "Access entries replace the fragile aws-auth ConfigMap and are managed as IAM-native resources in Terraform."
-> - "Taints isolate expensive ML nodes; tolerations opt specific workloads in."
-> - "Node groups at zero give ready-to-use capacity with zero idle cost."
-
----
-
-## 🔁 7. Blue / Green Node Group Switch
-
-```mermaid
-flowchart LR
-    BLUE["🔵 node_color = blue - only BLUE groups exist"]:::blue
-    BOTH["🟣 node_color = both - BLUE and GREEN exist"]:::both
-    GREEN["🟢 node_color = green - only GREEN groups exist"]:::green
-
-    BLUE -->|"Step 1: green nodes come up"| BOTH
-    BOTH -->|"Step 2: pods move, blue removed"| GREEN
-    BOTH -.->|"Rollback"| BLUE
-    GREEN -.->|"Next upgrade"| BOTH
-
-    classDef blue  fill:#4361EE,stroke:#14213D,color:#fff,stroke-width:2px
-    classDef both  fill:#7B2CBF,stroke:#3C096C,color:#fff,stroke-width:2px
-    classDef green fill:#2DC653,stroke:#155D27,color:#fff,stroke-width:2px
-```
-
-### 📝 Explanation
-A single validated variable, `node_color` (`blue`, `green` or `both`), drives the `count` of every node group:
-
-```hcl
-count = var.node_color == "blue"  || var.node_color == "both" ? 1 : 0   # blue groups
-count = var.node_color == "green" || var.node_color == "both" ? 1 : 0   # green groups
-```
-
-Upgrades become a **zero-downtime change in `terraform.tfvars`**: switch to `both`, let workloads move to the new nodes, then switch to the new colour. Rollback is the same change in reverse. The current value is `both`, so all four node groups exist.
-
-> 🎤 **Interview talking points**
-> - "Blue/green at the node-group level lets me upgrade AMIs or Kubernetes versions with an instant rollback path."
-> - "A `validation` block rejects typos, so a wrong value can never silently delete every node group."
-
----
-
-## 📈 8. Cluster Autoscaler with IRSA
-
-```mermaid
-sequenceDiagram
-    autonumber
-    participant Pod as 📦 Pending Pod
-    participant CA as 📈 Cluster Autoscaler
-    participant OIDC as 🪪 EKS OIDC Provider
-    participant STS as 🔐 AWS STS
-    participant ASG as ⚙️ Node Group ASG
-
-    Pod->>CA: Pod is unschedulable, no capacity
-    CA->>STS: AssumeRoleWithWebIdentity using service account token
-    STS->>OIDC: Verify token signature
-    OIDC-->>STS: Token is valid
-    STS->>STS: Check sub is kube-system/cluster-autoscaler and aud is sts.amazonaws.com
-    STS-->>CA: Temporary credentials for Cluster-Autoscaler-Role
-    CA->>ASG: DescribeNodegroup and SetDesiredCapacity
-    ASG-->>Pod: New node joins and the pod is scheduled
-    Note over CA,ASG: Idle nodes are removed later, down to min_size
-```
-
-### 📝 Explanation
-The autoscaler is installed by Terraform with the official Helm chart. It gets AWS permissions through **IAM Roles for Service Accounts (IRSA)**, so there are no access keys anywhere:
-
-1. **`aws_iam_policy`**: least-privilege actions to read and resize Auto Scaling Groups. `eks:DescribeNodegroup` enables **scaling up from zero**, which the green and ML groups rely on.
-2. **`aws_iam_role`**: trusts **only** the `kube-system/cluster-autoscaler` service account of **this** cluster, checked with `sub` and `aud` conditions.
-3. **`aws_iam_role_policy_attachment`**: binds the policy to the role.
-4. **`helm_release`**: installs the chart, annotates the service account with the role ARN, and auto-discovers node groups by their cluster tag. It waits for IAM and for the first node group.
-
-> 🎤 **Interview talking points**
-> - "IRSA gives each pod its own IAM role instead of sharing the node role, which is least privilege at pod level."
-> - "The `sub` condition pins the role to one namespace and service account; `aud` pins it to STS."
-> - "Cluster Autoscaler needs node group metadata to scale from zero, because no node exists to copy labels from."
-
----
-
-## 🔐 9. IAM: Environment Role Matrix
-
-```mermaid
-flowchart LR
-    TF[["🧩 module iam_roles - for_each over role_sets"]]:::mod
-
-    subgraph PLAT["platform"]
-        P1["👑 FinTech-Platform-Admin - EKS, KMS, VPC, RDS - denied PII access"]:::admin
-    end
-    subgraph QA["qa - full access"]
-        Q1["🧑‍💻 AppTeam-qa-Role"]:::full
-        Q2["🤖 FinTech-CI-CD-Deployer-qa"]:::bot
-    end
-    subgraph UAT["uat - read only"]
-        U1["🧑‍💻 AppTeam-uat-Role"]:::ro
-        U2["🤖 FinTech-CI-CD-Deployer-uat"]:::bot
-    end
-    subgraph PROD["prod - read only"]
-        R1["🧑‍💻 AppTeam-prod-Role"]:::ro
-        R2["🤖 FinTech-CI-CD-Deployer-prod"]:::bot
-    end
-
-    GH(["🐙 GitHub Actions OIDC"]):::gh
-
-    TF --> P1
-    TF --> Q1
-    TF --> U1
-    TF --> R1
-    GH -.->|"AssumeRoleWithWebIdentity"| Q2
-    GH -.->|"AssumeRoleWithWebIdentity"| U2
-    GH -.->|"AssumeRoleWithWebIdentity"| R2
-
-    classDef mod   fill:#FFD166,stroke:#B8860B,color:#000,stroke-width:2px
-    classDef admin fill:#9D0208,stroke:#370617,color:#fff,stroke-width:2px
-    classDef full  fill:#2DC653,stroke:#155D27,color:#fff
-    classDef ro    fill:#118AB2,stroke:#073B4C,color:#fff
-    classDef bot   fill:#7B2CBF,stroke:#3C096C,color:#fff
-    classDef gh    fill:#24292F,stroke:#000,color:#fff
-    style PLAT fill:#FFE8EE,stroke:#9D0208
-    style QA   fill:#E8FFEF,stroke:#2DC653
-    style UAT  fill:#E0F7FF,stroke:#118AB2
-    style PROD fill:#E0F7FF,stroke:#118AB2
-```
-
-### 📝 Explanation
-The IAM stack calls one wrapper module (`IAM/iam_roles`, built on `terraform-aws-modules/iam`) once per environment in `role_sets`. The module **derives permissions from the environment name**: environments listed in `read_only_environments` (`uat`, `prod`) automatically get restricted actions, which enforces least privilege without per-environment code. Guardrails are explicit `Deny` statements (no PII reads for platform admins, no VPC/TGW deletion for app teams). CI/CD roles trust **GitHub Actions OIDC** scoped to this repository, so pipelines need no stored keys.
-
-> 🎤 **Interview talking points**
-> - "An explicit Deny always wins over any Allow in IAM evaluation, so guardrails cannot be bypassed by attaching another policy."
-> - "Environment-aware permissions: same module, stricter rights in uat and prod automatically."
-> - "GitHub OIDC removes long-lived CI secrets; each workflow run gets short-lived credentials."
-
----
-
-## 🪣 10. S3: Compliance Storage Lifecycle
-
-```mermaid
-flowchart LR
-    N["📥 New object - STANDARD"]:::std -->|"after 30 days"| IA["🧊 STANDARD_IA"]:::ia
-    IA -->|"after 180 days"| GL["🏔️ GLACIER"]:::gl
-    GL -->|"after 730 days"| X["🗑️ Expired"]:::del
-    V["🕘 Non-current version"]:::ver -->|"after 90 days"| GL2["🏔️ GLACIER"]:::gl
-    GL2 -->|"after 180 days"| X2["🗑️ Deleted"]:::del
-
-    classDef std fill:#4CAF50,stroke:#1B5E20,color:#fff,stroke-width:2px
-    classDef ia  fill:#90E0EF,stroke:#0077B6,color:#000
-    classDef gl  fill:#3A86FF,stroke:#023E8A,color:#fff
-    classDef del fill:#EF476F,stroke:#9D0208,color:#fff
-    classDef ver fill:#FFD166,stroke:#B8860B,color:#000
-```
-
-### 📝 Explanation
-The buckets `muntaha-fintech-dvc-data-lake` and `muntaha-fintech-applog` are created by one module with `for_each`. Each has **versioning enabled** and a tiered lifecycle policy that keeps data for two years (a common retention baseline for financial audit logs) while moving cold data to cheaper storage classes automatically. Adding a bucket is a one-line change in `S3/terraform.tfvars`. The names carry a `muntaha-` prefix because S3 bucket names are **global across all AWS accounts**.
-
-> 🎤 **Interview talking points**
-> - "Lifecycle rules automate cost optimisation: STANDARD to IA to Glacier as data cools."
-> - "Versioning protects against accidental deletes and overwrites; non-current versions have their own expiry."
-
----
-
-## 📦 11. ECR: Container Registry
-
-```mermaid
-flowchart LR
-    CI["🤖 CI/CD Deployer Role"]:::bot -->|"docker push"| L
-    CI --> P
-    CI --> B
-    CI --> N
-
-    subgraph REPOS["📦 ECR - scan on push - MUTABLE tags"]
-        direction TB
-        L["fintech-ledgerservice"]:::r1
-        P["fintech-payment"]:::r2
-        B["fintech-bff"]:::r3
-        N["fintech-notifications"]:::r4
-    end
-
-    REPOS -->|"image pull through VPC endpoints"| EKSN["☸️ EKS nodes"]:::eks
-
-    classDef bot fill:#7B2CBF,stroke:#3C096C,color:#fff
-    classDef r1  fill:#FF9F1C,stroke:#B85C00,color:#000
-    classDef r2  fill:#F72585,stroke:#7A0E3E,color:#fff
-    classDef r3  fill:#4361EE,stroke:#14213D,color:#fff
-    classDef r4  fill:#2DC653,stroke:#155D27,color:#fff
-    classDef eks fill:#3A0CA3,stroke:#10002B,color:#fff
-    style REPOS fill:#FFF4E0,stroke:#FF9F1C,stroke-width:2px
-```
-
-### 📝 Explanation
-One repository per microservice, created with `for_each` over a set. **Image scanning on push** reports CVEs before an image reaches the cluster. Nodes pull images through the `ecr.api` and `ecr.dkr` interface endpoints and the S3 gateway endpoint in the App VPC, so image traffic never leaves the AWS network.
-
-> 🎤 **Interview talking points**
-> - "One repo per service gives per-service permissions, lifecycle policies and scan results."
-> - "For production I would switch to IMMUTABLE tags so a tag always points to the same image."
-
----
-
-## 🌳 12. Repository Tree
+## 3. Folder Layout and Environments
 
 ```text
 Terraform-FinTech-Infra/
-├── 📄 README.md                      ← you are here
 │
-├── 🪣 S3/                            ── Stack 1 · compliance buckets
-│   ├── backend.tf                    state → product-s3/envs/s3.tfstate
-│   ├── providers.tf · variables.tf · locals.tf · main.tf · outputs.tf
-│   ├── terraform.tfvars              bucket names, environment, tags
-│   └── modules/                      reusable bucket module
-│       └── main.tf · variables.tf · locals.tf · outputs.tf · versions.tf
+├── 🔐 IAM/                              GLOBAL · roles for every environment
+│   ├── backend.tf · providers.tf · variables.tf · locals.tf · main.tf · outputs.tf
+│   ├── terraform.tfvars                 which roles each environment gets
+│   └── modules/iam_roles/               wrapper around terraform-aws-modules/iam
 │
-├── 🌐 Networking/                    ── Stack 2 · VPCs + Transit Gateway
-│   ├── backend.tf                    state → cloudnetworking/prod/networking.tfstate
-│   ├── providers.tf · variables.tf · locals.tf · main.tf · outputs.tf
-│   ├── terraform.tfvars              vpc_setup: Edge · App · Database · Ops
-│   ├── module/                       one VPC: subnets, RTs, NAT, SGs, endpoints, TGW attach
-│   │   └── main.tf · variables.tf · outputs.tf · version.tf
-│   └── tgw/                          the Transit Gateway hub
-│       └── main.tf · variables.tf · outputs.tf · version.tf
+├── 🪣 S3/                               GLOBAL · compliance buckets
+│   ├── (same root files)
+│   ├── terraform.tfvars                 bucket names
+│   └── modules/s3_bucket/               bucket + versioning + encryption + lifecycle
 │
-├── 🔐 IAM/                           ── Stack 3 · environment roles
-│   ├── backend.tf                    state → product-iam/iam-roles.tfstate
-│   ├── providers.tf · variables.tf · locals.tf · main.tf · outputs.tf
-│   ├── terraform.tfvars              role_sets: platform · qa · uat · prod
-│   └── iam_roles/                    wrapper over terraform-aws-modules/iam
-│       └── main.tf · variables.tf · locals.tf · outputs.tf · versions.tf
+├── 📦 ECR/                              GLOBAL · container registry
+│   ├── (same root files)
+│   ├── terraform.tfvars                 repository names
+│   └── modules/ecr_repository/
 │
-├── 📦 ECR/                           ── Stack 4 · container registry
-│   ├── backend.tf                    state → ecr/envs/ecr.tfstate
-│   ├── providers.tf · variables.tf · main.tf
-│   ├── terraform.tfvars
-│   └── modules/
-│       └── main.tf · variables.tf · outputs.tf · versions.tf
+├── 🌐 Networking/                       PER ENVIRONMENT
+│   ├── modules/
+│   │   ├── vpc/                         ONE VPC: subnets, routes, NAT, security groups,
+│   │   │                                endpoints, flow logs, Transit Gateway attachment
+│   │   └── tgw/                         the Transit Gateway hub
+│   ├── Prod/                            root: 4 VPCs on 10.10 / 10.20 / 10.30 / 10.40
+│   ├── Stage/                           root: 10.50 / 10.60 / 10.70 / 10.80
+│   ├── QA/                              root: 10.90 / 10.100 / 10.110 / 10.120
+│   └── Dev/                             root: 10.130 / 10.140 / 10.150 / 10.160
 │
-└── ☸️ EKS/                           ── Stack 5 · Kubernetes platform
-    ├── backend.tf                    state → EKS/Prod/eks.tfstate
-    ├── versions.tf                   aws ~> 6.72 · tls ~> 4.0 · helm ~> 3.3
-    ├── providers.tf                  aws + helm (exec auth via aws eks get-token)
-    ├── variables.tf · outputs.tf
-    ├── terraform.tfvars              cluster, node names, node_color, autoscaler versions
-    ├── IAM.tf                        cluster role, worker role, DevOps user/role
-    ├── EKS_Control_Plane.tf          remote state, subnets, cluster, access entries
-    ├── EKS_Data_Plane.tf             4 node groups (core/ml × blue/green) + kubeconfig
-    ├── OIDC.tf                       IAM OIDC provider for IRSA
-    ├── EKS_Cluster_Autoscaler.tf     IRSA policy/role + Helm release
-    └── testapp.yaml                  sample workload for testing
+└── ☸️ EKS/                              PER ENVIRONMENT
+    ├── modules/eks_cluster/
+    │   ├── IAM.tf                       cluster role, worker role, DevOps user + role
+    │   ├── EKS_Control_Plane.tf         KMS key, log group, cluster, access entries
+    │   ├── EKS_Data_Plane.tf            4 node groups + kubeconfig update
+    │   ├── OIDC.tf                      IAM OIDC provider (enables IRSA)
+    │   ├── EKS_Cluster_Autoscaler.tf    least-privilege policy, IRSA role, Helm release
+    │   └── variables.tf · outputs.tf · versions.tf
+    ├── Prod/ · Stage/ · QA/ · Dev/      roots: one cluster each
+    └── testapp.yaml                     sample workload for testing
 ```
 
-### 📝 Explanation
-Every stack follows the **same root file layout** (`backend.tf`, `providers.tf`, `variables.tf`, `main.tf`, `outputs.tf`, `terraform.tfvars`), and reusable logic lives in a child module folder. Anyone who knows one stack can navigate all of them.
+Every **root** folder holds the same files, so anyone who knows one stack can find their way around all of them:
+
+| File | Question it answers |
+|---|---|
+| `terraform.tfvars` | **What** values does this stack use? (the file you edit day to day) |
+| `variables.tf` | **Which** inputs exist, and what type are they? |
+| `locals.tf` | What can be **worked out** from those inputs? |
+| `main.tf` | **What** gets built, and from which module? |
+| `outputs.tf` | What do we **get back** after apply? |
+| `backend.tf` / `providers.tf` | **Where** is the state, and which AWS region? |
+
+**The four environments run the same module code and differ only in `terraform.tfvars`:**
+
+| Environment | Edge | App | Database | Ops | EKS cluster | Node groups | Names end with |
+|---|---|---|---|---|---|---|---|
+| **Prod** | `10.10.0.0/16` | `10.20.0.0/16` | `10.30.0.0/16` | `10.40.0.0/16` | `FinTech-Cluster` | blue + green | *(nothing)* |
+| **Stage** | `10.50.0.0/16` | `10.60.0.0/16` | `10.70.0.0/16` | `10.80.0.0/16` | `FinTech-Cluster-Stage` | blue | `-Stage` |
+| **QA** | `10.90.0.0/16` | `10.100.0.0/16` | `10.110.0.0/16` | `10.120.0.0/16` | `FinTech-Cluster-QA` | blue | `-QA` |
+| **Dev** | `10.130.0.0/16` | `10.140.0.0/16` | `10.150.0.0/16` | `10.160.0.0/16` | `FinTech-Cluster-Dev` | blue | `-Dev` |
 
 > 🎤 **Interview talking points**
-> - "A consistent layout across stacks reduces onboarding time and review mistakes."
-> - "Root modules hold configuration; child modules hold reusable logic and version pins."
+> - "Environments are folders, not branches or workspaces. The difference between Prod and Stage is a normal file diff anyone can review."
+> - "Reusable logic lives in modules. A fix made once reaches every environment."
+> - "No two VPCs overlap, across VPCs or across environments, so they could all be routed together later."
 
 ---
 
-## 📐 13. Conventions
+## 4. The Stacks, One by One
+
+### 4.1 IAM (global)
+
+<div align="center">
+<img src="../docs/diagrams/iam-roles-v2.svg" width="100%" alt="Who assumes which IAM role, and which environment enables it"/>
+</div>
+
+**📝 What this shows.** One module (`IAM/modules/iam_roles`) runs once for each entry in `role_sets` (`platform`, `dev`, `qa`, `stage`, `prod`) and creates only the roles that entry switches on.
+
+| Role | Who uses it | What it may do | Guardrail (explicit Deny) |
+|---|---|---|---|
+| `FinTech-Platform-Admin` | Platform engineers | Manage VPC, RDS, EKS, KMS | Cannot read customer data (`s3:GetObject`, `rds-db:connect`, `kms:Decrypt`) |
+| `AppTeam-<env>-Role` | Developers and QA | **Full** in `dev` and `qa`, **read-only** in `stage` and `prod` | Cannot delete VPCs, subnets, the Transit Gateway or terminate instances |
+| `FinTech-CI-CD-Deployer-<env>` | GitHub Actions | Push images, update the cluster, read secrets | Trusts only this repository, through OIDC |
+
+The module works out permissions **from the environment name**: anything listed in `read_only_environments` (`prod`, `stage`) automatically gets the restricted action list.
+
+> 🎤 **Interview talking points**
+> - "An explicit Deny always beats any Allow, so a guardrail cannot be bypassed by attaching another policy."
+> - "Even the platform admin cannot read customer data. Running the infrastructure and reading the data are separate duties."
+> - "The same module gives stricter rights in stage and prod without any environment-specific code."
+
+### 4.2 S3 (global)
+
+Two buckets, `muntaha-fintech-dvc-data-lake` and `muntaha-fintech-applog`, created by one module with `for_each`. The `muntaha-` prefix is there because S3 bucket names are **global across every AWS account**.
+
+| Setting | Value | Why |
+|---|---|---|
+| Versioning | Enabled | An overwritten or deleted object can be recovered |
+| Public access block | All four switches on | The bucket can never be made public, even by mistake |
+| Default encryption | AWS KMS, with a bucket key | Every decrypt is permission-checked and logged |
+| Current objects | 30 days → `STANDARD_IA` → 180 days → `GLACIER` → deleted after 730 days | Cold data moves to cheaper storage on its own; two years is a common audit retention |
+| Old versions | 90 days → `GLACIER` → deleted after 180 days | Old versions do not pile up forever |
+| Unfinished uploads | Deleted after 7 days | Failed multipart uploads would otherwise be billed invisibly |
+
+> 🎤 **Interview talking points**
+> - "Lifecycle rules automate cost optimisation: STANDARD, then Infrequent Access, then Glacier as data cools."
+> - "Versioning protects against accidental deletes; the public access block protects against accidental exposure."
+
+### 4.3 ECR (global)
+
+One private repository per microservice: `fintech-ledgerservice`, `fintech-payment`, `fintech-bff`, `fintech-notifications`.
+
+| Setting | Value | Why |
+|---|---|---|
+| Tag mutability | `IMMUTABLE` | A tag can never be overwritten, so the image that was scanned is the image that runs. Pipelines push a new tag (the git SHA) every time |
+| Scan on push | On | Known vulnerabilities (CVEs) are reported before the image reaches the cluster |
+| Encryption | AWS KMS | Access to images is permission-checked and logged |
+
+> 🎤 **Interview talking points**
+> - "Immutable tags make deployments reproducible and stop anyone silently replacing an approved image."
+> - "Nodes pull images through VPC endpoints, so image traffic never leaves the AWS network."
+
+### 4.4 Networking (per environment)
+
+<div align="center">
+<img src="../docs/diagrams/terraform-foreach-v2.svg" width="100%" alt="terraform.tfvars drives one module that creates four VPCs and attaches them to the Transit Gateway"/>
+</div>
+
+**📝 What this shows.** All four VPCs come from **one module**. The root loops over the `vpc_setup` map in `terraform.tfvars` with `for_each`; each entry becomes one complete VPC.
+
+```hcl
+module "fintech_vpcs" {
+  source   = "../modules/vpc"
+  for_each = var.vpc_setup          # one entry per VPC in terraform.tfvars
+
+  vpc_name       = each.key         # e.g. "FinTech-App"
+  vpc_cidr_block = each.value.cidr  # e.g. "10.20.0.0/16"
+  tgw_id         = module.tgw.tgw_id
+  # ...
+}
+```
+
+One `terraform apply` on `Networking/Prod` creates **126 resources**:
+
+| Resource | Count | Resource | Count |
+|---|:-:|---|:-:|
+| VPCs | 4 | Security groups (public, private, endpoint) | 11 |
+| Subnets (9 public + 18 private) | 27 | Default security groups, locked | 4 |
+| Route tables (3 public + 4 private) | 7 | S3 gateway endpoints | 4 |
+| Internet Gateways | 3 | Interface endpoints | 5 |
+| NAT Gateways + Elastic IPs | 2 + 2 | VPC Flow Logs (+ log group and IAM role each) | 4 |
+| Transit Gateway + attachments | 1 + 4 | Routes and associations | the rest |
+
+<div align="center">
+<img src="../docs/diagrams/vpc-endpoints.svg" width="100%" alt="Gateway and interface VPC endpoints compared with the internet path they replace"/>
+</div>
+
+**📝 What this shows.** Two kinds of private tunnel to AWS services. The **gateway endpoint** for S3 is free and is just a route. **Interface endpoints** (ECR, KMS, Secrets Manager) are network cards in one private subnet per AZ, guarded by a security group that allows HTTPS from inside the VPC only. The bottom row is the internet path they replace.
+
+> 🎤 **Interview talking points**
+> - "I use `for_each` instead of `count`, so each VPC is tracked by name and removing one does not shift the others."
+> - "Adding a VPC is a data change in tfvars, not a code change."
+> - "Endpoints are cheaper than NAT traffic and remove the internet from the path completely."
+
+### 4.5 EKS (per environment)
+
+<div align="center">
+<img src="../docs/diagrams/eks-platform.svg" width="100%" alt="EKS control plane, four node groups, the Cluster Autoscaler loop and the blue/green switch"/>
+</div>
+
+**📝 What this shows.** Everything the `eks_cluster` module builds:
+
+- **Control plane (left).** Kubernetes 1.36, managed by AWS. Logins use **EKS access entries** (no `aws-auth` ConfigMap). Kubernetes **Secrets are encrypted** with a KMS key. All five log types, including the **audit log**, go to CloudWatch.
+- **Data plane (middle).** Four managed node groups in the App VPC's private subnets. Only **Core blue** runs a node by default; the other three exist at **zero nodes** and cost nothing until needed. The **ML** groups are tainted (`dedicated=ml-inference:NoSchedule`), so only pods that tolerate the taint land there.
+- **Cluster Autoscaler (right).** Adds a node when a pod cannot be scheduled and removes idle nodes later. Its pod gets AWS permissions through **IRSA**, with a role limited to this cluster's node groups.
+- **Blue/green switch (bottom).** `node_color` goes `blue` → `both` → `green`: new nodes arrive before old ones leave.
+
+**The two lines that make the blue/green switch work:**
+
+```hcl
+locals {
+  create_blue  = var.node_color == "blue"  || var.node_color == "both"
+  create_green = var.node_color == "green" || var.node_color == "both"
+}
+# each node group:  count = local.create_blue ? 1 : 0     (or create_green)
+```
+
+**Who controls the node count:**
+
+| Setting | Controlled by | How |
+|---|---|---|
+| `min_size`, `max_size` | Terraform (your code) | The limits |
+| `desired_size` | Cluster Autoscaler | `ignore_changes = [scaling_config[0].desired_size]`, so a pipeline run never removes busy nodes |
+
+**Access to the cluster:** whoever runs Terraform becomes cluster-admin automatically. Every other principal in `cluster_admin_arns` gets an access entry, so you keep `kubectl` access whether the cluster was created from your laptop or from GitHub Actions.
+
+> 🎤 **Interview talking points**
+> - "IRSA gives one pod one IAM role, instead of every pod sharing the node's role."
+> - "The trust policy checks `sub` (which service account) and `aud` (must be STS), so no other pod can assume the role."
+> - "Scale-from-zero works because the autoscaler may call `eks:DescribeNodegroup` to learn a group's labels and taints when no node exists yet."
+> - "Access entries replace the fragile aws-auth ConfigMap with IAM-native resources I can manage in Terraform."
+
+---
+
+## 5. Remote State
+
+<div align="center">
+<img src="../docs/diagrams/state-backend-v5.svg" width="100%" alt="Eleven Terraform state files in one S3 bucket, one per stack and environment"/>
+</div>
+
+**📝 What this shows.** Terraform remembers what it built in a **state file**. Every stack and environment has **its own** file in one encrypted bucket:
+
+| Stack | State key in `fintech-project-statefile-bucket` |
+|---|---|
+| IAM | `product-iam/iam-roles.tfstate` |
+| S3 | `product-s3/envs/s3.tfstate` |
+| ECR | `ecr/envs/ecr.tfstate` |
+| Networking | `cloudnetworking/<prod\|stage\|qa\|dev>/networking.tfstate` |
+| EKS | `EKS/<Prod\|Stage\|QA\|Dev>/eks.tfstate` |
+
+The teal arrow is the only link between stacks. `EKS/<env>/main.tf` **reads** the outputs of `Networking/<env>`:
+
+```hcl
+data "terraform_remote_state" "networking" {
+  backend = "s3"
+  config = {
+    bucket = var.networking_state_bucket
+    key    = var.networking_state_key      # e.g. cloudnetworking/prod/networking.tfstate
+    region = var.region
+  }
+}
+```
+
+It is read-only, so EKS can use the subnets but can never change the network.
+
+<div align="center">
+<img src="../docs/diagrams/state-locking.svg" width="100%" alt="Native S3 state locking: one writer at a time, no DynamoDB table"/>
+</div>
+
+**📝 What this shows.** Two engineers apply the same stack. The first creates a `.tflock` file next to the state; the second sees it and stops instead of overwriting. When the first finishes, the lock disappears. This is Terraform's **native S3 locking** (`use_lockfile = true`), so no DynamoDB table is needed.
+
+> 🎤 **Interview talking points**
+> - "One state per stack means a small blast radius, faster plans and separate locks."
+> - "`terraform destroy` empties the state file but does not delete it. The same file is reused next time."
+> - "Who runs Terraform does not matter, only the state does. A stack created by the pipeline can be destroyed from a laptop because both read the same state."
+
+---
+
+## 6. Security Hardening with Checkov
+
+<div align="center">
+<img src="../docs/diagrams/security-hardening.svg" width="100%" alt="Checkov scan results before and after, with the fixes applied to each stack"/>
+</div>
+
+**📝 What this shows.** [Checkov](https://www.checkov.io/) compares the Terraform code with hundreds of security rules. The first scan reported **156 failures across 22 rules**; it now reports **0 failed and 1000 passed**. The same scan runs **in the deploy pipeline**, before anything is created.
+
+Every fix has a comment next to the code. Search the repository for `CHECKOV FIX` to see them all:
+
+```hcl
+# CHECKOV FIX (CKV2_AWS_11)
+# WHAT: added VPC Flow Logs (4 small resources: log group, IAM role, role policy, flow log).
+# WHY:  flow logs record every accepted and rejected connection in the VPC. Without them you
+#       cannot investigate an incident or prove network controls to an auditor (PCI-DSS, SOC 2).
+```
+
+**What was fixed**
+
+| Stack | Check | What changed | Why it matters |
+|---|---|---|---|
+| Networking | `CKV2_AWS_11` | VPC Flow Logs on every VPC | A record of every connection, for incidents and audits |
+| Networking | `CKV2_AWS_12` | Default security group has no rules | Anything launched without a security group gets no access |
+| Networking | `CKV_AWS_23` | Description on every security group and rule | Every open port says why it is open |
+| S3 | `CKV2_AWS_6` | Public access block | A bucket can never be exposed publicly |
+| S3 | `CKV_AWS_145` | KMS encryption by default | Decrypts are permission-checked and logged |
+| S3 | `CKV_AWS_300` | Abort unfinished uploads after 7 days | No hidden storage cost |
+| ECR | `CKV_AWS_51` | Immutable tags | The scanned image is the running image |
+| ECR | `CKV_AWS_136` | KMS encryption | Image access is auditable |
+| EKS | `CKV_AWS_58` | Kubernetes Secrets encrypted with a KMS key | Secrets are unreadable even from an etcd backup |
+| EKS | `CKV_AWS_37` | All five control-plane log types | The audit log shows who did what |
+| EKS | `CKV_AWS_290`, `CKV_AWS_355` | Autoscaler policy split and scoped | It can only resize this cluster's own node groups |
+
+**What is skipped on purpose** (the reason is written next to each `checkov:skip` in the code)
+
+| Check | What it asks for | Why it is not done here |
+|---|---|---|
+| `CKV_AWS_38`, `CKV_AWS_39` | No public EKS endpoint | The GitHub-hosted runner and the engineer's machine are outside the VPC. Access is still protected by IAM and access entries |
+| `CKV_AWS_339` | A "supported" Kubernetes version | 1.36 is current on EKS; this Checkov release's list is older |
+| `CKV_AWS_144` | S3 cross-region replication | Needs a second region; planned with disaster recovery |
+| `CKV_AWS_18` | S3 access logging | Needs a separate log bucket; planned with CloudTrail |
+| `CKV2_AWS_62` | S3 event notifications | Nothing consumes bucket events yet |
+| `CKV_AWS_158` | KMS key on CloudWatch log groups | Default CloudWatch encryption for now; a customer key is a later step |
+| `CKV2_AWS_64` | Custom KMS key policy | The default key policy is what EKS expects |
+| `CKV2_AWS_5` | Security groups attached to something | They are attached by other stacks (EKS uses the private one) |
+| `CKV_AWS_273`, `CKV_AWS_40` | SSO instead of an IAM user | The IAM user is a course exercise; IAM Identity Center is next on the roadmap |
+| `CKV_TF_1` | Module pinned to a commit hash | Pinned to exact version `6.8.2` from the official registry instead |
+
+> 🎤 **Interview talking points**
+> - "Scanning is shift-left: the pipeline fails on a misconfiguration before any resource exists."
+> - "I neither blindly fix nor blindly suppress. Every skip has a written reason a reviewer can challenge."
+> - "The autoscaler fix is a good least-privilege example: read actions on `*` because AWS requires it, write actions only on Auto Scaling Groups tagged for this cluster."
+
+---
+
+## 7. CI/CD Pipelines
+
+<div align="center">
+<img src="../docs/diagrams/pipeline-environments.svg" width="100%" alt="The deploy pipeline order, the four environments and the reverse destroy order"/>
+</div>
+
+**📝 What this shows.**
+
+- **Top row: deploy** ([`4.fintech-infra-deploy.yaml`](../.github/workflows/4.fintech-infra-deploy.yaml)). OIDC login, then two quality gates (`terraform fmt -check` and the Checkov scan), then the stacks **in dependency order** on one GitHub-hosted runner: IAM → S3 → ECR → Networking → EKS. A step starts only when the one before it has succeeded. Networking must finish before EKS because the cluster is placed inside the network's subnets.
+- **Middle: environments.** A push to `dev` that touches Prod-related code deploys **Prod**. A manual run lets you choose Stage, QA or Dev.
+- **Bottom: destroy** ([`5.fintech-infra-destroy.yaml`](../.github/workflows/5.fintech-infra-destroy.yaml)). Manual only, needs the word `destroy` typed in, and runs the same road **backwards**. The shared stacks (ECR, S3, IAM) can be left in place when another environment is still running.
+
+| | Deploy (workflow 4) | Destroy (workflow 5) |
+|---|---|---|
+| Starts when | Push to `dev` (Prod paths only), or manual run | Manual run only |
+| Environment | Push → Prod · manual → your choice | Your choice |
+| Order | IAM → S3 → ECR → Networking → EKS | EKS → Networking → ECR → S3 → IAM |
+| Safety | Format check + Checkov must pass first | Must type `destroy` · `dev` branch only |
+| Each stack runs | `init` → `validate` → `plan -out plan1` → `apply plan1` | `init` → `plan -destroy -out destroyplan` → `apply destroyplan` |
+
+<div align="center">
+<img src="../docs/diagrams/github-oidc.svg" width="100%" alt="GitHub Actions getting short-lived AWS credentials through OIDC"/>
+</div>
+
+**📝 What this shows.** How the pipeline logs in to AWS with **no stored keys**. GitHub signs an identity token for the run, AWS STS checks it comes from **this repository**, and returns temporary credentials that expire on their own.
+
+> 🎤 **Interview talking points**
+> - "The plan is saved to a file and that exact file is applied, so what was reviewed is what runs."
+> - "Deploy and destroy share a concurrency group with `cancel-in-progress: false`. They queue instead of overlapping, and a running apply is never killed halfway."
+> - "Path filters stop a change to the Stage folder or the README from redeploying Prod."
+> - "There are no long-lived AWS secrets in GitHub. Each run gets credentials that last minutes."
+
+---
+
+## 8. Conventions
 
 | Rule | Example | Why |
 |---|---|---|
-| Terraform identifiers are `snake_case` | `aws_eks_cluster.eks_control_plane` | One consistent style across every stack and module |
+| Terraform identifiers are `snake_case` | `aws_eks_cluster.eks_control_plane` | One style across every stack and module |
 | AWS-facing names keep their own style | `FinTech-App`, `FinTech-Cluster-Role` | Renaming them would **replace** live resources |
-| Values come from `terraform.tfvars` | `node_color`, node group names | Root variables have **no defaults**: configuration is explicit and reviewable |
-| One state file per stack | `EKS/Prod/eks.tfstate` | Small blast radius, independent lifecycles |
+| Reusable code lives in `modules/<name>/` | `Networking/modules/vpc` | Roots stay small; one fix reaches every environment |
+| Environment stacks are `<stack>/<env>/` | `EKS/Prod`, `Networking/Stage` | Each environment has its own folder and state |
+| Values come from `terraform.tfvars` | `node_color`, `vpc_setup` | Root variables have **no defaults**: configuration is explicit and reviewable |
+| Module variables carry the standard defaults | `node_max_size = 10` | A root only passes what is different |
+| One state file per stack and environment | `EKS/Prod/eks.tfstate` | Small blast radius, separate locks |
 | `backend.tf` is never edited casually | — | Changing a key orphans the existing state |
-| Child modules own version pins | `modules/versions.tf` | Roots stay clean; upgrades happen in one place |
+| Every Checkov change is explained in place | `# CHECKOV FIX (...)` / `# checkov:skip=...` | The reason travels with the code |
+| The same tags everywhere | `Project`, `Stack`, `Environment`, `Name` | Cost reports and audits can group resources |
 
 ---
 
-## 🚀 14. How to Deploy
+## 9. How to Deploy and Destroy
+
+**From GitHub (recommended)**
+
+1. **Actions → "4. FinTech Infra - Deploy" → Run workflow**, branch `dev`, pick the environment.
+2. When you are finished: **Actions → "5. FinTech Infra - Destroy" → Run workflow**, branch `dev`, pick the environment, type `destroy`.
+
+**From your machine**
 
 ```bash
-# Run in this order: S3 → Networking → IAM → ECR → EKS
-for stack in S3 Networking IAM ECR EKS; do
-  cd Terraform-FinTech-Infra/$stack
-  terraform init
-  terraform fmt
-  terraform validate
-  terraform plan -var-file="terraform.tfvars" -out plan1
-  terraform apply plan1
-  cd - >/dev/null
+cd Terraform-FinTech-Infra
+
+# Deploy, in this order (replace Prod with Stage, QA or Dev):
+for stack in IAM S3 ECR Networking/Prod EKS/Prod; do
+  ( cd "$stack" &&
+    terraform init &&
+    terraform fmt -check &&
+    terraform validate &&
+    terraform plan -var-file="terraform.tfvars" -out plan1 &&
+    terraform apply plan1 ) || break          # stop at the first failure
 done
 
-# After EKS finishes, kubeconfig is already written:
-kubectl get nodes
-kubectl get pods -n kube-system
+kubectl get nodes                             # kubeconfig is written automatically after EKS
+
+# Destroy, in the reverse order:
+for stack in EKS/Prod Networking/Prod ECR S3 IAM; do
+  ( cd "$stack" && terraform init && terraform destroy -var-file="terraform.tfvars" ) || break
+done
 ```
 
-> ⚠️ **Destroy in reverse order** (EKS → ECR → IAM → Networking → S3), because EKS depends on Networking's subnets.
+**Run the security scan yourself**
+
+```bash
+checkov -d Terraform-FinTech-Infra --framework terraform --quiet --compact
+```
+
+> ⚠️ **Before destroying:** S3 buckets and ECR repositories must be empty, or AWS refuses to delete them. `force_destroy` is off on purpose, so data is never removed by accident.
+>
+> 💰 **Cost while running (before data charges):** 5 interface endpoints × 3 AZs ≈ $110/month, 2 NAT Gateways ≈ $66, 4 Transit Gateway attachments ≈ $146, EKS control plane ≈ $73, plus the worker node. Destroy the lab when you are not using it.
 
 ---
 
-## 🗺️ 15. Roadmap
+## 10. Known Issues and Roadmap
 
-```mermaid
-flowchart LR
-    subgraph DONE["✅ Done"]
-        direction TB
-        D1["S3 compliance storage"]:::done
-        D2["Hub-and-spoke networking"]:::done
-        D3["IAM role matrix"]:::done
-        D4["ECR registry"]:::done
-        D5["EKS with blue/green and autoscaler"]:::done
-    end
-    subgraph NEXT["🔜 Next"]
-        direction TB
-        N1["IAM Identity Center SSO - remove root keys"]:::next
-        N2["GitHub Actions with OIDC plan and apply roles"]:::next
-    end
-    subgraph LATER["🔭 Later"]
-        direction TB
-        L1["Argo CD GitOps"]:::later
-        L2["Karpenter evaluation"]:::later
-        L3["Multi-account AWS Organizations"]:::later
-    end
-    DONE --> NEXT --> LATER
+**Open items, stated honestly**
 
-    classDef done  fill:#2DC653,stroke:#155D27,color:#fff
-    classDef next  fill:#FF9F1C,stroke:#B85C00,color:#000
-    classDef later fill:#4361EE,stroke:#14213D,color:#fff
-    style DONE  fill:#E8FFEF,stroke:#2DC653,stroke-width:2px
-    style NEXT  fill:#FFF4E0,stroke:#FF9F1C,stroke-width:2px
-    style LATER fill:#E8EEFF,stroke:#4361EE,stroke-width:2px
-```
+| # | Item | Status |
+|:-:|---|---|
+| 1 | On the last pipeline run the **Cluster Autoscaler image** (`registry.k8s.io`) could not be pulled through the NAT Gateway, so the Helm install timed out. The network configuration checked out; the failure was between that NAT IP and the registry | Fix planned: an **ECR pull-through cache**, so add-on images come through the VPC endpoint. `atomic = true` is already set, so a failed install cleans itself up |
+| 2 | The EKS hardening in this version (KMS secrets encryption, control-plane logs, scoped autoscaler policy) is **validated but not yet applied** to a live cluster. IAM, S3, ECR and Networking were confirmed with a real `terraform plan` | Will be confirmed on the next deploy |
+| 3 | Node groups use `create_before_destroy` with a **fixed name**. If Terraform ever has to *replace* a node group, the new one would clash with the old name | Use the blue/green switch for node changes; a name prefix is the long-term fix |
+| 4 | The Database VPC security group opens `5432` (PostgreSQL), while the target architecture names MySQL (`3306`) | To be aligned when the data layer is built |
+| 5 | Local runs still use the account's root credentials, and one IAM user exists for the course exercise | Next step: **IAM Identity Center (SSO)** |
 
-### 📝 Explanation
-The infrastructure layer is complete. The next milestone is **identity hardening**: IAM Identity Center for people and GitHub Actions OIDC for pipelines, replacing long-lived credentials the way regulated enterprises operate. After that, application delivery moves to **GitOps** with Argo CD.
+<div align="center">
+<img src="../docs/diagrams/roadmap-v2.svg" width="100%" alt="Roadmap: done, in progress and planned, layer by layer"/>
+</div>
+
+**📝 What this shows.** Foundation and Network are complete. **Orchestration** and **Delivery** are in progress: the cluster, the autoscaler and the infrastructure pipeline are built, and the platform add-ons (Karpenter, KEDA, Calico, Istio) and GitOps tools (Argo CD, Argo Rollouts) come next.
 
 > 🎤 **Interview talking points**
-> - "My next step is removing every long-lived credential: SSO for humans, OIDC for machines."
-> - "GitOps makes Git the single source of truth for what runs in the cluster."
+> - "My next step is removing every long-lived credential: SSO for people, OIDC for pipelines."
+> - "I keep a written list of known issues. Knowing where your system is weak is part of running it."
+
+---
+
+## 11. Interview Cheat Sheet
+
+Short answers you can say out loud. Each one points to the section with the detail.
+
+<details open>
+<summary><b>Terraform</b></summary>
+
+| Question | Answer |
+|---|---|
+| Why split into several stacks? | Smaller blast radius, faster plans, separate locks, and each stack has its own lifecycle (§1, §5) |
+| How do stacks share data? | Outputs read with `terraform_remote_state`. It is read-only: a contract between producer and consumer (§5) |
+| `count` or `for_each`? | `for_each` for things with names (VPCs, buckets), so removing one does not shift the rest. `count` for simple on/off switches like the blue/green groups (§4.4, §4.5) |
+| How do you handle environments? | One folder per environment calling the same modules. Only `terraform.tfvars` differs (§3) |
+| What does `terraform destroy` do to state? | Empties it. The file stays in S3 and is reused on the next apply (§5) |
+| How is state locked? | Native S3 lock file, `use_lockfile = true`. No DynamoDB table (§5) |
+| What is `ignore_changes` for? | To let something else own a field. Here the Cluster Autoscaler owns `desired_size` (§4.5) |
+| What is drift? | Reality no longer matching the code, for example the autoscaler changing the node count (§4.5) |
+
+</details>
+
+<details open>
+<summary><b>AWS networking</b></summary>
+
+| Question | Answer |
+|---|---|
+| Public vs private subnet? | Public has a route to an Internet Gateway. Private does not (§2) |
+| What does a NAT Gateway do? | Lets private workloads call out. Nothing outside can start a connection in (§2) |
+| Why a Transit Gateway instead of peering? | Hub-and-spoke scales linearly. A mesh of peerings needs n(n-1)/2 links (§2) |
+| Why VPC endpoints? | Private, cheaper path to AWS services. No internet, less NAT traffic (§4.4) |
+| Route table vs security group? | Routes decide if a packet *can* get there. Security groups decide if it is *allowed* (§2) |
+| How is the database tier protected? | No Internet Gateway, no NAT, and ingress only from the App CIDR on specific ports (§2) |
+| What are VPC Flow Logs for? | A record of every connection, for incident response and audits (§6) |
+
+</details>
+
+<details open>
+<summary><b>Kubernetes and EKS</b></summary>
+
+| Question | Answer |
+|---|---|
+| Control plane vs data plane? | AWS runs the API servers and etcd. I run the worker nodes in my subnets (§4.5) |
+| What is IRSA? | IAM Roles for Service Accounts: one pod, one IAM role, through the cluster's OIDC provider (§4.5) |
+| How does the Cluster Autoscaler work? | A pending pod triggers a scale-up of the node group's Auto Scaling Group; idle nodes are removed later (§4.5) |
+| What is a taint? | A "keep out" sign on a node. Only pods with a matching toleration may be scheduled there (§4.5) |
+| How do you upgrade nodes without downtime? | Blue/green node groups: bring up green, move the pods, remove blue (§4.5) |
+| How is cluster access managed? | EKS access entries mapped to IAM roles, not the aws-auth ConfigMap (§4.5) |
+| How are Kubernetes Secrets protected? | Envelope encryption with a KMS key, plus the audit log in CloudWatch (§6) |
+
+</details>
+
+<details open>
+<summary><b>Security and CI/CD</b></summary>
+
+| Question | Answer |
+|---|---|
+| How does the pipeline log in to AWS? | GitHub OIDC. STS returns short-lived credentials; no keys are stored (§7) |
+| What is shift-left security? | Finding problems before deployment. Checkov runs in the pipeline before `apply` (§6) |
+| How do you treat scanner findings? | Fix the real gaps, and document every deliberate skip next to the code (§6) |
+| Least privilege, an example? | The autoscaler role: read on `*`, write only on this cluster's tagged Auto Scaling Groups (§6) |
+| Explicit Deny vs Allow? | Deny always wins. That is how the guardrails stay in force (§4.1) |
+| Why immutable image tags? | The scanned image is exactly the running image (§4.3) |
+| How do you stop two pipeline runs clashing? | A shared concurrency group, with `cancel-in-progress: false` (§7) |
+| Why is the plan saved to a file? | So the reviewed plan is exactly what gets applied (§7) |
+
+</details>
