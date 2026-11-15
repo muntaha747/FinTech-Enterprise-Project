@@ -27,7 +27,7 @@ resource "aws_eks_node_group" "core_data_plane_blue" {
   ]
 }
 
-########################################### Green Node group for Core Services###########################################
+########################################### Green Node group for Core Services############################################
 resource "aws_eks_node_group" "core_data_plane_green" {
   count           = var.node_color == "green" || var.node_color == "both" ? 1 : 0
   cluster_name    = aws_eks_cluster.eks_control_plane.name
