@@ -1,7 +1,7 @@
 name: IAC Pipeline ###
 
 # 🔒 DISABLED: automatic triggers are commented out so this workflow never runs on its own.
-#    It can still be started by hand from the Actions tab (workflow_dispatch) if ever needed.
+#    Every job also has "if: false", so even a manual run does nothing. Remove it to re-enable.
 # on:
 #   workflow_dispatch:
 #
@@ -21,6 +21,7 @@ permissions:
 
 jobs:
   terraform-devsecops:
+    if: false # 🔒 DISABLED: this job never runs, even when started by hand
     runs-on: ubuntu-latest
 
     defaults:

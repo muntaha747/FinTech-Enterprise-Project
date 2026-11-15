@@ -1,7 +1,8 @@
 name: Terraform S3 CI Pipeline (Dev Branch Only For Testing the infra) #
 
-# 🔑 Disabled: Empty trigger list prevents this workflow from ever running automatically
-on: []
+# 🔒 DISABLED: no automatic triggers, and every job has "if: false", so it never runs.
+on:
+  workflow_dispatch:
 
 permissions:
   id-token: write
@@ -9,6 +10,7 @@ permissions:
 
 jobs:
   terraform:
+    if: false # 🔒 DISABLED: this job never runs, even when started by hand
     runs-on: ubuntu-latest
 #
     defaults:
