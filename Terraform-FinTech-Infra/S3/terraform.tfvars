@@ -4,6 +4,6 @@ project_name = "FinTech-Enterprise-Project"
 stack_name   = "s3"
 environment  = "production"
 bucket_names = [
-  "fintech-dvc-data-lake",
-  "fintech-applog",
+  "muntaha-fintech-dvc-data-lake",
+  "muntaha-fintech-applog",
 ]
