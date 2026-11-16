@@ -132,7 +132,7 @@ variable "github_oidc_host" {
 variable "github_repo" {
   description = "Only this GitHub repository (owner/name) may assume the CI/CD role"
   type        = string
-  default     = "muntaha747/FinTech-Enterprise-Project"
+  default     = "muntaha747/FinTech-Enterprise-Project-Infra-Terraform"
 }
 
 variable "cicd_ecr_actions" {

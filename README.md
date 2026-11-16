@@ -850,7 +850,7 @@ Already in place today: **VPC Flow Logs** for all four VPCs and the **EKS contro
 ## 13. Repository Structure
 
 ```text
-FinTech-Enterprise-Project/
+FinTech-Enterprise-Project-Infra-Terraform/
 ├── .github/workflows/
 │   ├── 4.fintech-infra-deploy.yaml    # deploy: IAM → S3 → ECR → Networking → EKS
 │   ├── 5.fintech-infra-destroy.yaml   # destroy: the reverse order, manual only
