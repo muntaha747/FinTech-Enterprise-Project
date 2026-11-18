@@ -887,3 +887,207 @@ terraform apply plan1
 <img src="https://capsule-render.vercel.app/api?type=waving&color=0:00c9a7,50:2c5364,100:0f2027&height=140&section=footer" alt="footer"/>
 
 </div>
+
+---
+
+## 📚 Class Notes: Terraform, AWS Infrastructure, EKS and Security (Infra repo)
+
+This section holds the class notes that apply to this infra repo. Terraform code in `Terraform-FinTech-Infra/` is applied by `4.fintech-infra-deploy.yaml` and `5.fintech-infra-destroy.yaml`.
+
+### Terraform basics
+
+- **HCL (HashiCorp Configuration Language)** in `*.tf` files. Every block has a type and a name, and every argument is `key = value`.
+- **provider** sets the cloud and region. **resource** creates an object. **data** reads an existing object. **variable** takes input. **output** shows a value.
+- **Interpolation:** `resource_type.resource_name.attribute`, for example `aws_instance.example.id`.
+- **Dependencies:** implicit (one resource references another) or explicit (`depends_on`).
+
+Files in a Terraform folder:
+
+| File | Holds |
+|---|---|
+| `main.tf` | providers, resources, data |
+| `variables.tf` | input variables |
+| `output.tf` | output values |
+| `versions.tf` | Terraform and provider version limits |
+| `backend.tf` | where the remote state is stored and how it is locked |
+| `*.tfvars` | runtime values for variables |
+
+Remote state with S3 native locking (no DynamoDB table):
+
+```hcl
+terraform {
+  backend "s3" {
+    bucket       = "<your-tfstate-bucket>"
+    key          = "<env>/<module>.tfstate"
+    region       = "us-east-1"
+    encrypt      = true
+    use_lockfile = true
+  }
+}
+```
+
+Keep the S3 state bucket versioned so you can recover earlier state. Use one state file per environment and per module.
+
+### Terraform workflow
+
+```bash
+terraform init
+terraform validate
+terraform plan -var-file="dev.tfvars" -out planfile
+terraform apply planfile
+terraform show
+terraform plan -var-file="dev.tfvars" -out destroyfile -destroy   # plan a destroy
+terraform apply destroyfile
+terraform import aws_instance.example <instance-id>               # bring an existing resource under Terraform
+terraform console                                                 # test functions, e.g. max(1,31,12)
+```
+
+### Loops, dynamic blocks and count
+
+- `count = length(var.user_names)` creates one resource per list item. Use `count.index` to pick the item.
+- `count = 0` creates nothing. Useful for turning a resource off.
+- Use `count` when you need several identical resources. Use a `dynamic` block when one resource needs several child blocks, such as the rules in a security group.
+
+### Modules
+
+A module is reusable code. The root project calls child modules and passes values between them.
+
+```hcl
+module "eip" {
+  source     = "../modules/eip"
+  instanceid = module.instance.instanceid
+}
+```
+
+Example from class: an `instance` module outputs `instanceid`, and an `eip` module takes it as input.
+
+### Infra layout (this repo)
+
+| Folder | Purpose | Environments |
+|---|---|---|
+| `IAM` | Roles for each environment. Terraform assumes the role before it changes infra. | Dev, QA, Stage, Prod |
+| `S3` | Versioned state and data buckets, with lifecycle rules | all |
+| `ECR` | Base images (Java, Node, Go) and app images (Ledger, Payment, Notification, BFF) | all |
+| `Networking` | VPCs, subnets, gateways, endpoints | QA, Stage, Prod |
+| `EKS` | Kubernetes cluster and node groups | Dev, QA, Stage, Prod |
+
+**Network layout (4 VPCs, 24 subnets)**
+
+| VPC | Public subnets | Private subnets | Key resources |
+|---|---|---|---|
+| A (Edge) | 0 | 3 | Private subnets for the API gateway |
+| B (App) | 3 | 6 | Public subnets for ALB and NAT. Private subnets for the control plane and data plane. |
+| C (Data) | 0 | 6 | Private subnets for MySQL, MongoDB and Valkey. Private subnets for Kafka and OpenSearch. |
+| D (Ops) | 3 | 3 | Private subnets for Prometheus, Grafana, Vault and MLflow. Public subnets for NAT. |
+
+Use three subnets across three availability zones for high availability. Use VPC endpoints so private subnets can reach AWS services without the internet.
+
+### Trigger rules in this repo
+
+- `4.fintech-infra-deploy.yaml` runs on push to `dev`, but only when a file in the listed folders changes. Changes to docs or the README do not trigger it.
+- `5.fintech-infra-destroy.yaml` and the other workflows are run by hand.
+- Add `[skip ci]` to commit messages for doc-only changes.
+
+Install the tools (from class):
+
+```bash
+# kubectl
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+chmod +x ./kubectl && sudo mv ./kubectl /usr/local/bin/kubectl
+
+# helm
+curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+
+# AWS CLI v2
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+sudo apt install -y unzip && unzip awscliv2.zip
+sudo ./aws/install --bin-dir /usr/bin --install-dir /usr/bin/aws-cli --update
+aws --version
+```
+
+AWS credentials go in GitHub secrets (`AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`), not in files. On your own machine, use `aws login` or `aws configure`.
+
+### EKS
+
+- **Managed node groups:** AWS runs the control plane, and you run the data plane (worker nodes).
+- **Auto Mode:** AWS runs both.
+- Each node group needs a minimum and maximum size, a scaling policy, an instance type, and the private subnets it runs in (three, for high availability).
+- The Cluster Autoscaler adds and removes nodes based on pending pods. A plain Auto Scaling Group only scales on CPU or memory percentage.
+
+```bash
+terraform plan -var="eksversion=1.34" -var="caversion=v1.34.4" -out eks1.34
+terraform apply eks1.34
+kubectl get pods -l app.kubernetes.io/name=aws-cluster-autoscaler -n kube-system
+```
+
+Upgrade with blue/green node groups: upgrade the control plane, add green node groups, cordon and drain the blue nodes, then remove the blue group. Use labels, taints and PodDisruptionBudgets so the pods stay available.
+
+### Backup with Velero
+
+```bash
+velero install --provider aws --plugins velero/velero-plugin-for-aws:v1.10.0 \
+  --bucket <your-velero-bucket> --secret-file ~/.aws/credentials \
+  --backup-location-config region=us-east-1 --snapshot-location-config region=us-east-1
+velero backup create backup.1
+velero restore create --from-backup backup.1
+```
+
+### Capacity planning
+
+Every cluster runs four kinds of workload:
+
+1. Kubernetes system components (kube-proxy, kubelet, CoreDNS)
+2. Platform add-ons (Calico, Argo CD, Cluster Autoscaler, logging, monitoring, security, MLflow, KServe)
+3. Core microservices (Ledger, Payment, Notification, BFF)
+4. ML microservices (fraud model serving)
+
+Put them on separate node groups with labels and taints. Core services and platform tools share node group 1. ML services get node group 2 with a GPU.
+
+Add 10% CPU and 20% memory as overhead for the operating system and the platform.
+
+### Observability (MELT)
+
+- **Prometheus:** time-series metrics from targets.
+- **Grafana:** dashboards. Add Prometheus as a data source at `http://prometheus-server:80`.
+- **Loki and Grafana Alloy:** logs and Kubernetes events.
+- **Fluent Bit and OpenSearch:** application logs. Fluent Bit collects them and OpenSearch stores and visualises them.
+
+Dashboards to import in Grafana: 6417 and 14623 (cluster health), 15760 (pod health).
+
+### Zero Trust
+
+- **Infra level:** segregate networks, as the four VPCs do.
+- **Cluster level:**
+  1. RBAC (user accounts, service accounts, roles, ClusterRoleBinding)
+  2. Network policies (ingress, egress, CNI)
+  3. Resource policies (limit the number of objects and total CPU and memory per namespace)
+  4. Runtime security (Falco and Falcosidekick)
+- **App level:** verify the YAML and the Docker image before deployment.
+
+### Security services
+
+| Service | Purpose |
+|---|---|
+| GuardDuty | Threat detection across the account |
+| CloudTrail | Records every API call (audit trail) |
+| AWS Config | Checks resources against compliance rules (for example, MFA on IAM users) |
+| Macie | Finds sensitive data (PII, credentials) in S3 buckets |
+| Comprehend | Detects and redacts PII in text as it arrives |
+| Shield | DDoS protection |
+| WAF | Blocks common web attacks, such as SQL injection and cross-site scripting |
+
+Use Macie to scan whole buckets on a schedule. Use Comprehend to scan each record as it arrives.
+
+### Terraform best practices (from class)
+
+- One S3 bucket per app team, covering all environments.
+- One state file per environment and per module.
+- Use S3 native locking (`.tflock` next to the state file).
+- Put reusable code in `modules/`. Put environment-specific values in each environment folder.
+
+### Responsibilities
+
+- Build Terraform modules that provision AWS infrastructure.
+- Set up the CI pipeline with DevSecOps checks for the Terraform code (Checkov and terraform plan).
+- Set up an AIOps pipeline that fixes Checkov findings on pull requests.
+- Work with Infosec to set guardrails.
