@@ -1,0 +1,198 @@
+FINTECH ENTERPRISE - INFRASTRUCTURE (TERRAFORM) NOTES
+=====================================================
+
+
+1. INSTALL TOOLS (Ubuntu)
+-------------------------
+# Terraform (HashiCorp apt repo)
+sudo apt update && sudo apt install -y gnupg software-properties-common curl
+curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+sudo apt update && sudo apt install -y terraform
+terraform version
+
+# AWS CLI v2
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+sudo apt install -y unzip && unzip awscliv2.zip
+sudo ./aws/install --bin-dir /usr/bin --install-dir /usr/bin/aws-cli --update
+aws --version
+
+# kubectl
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+chmod +x ./kubectl && sudo mv ./kubectl /usr/local/bin/kubectl
+
+# Helm
+curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+
+# Sign in to AWS on your own machine
+aws login            # or: aws configure
+
+AWS keys for the pipeline go in GitHub secrets (AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY).
+Never put keys in files.
+
+
+2. CLONE AND CHECK
+------------------
+git clone https://github.com/muntaha747/FinTech-Enterprise-Project-Infra-Terraform.git
+cd FinTech-Enterprise-Project-Infra-Terraform
+git checkout dev
+git status
+
+
+3. TERRAFORM WORKFLOW (run from an environment folder)
+------------------------------------------------------
+terraform init
+terraform validate
+terraform plan -var-file="dev.tfvars" -out planfile
+terraform apply planfile
+terraform show
+
+Destroy:
+terraform plan -var-file="dev.tfvars" -out destroyfile -destroy
+terraform apply destroyfile
+
+Other:
+terraform import <resource_type>.<name> <id>      # bring an existing resource under Terraform
+terraform console                                 # test functions, e.g. max(1,31,12)
+
+
+4. REMOTE STATE (S3 with native locking)
+----------------------------------------
+backend.tf:
+terraform {
+  backend "s3" {
+    bucket       = "<your-tfstate-bucket>"
+    key          = "<env>/<module>.tfstate"
+    region       = "us-east-1"
+    encrypt      = true
+    use_lockfile = true
+  }
+}
+
+Keep the state bucket versioned. One state file per environment and per module.
+
+
+5. ORDER OF BUILD (infra layout)
+--------------------------------
+Folder           Purpose                                   Envs
+IAM              roles per environment                     Dev, QA, Stage, Prod
+S3               versioned state and data buckets          all
+ECR              base images (Java, Node, Go) and app images  all
+Networking       4 VPCs, subnets, gateways, endpoints      QA, Stage, Prod
+EKS              cluster and node groups                   Dev, QA, Stage, Prod
+
+Run in this order: IAM -> S3 -> ECR -> Networking -> EKS.
+Destroy in reverse order.
+
+For each folder:
+cd <folder>/<env>
+terraform init
+terraform plan -out <name>plan
+terraform apply <name>plan
+
+
+6. NETWORK LAYOUT (4 VPCs, 24 subnets)
+--------------------------------------
+VPC A (Edge): 0 public, 3 private   - private subnets for the API gateway
+VPC B (App):  3 public, 6 private   - public for ALB and NAT; private for control plane and data plane
+VPC C (Data): 0 public, 6 private   - private for MySQL, MongoDB, Valkey, Kafka, OpenSearch
+VPC D (Ops):  3 public, 3 private   - private for Prometheus, Grafana, Vault, MLflow; public for NAT
+
+Use 3 subnets in 3 availability zones for high availability.
+Use VPC endpoints so private subnets reach AWS services without the internet.
+
+
+7. EKS
+------
+cd <eks-folder>
+terraform plan -var="eksversion=1.34" -var="caversion=v1.34.4" -out eks1.34
+terraform apply eks1.34
+
+kubectl get pods -l app.kubernetes.io/name=aws-cluster-autoscaler -n kube-system
+kubectl get nodes --watch
+
+Autoscaling test:
+kubectl apply -f testapp.yml
+kubectl get pods --watch
+
+Upgrade (blue/green node groups):
+terraform plan -var="eksversion=1.35" -var="caversion=v1.35.2" -var="node_color=both" -out eks1.35
+terraform apply eks1.35
+kubectl get nodes -l eks.amazonaws.com/nodegroup=system-apps-pool-blue
+kubectl cordon <BLUE-NODE>
+kubectl drain <BLUE-NODE> --ignore-daemonsets --delete-emptydir-data
+terraform plan -var="eksversion=1.35" -var="caversion=v1.35.2" -var="node_color=green" -out eks1.35green
+terraform apply eks1.35green
+terraform destroy -auto-approve          # only when the old group is no longer needed
+
+
+8. BACKUP WITH VELERO
+---------------------
+wget https://github.com/vmware-tanzu/velero/releases/download/v1.16.0/velero-v1.16.0-linux-amd64.tar.gz
+tar zxvf velero-v1.16.0-linux-amd64.tar.gz
+sudo mv velero-v1.16.0-linux-amd64/velero /usr/local/bin/velero
+
+velero install --provider aws --plugins velero/velero-plugin-for-aws:v1.10.0 \
+  --bucket <your-velero-bucket> --secret-file ~/.aws/credentials \
+  --backup-location-config region=us-east-1 --snapshot-location-config region=us-east-1
+kubectl get pods -n velero
+
+velero backup create backup.1
+velero backup get
+velero backup describe backup.1
+velero restore create --from-backup backup.1
+velero uninstall
+
+
+9. DEVSECOPS CHECKS
+-------------------
+Checkov (IaC scan) on the Terraform code:
+pip install checkov
+checkov -d . --soft-fail
+
+Pipeline order: terraform init -> terraform plan -> checkov scan -> apply (manual).
+Deploy workflow runs on push to dev only when files in the listed folders change.
+
+
+10. AWS SECURITY SERVICES
+-------------------------
+GuardDuty   threat detection across the account
+CloudTrail  audit trail of every API call
+AWS Config  compliance rules (for example, MFA on IAM users)
+Macie       finds sensitive data (PII, credentials) in S3, scheduled scans
+Comprehend  detects and redacts PII in text as it arrives
+Shield      DDoS protection
+WAF         blocks SQL injection and cross-site scripting
+
+Test GuardDuty with sample findings:
+aws guardduty list-detectors --query "DetectorIds[0]" --output text
+aws guardduty create-sample-findings --detector-id <DETECTOR_ID> \
+  --finding-types "UnauthorizedAccess:EC2/MaliciousIPCaller.Custom"
+
+
+11. KUBERNETES CAPACITY PLANNING
+--------------------------------
+Node group 1: platform tools, core microservices (Ledger, Payment, Notification, BFF)
+              3 x m6i.2xlarge (8 vCPU, 32 GiB each)
+Node group 2: MLOps (KServe), ML microservice (fraud model)
+              2 x g6.2xlarge (8 vCPU, 32 GiB, 1 x NVIDIA L4 each)
+Add 10% CPU and 20% memory as overhead.
+
+
+12. OBSERVABILITY
+-----------------
+Prometheus   metrics. Grafana data source: http://prometheus-server:80
+Grafana      dashboards. Import 6417 and 14623 (cluster), 15760 (pods).
+Loki + Alloy logs and Kubernetes events. Loki URL: http://loki.loki.svc.cluster.local:3100
+Fluent Bit + OpenSearch  application logs
+
+kubectl get svc -n monitoring
+kubectl get secret --namespace monitoring grafana -o jsonpath="{.data.admin-password}" | base64 --decode; echo
+
+
+13. RESPONSIBILITIES
+--------------------
+- Build Terraform modules that provision AWS infrastructure.
+- Set up the CI pipeline with DevSecOps checks (Checkov, terraform plan).
+- Set up an AIOps pipeline that fixes Checkov findings on pull requests.
+- Work with Infosec to set guardrails.
