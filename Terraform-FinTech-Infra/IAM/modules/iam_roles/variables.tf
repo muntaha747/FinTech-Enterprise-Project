@@ -132,7 +132,19 @@ variable "github_oidc_host" {
 variable "github_repo" {
   description = "Only this GitHub repository (owner/name) may assume the CI/CD role"
   type        = string
-  default     = "muntaha747/FinTech-Enterprise-Project"
+  default     = "muntaha747/FinTech-Enterprise-Project-Infra-Terraform"
+}
+
+variable "github_owner_id" {
+  description = "Numeric GitHub owner (user/org) ID. GitHub's OIDC subject uses IDs when immutable subjects are on."
+  type        = string
+  default     = "189835454"
+}
+
+variable "github_repo_id" {
+  description = "Numeric GitHub repository ID. Stays the same across renames."
+  type        = string
+  default     = "1446340301"
 }
 
 variable "cicd_ecr_actions" {

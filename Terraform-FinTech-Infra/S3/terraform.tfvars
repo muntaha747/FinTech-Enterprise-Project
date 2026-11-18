@@ -6,4 +6,5 @@ environment  = "Prod"
 bucket_names = [
   "muntaha-fintech-dvc-data-lake",
   "muntaha-fintech-applog",
+  "muntaha-fintech-rawdata-applog"
 ]

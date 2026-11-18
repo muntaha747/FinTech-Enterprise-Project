@@ -12,7 +12,9 @@ locals {
 
   # GitHub Actions OIDC provider in this account, and the repo allowed to use it
   github_oidc_arn = "arn:aws:iam::${var.account_id}:oidc-provider/${var.github_oidc_host}"
-  github_subject  = "repo:${var.github_repo}:*"
+  # Matches GitHub's immutable subject: repo:<owner>@<owner_id>/<repo>@<repo_id>:*
+  # Using IDs means a repo rename does not break the trust, but the names must match the live repo
+  github_subject = "repo:${split("/", var.github_repo)[0]}@${var.github_owner_id}/${split("/", var.github_repo)[1]}@${var.github_repo_id}:*"
 
   ########## Role 1: platform admin ##########
   platform_name                = var.platform_role_name
