@@ -51,7 +51,7 @@
 
 ### 1. Git & GitHub
 
-<p align="center"><img src="diagrams/00-branching-feature-dev-main.png" alt="Branching: feature → dev → main" width="860"><br><sub><b>Branching: feature → dev → main</b></sub></p>
+<p align="center"><img src="diagrams/00-branching-feature-dev-main.svg" alt="Branching: feature → dev → main" width="860"><br><sub><b>Branching: feature → dev → main</b></sub></p>
 
 #### ▸ Assignment
 
@@ -97,7 +97,7 @@ git cherry-pick <CommitID>
 
 #### ▸ MLOps Lifecycle
 
-<p align="center"><img src="diagrams/01-mlops-continuous-loop.png" alt="MLOps — continuous loop" width="860"><br><sub><b>MLOps — continuous loop</b></sub></p>
+<p align="center"><img src="diagrams/01-mlops-continuous-loop.svg" alt="MLOps — continuous loop" width="860"><br><sub><b>MLOps — continuous loop</b></sub></p>
 
 1. Dataset collection (previous / historic production data)
 2. ML development
@@ -120,7 +120,7 @@ git cherry-pick <CommitID>
 
 #### ▸ DevOps Lifecycle
 
-<p align="center"><img src="diagrams/02-devops-continuous-loop.png" alt="DevOps — continuous loop" width="860"><br><sub><b>DevOps — continuous loop</b></sub></p>
+<p align="center"><img src="diagrams/02-devops-continuous-loop.svg" alt="DevOps — continuous loop" width="860"><br><sub><b>DevOps — continuous loop</b></sub></p>
 
 Develop → Test → Release
 
@@ -135,7 +135,7 @@ Develop → Test → Release
 
 #### ▸ DevSecOps Approach
 
-<p align="center"><img src="diagrams/03-the-4-c-s-of-security-outer-inner.png" alt="The 4 C's of security (outer → inner)" width="860"><br><sub><b>The 4 C's of security (outer → inner)</b></sub></p>
+<p align="center"><img src="diagrams/03-the-4-c-s-of-security-outer-inner.svg" alt="The 4 C's of security (outer → inner)" width="860"><br><sub><b>The 4 C's of security (outer → inner)</b></sub></p>
 
 - **Shift-Left** security: find & fix vulnerabilities during development (Feature/Dev branch)
 - The **4 C's** of security: **Cloud · Compute · Container · Code**
@@ -149,7 +149,7 @@ Develop → Test → Release
 
 #### ▸ Java Build — 3 steps
 
-<p align="center"><img src="diagrams/04-java-build-pipeline.png" alt="Java build pipeline" width="860"><br><sub><b>Java build pipeline</b></sub></p>
+<p align="center"><img src="diagrams/04-java-build-pipeline.svg" alt="Java build pipeline" width="860"><br><sub><b>Java build pipeline</b></sub></p>
 
 **Compile → Unit Test → Package (.jar)**
 
@@ -169,7 +169,7 @@ mvn clean package -Dmaven.test.skip=true
 
 #### ▸ Node.js Build — 3 steps
 
-<p align="center"><img src="diagrams/05-node-js-build-pipeline.png" alt="Node.js build pipeline" width="860"><br><sub><b>Node.js build pipeline</b></sub></p>
+<p align="center"><img src="diagrams/05-node-js-build-pipeline.svg" alt="Node.js build pipeline" width="860"><br><sub><b>Node.js build pipeline</b></sub></p>
 
 **Install → Unit Test → Package** (no compilation; package = tar/zip of the needed *.js / *.html)
 
@@ -202,7 +202,7 @@ tar -cvf samplenode.tar app.js *html
 
 #### ▸ Full checklist
 
-<p align="center"><img src="diagrams/06-traditional-deployment-step-by-step.png" alt="Traditional deployment, step by step" width="860"><br><sub><b>Traditional deployment, step by step</b></sub></p>
+<p align="center"><img src="diagrams/06-traditional-deployment-step-by-step.svg" alt="Traditional deployment, step by step" width="860"><br><sub><b>Traditional deployment, step by step</b></sub></p>
 
 1. Choose the server (based on env)
 2. Run prerequisites — create user, create app folder, install OS packages / libraries
@@ -217,7 +217,7 @@ tar -cvf samplenode.tar app.js *html
 
 ### 5. Docker
 
-<p align="center"><img src="diagrams/07-from-dockerfile-to-running-container.png" alt="From Dockerfile to running container" width="860"><br><sub><b>From Dockerfile to running container</b></sub></p>
+<p align="center"><img src="diagrams/07-from-dockerfile-to-running-container.svg" alt="From Dockerfile to running container" width="860"><br><sub><b>From Dockerfile to running container</b></sub></p>
 
 > [!TIP]
 > Build a **pre-configured Image**. Deployment = create a **container** (a box) from the image and run the app. *Creating a container is running an application.*  
@@ -297,7 +297,7 @@ echo "java -jar test.jar $1 $2"
 
 #### ▸ Image layers vs Container layers
 
-<p align="center"><img src="diagrams/08-container-layers-bottom-top.png" alt="Container layers (bottom → top)" width="860"><br><sub><b>Container layers (bottom → top)</b></sub></p>
+<p align="center"><img src="diagrams/08-container-layers-bottom-top.svg" alt="Container layers (bottom → top)" width="860"><br><sub><b>Container layers (bottom → top)</b></sub></p>
 
 | Layer | Image | Container |
 |---|---|---|
@@ -327,7 +327,7 @@ ENTRYPOINT ["node","src/index.js"]
 
 #### ▸ Multi-Stage Dockerfile
 
-<p align="center"><img src="diagrams/09-multi-stage-build.png" alt="Multi-stage build" width="860"><br><sub><b>Multi-stage build</b></sub></p>
+<p align="center"><img src="diagrams/09-multi-stage-build.svg" alt="Multi-stage build" width="860"><br><sub><b>Multi-stage build</b></sub></p>
 
 - **Stage 1 (build):** full OS · full Node 16 · app `src/` & `public/` · `npm install` → node_modules
 - **Stage 2 (runtime):** minimal OS · node binary only · `/usr/app` with `src/`, `public/`, `node_modules/`
@@ -340,7 +340,7 @@ ENTRYPOINT ["node","src/index.js"]
 
 ### 6. Kubernetes
 
-<p align="center"><img src="diagrams/10-kubernetes-cluster-anatomy.png" alt="Kubernetes cluster anatomy" width="860"><br><sub><b>Kubernetes cluster anatomy</b></sub></p>
+<p align="center"><img src="diagrams/10-kubernetes-cluster-anatomy.svg" alt="Kubernetes cluster anatomy" width="860"><br><sub><b>Kubernetes cluster anatomy</b></sub></p>
 
 #### ▸ Setup Kind cluster (t3.medium + 15 GB disk)
 
@@ -425,7 +425,7 @@ kubectl exec testpod -- env
 
 #### ▸ Deployment (stateless apps: recreate, scale, rollback) — deploy1.yml
 
-<p align="center"><img src="diagrams/11-deployment-replicaset-pods.png" alt="Deployment → ReplicaSet → Pods" width="860"><br><sub><b>Deployment → ReplicaSet → Pods</b></sub></p>
+<p align="center"><img src="diagrams/11-deployment-replicaset-pods.svg" alt="Deployment → ReplicaSet → Pods" width="860"><br><sub><b>Deployment → ReplicaSet → Pods</b></sub></p>
 
 ```yaml
 kind: Deployment
@@ -503,7 +503,7 @@ kubectl label nodes <NODE-NAME> mynode=demonode
 
 #### ▸ Healthchecks
 
-<p align="center"><img src="diagrams/12-liveness-vs-readiness-probes.png" alt="Liveness vs readiness probes" width="860"><br><sub><b>Liveness vs readiness probes</b></sub></p>
+<p align="center"><img src="diagrams/12-liveness-vs-readiness-probes.svg" alt="Liveness vs readiness probes" width="860"><br><sub><b>Liveness vs readiness probes</b></sub></p>
 
 - **livenessProbe** — container is **recreated** if the check fails
 - **readinessProbe** — pod **gets no traffic** while the check fails
@@ -547,7 +547,7 @@ spec:
 
 #### ▸ Container Patterns
 
-<p align="center"><img src="diagrams/13-init-main-sidecar-in-one-pod.png" alt="Init + main + sidecar in one Pod" width="860"><br><sub><b>Init + main + sidecar in one Pod</b></sub></p>
+<p align="center"><img src="diagrams/13-init-main-sidecar-in-one-pod.svg" alt="Init + main + sidecar in one Pod" width="860"><br><sub><b>Init + main + sidecar in one Pod</b></sub></p>
 
 - **Init container** — runs *before* the main container: check DB is up, fetch/put data, download a file
 - **Sidecar container** — runs *alongside* the main container: refresh credentials, control traffic
@@ -602,7 +602,7 @@ kubectl exec testpod -c main -it -- /bin/bash
 
 #### ▸ Persistent Volumes
 
-<p align="center"><img src="diagrams/14-persistent-storage-chain.png" alt="Persistent storage chain" width="860"><br><sub><b>Persistent storage chain</b></sub></p>
+<p align="center"><img src="diagrams/14-persistent-storage-chain.svg" alt="Persistent storage chain" width="860"><br><sub><b>Persistent storage chain</b></sub></p>
 
 ```yaml
 # pv.yml
@@ -676,7 +676,7 @@ spec:
 
 #### ▸ ConfigMaps & Secrets (virtual memory)
 
-<p align="center"><img src="diagrams/15-injecting-the-configuration-layer.png" alt="Injecting the configuration layer" width="860"><br><sub><b>Injecting the configuration layer</b></sub></p>
+<p align="center"><img src="diagrams/15-injecting-the-configuration-layer.svg" alt="Injecting the configuration layer" width="860"><br><sub><b>Injecting the configuration layer</b></sub></p>
 
 - **ConfigMap** — app config (Kafka, cache server, DB host/user/table, log level, heap memory)
 - **Secret** — sensitive data (keystores, passwords, certificates)
@@ -786,7 +786,7 @@ spec:
 
 #### ▸ Services
 
-<p align="center"><img src="diagrams/16-request-path-into-a-pod.png" alt="Request path into a pod" width="860"><br><sub><b>Request path into a pod</b></sub></p>
+<p align="center"><img src="diagrams/16-request-path-into-a-pod.svg" alt="Request path into a pod" width="860"><br><sub><b>Request path into a pod</b></sub></p>
 
 - Access the app without worrying about changing Pod IPs
 - Load-balance traffic across pods
@@ -916,7 +916,7 @@ kubectl get pods -n demo
 
 #### ▸ Taints & Tolerations
 
-<p align="center"><img src="diagrams/17-taint-on-node-toleration-on-pod.png" alt="Taint on node, toleration on pod" width="860"><br><sub><b>Taint on node, toleration on pod</b></sub></p>
+<p align="center"><img src="diagrams/17-taint-on-node-toleration-on-pod.svg" alt="Taint on node, toleration on pod" width="860"><br><sub><b>Taint on node, toleration on pod</b></sub></p>
 
 - **Taint** — node property that refuses pods
 - **Toleration** — pod property that allows it onto a tainted node
@@ -991,7 +991,7 @@ kubectl label nodes <node> myname-          # remove label
 
 #### ▸ Minimal Kubernetes Deployment Template
 
-<p align="center"><img src="diagrams/18-minimal-app-template.png" alt="Minimal app template" width="860"><br><sub><b>Minimal app template</b></sub></p>
+<p align="center"><img src="diagrams/18-minimal-app-template.svg" alt="Minimal app template" width="860"><br><sub><b>Minimal app template</b></sub></p>
 
 - **Namespace** — group the app, apply policies
 - **Deployment** — scale, recreate, rollback
@@ -1061,7 +1061,7 @@ resource "aws_s3_bucket" "example" {
 
 #### ▸ Workflow
 
-<p align="center"><img src="diagrams/19-terraform-workflow.png" alt="Terraform workflow" width="860"><br><sub><b>Terraform workflow</b></sub></p>
+<p align="center"><img src="diagrams/19-terraform-workflow.svg" alt="Terraform workflow" width="860"><br><sub><b>Terraform workflow</b></sub></p>
 
 ```bash
 terraform init
@@ -1128,7 +1128,7 @@ resource "aws_s3_bucket" "example" {
 
 #### ▸ Remote backend — backend.tf
 
-<p align="center"><img src="diagrams/20-remote-state-with-native-locking.png" alt="Remote state with native locking" width="860"><br><sub><b>Remote state with native locking</b></sub></p>
+<p align="center"><img src="diagrams/20-remote-state-with-native-locking.svg" alt="Remote state with native locking" width="860"><br><sub><b>Remote state with native locking</b></sub></p>
 
 ```hcl
 terraform {
@@ -1195,7 +1195,7 @@ terraform import aws_instance.example2 i-04828223b3509f4aa
 
 #### ▸ Modules (reusable code)
 
-<p align="center"><img src="diagrams/21-root-module-wiring-child-modules.png" alt="Root module wiring child modules" width="860"><br><sub><b>Root module wiring child modules</b></sub></p>
+<p align="center"><img src="diagrams/21-root-module-wiring-child-modules.svg" alt="Root module wiring child modules" width="860"><br><sub><b>Root module wiring child modules</b></sub></p>
 
 ```hcl
 # modules/instance/main.tf
@@ -1318,7 +1318,7 @@ resource "null_resource" "dummy" {
 
 ### 8. FinTech (B2B) Microservices
 
-<p align="center"><img src="diagrams/22-fintech-platform-architecture.png" alt="FinTech platform architecture" width="860"><br><sub><b>FinTech platform architecture</b></sub></p>
+<p align="center"><img src="diagrams/22-fintech-platform-architecture.svg" alt="FinTech platform architecture" width="860"><br><sub><b>FinTech platform architecture</b></sub></p>
 
 | Service | Language | Role |
 |---|---|---|
@@ -1357,7 +1357,7 @@ resource "null_resource" "dummy" {
 
 #### ▸ Enterprise-grade structure
 
-<p align="center"><img src="diagrams/23-who-owns-what-modules-vs-environments.png" alt="Who owns what — modules vs environments" width="860"><br><sub><b>Who owns what — modules vs environments</b></sub></p>
+<p align="center"><img src="diagrams/23-who-owns-what-modules-vs-environments.svg" alt="Who owns what — modules vs environments" width="860"><br><sub><b>Who owns what — modules vs environments</b></sub></p>
 
 ```text
 ## Managed by Platform Team
@@ -1432,7 +1432,7 @@ A pipeline (workflow) that automates tasks: **Pipeline → Jobs → Steps**
 
 #### ▸ GenAI prompt — IaC DevSecOps pipeline
 
-<p align="center"><img src="diagrams/24-iac-devsecops-pipeline-dev-branch.png" alt="IaC DevSecOps pipeline (dev branch)" width="860"><br><sub><b>IaC DevSecOps pipeline (dev branch)</b></sub></p>
+<p align="center"><img src="diagrams/24-iac-devsecops-pipeline-dev-branch.svg" alt="IaC DevSecOps pipeline (dev branch)" width="860"><br><sub><b>IaC DevSecOps pipeline (dev branch)</b></sub></p>
 
 1. Run only on dev branches in this repo
 2. Trigger when a commit is pushed to dev
@@ -1444,7 +1444,7 @@ A pipeline (workflow) that automates tasks: **Pipeline → Jobs → Steps**
 
 #### ▸ GenAI prompt — AIOps PR remediation pipeline
 
-<p align="center"><img src="diagrams/25-aiops-continuous-loop.png" alt="AIOps — continuous loop" width="860"><br><sub><b>AIOps — continuous loop</b></sub></p>
+<p align="center"><img src="diagrams/25-aiops-continuous-loop.svg" alt="AIOps — continuous loop" width="860"><br><sub><b>AIOps — continuous loop</b></sub></p>
 
 > [!TIP]
 > Problem: a GitHub Actions pipeline that validates IaC PRs and auto-remediates with Kiro.  
@@ -1471,7 +1471,7 @@ Repo: https://github.com/wezva-fintech/terraform-modules.git
 
 ### 12. Step 1 — IAM Roles per Environment
 
-<p align="center"><img src="diagrams/26-assume-role-per-environment.png" alt="Assume-role per environment" width="860"><br><sub><b>Assume-role per environment</b></sub></p>
+<p align="center"><img src="diagrams/26-assume-role-per-environment.svg" alt="Assume-role per environment" width="860"><br><sub><b>Assume-role per environment</b></sub></p>
 
 ```bash
 git clone https://github.com/wezva-fintech/terraform-modules.git     # main branch
@@ -1525,7 +1525,7 @@ Goals: **Security · Traffic isolation · Compliance**
 
 #### ▸ 4 VPCs · 24 Subnets (6 public, 18 private)
 
-<p align="center"><img src="diagrams/27-4-vpc-network-layout.png" alt="4-VPC network layout" width="860"><br><sub><b>4-VPC network layout</b></sub></p>
+<p align="center"><img src="diagrams/27-4-vpc-network-layout.svg" alt="4-VPC network layout" width="860"><br><sub><b>4-VPC network layout</b></sub></p>
 
 | VPC | Public | Private | Key resources |
 |---|---|---|---|
@@ -1577,7 +1577,7 @@ terraform destroy --auto-approve
 
 #### ▸ Macie — Data compliance guardrail
 
-<p align="center"><img src="diagrams/28-macie-alert-pipeline.png" alt="Macie alert pipeline" width="860"><br><sub><b>Macie alert pipeline</b></sub></p>
+<p align="center"><img src="diagrams/28-macie-alert-pipeline.svg" alt="Macie alert pipeline" width="860"><br><sub><b>Macie alert pipeline</b></sub></p>
 
 ```bash
 cd macie-compliance
@@ -1592,7 +1592,7 @@ terraform destroy --auto-approve
 
 #### ▸ Comprehend — Real-time PII redaction
 
-<p align="center"><img src="diagrams/29-real-time-pii-redaction.png" alt="Real-time PII redaction" width="860"><br><sub><b>Real-time PII redaction</b></sub></p>
+<p align="center"><img src="diagrams/29-real-time-pii-redaction.svg" alt="Real-time PII redaction" width="860"><br><sub><b>Real-time PII redaction</b></sub></p>
 
 ```bash
 cd comprehend-PII-gateway
@@ -1638,7 +1638,7 @@ Both use the same AWS ML models to detect:
 
 #### ▸ Operational Security & Governance
 
-<p align="center"><img src="diagrams/30-audit-threat-detection.png" alt="Audit & threat detection" width="860"><br><sub><b>Audit & threat detection</b></sub></p>
+<p align="center"><img src="diagrams/30-audit-threat-detection.svg" alt="Audit & threat detection" width="860"><br><sub><b>Audit & threat detection</b></sub></p>
 
 ```bash
 cd audit
@@ -1709,7 +1709,7 @@ curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
 
 ### 18. Create EKS Cluster
 
-<p align="center"><img src="diagrams/31-eks-cluster-layout.png" alt="EKS cluster layout" width="860"><br><sub><b>EKS cluster layout</b></sub></p>
+<p align="center"><img src="diagrams/31-eks-cluster-layout.svg" alt="EKS cluster layout" width="860"><br><sub><b>EKS cluster layout</b></sub></p>
 
 ```bash
 cd eks
@@ -1733,7 +1733,7 @@ kubectl get nodes --watch
 
 #### ▸ Cluster backup — Velero
 
-<p align="center"><img src="diagrams/32-velero-continuous-loop.png" alt="Velero — continuous loop" width="860"><br><sub><b>Velero — continuous loop</b></sub></p>
+<p align="center"><img src="diagrams/32-velero-continuous-loop.svg" alt="Velero — continuous loop" width="860"><br><sub><b>Velero — continuous loop</b></sub></p>
 
 ```bash
 wget https://github.com/vmware-tanzu/velero/releases/download/v1.16.0/velero-v1.16.0-linux-amd64.tar.gz
@@ -1762,7 +1762,7 @@ velero uninstall
 
 ### 19. EKS Version Upgrade (Blue/Green node groups)
 
-<p align="center"><img src="diagrams/33-blue-green-node-group-upgrade.png" alt="Blue/green node group upgrade" width="860"><br><sub><b>Blue/green node group upgrade</b></sub></p>
+<p align="center"><img src="diagrams/33-blue-green-node-group-upgrade.svg" alt="Blue/green node group upgrade" width="860"><br><sub><b>Blue/green node group upgrade</b></sub></p>
 
 ```bash
 terraform init
@@ -1791,7 +1791,7 @@ terraform destroy -auto-approve
 
 #### ▸ 4 kinds of workloads in every cluster
 
-<p align="center"><img src="diagrams/34-cluster-workload-tiers.png" alt="Cluster workload tiers" width="860"><br><sub><b>Cluster workload tiers</b></sub></p>
+<p align="center"><img src="diagrams/34-cluster-workload-tiers.svg" alt="Cluster workload tiers" width="860"><br><sub><b>Cluster workload tiers</b></sub></p>
 
 1. K8s system components — kube-proxy, kubelet, CoreDNS
 2. Platform tools / add-ons — Calico, ArgoCD, Cluster Autoscaler, logging, monitoring, security, MLflow, KServe
@@ -1835,7 +1835,7 @@ Others: Prometheus exporters, Loki, Fluent Bit, Falco, Falcosidekick, Cluster Au
 
 ### 21. Observability
 
-<p align="center"><img src="diagrams/35-metrics-events-and-runtime-alerts.png" alt="Metrics, events and runtime alerts" width="860"><br><sub><b>Metrics, events and runtime alerts</b></sub></p>
+<p align="center"><img src="diagrams/35-metrics-events-and-runtime-alerts.svg" alt="Metrics, events and runtime alerts" width="860"><br><sub><b>Metrics, events and runtime alerts</b></sub></p>
 
 - **Prometheus** — time-series monitoring, scrapes targets frequently
 - **Grafana** — dashboards / visualization
@@ -1910,7 +1910,7 @@ kubectl apply -f pod.yml
 
 #### ▸ Application logging
 
-<p align="center"><img src="diagrams/36-application-log-pipeline.png" alt="Application log pipeline" width="860"><br><sub><b>Application log pipeline</b></sub></p>
+<p align="center"><img src="diagrams/36-application-log-pipeline.svg" alt="Application log pipeline" width="860"><br><sub><b>Application log pipeline</b></sub></p>
 
 Logs: console, http-request.log, access.log, core.log
 
@@ -1944,7 +1944,7 @@ kubectl logs -n logging -f <ANY-FLUENT-POD>
 
 ### 22. Zero Trust Architecture
 
-<p align="center"><img src="diagrams/37-zero-trust-layers-bottom-top.png" alt="Zero-trust layers (bottom → top)" width="860"><br><sub><b>Zero-trust layers (bottom → top)</b></sub></p>
+<p align="center"><img src="diagrams/37-zero-trust-layers-bottom-top.svg" alt="Zero-trust layers (bottom → top)" width="860"><br><sub><b>Zero-trust layers (bottom → top)</b></sub></p>
 
 **I. Infra level** — network segregation
 
@@ -2025,7 +2025,7 @@ spec:
 
 ### 23. Testing Stages
 
-<p align="center"><img src="diagrams/38-testing-stages.png" alt="Testing stages" width="860"><br><sub><b>Testing stages</b></sub></p>
+<p align="center"><img src="diagrams/38-testing-stages.svg" alt="Testing stages" width="860"><br><sub><b>Testing stages</b></sub></p>
 
 | Test | Who | Purpose |
 |---|---|---|
@@ -2040,7 +2040,7 @@ spec:
 
 #### ▸ Branch flows
 
-<p align="center"><img src="diagrams/39-feature-vs-main-branch-promotion.png" alt="Feature vs main branch promotion" width="860"><br><sub><b>Feature vs main branch promotion</b></sub></p>
+<p align="center"><img src="diagrams/39-feature-vs-main-branch-promotion.svg" alt="Feature vs main branch promotion" width="860"><br><sub><b>Feature vs main branch promotion</b></sub></p>
 
 ```text
 Feature branch:  Code + Unit test (Dev) → Build (We) → Deploy QA (We) → Functional test (QA)
@@ -2106,7 +2106,7 @@ Main branch:     Merge FB → Main (Dev) → Build (We)
 
 #### ▸ Setup ArgoCD
 
-<p align="center"><img src="diagrams/40-gitops-delivery-with-argo-cd.png" alt="GitOps delivery with Argo CD" width="860"><br><sub><b>GitOps delivery with Argo CD</b></sub></p>
+<p align="center"><img src="diagrams/40-gitops-delivery-with-argo-cd.svg" alt="GitOps delivery with Argo CD" width="860"><br><sub><b>GitOps delivery with Argo CD</b></sub></p>
 
 ```bash
 kubectl create namespace argocd
