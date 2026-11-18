@@ -1,0 +1,91 @@
+{
+	"folders": [
+		{
+			"path": "../../.."
+		},
+		{
+			"path": "../../../.."
+		}
+	],
+	"settings": {
+		"workbench.colorCustomizations": {
+			"editor.foreground": "#FFD700",
+			"foreground": "#FFD700",
+			"terminal.foreground": "#FFD700"
+		},
+		"editor.tokenColorCustomizations": {
+			"textMateRules": [
+				{
+					"scope": [
+						"source",
+						"text"
+					],
+					"settings": {
+						"foreground": "#FFD700"
+					}
+				},
+				{
+					"name": "Purple: keywords, block types, storage",
+					"scope": [
+						"keyword",
+						"storage",
+						"storage.type",
+						"entity.name.type",
+						"support.type",
+						"keyword.control",
+						"keyword.operator"
+					],
+					"settings": {
+						"foreground": "#B388FF"
+					}
+				},
+				{
+					"name": "Green: strings and numbers",
+					"scope": [
+						"string",
+						"constant.numeric",
+						"constant.language"
+					],
+					"settings": {
+						"foreground": "#50FA7B"
+					}
+				},
+				{
+					"name": "Purple italic: comments",
+					"scope": [
+						"comment",
+						"punctuation.definition.comment"
+					],
+					"settings": {
+						"foreground": "#9575CD",
+						"fontStyle": "italic"
+					}
+				},
+				{
+					"name": "Gold bold: names and attributes",
+					"scope": [
+						"entity.name",
+						"variable",
+						"variable.other",
+						"variable.declaration",
+						"entity.other.attribute-name"
+					],
+					"settings": {
+						"foreground": "#FFD700",
+						"fontStyle": "bold"
+					}
+				},
+				{
+					"name": "Green: functions",
+					"scope": [
+						"support.function",
+						"entity.name.function"
+					],
+					"settings": {
+						"foreground": "#69F0AE"
+					}
+				}
+			]
+		}
+	}
+}
