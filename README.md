@@ -1,5 +1,11 @@
 <div align="center">
 
+<img src="https://raw.githubusercontent.com/muntaha747/muntaha747/master/docs/diagrams/architecture-cicd-v14.svg" width="100%" alt="FinTech Enterprise regional architecture with CI/CD: Edge, App, Data and Ops VPCs, plus the pipelines for Ledger, Notification, Payment, Fraud and BFF"/>
+
+</div>
+
+<div align="center">
+
 <img src="https://capsule-render.vercel.app/api?type=venom&color=0:0f2027,40:203a43,70:2c5364,100:00c9a7&height=240&section=header&text=FinTech%20Enterprise%20Project&fontSize=56&fontColor=ffffff&animation=twinkling&fontAlignY=40&desc=4%20VPCs%20%7C%20Transit%20Gateway%20%7C%20EKS%20%7C%20GitOps%20%7C%20MLOps&descAlignY=62&descSize=20" alt="banner"/>
 
 ![AWS](https://img.shields.io/badge/AWS-232F3E?style=for-the-badge&logo=amazonaws&logoColor=FF9900)
